@@ -5,6 +5,7 @@ import { AppComponent } from './main/app.component';
 import { LoginComponent } from './login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import {MatButtonModule} from '@angular/material';
     LoginComponent
   ],
   imports: [
+    RouterModule.forRoot([]),
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule

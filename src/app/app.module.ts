@@ -4,7 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './main/app.component';
 import { LoginComponent } from './login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatBottomSheetModule, MatButtonModule, MatListModule, MatToolbarModule} from '@angular/material';
 import {RouterModule} from '@angular/router';
 
 @NgModule({
@@ -12,11 +13,18 @@ import {RouterModule} from '@angular/router';
     AppComponent,
     LoginComponent
   ],
+  entryComponents: [
+    LoginComponent
+  ],
   imports: [
     RouterModule.forRoot([]),
     BrowserModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    MatBottomSheetModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatListModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

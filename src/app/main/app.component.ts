@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {environment} from '../../environments/environment';
 import {ActivatedRoute} from '@angular/router';
+import {MatBottomSheet} from '@angular/material';
+import {LoginComponent} from '../login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -10,53 +11,27 @@ import {ActivatedRoute} from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'dont-play-with-gp-web';
 
-  networks = {
-    facebook: {width: 600, height: 300},
-    // todo check it
-    google: {width: 515, height: 490}
-  };
+  // todo
+  authenticated = false;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private bottomSheet: MatBottomSheet
+  ) {
   }
 
   ngOnInit() {
-    // check login
-    this.route.queryParamMap.subscribe(paramsMap => {
-      console.log('code => ', paramsMap.get('code'));
-      console.log('code => ', paramsMap.get('state'));
-    });
+    console.log('ngOnInit');
   }
 
   login() {
     console.log('login clicked!');
-    const network = 'facebook';
-    const facebookLoginUrl = 'https://www.facebook.com/v4.0/dialog/oauth?' +
-      'client_id=' + environment.facebookClientId +
-      '&redirect_uri=' + environment.facebookRedirectUrl +
-      '&state=state' +
-      // '&display=popup' +
-      '&display=dialog' +
-      '&scope=email' +
-      '&response_type=code';
-    // window.open(facebookLoginUrl);
-    window.location.href = facebookLoginUrl;
-
-    // const options = 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,';
-    // window.open(
-    //   facebookLoginUrl,
-    //   // 'targetWindow',
-    //   'popup',
-    //   options + 'height=' + this.networks[network].height + ',width=' + this.networks[network].width
-    // );
+    // todo open login component
+    this.bottomSheet.open(LoginComponent);
   }
 
   logout() {
     console.log('logout clicked!');
     // todo call server, which will call api to logout user.
   }
-
-
-  // todo rerequest permissions
-
-  // todo check granted permissions
 }

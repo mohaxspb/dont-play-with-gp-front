@@ -4,6 +4,4 @@
 
 export const environment = {
   production: false,
-  facebookClientId: '356224868629651',
-  facebookRedirectUrl: 'http://localhost:4200/'
 };

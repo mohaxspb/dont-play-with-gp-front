@@ -5,7 +5,7 @@
     fxLayoutGap="16px grid"
   >
     <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
-      <button mat-stroked-button class="login-button">
+      <button mat-stroked-button class="login-button" (click)="onGitHubLoginClicked()">
         <img class="login-icon" src="/assets/img/login/github.svg" alt="login with github">
         <span>GitHub</span>
       </button>

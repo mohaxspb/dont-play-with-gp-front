@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  onGitHubLoginClicked() {
+    // window.open('http://localhost:8080/api/oauth2/authorize/github');
+    window.location.href = 'http://localhost:8080/api/oauth2/authorize/github';
+  }
 }

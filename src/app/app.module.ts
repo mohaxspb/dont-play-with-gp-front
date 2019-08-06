@@ -7,6 +7,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatBottomSheetModule, MatButtonModule, MatListModule, MatToolbarModule} from '@angular/material';
 import {RouterModule} from '@angular/router';
+import {AppService} from './service/auth/app.service';
+import {UserProvider} from './service/auth/user.subject';
+import {AuthProvider} from './service/auth/auth.state.subject';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,7 @@ import {RouterModule} from '@angular/router';
     MatListModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [AppService, AuthProvider, UserProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

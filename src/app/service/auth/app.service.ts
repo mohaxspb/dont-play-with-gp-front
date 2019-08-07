@@ -4,6 +4,7 @@ import {AuthProvider} from './auth.state.subject';
 import {UserProvider} from './user.subject';
 import {User} from '../../model/user';
 import {environment} from '../../../environments/environment';
+import {GpApiService} from '../api.service';
 
 @Injectable()
 export class AppService {
@@ -14,6 +15,7 @@ export class AppService {
 
   constructor(
     private http: HttpClient,
+    private apiService: GpApiService,
     private authProvider: AuthProvider,
     private userProvider: UserProvider
   ) {
@@ -32,7 +34,7 @@ export class AppService {
     this.http.get<User>(
       window.location.protocol + '//'
       + window.location.hostname + ':' + port
-      + environment.apiPath + '/user/me',
+      + environment.apiPath + '/users/me',
       {withCredentials: true}
     )
       .subscribe(user => {
@@ -50,8 +52,13 @@ export class AppService {
     console.log('port: ' + port);
     console.log('url: ' + window.location.protocol + '//'
       + window.location.hostname + ':' + port
-      + environment.apiPath + '/user/me'
+      + environment.apiPath + '/users/me'
     );
+  }
+
+  logout() {
+
+    window.location.href = this.apiService.API_URL + 'logout';
   }
 
   getUser() {

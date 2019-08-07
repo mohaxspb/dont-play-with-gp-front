@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {SocialProvider} from '../GpConstants';
+import {GpApiService} from '../service/api.service';
 
 @Component({
   selector: 'app-login',
@@ -7,14 +9,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() {
+  constructor(private apiService: GpApiService) {
   }
 
   ngOnInit() {
   }
 
   onGitHubLoginClicked() {
-    // window.open('http://localhost:8080/api/oauth2/authorize/github');
-    window.location.href = 'http://localhost:8080/api/oauth2/authorize/github';
+    window.location.href =  this.apiService.API_URL + 'oauth2/authorize/' + SocialProvider.GITHUB.toLowerCase();
   }
 }

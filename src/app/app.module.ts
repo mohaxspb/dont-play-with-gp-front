@@ -10,6 +10,8 @@ import {RouterModule} from '@angular/router';
 import {AppService} from './service/auth/app.service';
 import {UserProvider} from './service/auth/user.subject';
 import {AuthProvider} from './service/auth/auth.state.subject';
+import {HttpClientModule} from '@angular/common/http';
+import {GpApiService} from './service/api.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import {AuthProvider} from './service/auth/auth.state.subject';
   imports: [
     RouterModule.forRoot([]),
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatBottomSheetModule,
     MatButtonModule,
@@ -29,7 +32,7 @@ import {AuthProvider} from './service/auth/auth.state.subject';
     MatListModule,
     FlexLayoutModule
   ],
-  providers: [AppService, AuthProvider, UserProvider],
+  providers: [GpApiService, AppService, AuthProvider, UserProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

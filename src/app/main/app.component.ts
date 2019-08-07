@@ -13,7 +13,6 @@ import {AuthProvider} from '../service/auth/auth.state.subject';
 export class AppComponent implements OnInit {
   title = 'dont-play-with-gp-web';
 
-  // todo
   authenticated = false;
 
   constructor(
@@ -27,17 +26,21 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit');
-    this.authProvider.authenticated.subscribe((value: boolean) => this.authenticated = value);
+    this.authProvider
+      .authenticated
+      .subscribe((value: boolean) => {
+        this.authenticated = value;
+        console.log('authProvider authenticated: ' + this.authenticated);
+      });
   }
 
   login() {
     console.log('login clicked!');
-    // todo open login component
     this.bottomSheet.open(LoginComponent);
   }
 
   logout() {
     console.log('logout clicked!');
-    // todo call server, which will call api to logout user.
+    this.appService.logout();
   }
 }

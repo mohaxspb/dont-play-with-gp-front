@@ -4,6 +4,8 @@ import {MatBottomSheet} from '@angular/material';
 import {LoginComponent} from '../login/login.component';
 import {AuthService} from '../service/auth/auth.service';
 import {AuthProvider} from '../service/auth/auth.state.subject';
+import {UserProvider} from '../service/auth/user.subject';
+import {User} from '../model/user';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +15,14 @@ import {AuthProvider} from '../service/auth/auth.state.subject';
 export class AppComponent implements OnInit {
   title = 'dont-play-with-gp-web';
 
-  authenticated = false;
+  authenticated: boolean | null;
+  user: User | null;
 
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
     private authProvider: AuthProvider,
+    private userProvider: UserProvider,
     private bottomSheet: MatBottomSheet
   ) {
     this.authService.authenticate();
@@ -28,10 +32,10 @@ export class AppComponent implements OnInit {
     console.log('ngOnInit');
     this.authProvider
       .authenticated
-      .subscribe((value: boolean) => {
-        this.authenticated = value;
-        console.log('authProvider authenticated: ' + this.authenticated);
-      });
+      .subscribe((authenticated: boolean) => this.authenticated = authenticated);
+    this.userProvider
+      .user
+      .subscribe((user: User) => this.user = user);
   }
 
   login() {
@@ -42,5 +46,9 @@ export class AppComponent implements OnInit {
   logout() {
     console.log('logout clicked!');
     this.authService.logout();
+  }
+
+  isNullOrEmptyOrUndefined(value) {
+    return !value;
   }
 }

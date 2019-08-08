@@ -1,3 +1,20 @@
 .toolbar-spacer {
   flex: 1 1 auto;
 }
+
+.avatar {
+  width: 32px;
+  height: 32px;
+
+  margin-right: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+}
+
+.user-name {
+  margin-right: 16px;
+}

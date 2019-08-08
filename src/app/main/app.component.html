@@ -3,11 +3,12 @@
 <mat-toolbar color="primary">
   <span routerLinkActive="active" routerLink="/home">{{title}}</span>
   <span class="toolbar-spacer"></span>
-<!--  <img class="avatar" *ngIf="authenticated && isNullOrEmptyOrUndefined(appService.getUser().avatar)"-->
-<!--       src="{{appService.getUser().myUsername}}" alt="avatar"/>-->
-<!--  <mat-icon class="avatar" *ngIf="authenticated && !isNullOrEmptyOrUndefined(appService.getUser().avatar)">person-->
-<!--  </mat-icon>-->
-<!--  <span class="username" *ngIf="authenticated">{{appService.getUser().myUsername}}</span>-->
+  <img class="avatar" *ngIf="authenticated && !isNullOrEmptyOrUndefined(user.avatar)"
+       src="{{user.avatar}}" alt="avatar"/>
+  <mat-icon class="avatar" *ngIf="authenticated && isNullOrEmptyOrUndefined(user.avatar)">
+    person
+  </mat-icon>
+  <span class="user-name" *ngIf="authenticated">{{user.fullName}}</span>
   <button
     mat-raised-button
     color="accent"
@@ -39,7 +40,6 @@
 <!--<div>-->
 <!--  <button mat-raised-button color="accent" (click)="logout()">Logout</button>-->
 <!--</div>-->
-
 
 
 <!--  todo move to sites footer-->

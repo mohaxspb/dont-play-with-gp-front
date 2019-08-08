@@ -38,17 +38,22 @@ export class AppComponent implements OnInit {
       .subscribe((user: User) => this.user = user);
   }
 
-  login() {
+  onLoginClicked() {
     console.log('login clicked!');
     this.bottomSheet.open(LoginComponent);
   }
 
-  logout() {
+  onLogoutClicked() {
     console.log('logout clicked!');
     this.authService.logout();
   }
 
-  isNullOrEmptyOrUndefined(value) {
+  onAccountClicked() {
+    console.log('onAccountClicked');
+    // todo
+  }
+
+  private isNullOrEmptyOrUndefined(value) {
     return !value;
   }
 }

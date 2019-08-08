@@ -5,7 +5,15 @@ import { AppComponent } from './main/app.component';
 import { LoginComponent } from './login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatBottomSheetModule, MatButtonModule, MatIconModule, MatListModule, MatToolbarModule} from '@angular/material';
+import {
+  MatBottomSheetModule,
+  MatButtonModule,
+  MatIconModule,
+  MatListModule,
+  MatMenuModule,
+  MatRippleModule,
+  MatToolbarModule
+} from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {AuthService} from './service/auth/auth.service';
 import {UserProvider} from './service/auth/user.subject';
@@ -31,7 +39,9 @@ import {GpApiService} from './service/api.service';
     MatToolbarModule,
     MatListModule,
     FlexLayoutModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule,
+    MatRippleModule
   ],
   providers: [GpApiService, AuthService, AuthProvider, UserProvider],
   bootstrap: [AppComponent]

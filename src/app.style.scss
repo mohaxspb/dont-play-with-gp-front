@@ -6,7 +6,7 @@
 
 // Define a theme.
 $primary: mat-palette($mat-deep-purple);
-$accent:  mat-palette($mat-amber, A200, A100, A400);
+$accent: mat-palette($mat-amber, A200, A100, A400);
 
 $theme: mat-light-theme($primary, $accent);
 
@@ -27,6 +27,7 @@ body {
 }
 
 /**
+ * prevents text selection
  * see [https://stackoverflow.com/a/9314458/3212712]
  */
 .noselect {
@@ -36,4 +37,8 @@ body {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.default-margin-right {
+  margin-right: 16px;
 }

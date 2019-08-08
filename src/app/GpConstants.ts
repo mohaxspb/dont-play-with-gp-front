@@ -4,3 +4,8 @@ export enum SocialProvider {
   FACEBOOK = 'FACEBOOK',
   GOOGLE = 'GOOGLE'
 }
+
+export enum Language {
+  RU = 'RU',
+  EN = 'EN'
+}

@@ -7,11 +7,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
   MatBottomSheetModule,
-  MatButtonModule,
-  MatIconModule,
+  MatButtonModule, MatCardModule, MatFormFieldModule,
+  MatIconModule, MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatRippleModule,
+  MatRippleModule, MatSelectModule,
   MatToolbarModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
@@ -25,6 +25,7 @@ import {GpApiService} from './service/api.service';
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localeRu from '@angular/common/locales/ru';
+import {ReactiveFormsModule} from '@angular/forms';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
@@ -49,7 +50,12 @@ registerLocaleData(localeRu);
     FlexLayoutModule,
     MatIconModule,
     MatMenuModule,
-    MatRippleModule
+    MatRippleModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatCardModule
   ],
   providers: [GpApiService, AuthService, AuthProvider, UserProvider],
   bootstrap: [AppComponent]

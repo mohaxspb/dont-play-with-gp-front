@@ -11,22 +11,22 @@
       </button>
     </div>
     <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
-    <button mat-stroked-button>
-      <img class="login-icon" src="/assets/img/login/facebook.svg" alt="login with facebook">
-      <span>Facebook</span>
-    </button>
+      <button mat-stroked-button class="login-button" (click)="onFacebookLoginClicked()">
+        <img class="login-icon" src="/assets/img/login/facebook.svg" alt="login with facebook">
+        <span>Facebook</span>
+      </button>
     </div>
     <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
-    <button mat-stroked-button >
-      <img class="login-icon" src="/assets/img/login/vk.svg" alt="login with vk">
-      <span>VK</span>
-    </button>
+      <button mat-stroked-button class="login-button" (click)="onVkLoginClicked()">
+        <img class="login-icon" src="/assets/img/login/vk.svg" alt="login with vk">
+        <span>VK</span>
+      </button>
     </div>
     <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
-    <button mat-stroked-button>
-      <img class="login-icon" src="/assets/img/login/google.svg" alt="login with google">
-      <span>Google</span>
-    </button>
+      <button mat-stroked-button class="login-button" (click)="onGoogleLoginClicked()">
+        <img class="login-icon" src="/assets/img/login/google.svg" alt="login with google">
+        <span>Google</span>
+      </button>
     </div>
   </div>
 </div>

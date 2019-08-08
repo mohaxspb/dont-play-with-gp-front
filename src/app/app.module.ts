@@ -7,7 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatBottomSheetModule, MatButtonModule, MatListModule, MatToolbarModule} from '@angular/material';
 import {RouterModule} from '@angular/router';
-import {AppService} from './service/auth/app.service';
+import {AuthService} from './service/auth/auth.service';
 import {UserProvider} from './service/auth/user.subject';
 import {AuthProvider} from './service/auth/auth.state.subject';
 import {HttpClientModule} from '@angular/common/http';
@@ -32,7 +32,7 @@ import {GpApiService} from './service/api.service';
     MatListModule,
     FlexLayoutModule
   ],
-  providers: [GpApiService, AppService, AuthProvider, UserProvider],
+  providers: [GpApiService, AuthService, AuthProvider, UserProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

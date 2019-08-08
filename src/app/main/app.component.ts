@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MatBottomSheet} from '@angular/material';
 import {LoginComponent} from '../login/login.component';
-import {AppService} from '../service/auth/app.service';
+import {AuthService} from '../service/auth/auth.service';
 import {AuthProvider} from '../service/auth/auth.state.subject';
 
 @Component({
@@ -17,11 +17,11 @@ export class AppComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private appService: AppService,
+    private authService: AuthService,
     private authProvider: AuthProvider,
     private bottomSheet: MatBottomSheet
   ) {
-    this.appService.authenticate(undefined, undefined);
+    this.authService.authenticate();
   }
 
   ngOnInit() {
@@ -41,6 +41,6 @@ export class AppComponent implements OnInit {
 
   logout() {
     console.log('logout clicked!');
-    this.appService.logout();
+    this.authService.logout();
   }
 }

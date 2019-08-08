@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../service/auth/auth.service';
 import {SocialProvider} from '../GpConstants';
-import {GpApiService} from '../service/api.service';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +9,25 @@ import {GpApiService} from '../service/api.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private apiService: GpApiService) {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
   }
 
   onGitHubLoginClicked() {
-    window.location.href =  this.apiService.API_URL + 'oauth2/authorize/' + SocialProvider.GITHUB.toLowerCase();
+    this.authService.socialLogin(SocialProvider.GITHUB);
+  }
+
+  onVkLoginClicked() {
+    this.authService.socialLogin(SocialProvider.VK);
+  }
+
+  onFacebookLoginClicked() {
+    this.authService.socialLogin(SocialProvider.FACEBOOK);
+  }
+
+  onGoogleLoginClicked() {
+    this.authService.socialLogin(SocialProvider.GOOGLE);
   }
 }

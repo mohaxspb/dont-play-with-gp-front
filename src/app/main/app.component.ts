@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
     // todo
   }
 
-  private isNullOrEmptyOrUndefined(value) {
+  isNullOrEmptyOrUndefined(value) {
     return !value;
   }
 }

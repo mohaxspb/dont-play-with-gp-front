@@ -21,6 +21,14 @@ import {AuthProvider} from './service/auth/auth.state.subject';
 import {HttpClientModule} from '@angular/common/http';
 import {GpApiService} from './service/api.service';
 
+// internalization
+import { registerLocaleData } from '@angular/common';
+import localeEn from '@angular/common/locales/en';
+import localeRu from '@angular/common/locales/ru';
+
+registerLocaleData(localeEn);
+registerLocaleData(localeRu);
+
 @NgModule({
   declarations: [
     AppComponent,

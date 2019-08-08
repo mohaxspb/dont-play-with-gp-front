@@ -23,9 +23,8 @@
     color="accent"
     *ngIf="!authenticated"
     (click)="onLoginClicked()"
-  >
-    Login
-  </button>
+    i18n="login button@@login"
+  >Login</button>
   <button
     *ngIf="authenticated"
     mat-icon-button
@@ -36,19 +35,17 @@
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="onAccountClicked()">
       <mat-icon>person</mat-icon>
-      <span>Account</span>
+      <span i18n="account button@@account">Account</span>
     </button>
     <button mat-menu-item (click)="onLogoutClicked()">
       <mat-icon>exit_to_app</mat-icon>
-      <span>Logout</span>
+      <span i18n="logout button@@logout">Logout</span>
     </button>
   </mat-menu>
 </mat-toolbar>
 
 <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
+  <h1>Welcome to {{ title }}!</h1>
 </div>
 
 <!--<div>-->

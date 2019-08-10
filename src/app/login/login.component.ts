@@ -60,19 +60,19 @@ export class LoginComponent implements OnInit {
   }
 
   onGitHubLoginClicked() {
-    this.authService.socialLogin(SocialProvider.GITHUB);
+    AuthService.socialLogin(SocialProvider.GITHUB);
   }
 
   onVkLoginClicked() {
-    this.authService.socialLogin(SocialProvider.VK);
+    AuthService.socialLogin(SocialProvider.VK);
   }
 
   onFacebookLoginClicked() {
-    this.authService.socialLogin(SocialProvider.FACEBOOK);
+    AuthService.socialLogin(SocialProvider.FACEBOOK);
   }
 
   onGoogleLoginClicked() {
-    this.authService.socialLogin(SocialProvider.GOOGLE);
+    AuthService.socialLogin(SocialProvider.GOOGLE);
   }
 
   onLoginOrRegisterClicked() {

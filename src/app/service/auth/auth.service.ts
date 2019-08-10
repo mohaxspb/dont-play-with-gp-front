@@ -22,21 +22,20 @@ export class AuthService {
   ) {
   }
 
+  static socialLogin(provider: SocialProvider) {
+    window.location.href = Api.URL + Api.SocialAuthEndpoint.URL + provider.toLowerCase();
+  }
+
   authenticate() {
     console.log('authenticate');
     this.apiService
       .getUser()
       .pipe(
-        catchError(err => of(null))
+        catchError(() => of(null))
       )
       .subscribe((user: User) => {
         this.onUserReceived(user);
       });
-  }
-
-  // todo use same approach as for form login
-  socialLogin(provider: SocialProvider) {
-    window.location.href = Api.URL + Api.SocialAuthEndpoint.URL + provider.toLowerCase();
   }
 
   logout() {

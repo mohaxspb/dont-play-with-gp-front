@@ -19,7 +19,7 @@ import {AuthService} from './service/auth/auth.service';
 import {UserProvider} from './service/auth/user.subject';
 import {AuthProvider} from './service/auth/auth.state.subject';
 import {HttpClientModule} from '@angular/common/http';
-import {GpApiService} from './service/api.service';
+import {GpApiService} from './service/gp.api.service';
 
 // internalization
 import { registerLocaleData } from '@angular/common';

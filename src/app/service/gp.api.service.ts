@@ -18,4 +18,20 @@ export class GpApiService {
         {withCredentials: true}
       );
   }
+
+  login(email: string, password: string): Observable<User> {
+    const formData = new FormData();
+
+    formData.append('username', email);
+    formData.append('password', password);
+    formData.append(Api.TARGET_URL_PARAMETER, Api.URL + Api.UsersEndpoint.URL + Api.UsersEndpoint.Method.ME);
+    return this.http
+      .post<User>(
+        Api.URL + Api.Method.LOGIN,
+        formData,
+        {
+          withCredentials: true
+        }
+      );
+  }
 }

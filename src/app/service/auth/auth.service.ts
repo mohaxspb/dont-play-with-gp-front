@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {AuthProvider} from './auth.state.subject';
 import {UserProvider} from './user.subject';
 import {User} from '../../model/user';
-import {GpApiService} from '../api.service';
+import {GpApiService} from '../gp.api.service';
 import {Api} from '../Api';
 import {SocialProvider} from '../../GpConstants';
+import {tap} from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -24,17 +25,16 @@ export class AuthService {
     console.log('authenticate');
     this.apiService.getUser()
       .subscribe((user: User) => {
-        this.user = user;
-        this.authenticated = this.user != null;
-        this.authProvider.authenticated.next(this.authenticated);
-        this.userProvider.user.next(this.user);
+        this.onUserReceived(user);
       });
   }
 
+  // todo use same approach as for form login
   socialLogin(provider: SocialProvider) {
     window.location.href = Api.URL + Api.SocialAuthEndpoint.URL + provider.toLowerCase();
   }
 
+  // todo use same approach as for form login
   logout() {
     console.log('logout');
     window.location.href = Api.URL + Api.Method.LOGOUT;
@@ -42,5 +42,20 @@ export class AuthService {
 
   getUser(): User | null {
     return this.user;
+  }
+
+  login(email: string, password: string) {
+    return this.apiService
+      .login(email, password)
+      .pipe(
+        tap(value => this.onUserReceived(value))
+      );
+  }
+
+  private onUserReceived(user: User) {
+    this.user = user;
+    this.authenticated = this.user != null;
+    this.authProvider.authenticated.next(this.authenticated);
+    this.userProvider.user.next(this.user);
   }
 }

@@ -9,7 +9,7 @@
         [formGroup]="loginRegisterFormGroup"
         #loginRegisterForm="ngForm"
         name="loginRegisterForm"
-        (ngSubmit)="loginOrRegister()"
+        (ngSubmit)=onLoginOrRegisterClicked()
       >
 
         <div class="mat-input-element" *ngIf=createNewAccountFormTypeEnabled>
@@ -54,6 +54,7 @@
                 placeholder="Password"
                 (change)="onPasswordChanged($event.target.value)"
                 name="password"
+                type="password"
                 required
               >
             </label>
@@ -71,6 +72,7 @@
                 placeholder="Password confirm"
                 (change)="onPasswordConfirmChanged($event.target.value)"
                 name="passwordConfirm"
+                type="password"
                 required
               >
             </label>

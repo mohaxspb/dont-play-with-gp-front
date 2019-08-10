@@ -3,6 +3,8 @@ import {AuthService} from '../service/auth/auth.service';
 import {Language, SocialProvider} from '../GpConstants';
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
+import {User} from '../model/user';
+import {MatBottomSheetRef} from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -18,14 +20,25 @@ export class LoginComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
+  /**
+   * true, if form is in register mode.
+   * false, if form is in login mode.
+   */
   createNewAccountFormTypeEnabled = false;
 
   languages = Object.keys(Language);
   languagesEnum = Language;
 
+  // login fields
+  name: string;
+  email: string;
+  password: string;
+  // register fields
+  passwordConfirm: string;
   primaryLanguage: string;
 
   constructor(
+    private bottomSheetRef: MatBottomSheetRef<LoginComponent>,
     private authService: AuthService,
     private fBuilder: FormBuilder
   ) {
@@ -44,7 +57,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   onGitHubLoginClicked() {
@@ -63,18 +75,26 @@ export class LoginComponent implements OnInit {
     this.authService.socialLogin(SocialProvider.GOOGLE);
   }
 
-  loginOrRegister() {
-    console.log('loginOrRegister: ' + this.createNewAccountFormTypeEnabled);
+  onLoginOrRegisterClicked() {
+    console.log('onLoginOrRegisterClicked: ' + this.createNewAccountFormTypeEnabled);
+
+    if (this.createNewAccountFormTypeEnabled) {
+      // this.authService.register(
+      //   this.email,
+      //   this.password,
+      //   this.name,
+      //   this.primaryLanguage
+      // );
+      // todo rx
+    } else {
+      this.authService.login(this.email, this.password)
+        .subscribe((value: User) => {
+          console.log('login: ' + value);
+          this.bottomSheetRef.dismiss();
+        });
+    }
   }
 
-  get hasDropDownRequiredError() {
-    const selectFormControl = this.loginRegisterFormGroup.get('primaryLanguageSelect');
-    return (
-      selectFormControl.touched &&
-      selectFormControl.errors &&
-      selectFormControl.errors.required
-    );
-  }
   onFormTypeClicked() {
     console.log('onFormTypeClicked');
     this.createNewAccountFormTypeEnabled = !this.createNewAccountFormTypeEnabled;
@@ -95,19 +115,21 @@ export class LoginComponent implements OnInit {
 
   onNameChanged(name: string) {
     console.log('onNameChanged: ' + name);
+    this.name = name;
   }
 
   onEmailChanged(email: string) {
     console.log('onEmailChanged: ' + email);
+    this.email = email;
   }
 
   onPasswordChanged(password: string) {
     console.log('onPasswordChanged: ' + password);
-
+    this.password = password;
   }
 
   onPasswordConfirmChanged(passwordConfirm: string) {
     console.log('onPasswordConfirmChanged: ' + passwordConfirm);
-
+    this.passwordConfirm = passwordConfirm;
   }
 }

@@ -13,7 +13,10 @@ export class Api {
 
   static Method = class {
     static LOGOUT = 'logout';
+    static LOGIN = 'login';
   };
+
+  static TARGET_URL_PARAMETER = 'targetUrlParameter';
 
   static UsersEndpoint = class {
     static URL = 'users/';

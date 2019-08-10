@@ -45,7 +45,9 @@ export class AppComponent implements OnInit {
 
   onLogoutClicked() {
     console.log('logout clicked!');
-    this.authService.logout();
+    this.authService
+      .logout()
+      .subscribe();
   }
 
   onAccountClicked() {

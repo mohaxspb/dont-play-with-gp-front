@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {User} from '../model/user';
 import {Observable} from 'rxjs';
 import {Api} from './Api';
@@ -33,5 +33,18 @@ export class GpApiService {
           withCredentials: true
         }
       );
+  }
+
+  logout(): Observable<string> {
+    const params = new HttpParams();
+    params.append(Api.TARGET_URL_PARAMETER, Api.URL);
+    return this.http.get(
+      Api.URL + Api.Method.LOGOUT,
+      {
+        withCredentials: true,
+        params,
+        responseType: 'text'
+      }
+    );
   }
 }

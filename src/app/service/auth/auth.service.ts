@@ -5,7 +5,8 @@ import {User} from '../../model/user';
 import {GpApiService} from '../gp.api.service';
 import {Api} from '../Api';
 import {SocialProvider} from '../../GpConstants';
-import {tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +24,11 @@ export class AuthService {
 
   authenticate() {
     console.log('authenticate');
-    this.apiService.getUser()
+    this.apiService
+      .getUser()
+      .pipe(
+        catchError(err => of(null))
+      )
       .subscribe((user: User) => {
         this.onUserReceived(user);
       });
@@ -34,10 +39,16 @@ export class AuthService {
     window.location.href = Api.URL + Api.SocialAuthEndpoint.URL + provider.toLowerCase();
   }
 
-  // todo use same approach as for form login
   logout() {
     console.log('logout');
-    window.location.href = Api.URL + Api.Method.LOGOUT;
+    return this.apiService
+      .logout()
+      .pipe(
+        tap(() => {
+          console.log('logout success');
+          this.onUserReceived(null);
+        })
+      );
   }
 
   getUser(): User | null {
@@ -52,7 +63,7 @@ export class AuthService {
       );
   }
 
-  private onUserReceived(user: User) {
+  private onUserReceived(user: User | null) {
     this.user = user;
     this.authenticated = this.user != null;
     this.authProvider.authenticated.next(this.authenticated);

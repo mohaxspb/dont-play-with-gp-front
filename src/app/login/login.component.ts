@@ -90,7 +90,6 @@ export class LoginComponent implements OnInit {
           console.log('register: ' + value);
           this.bottomSheetRef.dismiss();
         });
-      // todo rx
     } else {
       this.authService
         .login(this.email, this.password)

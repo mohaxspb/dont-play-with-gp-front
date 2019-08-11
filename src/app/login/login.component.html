@@ -75,10 +75,11 @@
                 name="passwordConfirm"
                 type="password"
                 required
+                pattern="{{password}}"
               >
             </label>
-            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required">You must provide password</mat-error>
-            <!--          todo error for password mismatch-->
+            <mat-error *ngIf="loginRegisterFormGroup.controls.passwordConfirm.errors?.required">You must provide password</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.passwordConfirm.errors?.pattern">Password & Password Confirm does not match.</mat-error>
           </mat-form-field>
         </div>
 

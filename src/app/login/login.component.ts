@@ -104,9 +104,9 @@ export class LoginComponent implements OnInit {
     console.log('onFormTypeClicked');
     this.createNewAccountFormTypeEnabled = !this.createNewAccountFormTypeEnabled;
 
-    const passwordConfirmFormControl = this.loginRegisterFormGroup.get('passwordConfirm');
-    const nameFormControl = this.loginRegisterFormGroup.get('name');
-    const selectFormControl = this.loginRegisterFormGroup.get('primaryLanguageSelect');
+    const passwordConfirmFormControl = this.loginRegisterFormGroup.controls.passwordConfirm;
+    const nameFormControl = this.loginRegisterFormGroup.controls.name;
+    const selectFormControl = this.loginRegisterFormGroup.controls.primaryLanguageSelect;
     if (this.createNewAccountFormTypeEnabled) {
       passwordConfirmFormControl.enable();
       selectFormControl.enable();

@@ -1,0 +1,70 @@
+<body>
+
+<mat-toolbar color="primary">
+  <span routerLinkActive="active" routerLink="/home">{{title}}</span>
+  <span class="toolbar-spacer"></span>
+  <div
+    class="noselect"
+    matRipple
+    fxLayout="row"
+    fxLayoutAlign="space-around center"
+    (click)="onAccountClicked()"
+  >
+    <img class="avatar" *ngIf="authenticated && !isNullOrEmptyOrUndefined(user.avatar)"
+         src="{{user.avatar}}" alt="avatar"/>
+    <mat-icon class="avatar" *ngIf="authenticated && isNullOrEmptyOrUndefined(user.avatar)">
+      person
+    </mat-icon>
+    <span class="user-name" *ngIf="authenticated">{{user.fullName}}</span>
+
+  </div>
+  <button
+    mat-raised-button
+    color="accent"
+    *ngIf="!authenticated"
+    (click)="onLoginClicked()"
+    i18n="login button@@login"
+  >Login</button>
+  <button
+    *ngIf="authenticated"
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onAccountClicked()">
+      <mat-icon>person</mat-icon>
+      <span i18n="account button@@account">Account</span>
+    </button>
+    <button mat-menu-item (click)="onLogoutClicked()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span i18n="logout button@@logout">Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<div style="text-align:center">
+  <h1>Welcome to {{ title }}!</h1>
+</div>
+
+<!--<div>-->
+<!--  <button mat-raised-button color="primary" (click)="login()">Login</button>-->
+<!--</div>-->
+
+<!--<div>-->
+<!--  <button mat-raised-button color="accent" (click)="logout()">Logout</button>-->
+<!--</div>-->
+
+
+<!--  todo move to sites footer-->
+<div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a
+  href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> messages.attribution.is_licensed_by <a
+  href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+</div>
+<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a
+  href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> messages.attribution.is_licensed_by <a
+  href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+</div>
+
+</body>

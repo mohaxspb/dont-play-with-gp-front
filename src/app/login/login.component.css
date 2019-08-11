@@ -1,0 +1,16 @@
+.login-bottom-sheet {
+  padding: 16px;
+}
+
+.login-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.login-button{
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+}

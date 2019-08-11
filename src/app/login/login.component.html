@@ -1,0 +1,163 @@
+<div class="login-bottom-sheet" fxLayout="column" fxLayoutGap="16px">
+
+  <h3 *ngIf=!createNewAccountFormTypeEnabled>Login with email</h3>
+  <h3 *ngIf=createNewAccountFormTypeEnabled>Register with email</h3>
+
+  <mat-card>
+    <div class="login-register-container" fxLayout="column" fxLayoutAlign="space-around center">
+      <form
+        [formGroup]="loginRegisterFormGroup"
+        #loginRegisterForm="ngForm"
+        name="loginRegisterForm"
+        (ngSubmit)=onLoginOrRegisterClicked()
+      >
+
+        <div class="mat-input-element" *ngIf=createNewAccountFormTypeEnabled>
+          <mat-form-field>
+            <label>
+              <input
+                matInput
+                formControlName="name"
+                placeholder="Name"
+                (change)="onNameChanged($event.target.value)"
+                name="name"
+                required
+              >
+            </label>
+            <mat-error>You must provide name</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="mat-input-element">
+          <mat-form-field>
+            <label>
+              <input
+                matInput
+                formControlName="email"
+                placeholder="Email"
+                (change)="onEmailChanged($event.target.value)"
+                name="email"
+                required
+              >
+            </label>
+            <mat-error>You must provide valid Email</mat-error>
+            <!--          todo email valid check-->
+          </mat-form-field>
+        </div>
+
+        <div class="mat-input-element">
+          <mat-form-field>
+            <label>
+              <input
+                matInput
+                formControlName="password"
+                placeholder="Password"
+                (change)="onPasswordChanged($event.target.value)"
+                name="password"
+                type="password"
+                required
+              >
+            </label>
+            <mat-error>You must provide password</mat-error>
+            <!--          todo password length check-->
+          </mat-form-field>
+        </div>
+
+        <div class="mat-input-element" *ngIf=createNewAccountFormTypeEnabled>
+          <mat-form-field>
+            <label>
+              <input
+                matInput
+                formControlName="passwordConfirm"
+                placeholder="Password confirm"
+                (change)="onPasswordConfirmChanged($event.target.value)"
+                name="passwordConfirm"
+                type="password"
+                required
+              >
+            </label>
+            <mat-error>You must provide password</mat-error>
+            <!--          todo error for password mismatch-->
+          </mat-form-field>
+        </div>
+
+        <mat-form-field *ngIf=createNewAccountFormTypeEnabled>
+          <mat-label>Primary language</mat-label>
+
+          <mat-select
+            formControlName="primaryLanguageSelect"
+            [(value)]="primaryLanguage"
+            [errorStateMatcher]="matcher"
+            required
+          >
+            <mat-option *ngFor="let type of languages" [value]="languagesEnum[type]">{{ type }}</mat-option>
+          </mat-select>
+          <mat-error>You must make a selection</mat-error>
+
+        </mat-form-field>
+
+        <p>
+          <button
+            *ngIf=!createNewAccountFormTypeEnabled
+            mat-raised-button
+            color="accent"
+            type="submit"
+            [disabled]="!loginRegisterForm.valid"
+          >Login
+          </button>
+          <button
+            *ngIf=createNewAccountFormTypeEnabled
+            mat-raised-button
+            color="accent"
+            type="submit"
+            [disabled]="!loginRegisterForm.valid"
+          >Register
+          </button>
+        </p>
+
+      </form>
+
+      <p *ngIf="!createNewAccountFormTypeEnabled">
+        <span class="default-margin-right">Don't have account?</span>
+        <button mat-raised-button color="accent" (click)="onFormTypeClicked()">Create it!</button>
+      </p>
+      <p *ngIf="createNewAccountFormTypeEnabled">
+        <span class="default-margin-right">Already have account?</span>
+        <button mat-raised-button color="accent" (click)="onFormTypeClicked()">Login</button>
+      </p>
+    </div>
+  </mat-card>
+
+  <h3>Or continue with</h3>
+
+  <div
+    fxLayout="row wrap"
+    fxLayoutAlign="space-around center"
+    fxLayoutGap="16px grid"
+  >
+    <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
+      <button mat-stroked-button class="login-button" (click)="onGitHubLoginClicked()">
+        <img class="login-icon" src="/assets/img/login/github.svg" alt="login with github">
+        <span>GitHub</span>
+      </button>
+    </div>
+    <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
+      <button mat-stroked-button class="login-button" (click)="onFacebookLoginClicked()">
+        <img class="login-icon" src="/assets/img/login/facebook.svg" alt="login with facebook">
+        <span>Facebook</span>
+      </button>
+    </div>
+    <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
+      <button mat-stroked-button class="login-button" (click)="onVkLoginClicked()">
+        <img class="login-icon" src="/assets/img/login/vk.svg" alt="login with vk">
+        <span>VK</span>
+      </button>
+    </div>
+    <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
+      <button mat-stroked-button class="login-button" (click)="onGoogleLoginClicked()">
+        <img class="login-icon" src="/assets/img/login/google.svg" alt="login with google">
+        <span>Google</span>
+      </button>
+    </div>
+  </div>
+</div>

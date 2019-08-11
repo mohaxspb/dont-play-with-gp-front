@@ -14,14 +14,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Internationalization
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng xi18n --output-path src/locale` to generate file to translate
 
-## Running end-to-end tests
+Then, copy it, rename to `messages.LOCALE_CODE_HERE_IE_ru.xlf` and translate, via adding `<target>TRANSLATION HERE</target>` just after `<source></source>` tag.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+For details see documentation: https://angular.io/guide/i18n#the-app-and-its-translation-file
+or this article: https://angular-templates.io/tutorials/about/angular-internationalization-i18n-multi-language-app

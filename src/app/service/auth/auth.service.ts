@@ -68,4 +68,12 @@ export class AuthService {
     this.authProvider.authenticated.next(this.authenticated);
     this.userProvider.user.next(this.user);
   }
+
+  register(email: string, password: string, name: string, primaryLanguage: string) {
+    return this.apiService
+      .register(email, password, name, primaryLanguage)
+      .pipe(
+        tap(value => this.onUserReceived(value))
+      );
+  }
 }

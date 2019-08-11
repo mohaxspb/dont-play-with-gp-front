@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {User} from '../model/user';
 import {Observable} from 'rxjs';
 import {Api} from './Api';
+import {environment} from '../../environments/environment';
 
 
 @Injectable()
@@ -46,5 +47,23 @@ export class GpApiService {
         responseType: 'text'
       }
     );
+  }
+
+  register(email: string, password: string, name: string, primaryLanguage: string) {
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('fullName', name);
+    formData.append('primaryLanguage', primaryLanguage);
+    formData.append('clientId', environment.clientId);
+    formData.append(Api.TARGET_URL_PARAMETER, Api.URL + Api.UsersEndpoint.URL + Api.UsersEndpoint.Method.ME);
+    return this.http
+      .post<User>(
+        Api.URL + Api.EmailAuthEndpoint.URL + Api.EmailAuthEndpoint.Method.REGISTER,
+        formData,
+        {
+          withCredentials: true
+        }
+      );
   }
 }

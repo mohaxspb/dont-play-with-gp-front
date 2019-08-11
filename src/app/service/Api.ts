@@ -36,6 +36,14 @@ export class Api {
     };
   };
 
+  static EmailAuthEndpoint = class {
+    static URL = 'auth/';
+
+    static Method = class {
+      static REGISTER = 'register';
+    };
+  };
+
   private static currentPort(): string {
     let port = this.TOMCAT_PORT;
     if (window.location.protocol === this.SECURE_SCHEME) {

@@ -79,15 +79,21 @@ export class LoginComponent implements OnInit {
     console.log('onLoginOrRegisterClicked: ' + this.createNewAccountFormTypeEnabled);
 
     if (this.createNewAccountFormTypeEnabled) {
-      // this.authService.register(
-      //   this.email,
-      //   this.password,
-      //   this.name,
-      //   this.primaryLanguage
-      // );
+      this.authService
+        .register(
+          this.email,
+          this.password,
+          this.name,
+          this.primaryLanguage
+        )
+        .subscribe((value: User) => {
+          console.log('register: ' + value);
+          this.bottomSheetRef.dismiss();
+        });
       // todo rx
     } else {
-      this.authService.login(this.email, this.password)
+      this.authService
+        .login(this.email, this.password)
         .subscribe((value: User) => {
           console.log('login: ' + value);
           this.bottomSheetRef.dismiss();

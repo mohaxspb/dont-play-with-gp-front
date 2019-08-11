@@ -48,7 +48,10 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginRegisterFormGroup = this.fBuilder.group({
       name: new FormControl({value: undefined, disabled: true}, [Validators.required]),
-      email: new FormControl({value: undefined, disabled: false}, [Validators.required]), // todo add validators
+      email: new FormControl(
+        {value: undefined, disabled: false},
+        [Validators.required, Validators.email]
+      ),
       password: new FormControl(
         {value: undefined, disabled: false},
         [
@@ -56,7 +59,7 @@ export class LoginComponent implements OnInit {
           Validators.minLength(this.passwordMinLength),
           Validators.maxLength(this.passwordMaxLength)
         ]
-      ), // todo add validators
+      ),
       passwordConfirm: new FormControl(
         {value: undefined, disabled: true},
         [

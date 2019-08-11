@@ -40,8 +40,8 @@
                 required
               >
             </label>
-            <mat-error>You must provide valid Email</mat-error>
-            <!--          todo email valid check-->
+            <mat-error *ngIf=loginRegisterFormGroup.controls.email.errors?.required>You must provide Email</mat-error>
+            <mat-error *ngIf=loginRegisterFormGroup.controls.email.errors?.email>Invalid Email</mat-error>
           </mat-form-field>
         </div>
 
@@ -58,9 +58,9 @@
                 required
               >
             </label>
-            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required">You must provide password</mat-error>
-            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.minlength">Minimum length is {{passwordMinLength}}</mat-error>
-            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.maxlength">Maximum length is {{passwordMaxLength}}</mat-error>
+            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.required>You must provide password</mat-error>
+            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.minlength>Minimum length is {{passwordMinLength}}</mat-error>
+            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.maxlength>Maximum length is {{passwordMaxLength}}</mat-error>
           </mat-form-field>
         </div>
 

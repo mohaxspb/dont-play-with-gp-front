@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
           Validators.minLength(this.passwordMinLength),
           Validators.maxLength(this.passwordMaxLength)
         ]
-      ), // todo add validators
+      ),
       primaryLanguageSelect: new FormControl(
         {value: undefined, disabled: true},
         [

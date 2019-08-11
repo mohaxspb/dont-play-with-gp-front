@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
-import {Language, SocialProvider} from '../GpConstants';
+import {GpConstants, Language, SocialProvider} from '../GpConstants';
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {User} from '../model/user';
@@ -37,6 +37,10 @@ export class LoginComponent implements OnInit {
   passwordConfirm: string;
   primaryLanguage: string;
 
+  // error validation
+  passwordMinLength = GpConstants.PASSWORD_MIN_LENGTH;
+  passwordMaxLength = GpConstants.PASSWORD_MAX_LENGTH;
+
   constructor(
     private bottomSheetRef: MatBottomSheetRef<LoginComponent>,
     private authService: AuthService,
@@ -44,9 +48,26 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginRegisterFormGroup = this.fBuilder.group({
       name: new FormControl({value: undefined, disabled: true}, [Validators.required]),
-      email: new FormControl({value: undefined, disabled: false}, [Validators.required]), // todo add validators
-      password: new FormControl({value: undefined, disabled: false}, [Validators.required]), // todo add validators
-      passwordConfirm: new FormControl({value: undefined, disabled: true}, [Validators.required]), // todo add validators
+      email: new FormControl(
+        {value: undefined, disabled: false},
+        [Validators.required, Validators.email]
+      ),
+      password: new FormControl(
+        {value: undefined, disabled: false},
+        [
+          Validators.required,
+          Validators.minLength(this.passwordMinLength),
+          Validators.maxLength(this.passwordMaxLength)
+        ]
+      ),
+      passwordConfirm: new FormControl(
+        {value: undefined, disabled: true},
+        [
+          Validators.required,
+          Validators.minLength(this.passwordMinLength),
+          Validators.maxLength(this.passwordMaxLength)
+        ]
+      ),
       primaryLanguageSelect: new FormControl(
         {value: undefined, disabled: true},
         [
@@ -104,9 +125,9 @@ export class LoginComponent implements OnInit {
     console.log('onFormTypeClicked');
     this.createNewAccountFormTypeEnabled = !this.createNewAccountFormTypeEnabled;
 
-    const passwordConfirmFormControl = this.loginRegisterFormGroup.get('passwordConfirm');
-    const nameFormControl = this.loginRegisterFormGroup.get('name');
-    const selectFormControl = this.loginRegisterFormGroup.get('primaryLanguageSelect');
+    const passwordConfirmFormControl = this.loginRegisterFormGroup.controls.passwordConfirm;
+    const nameFormControl = this.loginRegisterFormGroup.controls.name;
+    const selectFormControl = this.loginRegisterFormGroup.controls.primaryLanguageSelect;
     if (this.createNewAccountFormTypeEnabled) {
       passwordConfirmFormControl.enable();
       selectFormControl.enable();

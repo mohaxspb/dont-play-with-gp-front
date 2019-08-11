@@ -58,8 +58,9 @@
                 required
               >
             </label>
-            <mat-error>You must provide password</mat-error>
-            <!--          todo password length check-->
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required">You must provide password</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.minlength">Minimum length is {{passwordMinLength}}</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.maxlength">Maximum length is {{passwordMaxLength}}</mat-error>
           </mat-form-field>
         </div>
 
@@ -76,7 +77,7 @@
                 required
               >
             </label>
-            <mat-error>You must provide password</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required">You must provide password</mat-error>
             <!--          todo error for password mismatch-->
           </mat-form-field>
         </div>

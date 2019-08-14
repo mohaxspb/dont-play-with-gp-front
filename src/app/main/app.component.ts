@@ -6,6 +6,7 @@ import {AuthService} from '../service/auth/auth.service';
 import {AuthProvider} from '../service/auth/auth.state.subject';
 import {UserProvider} from '../service/auth/user.subject';
 import {User} from '../model/user';
+import {GpLanguageService} from '../service/GpLanguageService';
 
 @Component({
   selector: 'app-root',
@@ -22,10 +23,12 @@ export class AppComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private authProvider: AuthProvider,
+    private languageService: GpLanguageService,
     private userProvider: UserProvider,
     private bottomSheet: MatBottomSheet
   ) {
     this.authService.authenticate();
+    this.languageService.updateLanguages();
   }
 
   ngOnInit() {

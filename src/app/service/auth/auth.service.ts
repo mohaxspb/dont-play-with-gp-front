@@ -63,6 +63,7 @@ export class AuthService {
   }
 
   private onUserReceived(user: User | null) {
+    console.log('user: ' + JSON.stringify(user));
     this.user = user;
     this.authenticated = this.user != null;
     this.authProvider.authenticated.next(this.authenticated);

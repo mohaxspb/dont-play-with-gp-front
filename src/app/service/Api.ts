@@ -44,6 +44,14 @@ export class Api {
     };
   };
 
+  static LanguageEndpoint = class {
+    static URL = 'language/';
+
+    static Method = class {
+      static ALL = 'all';
+    };
+  };
+
   private static currentPort(): string {
     let port = this.TOMCAT_PORT;
     if (window.location.protocol === this.SECURE_SCHEME) {

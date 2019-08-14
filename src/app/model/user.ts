@@ -5,5 +5,6 @@ export class User {
   username: string;
   fullName: string;
   avatar: string;
+  primaryLanguageId: string;
   authorities: [Authority];
 }

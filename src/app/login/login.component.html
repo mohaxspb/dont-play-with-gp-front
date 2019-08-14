@@ -19,7 +19,7 @@
                 matInput
                 formControlName="name"
                 placeholder="Name"
-                (change)="onNameChanged($event.target.value)"
+                (change)=onNameChanged($event.target.value)
                 name="name"
                 required
               >
@@ -35,7 +35,7 @@
                 matInput
                 formControlName="email"
                 placeholder="Email"
-                (change)="onEmailChanged($event.target.value)"
+                (change)=onEmailChanged($event.target.value)
                 name="email"
                 required
               >
@@ -52,9 +52,9 @@
                 matInput
                 formControlName="password"
                 placeholder="Password"
-                (change)="onPasswordChanged($event.target.value)"
-                name="password"
-                type="password"
+                (change)=onPasswordChanged($event.target.value)
+                name=password
+                type=password
                 required
               >
             </label>
@@ -92,7 +92,8 @@
             [errorStateMatcher]="matcher"
             required
           >
-            <mat-option *ngFor="let type of languages" [value]="languagesEnum[type]">{{ type }}</mat-option>
+<!--            <mat-option *ngFor="let type of languages" [value]="languagesEnum[type]">{{ type }}</mat-option>-->
+            <mat-option *ngFor="let type of languagesListFromApi" [value]=type>{{type.langCode.toUpperCase()}}</mat-option>
           </mat-select>
           <mat-error>You must make a selection</mat-error>
 

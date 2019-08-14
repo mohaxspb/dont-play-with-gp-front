@@ -4,6 +4,7 @@ import {User} from '../model/user';
 import {Observable} from 'rxjs';
 import {Api} from './Api';
 import {environment} from '../../environments/environment';
+import {Language} from '../model/language';
 
 
 @Injectable()
@@ -65,5 +66,9 @@ export class GpApiService {
           withCredentials: true
         }
       );
+  }
+
+  getLanguages(): Observable<[Language]> {
+    return this.http.get<[Language]>(Api.URL + Api.LanguageEndpoint.URL + Api.LanguageEndpoint.Method.ALL);
   }
 }

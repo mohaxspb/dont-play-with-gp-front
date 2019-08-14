@@ -1,10 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
-import {GpConstants, Language, SocialProvider} from '../GpConstants';
+import {GpConstants, SocialProvider} from '../GpConstants';
+import {Language as ApiLanguage} from '../model/language';
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {User} from '../model/user';
 import {MatBottomSheetRef} from '@angular/material';
+import {GpLanguageService} from '../service/GpLanguageService';
 
 @Component({
   selector: 'app-login',
@@ -26,8 +28,7 @@ export class LoginComponent implements OnInit {
    */
   createNewAccountFormTypeEnabled = false;
 
-  languages = Object.keys(Language);
-  languagesEnum = Language;
+  languagesListFromApi: ApiLanguage[];
 
   // login fields
   name: string;
@@ -44,8 +45,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private bottomSheetRef: MatBottomSheetRef<LoginComponent>,
     private authService: AuthService,
+    private languageService: GpLanguageService,
     private fBuilder: FormBuilder
   ) {
+  }
+
+  private initForm() {
     this.loginRegisterFormGroup = this.fBuilder.group({
       name: new FormControl({value: undefined, disabled: true}, [Validators.required]),
       email: new FormControl(
@@ -78,6 +83,12 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.languagesListFromApi = this.languageService.getOrUpdateLanguages();
+    if (this.languagesListFromApi == null) {
+      // todo show error
+    } else {
+      this.initForm();
+    }
   }
 
   onGitHubLoginClicked() {

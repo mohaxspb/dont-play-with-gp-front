@@ -1,10 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
-import {GpConstants, Language, SocialProvider} from '../GpConstants';
+import {GpConstants, SocialProvider} from '../GpConstants';
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {User} from '../model/user';
-import {MatBottomSheetRef} from '@angular/material';
+import {MatBottomSheetRef, MatSnackBar} from '@angular/material';
+import {GpLanguageService} from '../service/GpLanguageService';
+import {BehaviorSubject} from 'rxjs';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -26,8 +29,8 @@ export class LoginComponent implements OnInit {
    */
   createNewAccountFormTypeEnabled = false;
 
-  languages = Object.keys(Language);
-  languagesEnum = Language;
+  languagesListFromApi = this.languageService.getLanguages();
+  languagesAreLoading = new BehaviorSubject<boolean>(false);
 
   // login fields
   name: string;
@@ -44,8 +47,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private bottomSheetRef: MatBottomSheetRef<LoginComponent>,
     private authService: AuthService,
-    private fBuilder: FormBuilder
+    private languageService: GpLanguageService,
+    private fBuilder: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
+  }
+
+  private initForm() {
     this.loginRegisterFormGroup = this.fBuilder.group({
       name: new FormControl({value: undefined, disabled: true}, [Validators.required]),
       email: new FormControl(
@@ -78,6 +86,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.updateLanguages();
+
+    this.initForm();
   }
 
   onGitHubLoginClicked() {
@@ -157,5 +168,23 @@ export class LoginComponent implements OnInit {
   onPasswordConfirmChanged(passwordConfirm: string) {
     console.log('onPasswordConfirmChanged: ' + passwordConfirm);
     this.passwordConfirm = passwordConfirm;
+  }
+
+  onLanguagesRefreshClicked() {
+    this.updateLanguages();
+  }
+
+  private updateLanguages() {
+    this.languagesAreLoading.next(true);
+    this.languagesListFromApi = this.languageService
+      .getLanguages()
+      .pipe(
+        finalize(() => this.languagesAreLoading.next(false))
+      );
+  }
+
+  private showError(error: any, errorMessage?: string | null) {
+    console.error(error);
+    this.snackBar.open(errorMessage == null ? error : errorMessage);
   }
 }

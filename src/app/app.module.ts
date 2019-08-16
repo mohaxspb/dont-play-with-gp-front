@@ -1,31 +1,39 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './main/app.component';
-import { LoginComponent } from './login/login.component';
+import {AppComponent} from './main/app.component';
+import {LoginComponent} from './login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatBottomSheetModule,
-  MatButtonModule, MatCardModule, MatFormFieldModule,
-  MatIconModule, MatInputModule,
+  MatButtonModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
   MatListModule,
-  MatMenuModule,
-  MatRippleModule, MatSelectModule,
+  MatMenuModule, MatProgressSpinnerModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+// internalization
+import {registerLocaleData} from '@angular/common';
+import localeEn from '@angular/common/locales/en';
+import localeRu from '@angular/common/locales/ru';
+// custom
 import {AuthService} from './service/auth/auth.service';
 import {UserProvider} from './service/auth/user.subject';
 import {AuthProvider} from './service/auth/auth.state.subject';
-import {HttpClientModule} from '@angular/common/http';
 import {GpApiService} from './service/gp.api.service';
-
-// internalization
-import { registerLocaleData } from '@angular/common';
-import localeEn from '@angular/common/locales/en';
-import localeRu from '@angular/common/locales/ru';
-import {ReactiveFormsModule} from '@angular/forms';
+import {GpLocalStorage} from './service/GpLocalStorage';
+import {GpLanguageService} from './service/GpLanguageService';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
@@ -55,9 +63,20 @@ registerLocaleData(localeRu);
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
-  providers: [GpApiService, AuthService, AuthProvider, UserProvider],
+  providers: [
+    GpApiService,
+    AuthService,
+    AuthProvider,
+    UserProvider,
+    GpLocalStorage,
+    GpLanguageService,
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

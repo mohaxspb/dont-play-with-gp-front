@@ -19,9 +19,9 @@
                 matInput
                 formControlName="name"
                 placeholder="Name"
-                (change)="onNameChanged($event.target.value)"
                 name="name"
                 required
+                (change)=onNameChanged($event.target.value)
               >
             </label>
             <mat-error>You must provide name</mat-error>
@@ -35,9 +35,9 @@
                 matInput
                 formControlName="email"
                 placeholder="Email"
-                (change)="onEmailChanged($event.target.value)"
                 name="email"
                 required
+                (change)=onEmailChanged($event.target.value)
               >
             </label>
             <mat-error *ngIf=loginRegisterFormGroup.controls.email.errors?.required>You must provide Email</mat-error>
@@ -52,15 +52,18 @@
                 matInput
                 formControlName="password"
                 placeholder="Password"
-                (change)="onPasswordChanged($event.target.value)"
-                name="password"
-                type="password"
+                name=password
+                type=password
                 required
+                (change)=onPasswordChanged($event.target.value)
               >
             </label>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.required>You must provide password</mat-error>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.minlength>Minimum length is {{passwordMinLength}}</mat-error>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.maxlength>Maximum length is {{passwordMaxLength}}</mat-error>
+            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.required
+            >You must provide password</mat-error>
+            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.minlength
+            >Minimum length is {{passwordMinLength}}</mat-error>
+            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.maxlength
+            >Maximum length is {{passwordMaxLength}}</mat-error>
           </mat-form-field>
         </div>
 
@@ -71,32 +74,64 @@
                 matInput
                 formControlName="passwordConfirm"
                 placeholder="Password confirm"
-                (change)="onPasswordConfirmChanged($event.target.value)"
                 name="passwordConfirm"
                 type="password"
                 required
                 pattern="{{password}}"
+                (change)="onPasswordConfirmChanged($event.target.value)"
               >
             </label>
-            <mat-error *ngIf="loginRegisterFormGroup.controls.passwordConfirm.errors?.required">You must provide password</mat-error>
-            <mat-error *ngIf="loginRegisterFormGroup.controls.passwordConfirm.errors?.pattern">Password & Password Confirm does not match.</mat-error>
+            <mat-error
+              *ngIf="loginRegisterFormGroup.controls.passwordConfirm.errors?.required"
+              i18n="Password is required error@@passwordError"
+            >You must provide password</mat-error>
+            <mat-error
+              *ngIf="loginRegisterFormGroup.controls.passwordConfirm.errors?.pattern"
+            >Password & Password Confirm does not match.</mat-error>
           </mat-form-field>
         </div>
 
-        <mat-form-field *ngIf=createNewAccountFormTypeEnabled>
-          <mat-label>Primary language</mat-label>
+        <div fxLayout="row" fxLayoutGap="16px">
 
-          <mat-select
-            formControlName="primaryLanguageSelect"
-            [(value)]="primaryLanguage"
-            [errorStateMatcher]="matcher"
-            required
-          >
-            <mat-option *ngFor="let type of languages" [value]="languagesEnum[type]">{{ type }}</mat-option>
-          </mat-select>
-          <mat-error>You must make a selection</mat-error>
+          <mat-form-field *ngIf=createNewAccountFormTypeEnabled>
+            <mat-label>Primary language</mat-label>
 
-        </mat-form-field>
+            <mat-select
+              formControlName="primaryLanguageSelect"
+              [(value)]="primaryLanguage"
+              [errorStateMatcher]="matcher"
+              required
+            >
+              <mat-option
+                *ngFor="let type of languagesListFromApi | async"
+                [value]=type>{{type.langCode.toUpperCase()}}
+              </mat-option>
+            </mat-select>
+
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required"
+            >You must make a selection</mat-error>
+            <mat-error *ngIf="(languagesListFromApi | async) == null">Please, refresh languages list</mat-error>
+
+          </mat-form-field>
+
+          <div>
+            <button
+              *ngIf="(languagesListFromApi | async) == null && !(languagesAreLoading | async) && createNewAccountFormTypeEnabled"
+              class="default-margin-left"
+              mat-raised-button
+              color="warn"
+              type="button"
+              (click)="onLanguagesRefreshClicked()"
+            >Refresh</button>
+
+            <mat-spinner
+              *ngIf="languagesAreLoading | async"
+              class="default-margin-left"
+              [diameter]="24"
+            ></mat-spinner>
+
+          </div>
+        </div>
 
         <p>
           <button
@@ -105,16 +140,14 @@
             color="accent"
             type="submit"
             [disabled]="!loginRegisterForm.valid"
-          >Login
-          </button>
+          >Login</button>
           <button
             *ngIf=createNewAccountFormTypeEnabled
             mat-raised-button
             color="accent"
             type="submit"
             [disabled]="!loginRegisterForm.valid"
-          >Register
-          </button>
+          >Register</button>
         </p>
 
       </form>
@@ -138,25 +171,25 @@
     fxLayoutGap="16px grid"
   >
     <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
-      <button mat-stroked-button class="login-button" (click)="onGitHubLoginClicked()">
+      <button mat-stroked-button (click)="onGitHubLoginClicked()">
         <img class="login-icon" src="/assets/img/login/github.svg" alt="login with github">
         <span>GitHub</span>
       </button>
     </div>
     <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
-      <button mat-stroked-button class="login-button" (click)="onFacebookLoginClicked()">
+      <button mat-stroked-button (click)="onFacebookLoginClicked()">
         <img class="login-icon" src="/assets/img/login/facebook.svg" alt="login with facebook">
         <span>Facebook</span>
       </button>
     </div>
     <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
-      <button mat-stroked-button class="login-button" (click)="onVkLoginClicked()">
+      <button mat-stroked-button (click)="onVkLoginClicked()">
         <img class="login-icon" src="/assets/img/login/vk.svg" alt="login with vk">
         <span>VK</span>
       </button>
     </div>
     <div fxFlex="noshrink" fxFlex.lt-sm="1 0 50%" fxLayout fxLayoutAlign="center">
-      <button mat-stroked-button class="login-button" (click)="onGoogleLoginClicked()">
+      <button mat-stroked-button (click)="onGoogleLoginClicked()">
         <img class="login-icon" src="/assets/img/login/google.svg" alt="login with google">
         <span>Google</span>
       </button>

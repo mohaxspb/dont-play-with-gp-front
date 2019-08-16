@@ -6,6 +6,7 @@ import {LoginComponent} from './login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatBottomSheetModule,
   MatButtonModule,
   MatCardModule,
@@ -13,9 +14,10 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule,
+  MatMenuModule, MatProgressSpinnerModule,
   MatRippleModule,
   MatSelectModule,
+  MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
@@ -61,9 +63,19 @@ registerLocaleData(localeRu);
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
-  providers: [GpApiService, AuthService, AuthProvider, UserProvider, GpLocalStorage, GpLanguageService],
+  providers: [
+    GpApiService,
+    AuthService,
+    AuthProvider,
+    UserProvider,
+    GpLocalStorage,
+    GpLanguageService,
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

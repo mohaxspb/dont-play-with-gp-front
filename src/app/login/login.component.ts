@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
 import {GpConstants, SocialProvider} from '../GpConstants';
-import {Language as ApiLanguage} from '../model/language';
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {User} from '../model/user';
-import {MatBottomSheetRef} from '@angular/material';
+import {MatBottomSheetRef, MatSnackBar} from '@angular/material';
 import {GpLanguageService} from '../service/GpLanguageService';
+import {BehaviorSubject} from 'rxjs';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit {
    */
   createNewAccountFormTypeEnabled = false;
 
-  languagesListFromApi: ApiLanguage[];
+  languagesListFromApi = this.languageService.getLanguages();
+  languagesAreLoading = new BehaviorSubject<boolean>(false);
 
   // login fields
   name: string;
@@ -46,7 +48,8 @@ export class LoginComponent implements OnInit {
     private bottomSheetRef: MatBottomSheetRef<LoginComponent>,
     private authService: AuthService,
     private languageService: GpLanguageService,
-    private fBuilder: FormBuilder
+    private fBuilder: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -83,12 +86,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.languagesListFromApi = this.languageService.getOrUpdateLanguages();
-    if (this.languagesListFromApi == null) {
-      // todo show error
-    } else {
-      this.initForm();
-    }
+    this.updateLanguages();
+
+    this.initForm();
   }
 
   onGitHubLoginClicked() {
@@ -168,5 +168,23 @@ export class LoginComponent implements OnInit {
   onPasswordConfirmChanged(passwordConfirm: string) {
     console.log('onPasswordConfirmChanged: ' + passwordConfirm);
     this.passwordConfirm = passwordConfirm;
+  }
+
+  onLanguagesRefreshClicked() {
+    this.updateLanguages();
+  }
+
+  private updateLanguages() {
+    this.languagesAreLoading.next(true);
+    this.languagesListFromApi = this.languageService
+      .getLanguages()
+      .pipe(
+        finalize(() => this.languagesAreLoading.next(false))
+      );
+  }
+
+  private showError(error: any, errorMessage?: string | null) {
+    console.error(error);
+    this.snackBar.open(errorMessage == null ? error : errorMessage);
   }
 }

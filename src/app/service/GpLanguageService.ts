@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {GpApiService} from './gp.api.service';
 import {GpLocalStorage} from './GpLocalStorage';
-import {tap} from 'rxjs/operators';
 import {Language} from '../model/language';
+import {Observable, of} from 'rxjs';
 
 @Injectable()
 export class GpLanguageService {
@@ -14,18 +14,18 @@ export class GpLanguageService {
   }
 
   updateLanguages() {
-    this.apiService.getLanguages()
-      .pipe(
-        tap((languages: Language[]) => this.localStorageService.setLanguages(languages))
-      )
-      .subscribe();
+    this.apiService
+      .getLanguages()
+      .subscribe((languages: Language[]) => this.localStorageService.setLanguages(languages));
   }
 
-  getOrUpdateLanguages(): Language[] | null {
+  getLanguages(): Observable<Language[]> {
     const languages = this.localStorageService.getLanguages();
     if (languages == null) {
+      return this.apiService.getLanguages();
+    } else {
       this.updateLanguages();
+      return of(languages);
     }
-    return languages;
   }
 }

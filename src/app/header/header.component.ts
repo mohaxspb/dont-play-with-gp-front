@@ -14,6 +14,7 @@ import {LoginComponent} from '../login/login.component';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  title = 'dont-play-with-gp-web';
 
   authenticated: boolean | null;
   user: User | null;

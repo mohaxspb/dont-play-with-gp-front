@@ -20,7 +20,7 @@ import {
   MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
-import {RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 // internalization
@@ -36,22 +36,29 @@ import {GpLocalStorage} from './service/GpLocalStorage';
 import {GpLanguageService} from './service/GpLanguageService';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { FeedComponent } from './feed/feed.component';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
+
+const routes: Routes = [
+  {path: '', pathMatch: 'full', redirectTo: 'feed'},
+  {path: 'feed',  pathMatch: 'full', component: FeedComponent},
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    FeedComponent
   ],
   entryComponents: [
     LoginComponent
   ],
   imports: [
-    RouterModule.forRoot([]),
+    RouterModule.forRoot(routes, {useHash: true}),
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,

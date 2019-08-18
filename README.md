@@ -10,13 +10,28 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 In terminal execute
 ```
-ng g component COMPONENT_TO_CREATE_NAME --spec=false
+ng g component COMPONENT_TO_CREATE_NAME --skipTests=true
 ```
 where `--spec=false` needed to prevent `spec` file generating
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Test on device in same network
+
+Add `host` option to `scripts` in `serve` command in `angular.json`. Now site can be accessed by host IP
+
+```$json
+"serve": {
+  ...,
+  "options": {
+    ...,
+    "host": "0.0.0.0"
+  },
+  ...
+},
+```
 
 ## Internationalization
 

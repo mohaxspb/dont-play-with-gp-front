@@ -58,7 +58,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "dont-play-with-gp-web:build"
+            "browserTarget": "dont-play-with-gp-web:build",
+            "host": "0.0.0.0"
           },
           "configurations": {
             "production": {

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../service/auth/auth.service';
 import {AuthProvider} from '../service/auth/auth.state.subject';
 import {GpLanguageService} from '../service/GpLanguageService';
@@ -20,7 +20,8 @@ export class HeaderComponent implements OnInit {
   user: User | null;
 
   constructor(
-    private route: ActivatedRoute,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private authProvider: AuthProvider,
     private languageService: GpLanguageService,
@@ -55,7 +56,7 @@ export class HeaderComponent implements OnInit {
 
   onAccountClicked() {
     console.log('onAccountClicked');
-    // todo
+    this.router.navigateByUrl('account');
   }
 
   isNullOrEmptyOrUndefined(value) {

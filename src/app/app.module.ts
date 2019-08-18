@@ -1,8 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
-import {AppComponent} from './main/app.component';
-import {LoginComponent} from './login/login.component';
+//
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
@@ -20,14 +18,14 @@ import {
   MatSnackBarModule,
   MatToolbarModule
 } from '@angular/material';
-import {RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 // internalization
 import {registerLocaleData} from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localeRu from '@angular/common/locales/ru';
-// custom
+// services
 import {AuthService} from './service/auth/auth.service';
 import {UserProvider} from './service/auth/user.subject';
 import {AuthProvider} from './service/auth/auth.state.subject';
@@ -35,19 +33,37 @@ import {GpApiService} from './service/gp.api.service';
 import {GpLocalStorage} from './service/GpLocalStorage';
 import {GpLanguageService} from './service/GpLanguageService';
 
+// components
+import {AppComponent} from './main/app.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { FeedComponent } from './feed/feed.component';
+import { AccountComponent } from './account/account.component';
+import {LoginComponent} from './login/login.component';
+
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
+
+const routes: Routes = [
+  {path: '', pathMatch: 'full', redirectTo: 'feed'},
+  {path: 'feed',  pathMatch: 'full', component: FeedComponent},
+  {path: 'account',  pathMatch: 'full', component: AccountComponent},
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent,
+    FooterComponent,
+    FeedComponent,
+    AccountComponent
   ],
   entryComponents: [
     LoginComponent
   ],
   imports: [
-    RouterModule.forRoot([]),
+    RouterModule.forRoot(routes, {useHash: true}),
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,

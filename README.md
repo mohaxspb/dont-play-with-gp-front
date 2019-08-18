@@ -6,13 +6,32 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Creating components
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+In terminal execute
+```
+ng g component COMPONENT_TO_CREATE_NAME --skipTests=true
+```
+where `--spec=false` needed to prevent `spec` file generating
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Test on device in same network
+
+Add `host` option to `scripts` in `serve` command in `angular.json`. Now site can be accessed by host IP
+
+```$json
+"serve": {
+  ...,
+  "options": {
+    ...,
+    "host": "0.0.0.0"
+  },
+  ...
+},
+```
 
 ## Internationalization
 

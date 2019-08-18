@@ -3,7 +3,7 @@
   <h3 *ngIf=!createNewAccountFormTypeEnabled>Login with email</h3>
   <h3 *ngIf=createNewAccountFormTypeEnabled>Register with email</h3>
 
-  <mat-card>
+  <mat-card class="login-register-card">
     <div class="login-register-container" fxLayout="column" fxLayoutAlign="space-around center">
       <form
         [formGroup]="loginRegisterFormGroup"

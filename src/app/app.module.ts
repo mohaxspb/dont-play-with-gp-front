@@ -34,6 +34,7 @@ import {AuthProvider} from './service/auth/auth.state.subject';
 import {GpApiService} from './service/gp.api.service';
 import {GpLocalStorage} from './service/GpLocalStorage';
 import {GpLanguageService} from './service/GpLanguageService';
+import { HeaderComponent } from './header/header.component';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
@@ -41,7 +42,8 @@ registerLocaleData(localeRu);
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent
   ],
   entryComponents: [
     LoginComponent

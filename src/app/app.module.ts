@@ -35,6 +35,7 @@ import {GpApiService} from './service/gp.api.service';
 import {GpLocalStorage} from './service/GpLocalStorage';
 import {GpLanguageService} from './service/GpLanguageService';
 import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
@@ -43,7 +44,8 @@ registerLocaleData(localeRu);
   declarations: [
     AppComponent,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   entryComponents: [
     LoginComponent

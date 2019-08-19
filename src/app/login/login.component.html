@@ -6,10 +6,10 @@
   <mat-card class="login-register-card">
     <div class="login-register-container" fxLayout="column" fxLayoutAlign="space-around center">
       <form
-        [formGroup]="loginRegisterFormGroup"
-        #loginRegisterForm="ngForm"
-        name="loginRegisterForm"
-        (ngSubmit)=onLoginOrRegisterClicked()
+          #loginRegisterForm="ngForm"
+          [formGroup]="loginRegisterFormGroup"
+          name="loginRegisterForm"
+          (ngSubmit)=onLoginOrRegisterClicked()
       >
 
         <div class="mat-input-element" *ngIf="createNewAccountFormTypeEnabled">
@@ -56,7 +56,7 @@
                 name="password"
                 type="password"
                 required
-                (change)=onPasswordChanged($event.target.value)
+                (change)="onPasswordChanged($event.target.value)"
               >
             </label>
             <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.required

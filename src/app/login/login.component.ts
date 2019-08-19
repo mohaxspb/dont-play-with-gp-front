@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
 import {GpConstants, SocialProvider} from '../GpConstants';
-import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {User} from '../model/user';
 import {MatBottomSheetRef, MatSnackBar} from '@angular/material';
@@ -16,8 +16,8 @@ import {finalize} from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
 
-  @ViewChild('loginRegisterForm', {static: false})
-  loginRegisterForm: NgForm;
+  // @ViewChild('loginRegisterForm', {static: false})
+  // loginRegisterForm: NgForm;
 
   loginRegisterFormGroup: FormGroup;
 

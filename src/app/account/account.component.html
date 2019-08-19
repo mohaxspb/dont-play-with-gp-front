@@ -1,1 +1,61 @@
-<p>account works!</p>
+<div class="account-container">
+
+  <!--  <div class="background-color-accent account-top-panel">-->
+  <!--    <span>Account top panel</span>-->
+  <!--  </div>-->
+
+  <mat-card class="account-card">
+    <mat-card-header class="account-card-header">
+      <mat-card-title>Profile</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <mat-spinner
+        *ngIf="userIsLoading | async"
+        class="center-inside"
+        [diameter]="24"
+      ></mat-spinner>
+
+      <!--      todo refresh button-->
+<!--      </mat-card-content>-->
+<!--      <mat-card-content *ngIf="userFromApi!=null">-->
+      <div *ngIf="userFromApi!=null">
+        <img
+          *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)"
+          class="avatar"
+          src="{{userFromApi.avatar}}"
+          alt="avatar"
+        />
+        <!--      todo image for no avatar-->
+        <form
+          [formGroup]="accountEditFormGroup"
+          name="accountEditForm"
+          (ngSubmit)=onAccountEditClicked()
+        >
+          <!--        #accountEditForm="ngForm"-->
+
+          <div class="mat-input-element">
+            <mat-form-field>
+              <label>
+                <input
+                  matInput
+                  formControlName="name"
+                  placeholder="Name"
+                  name="name"
+                  required
+                  (change)="onNameChanged($event.target.value)"
+                >
+              </label>
+              <mat-error>You must provide name</mat-error>
+            </mat-form-field>
+          </div>
+
+        </form>
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

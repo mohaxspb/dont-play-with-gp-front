@@ -1,0 +1,27 @@
+.account-container {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+
+.account-card {
+}
+
+.account-card-header {
+
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+
+  margin-bottom: 16px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+}
+
+.center-inside {
+  margin: auto;
+}

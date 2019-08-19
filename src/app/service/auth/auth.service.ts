@@ -7,6 +7,7 @@ import {Api} from '../Api';
 import {SocialProvider} from '../../GpConstants';
 import {catchError, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,8 @@ export class AuthService {
   constructor(
     private apiService: GpApiService,
     private authProvider: AuthProvider,
-    private userProvider: UserProvider
+    private userProvider: UserProvider,
+    private router: Router
   ) {
   }
 
@@ -46,6 +48,7 @@ export class AuthService {
         tap(() => {
           console.log('logout success');
           this.onUserReceived(null);
+          this.router.navigateByUrl('');
         })
       );
   }

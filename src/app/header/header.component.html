@@ -8,8 +8,12 @@
     fxLayoutAlign="space-around center"
     (click)="onAccountClicked()"
   >
-    <img class="avatar" *ngIf="authenticated && !isNullOrEmptyOrUndefined(user.avatar)"
-         src="{{user.avatar}}" alt="avatar"/>
+    <img
+      *ngIf="authenticated && !isNullOrEmptyOrUndefined(user.avatar)"
+      class="avatar"
+      src="{{user.avatar}}"
+      alt="avatar"
+    />
     <mat-icon class="avatar" *ngIf="authenticated && isNullOrEmptyOrUndefined(user.avatar)">
       person
     </mat-icon>

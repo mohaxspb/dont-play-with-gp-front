@@ -12,7 +12,7 @@
         (ngSubmit)=onLoginOrRegisterClicked()
       >
 
-        <div class="mat-input-element" *ngIf=createNewAccountFormTypeEnabled>
+        <div class="mat-input-element" *ngIf="createNewAccountFormTypeEnabled">
           <mat-form-field>
             <label>
               <input
@@ -36,12 +36,13 @@
                 formControlName="email"
                 placeholder="Email"
                 name="email"
+                type="email"
                 required
-                (change)=onEmailChanged($event.target.value)
+                (change)="onEmailChanged($event.target.value)"
               >
             </label>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.email.errors?.required>You must provide Email</mat-error>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.email.errors?.email>Invalid Email</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.email.errors?.required">You must provide Email</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.email.errors?.email">Invalid Email</mat-error>
           </mat-form-field>
         </div>
 
@@ -52,8 +53,8 @@
                 matInput
                 formControlName="password"
                 placeholder="Password"
-                name=password
-                type=password
+                name="password"
+                type="password"
                 required
                 (change)=onPasswordChanged($event.target.value)
               >

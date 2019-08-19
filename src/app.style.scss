@@ -26,6 +26,10 @@ body {
   color: mat-color($accent);
 }
 
+.background-color-accent {
+  background: mat-color($accent);
+}
+
 /**
  * prevents text selection
  * see [https://stackoverflow.com/a/9314458/3212712]

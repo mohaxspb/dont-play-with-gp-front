@@ -21,9 +21,6 @@ export class AccountComponent implements OnInit {
   name: string;
   userLanguage: Language;
 
-  // @ViewChild('accountEditForm', {static: false})
-  // accountEditForm: NgForm;
-
   accountEditFormGroup: FormGroup;
 
   matcher = new MyErrorStateMatcher();
@@ -47,6 +44,7 @@ export class AccountComponent implements OnInit {
       .subscribe(
         (userAndLanguages: [User, Language[]]) => {
           this.userFromApi = userAndLanguages[0];
+          this.name = this.userFromApi.fullName;
           this.languagesListFromApi2 = userAndLanguages[1];
 
           this.userLanguage = this.languagesListFromApi2.find(value => value.id === this.userFromApi.primaryLanguageId);
@@ -73,6 +71,17 @@ export class AccountComponent implements OnInit {
         {value: userLanguage, disabled: false},
         [Validators.required]
       )
+    });
+
+    const initialValues = {name: user.fullName, primaryLanguageSelect: userLanguage};
+    this.accountEditFormGroup.valueChanges.subscribe((changes) => {
+      for (const prop in changes) {
+        if (changes.hasOwnProperty(prop)) {
+          if (changes[prop] === initialValues[prop]) {
+            this.accountEditFormGroup.get(prop).markAsPristine();
+          }
+        }
+      }
     });
   }
 

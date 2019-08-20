@@ -3,7 +3,7 @@ import {UserProvider} from '../service/auth/user.subject';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../model/user';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {delay, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-account',
@@ -27,18 +27,6 @@ export class AccountComponent implements OnInit {
     private userProvider: UserProvider,
     private fBuilder: FormBuilder
   ) {
-    // this.userObservable = userProvider.user;
-    // this.userObservable.subscribe((user: User) => {
-    //   if (user == null) {
-    //     // todo
-    //   } else {
-    //     this.initForm(user);
-    //   }
-    // });
-
-    // this.userIsLoading.subscribe(value => console.log('userIsLoading: ' + value));
-    // this.userObservable = userProvider.user;
-    // this.userObservable.subscribe(value => console.log('constructor userObservable: ' + value));
     this.getUser();
   }
 
@@ -48,7 +36,6 @@ export class AccountComponent implements OnInit {
   }
 
   private initForm(user: User) {
-    this.userFromApi = user;
     this.accountEditFormGroup = this.fBuilder.group({
       name: new FormControl(
         {value: user.fullName, disabled: true},
@@ -69,10 +56,6 @@ export class AccountComponent implements OnInit {
     this.name = name;
   }
 
-  isNullOrEmptyOrUndefined(value) {
-    return !value;
-  }
-
   onAccountEditClicked() {
     console.log('onAccountEditClicked');
   }
@@ -82,18 +65,19 @@ export class AccountComponent implements OnInit {
     this.userObservable = this.userProvider
       .user
       .pipe(
-        // fixme test
-        delay(2000),
-        tap((user: User) => {
+        tap((user: User | null) => {
           console.log('userObservable tap: ' + user);
+          this.userFromApi = user;
           this.userIsLoading.next(false);
-          if (user == null) {
-            // todo
-          } else {
+          if (user != null) {
             this.initForm(user);
           }
         }),
       );
     this.userObservable.subscribe();
+  }
+
+  isNullOrEmptyOrUndefined(value) {
+    return !value;
   }
 }

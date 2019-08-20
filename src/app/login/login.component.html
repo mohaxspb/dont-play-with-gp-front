@@ -94,7 +94,7 @@
 
         <div fxLayout="row" fxLayoutGap="16px">
 
-          <mat-form-field *ngIf=createNewAccountFormTypeEnabled>
+          <mat-form-field *ngIf="createNewAccountFormTypeEnabled">
             <mat-label>Primary language</mat-label>
 
             <mat-select
@@ -105,11 +105,11 @@
             >
               <mat-option
                 *ngFor="let type of languagesListFromApi | async"
-                [value]=type>{{type.langCode.toUpperCase()}}
+                [value]="type">{{type.langCode.toUpperCase()}}
               </mat-option>
             </mat-select>
 
-            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required"
+            <mat-error *ngIf="loginRegisterFormGroup.controls.primaryLanguageSelect.errors?.required"
             >You must make a selection</mat-error>
             <mat-error *ngIf="(languagesListFromApi | async) == null">Please, refresh languages list</mat-error>
 

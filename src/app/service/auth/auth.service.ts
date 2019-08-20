@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthProvider} from './auth.state.subject';
 import {UserProvider} from './user.subject';
 import {User} from '../../model/user';
-import {GpApiService} from '../gp.api.service';
+import {GpApiService} from '../GpApiService';
 import {Api} from '../Api';
 import {SocialProvider} from '../../GpConstants';
 import {catchError, tap} from 'rxjs/operators';
@@ -11,8 +11,6 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
-
-  user: User | null;
 
   authenticated = false;
 
@@ -53,10 +51,6 @@ export class AuthService {
       );
   }
 
-  getUser(): User | null {
-    return this.user;
-  }
-
   login(email: string, password: string) {
     return this.apiService
       .login(email, password)
@@ -67,10 +61,9 @@ export class AuthService {
 
   private onUserReceived(user: User | null) {
     console.log('user: ' + JSON.stringify(user));
-    this.user = user;
-    this.authenticated = this.user != null;
+    this.authenticated = user != null;
     this.authProvider.authenticated.next(this.authenticated);
-    this.userProvider.user.next(this.user);
+    this.userProvider.user.next(user);
   }
 
   register(email: string, password: string, name: string, primaryLanguage: string) {

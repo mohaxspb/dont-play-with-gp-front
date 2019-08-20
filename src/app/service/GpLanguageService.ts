@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {GpApiService} from './gp.api.service';
+import {GpApiService} from './GpApiService';
 import {GpLocalStorage} from './GpLocalStorage';
 import {Language} from '../model/language';
 import {Observable, of} from 'rxjs';

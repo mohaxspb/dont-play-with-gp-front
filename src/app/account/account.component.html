@@ -55,7 +55,7 @@
                   (change)="onNameChanged($event.target.value)"
                 >
               </label>
-              <mat-error>You must provide name</mat-error>
+              <mat-error *ngIf="accountEditFormGroup.controls.name.errors?.required">You must provide name</mat-error>
             </mat-form-field>
           </div>
 
@@ -103,7 +103,7 @@
               mat-raised-button
               color="accent"
               type="submit"
-              [disabled]="!accountEditForm.valid"
+              [disabled]="!(accountEditFormGroup.dirty && accountEditFormGroup.valid)"
             >Update</button>
           </p>
 

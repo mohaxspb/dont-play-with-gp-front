@@ -24,7 +24,7 @@
                 (change)=onNameChanged($event.target.value)
               >
             </label>
-            <mat-error>You must provide name</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.name.errors?.required">You must provide name</mat-error>
           </mat-form-field>
         </div>
 

@@ -1,9 +1,5 @@
 <div class="account-container">
 
-  <!--  <div class="background-color-accent account-top-panel">-->
-  <!--    <span>Account top panel</span>-->
-  <!--  </div>-->
-
   <mat-card class="account-card">
     <mat-card-header class="account-card-header">
       <mat-card-title>Profile</mat-card-title>
@@ -17,10 +13,7 @@
         [diameter]="24"
       ></mat-spinner>
 
-      <!--      todo refresh button-->
-<!--      </mat-card-content>-->
-<!--      <mat-card-content *ngIf="userFromApi!=null">-->
-      <div *ngIf="userFromApi!=null">
+      <div *ngIf="userFromApi != null">
         <img
           *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)"
           class="avatar"

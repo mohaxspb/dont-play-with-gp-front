@@ -14,9 +14,7 @@
       src="{{user.avatar}}"
       alt="avatar"
     />
-    <mat-icon class="avatar" *ngIf="authenticated && isNullOrEmptyOrUndefined(user.avatar)">
-      person
-    </mat-icon>
+    <mat-icon class="avatar" *ngIf="authenticated && isNullOrEmptyOrUndefined(user.avatar)">person</mat-icon>
     <span class="user-name" *ngIf="authenticated">{{user.fullName}}</span>
 
   </div>

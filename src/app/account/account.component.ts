@@ -7,6 +7,7 @@ import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {GpLanguageService} from '../service/GpLanguageService';
 import {GpAccountInteractor} from '../service/GpAccountInteractor';
 import {Language} from '../model/language';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-account',
@@ -37,10 +38,17 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit');
-    // todo use combine latest with user from api
+
+    this.getData();
+  }
+
+  getData() {
     this.dataIsLoading.next(true);
-    this.accountInteractor.getUserAndLanguages()
-    // todo test error/refresh
+    this.accountInteractor
+      .getUserAndLanguages()
+      .pipe(
+        finalize(() => this.dataIsLoading.next(false))
+      )
       .subscribe(
         (userAndLanguages: [User, Language[]]) => {
           this.userFromApi = userAndLanguages[0];
@@ -48,9 +56,6 @@ export class AccountComponent implements OnInit {
           this.languagesListFromApi2 = userAndLanguages[1];
 
           this.userLanguage = this.languagesListFromApi2.find(value => value.id === this.userFromApi.primaryLanguageId);
-          // this.primaryLanguage = userLanguage.langCode.toUpperCase();
-
-          this.dataIsLoading.next(false);
 
           this.initForm(this.userFromApi, this.userLanguage);
         }
@@ -97,6 +102,12 @@ export class AccountComponent implements OnInit {
 
   onAccountEditClicked() {
     console.log('onAccountEditClicked: %s, %s', this.name, this.userLanguage.langCode);
+    // todo
+  }
+
+  onDataRefreshClicked() {
+    console.log('onDataRefreshClicked');
+    this.getData();
   }
 
   isNullOrEmptyOrUndefined(value) {

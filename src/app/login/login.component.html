@@ -9,7 +9,7 @@
           #loginRegisterForm="ngForm"
           [formGroup]="loginRegisterFormGroup"
           name="loginRegisterForm"
-          (ngSubmit)=onLoginOrRegisterClicked()
+          (ngSubmit)="onLoginOrRegisterClicked()"
       >
 
         <div class="mat-input-element" *ngIf="createNewAccountFormTypeEnabled">
@@ -21,7 +21,7 @@
                 placeholder="Name"
                 name="name"
                 required
-                (change)=onNameChanged($event.target.value)
+                (change)="onNameChanged($event.target.value)"
               >
             </label>
             <mat-error *ngIf="loginRegisterFormGroup.controls.name.errors?.required">You must provide name</mat-error>
@@ -59,16 +59,16 @@
                 (change)="onPasswordChanged($event.target.value)"
               >
             </label>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.required
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required"
             >You must provide password</mat-error>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.minlength
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.minlength"
             >Minimum length is {{passwordMinLength}}</mat-error>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.maxlength
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.maxlength"
             >Maximum length is {{passwordMaxLength}}</mat-error>
           </mat-form-field>
         </div>
 
-        <div class="mat-input-element" *ngIf=createNewAccountFormTypeEnabled>
+        <div class="mat-input-element" *ngIf="createNewAccountFormTypeEnabled">
           <mat-form-field>
             <label>
               <input
@@ -136,14 +136,14 @@
 
         <p>
           <button
-            *ngIf=!createNewAccountFormTypeEnabled
+            *ngIf="!createNewAccountFormTypeEnabled"
             mat-raised-button
             color="accent"
             type="submit"
             [disabled]="!loginRegisterForm.valid"
           >Login</button>
           <button
-            *ngIf=createNewAccountFormTypeEnabled
+            *ngIf="createNewAccountFormTypeEnabled"
             mat-raised-button
             color="accent"
             type="submit"

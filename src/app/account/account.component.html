@@ -7,11 +7,24 @@
 
     <mat-card-content>
 
-      <mat-spinner
-        *ngIf="dataIsLoading | async"
-        class="center-inside"
-        [diameter]="24"
-      ></mat-spinner>
+      <div>
+
+        <mat-spinner
+          *ngIf="dataIsLoading | async"
+          class="center-inside"
+          [diameter]="24"
+        ></mat-spinner>
+
+        <button
+          *ngIf="userFromApi == null && !(dataIsLoading | async)"
+          class="default-margin-left"
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onDataRefreshClicked()"
+        >Refresh</button>
+
+      </div>
 
       <div *ngIf="userFromApi != null">
         <img
@@ -20,12 +33,11 @@
           src="{{userFromApi.avatar}}"
           alt="avatar"
         />
-        <!--      todo image for no avatar-->
+        <mat-icon class="avatar" *ngIf="isNullOrEmptyOrUndefined(userFromApi.avatar)">person</mat-icon>
         <form
           [formGroup]="accountEditFormGroup"
           name="accountEditForm"
-          #accountEditForm="ngForm"
-          (ngSubmit)=onAccountEditClicked()
+          (ngSubmit)="onAccountEditClicked()"
         >
 
           <div class="mat-input-element">
@@ -60,42 +72,26 @@
           </div>
 
           <div fxLayout="row" fxLayoutGap="16px">
-          <mat-form-field>
-            <mat-label>Primary language</mat-label>
+            <mat-form-field>
+              <mat-label>Primary language</mat-label>
 
-            <mat-select
-              formControlName="primaryLanguageSelect"
-              [errorStateMatcher]="matcher"
-              required
-              (selectionChange)="onPrimaryLanguageChanged($event.value)"
-            >
-              <mat-option
-                *ngFor="let language of languagesListFromApi2"
-                [value]="language">{{language.langCode.toUpperCase()}}
-              </mat-option>
-            </mat-select>
+              <mat-select
+                formControlName="primaryLanguageSelect"
+                [errorStateMatcher]="matcher"
+                required
+                (selectionChange)="onPrimaryLanguageChanged($event.value)"
+              >
+                <mat-option
+                  *ngFor="let language of languagesListFromApi2"
+                  [value]="language">{{language.langCode.toUpperCase()}}
+                </mat-option>
+              </mat-select>
 
-            <mat-error *ngIf="accountEditFormGroup.controls.primaryLanguageSelect.errors?.required"
-            >You must make a selection</mat-error>
+              <mat-error *ngIf="accountEditFormGroup.controls.primaryLanguageSelect.errors?.required"
+              >You must make a selection</mat-error>
 
-          </mat-form-field>
-<!--            <div>-->
-<!--              <button-->
-<!--                *ngIf="(languagesListFromApi | async) == null && !(languagesAreLoading | async)"-->
-<!--                class="default-margin-left"-->
-<!--                mat-raised-button-->
-<!--                color="warn"-->
-<!--                type="button"-->
-<!--                (click)="onLanguagesRefreshClicked()"-->
-<!--              >Refresh</button>-->
+            </mat-form-field>
 
-<!--              <mat-spinner-->
-<!--                *ngIf="languagesAreLoading | async"-->
-<!--                class="default-margin-left"-->
-<!--                [diameter]="24"-->
-<!--              ></mat-spinner>-->
-
-<!--            </div>-->
           </div>
 
           <p>

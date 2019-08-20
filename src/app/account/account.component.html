@@ -27,14 +27,21 @@
       </div>
 
       <div *ngIf="userFromApi != null">
-        <img
-          *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)"
-          class="avatar"
-          src="{{userFromApi.avatar}}"
-          alt="avatar"
-        />
-        <mat-icon class="avatar" *ngIf="isNullOrEmptyOrUndefined(userFromApi.avatar)">person</mat-icon>
+        <div>
+          <img
+            *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)"
+            class="avatar"
+            src="{{userFromApi.avatar}}"
+            alt="avatar"
+          />
+          <mat-icon class="avatar" *ngIf="isNullOrEmptyOrUndefined(userFromApi.avatar)">person</mat-icon>
+          <button mat-mini-fab aria-label="Edit avatar" class="avatar-edit-fab" (click)="onAvatarEditClicked()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+
         <form
+          class="account-edit-form"
           [formGroup]="accountEditFormGroup"
           name="accountEditForm"
           (ngSubmit)="onAccountEditClicked()"
@@ -100,7 +107,7 @@
               color="accent"
               type="submit"
               [disabled]="!(accountEditFormGroup.dirty && accountEditFormGroup.valid)"
-            >Update</button>
+            >Save changes</button>
           </p>
 
         </form>

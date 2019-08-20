@@ -8,6 +8,7 @@ import {GpLanguageService} from '../service/GpLanguageService';
 import {GpAccountInteractor} from '../service/GpAccountInteractor';
 import {Language} from '../model/language';
 import {finalize} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-account',
@@ -32,7 +33,8 @@ export class AccountComponent implements OnInit {
     private userProvider: UserProvider,
     private languageService: GpLanguageService,
     private accountInteractor: GpAccountInteractor,
-    private fBuilder: FormBuilder
+    private fBuilder: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -105,9 +107,19 @@ export class AccountComponent implements OnInit {
     // todo
   }
 
+  onAvatarEditClicked() {
+    console.log('onAvatarEditClicked');
+    this.showMessage('Not implemented yet, sorry)');
+    // todo
+  }
+
   onDataRefreshClicked() {
     console.log('onDataRefreshClicked');
     this.getData();
+  }
+
+  showMessage(message: string) {
+    this.snackBar.open(message);
   }
 
   isNullOrEmptyOrUndefined(value) {

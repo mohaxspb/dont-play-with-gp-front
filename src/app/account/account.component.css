@@ -3,11 +3,8 @@
   padding-right: 16px;
 }
 
-.account-card {
-}
-
-.account-card-header {
-
+.center-inside {
+  margin: auto;
 }
 
 .avatar {
@@ -21,6 +18,10 @@
   object-fit: cover;
 }
 
-.center-inside {
-  margin: auto;
+.avatar-edit-fab {
+  bottom: 24px;
+  right: 24px;
+}
+
+.account-edit-form {
 }

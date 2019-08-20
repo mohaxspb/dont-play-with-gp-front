@@ -12,7 +12,8 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule, MatProgressSpinnerModule,
+  MatMenuModule,
+  MatProgressSpinnerModule,
   MatRippleModule,
   MatSelectModule,
   MatSnackBarModule,
@@ -29,25 +30,26 @@ import localeRu from '@angular/common/locales/ru';
 import {AuthService} from './service/auth/auth.service';
 import {UserProvider} from './service/auth/user.subject';
 import {AuthProvider} from './service/auth/auth.state.subject';
-import {GpApiService} from './service/gp.api.service';
+import {GpApiService} from './service/GpApiService';
 import {GpLocalStorage} from './service/GpLocalStorage';
 import {GpLanguageService} from './service/GpLanguageService';
-
 // components
 import {AppComponent} from './main/app.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { FeedComponent } from './feed/feed.component';
-import { AccountComponent } from './account/account.component';
+import {HeaderComponent} from './header/header.component';
+import {FooterComponent} from './footer/footer.component';
+import {FeedComponent} from './feed/feed.component';
+import {AccountComponent} from './account/account.component';
 import {LoginComponent} from './login/login.component';
+import {GpUserService} from './service/GpUserService';
+import {GpAccountInteractor} from './service/GpAccountInteractor';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'feed'},
-  {path: 'feed',  pathMatch: 'full', component: FeedComponent},
-  {path: 'account',  pathMatch: 'full', component: AccountComponent},
+  {path: 'feed', pathMatch: 'full', component: FeedComponent},
+  {path: 'account', pathMatch: 'full', component: AccountComponent},
 ];
 
 @NgModule({
@@ -85,6 +87,8 @@ const routes: Routes = [
   ],
   providers: [
     GpApiService,
+    GpUserService,
+    GpAccountInteractor,
     AuthService,
     AuthProvider,
     UserProvider,

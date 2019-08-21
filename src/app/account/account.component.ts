@@ -9,6 +9,7 @@ import {GpAccountInteractor} from '../service/GpAccountInteractor';
 import {Language} from '../model/language';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
+import {DialogService} from '../service/ui/DialogService';
 
 @Component({
   selector: 'app-account',
@@ -34,7 +35,8 @@ export class AccountComponent implements OnInit {
     private languageService: GpLanguageService,
     private accountInteractor: GpAccountInteractor,
     private fBuilder: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialogsService: DialogService
   ) {
   }
 
@@ -127,7 +129,20 @@ export class AccountComponent implements OnInit {
   onDeleteAccountClicked() {
     console.log('onDeleteAccountClicked');
 
-    // todo
+    this.showConfirmAccountDeleteDialog(this.userFromApi.id);
+  }
+
+  showConfirmAccountDeleteDialog(id: number) {
+    this.dialogsService
+    // todo translation
+      .confirm('Delete account', 'Are you sure you want to delete account? This can\'t be undone!', 'Delete account')
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.deleteAccount(id);
+        } else {
+          console.log('do not delete!');
+        }
+      });
   }
 
   showMessage(message: string) {
@@ -136,5 +151,10 @@ export class AccountComponent implements OnInit {
 
   isNullOrEmptyOrUndefined(value) {
     return !value;
+  }
+
+  private deleteAccount(id: number) {
+    console.log('deleteAccount: %d', id);
+    // todo
   }
 }

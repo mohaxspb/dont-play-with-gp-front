@@ -7,7 +7,7 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatBottomSheetModule,
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -42,6 +42,8 @@ import {AccountComponent} from './account/account.component';
 import {LoginComponent} from './login/login.component';
 import {GpUserService} from './service/GpUserService';
 import {GpAccountInteractor} from './service/GpAccountInteractor';
+import {DialogComponent} from './dialog/dialog.component';
+import {DialogService} from './service/ui/DialogService';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
@@ -59,10 +61,12 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     FeedComponent,
-    AccountComponent
+    AccountComponent,
+    DialogComponent
   ],
   entryComponents: [
-    LoginComponent
+    LoginComponent,
+    DialogComponent
   ],
   imports: [
     RouterModule.forRoot(routes, {useHash: true}),
@@ -80,6 +84,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatDialogModule,
     MatInputModule,
     MatCardModule,
     MatSnackBarModule,
@@ -92,8 +97,9 @@ const routes: Routes = [
     AuthService,
     AuthProvider,
     UserProvider,
-    GpLocalStorage,
     GpLanguageService,
+    GpLocalStorage,
+    DialogService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ],
   bootstrap: [AppComponent]

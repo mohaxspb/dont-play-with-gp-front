@@ -118,6 +118,18 @@ export class AccountComponent implements OnInit {
     this.getData();
   }
 
+  onChangePasswordClicked() {
+    console.log('onChangePasswordClicked');
+    this.showMessage('Not implemented yet, sorry)');
+    // todo
+  }
+
+  onDeleteAccountClicked() {
+    console.log('onDeleteAccountClicked');
+
+    // todo
+  }
+
   showMessage(message: string) {
     this.snackBar.open(message);
   }

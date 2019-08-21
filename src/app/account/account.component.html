@@ -111,9 +111,26 @@
           </p>
 
         </form>
+
       </div>
 
     </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions fxLayout="row" fxLayoutAlign="space-between">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="onChangePasswordClicked()"
+      >Change password</button>
+
+      <button
+        mat-stroked-button
+        color="warn"
+        (click)="onDeleteAccountClicked()"
+      >Delete Account</button>
+    </mat-card-actions>
 
   </mat-card>
 

@@ -23,6 +23,7 @@ export class Api {
 
     static Method = class {
       static ME = 'me';
+      static DELETE = 'delete';
     };
   };
 

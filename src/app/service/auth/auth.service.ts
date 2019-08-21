@@ -6,7 +6,7 @@ import {GpApiService} from '../GpApiService';
 import {Api} from '../Api';
 import {SocialProvider} from '../../GpConstants';
 import {catchError, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Router} from '@angular/router';
 
 @Injectable()
@@ -38,7 +38,7 @@ export class AuthService {
       });
   }
 
-  logout() {
+  logout(): Observable<string> {
     console.log('logout');
     return this.apiService
       .logout()
@@ -51,7 +51,7 @@ export class AuthService {
       );
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<User> {
     return this.apiService
       .login(email, password)
       .pipe(

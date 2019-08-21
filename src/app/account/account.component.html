@@ -116,9 +116,13 @@
 
     </mat-card-content>
 
-    <mat-divider></mat-divider>
+    <mat-divider *ngIf="userFromApi != null"></mat-divider>
 
-    <mat-card-actions fxLayout="row" fxLayoutAlign="space-between">
+    <mat-card-actions
+      *ngIf="userFromApi != null"
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+    >
       <button
         mat-stroked-button
         color="primary"

@@ -12,7 +12,10 @@ export class GpUserService {
   }
 
   getUser(): Observable<User> {
-    return this.apiService
-      .getUser();
+    return this.apiService.getUser();
+  }
+
+  delete(id: number): Observable<boolean> {
+    return this.apiService.delete(id);
   }
 }

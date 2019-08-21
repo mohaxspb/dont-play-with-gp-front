@@ -10,6 +10,7 @@ import {Language} from '../model/language';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {DialogService} from '../service/ui/DialogService';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -31,6 +32,7 @@ export class AccountComponent implements OnInit {
   languagesListFromApi2: Language[];
 
   constructor(
+    private router: Router,
     private userProvider: UserProvider,
     private languageService: GpLanguageService,
     private accountInteractor: GpAccountInteractor,
@@ -156,5 +158,15 @@ export class AccountComponent implements OnInit {
   private deleteAccount(id: number) {
     console.log('deleteAccount: %d', id);
     // todo
+    this.accountInteractor
+      .deleteAccount(id)
+      .subscribe(
+        value => {
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    // .subscribe(value => this.router.navigateByUrl('/'))
   }
 }

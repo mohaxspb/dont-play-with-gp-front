@@ -15,7 +15,7 @@
       alt="avatar"
     />
     <mat-icon class="avatar" *ngIf="authenticated && isNullOrEmptyOrUndefined(user.avatar)">person</mat-icon>
-    <span class="user-name" *ngIf="authenticated">{{user.fullName}}</span>
+    <span class="user-name" *ngIf="authenticated" fxHide.lt-sm>{{user.fullName}}</span>
 
   </div>
   <button

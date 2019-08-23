@@ -8,6 +8,9 @@ import {MatBottomSheetRef, MatSnackBar} from '@angular/material';
 import {GpLanguageService} from '../service/GpLanguageService';
 import {BehaviorSubject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
+import {Language} from '../model/language';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ApiError} from '../model/ApiError';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +18,6 @@ import {finalize} from 'rxjs/operators';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  // @ViewChild('loginRegisterForm', {static: false})
-  // loginRegisterForm: NgForm;
 
   loginRegisterFormGroup: FormGroup;
 
@@ -38,7 +38,8 @@ export class LoginComponent implements OnInit {
   password: string;
   // register fields
   passwordConfirm: string;
-  primaryLanguage: string;
+
+  primaryLanguage: Language;
 
   // error validation
   passwordMinLength = GpConstants.PASSWORD_MIN_LENGTH;
@@ -111,24 +112,49 @@ export class LoginComponent implements OnInit {
     console.log('onLoginOrRegisterClicked: ' + this.createNewAccountFormTypeEnabled);
 
     if (this.createNewAccountFormTypeEnabled) {
+      // console.log('mail, name, password, lang: %s/%s/%s/%s', this.email, this.name, this.password, JSON.stringify(this.primaryLanguage));
       this.authService
         .register(
           this.email,
           this.password,
           this.name,
-          this.primaryLanguage
+          this.primaryLanguage.langCode
         )
-        .subscribe((value: User) => {
-          console.log('register: ' + value);
-          this.bottomSheetRef.dismiss();
-        });
+        .subscribe(
+          (value: User) => {
+            console.log('register: ' + value);
+            this.bottomSheetRef.dismiss();
+          },
+          error => {
+            if (error instanceof HttpErrorResponse) {
+              console.log('message: %s/%s', error.message, JSON.stringify(error.error));
+              try {
+                const parsedServerError: ApiError = error.error;
+                this.showMessage(parsedServerError.message);
+              } catch (e) {
+                console.error(e);
+                this.showMessage('Unexpected error occurred.');
+              }
+            } else {
+              console.log('error is instance of: %s', error.constructor.name);
+              this.showMessage('Unexpected error occurred.');
+            }
+          }
+        );
     } else {
       this.authService
         .login(this.email, this.password)
-        .subscribe((value: User) => {
-          console.log('login: ' + value);
-          this.bottomSheetRef.dismiss();
-        });
+        .subscribe(
+          (value: User) => {
+            console.log('login: ' + value);
+            this.bottomSheetRef.dismiss();
+          },
+          error => {
+            console.error(error);
+            // todo message localization
+            this.showMessage('Error. May be wrong email and/or password.');
+          }
+        );
     }
   }
 
@@ -183,8 +209,7 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  private showError(error: any, errorMessage?: string | null) {
-    console.error(error);
-    this.snackBar.open(errorMessage == null ? error : errorMessage);
+  private showMessage(message: string) {
+    this.snackBar.open(message);
   }
 }

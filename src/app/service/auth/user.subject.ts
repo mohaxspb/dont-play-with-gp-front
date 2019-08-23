@@ -4,9 +4,5 @@ import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class UserProvider {
-
-  public user: BehaviorSubject<User> = new BehaviorSubject(undefined);
-
-  constructor() {
-  }
+  public user: BehaviorSubject<User | null> = new BehaviorSubject(null);
 }

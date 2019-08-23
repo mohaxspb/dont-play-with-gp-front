@@ -2,9 +2,9 @@ import {Authority} from './authority';
 
 export class User {
   id: number;
-  username: string;
+  email: string | null;
   fullName: string;
   avatar: string;
-  primaryLanguageId: string;
+  primaryLanguageId: number;
   authorities: [Authority];
 }

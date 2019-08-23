@@ -1,0 +1,28 @@
+.account-container {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.center-inside {
+  margin: auto;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+
+  margin-bottom: 16px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+}
+
+.avatar-edit-fab {
+  bottom: 24px;
+  right: 24px;
+}
+
+.rect-height-200 {
+  height: 200px;
+}

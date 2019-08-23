@@ -2,23 +2,23 @@ import {Injectable} from '@angular/core';
 import {AuthProvider} from './auth.state.subject';
 import {UserProvider} from './user.subject';
 import {User} from '../../model/user';
-import {GpApiService} from '../gp.api.service';
+import {GpApiService} from '../GpApiService';
 import {Api} from '../Api';
 import {SocialProvider} from '../../GpConstants';
 import {catchError, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {Observable, of} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
-
-  user: User | null;
 
   authenticated = false;
 
   constructor(
     private apiService: GpApiService,
     private authProvider: AuthProvider,
-    private userProvider: UserProvider
+    private userProvider: UserProvider,
+    private router: Router
   ) {
   }
 
@@ -38,7 +38,7 @@ export class AuthService {
       });
   }
 
-  logout() {
+  logout(): Observable<string> {
     console.log('logout');
     return this.apiService
       .logout()
@@ -46,15 +46,12 @@ export class AuthService {
         tap(() => {
           console.log('logout success');
           this.onUserReceived(null);
+          this.router.navigateByUrl('');
         })
       );
   }
 
-  getUser(): User | null {
-    return this.user;
-  }
-
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<User> {
     return this.apiService
       .login(email, password)
       .pipe(
@@ -64,10 +61,9 @@ export class AuthService {
 
   private onUserReceived(user: User | null) {
     console.log('user: ' + JSON.stringify(user));
-    this.user = user;
-    this.authenticated = this.user != null;
+    this.authenticated = user != null;
     this.authProvider.authenticated.next(this.authenticated);
-    this.userProvider.user.next(this.user);
+    this.userProvider.user.next(user);
   }
 
   register(email: string, password: string, name: string, primaryLanguage: string) {

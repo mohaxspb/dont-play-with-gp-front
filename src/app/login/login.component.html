@@ -6,13 +6,13 @@
   <mat-card class="login-register-card">
     <div class="login-register-container" fxLayout="column" fxLayoutAlign="space-around center">
       <form
-        [formGroup]="loginRegisterFormGroup"
-        #loginRegisterForm="ngForm"
-        name="loginRegisterForm"
-        (ngSubmit)=onLoginOrRegisterClicked()
+          #loginRegisterForm="ngForm"
+          [formGroup]="loginRegisterFormGroup"
+          name="loginRegisterForm"
+          (ngSubmit)="onLoginOrRegisterClicked()"
       >
 
-        <div class="mat-input-element" *ngIf=createNewAccountFormTypeEnabled>
+        <div class="mat-input-element" *ngIf="createNewAccountFormTypeEnabled">
           <mat-form-field>
             <label>
               <input
@@ -21,10 +21,10 @@
                 placeholder="Name"
                 name="name"
                 required
-                (change)=onNameChanged($event.target.value)
+                (change)="onNameChanged($event.target.value)"
               >
             </label>
-            <mat-error>You must provide name</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.name.errors?.required">You must provide name</mat-error>
           </mat-form-field>
         </div>
 
@@ -36,12 +36,13 @@
                 formControlName="email"
                 placeholder="Email"
                 name="email"
+                type="email"
                 required
-                (change)=onEmailChanged($event.target.value)
+                (change)="onEmailChanged($event.target.value)"
               >
             </label>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.email.errors?.required>You must provide Email</mat-error>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.email.errors?.email>Invalid Email</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.email.errors?.required">You must provide Email</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.email.errors?.email">Invalid Email</mat-error>
           </mat-form-field>
         </div>
 
@@ -52,22 +53,22 @@
                 matInput
                 formControlName="password"
                 placeholder="Password"
-                name=password
-                type=password
+                name="password"
+                type="password"
                 required
-                (change)=onPasswordChanged($event.target.value)
+                (change)="onPasswordChanged($event.target.value)"
               >
             </label>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.required
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required"
             >You must provide password</mat-error>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.minlength
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.minlength"
             >Minimum length is {{passwordMinLength}}</mat-error>
-            <mat-error *ngIf=loginRegisterFormGroup.controls.password.errors?.maxlength
+            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.maxlength"
             >Maximum length is {{passwordMaxLength}}</mat-error>
           </mat-form-field>
         </div>
 
-        <div class="mat-input-element" *ngIf=createNewAccountFormTypeEnabled>
+        <div class="mat-input-element" *ngIf="createNewAccountFormTypeEnabled">
           <mat-form-field>
             <label>
               <input
@@ -93,7 +94,7 @@
 
         <div fxLayout="row" fxLayoutGap="16px">
 
-          <mat-form-field *ngIf=createNewAccountFormTypeEnabled>
+          <mat-form-field *ngIf="createNewAccountFormTypeEnabled">
             <mat-label>Primary language</mat-label>
 
             <mat-select
@@ -104,11 +105,11 @@
             >
               <mat-option
                 *ngFor="let type of languagesListFromApi | async"
-                [value]=type>{{type.langCode.toUpperCase()}}
+                [value]="type">{{type.langCode.toUpperCase()}}
               </mat-option>
             </mat-select>
 
-            <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required"
+            <mat-error *ngIf="loginRegisterFormGroup.controls.primaryLanguageSelect.errors?.required"
             >You must make a selection</mat-error>
             <mat-error *ngIf="(languagesListFromApi | async) == null">Please, refresh languages list</mat-error>
 
@@ -135,14 +136,14 @@
 
         <p>
           <button
-            *ngIf=!createNewAccountFormTypeEnabled
+            *ngIf="!createNewAccountFormTypeEnabled"
             mat-raised-button
             color="accent"
             type="submit"
             [disabled]="!loginRegisterForm.valid"
           >Login</button>
           <button
-            *ngIf=createNewAccountFormTypeEnabled
+            *ngIf="createNewAccountFormTypeEnabled"
             mat-raised-button
             color="accent"
             type="submit"

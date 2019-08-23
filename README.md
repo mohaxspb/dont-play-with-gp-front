@@ -12,7 +12,7 @@ In terminal execute
 ```
 ng g component COMPONENT_TO_CREATE_NAME --skipTests=true
 ```
-where `--spec=false` needed to prevent `spec` file generating
+where `--skipTests=true` needed to prevent `spec` file generating
 
 ## Build
 

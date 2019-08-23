@@ -26,91 +26,114 @@
 
       </div>
 
-      <div *ngIf="userFromApi != null">
+      <div
+        *ngIf="userFromApi != null"
+        fxLayout="row"
+        fxLayoutGap="16px"
+        fxLayout.lt-sm="column"
+        fxLayoutGap.lt-sm="16px"
+      >
         <div>
-          <img
-            *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)"
-            class="avatar"
-            src="{{userFromApi.avatar}}"
-            alt="avatar"
-          />
-          <mat-icon class="avatar" *ngIf="isNullOrEmptyOrUndefined(userFromApi.avatar)">person</mat-icon>
-          <button mat-mini-fab aria-label="Edit avatar" class="avatar-edit-fab" (click)="onAvatarEditClicked()">
-            <mat-icon>edit</mat-icon>
-          </button>
+          <div>
+            <img
+              *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)"
+              class="avatar"
+              src="{{userFromApi.avatar}}"
+              alt="avatar"
+            />
+            <mat-icon class="avatar" *ngIf="isNullOrEmptyOrUndefined(userFromApi.avatar)">person</mat-icon>
+            <button mat-mini-fab aria-label="Edit avatar" class="avatar-edit-fab" (click)="onAvatarEditClicked()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+
+          <form
+            [formGroup]="accountEditFormGroup"
+            name="accountEditForm"
+            (ngSubmit)="onAccountEditClicked()"
+          >
+
+            <div class="mat-input-element">
+              <mat-form-field>
+                <label>
+                  <input
+                    matInput
+                    formControlName="email"
+                    placeholder="Email"
+                    name="email"
+                    type="email"
+                    required
+                  >
+                </label>
+              </mat-form-field>
+            </div>
+
+            <div class="mat-input-element">
+              <mat-form-field>
+                <label>
+                  <input
+                    matInput
+                    formControlName="name"
+                    placeholder="Name"
+                    name="name"
+                    required
+                    (change)="onNameChanged($event.target.value)"
+                  >
+                </label>
+                <mat-error *ngIf="accountEditFormGroup.controls.name.errors?.required">You must provide name</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="16px">
+              <mat-form-field>
+                <mat-label>Primary language</mat-label>
+
+                <mat-select
+                  formControlName="primaryLanguageSelect"
+                  [errorStateMatcher]="matcher"
+                  required
+                  (selectionChange)="onPrimaryLanguageChanged($event.value)"
+                >
+                  <mat-option
+                    *ngFor="let language of languagesListFromApi2"
+                    [value]="language">{{language.langCode.toUpperCase()}}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error *ngIf="accountEditFormGroup.controls.primaryLanguageSelect.errors?.required"
+                >You must make a selection</mat-error>
+
+              </mat-form-field>
+
+            </div>
+
+            <p>
+              <button
+                mat-raised-button
+                color="accent"
+                type="submit"
+                [disabled]="!(accountEditFormGroup.dirty && accountEditFormGroup.valid)"
+              >Save changes</button>
+            </p>
+
+          </form>
+
         </div>
 
-        <form
-          class="account-edit-form"
-          [formGroup]="accountEditFormGroup"
-          name="accountEditForm"
-          (ngSubmit)="onAccountEditClicked()"
-        >
+        <div id="createdContent" fxLayout="column" fxLayoutAlign="space-between" fxFlex>
 
-          <div class="mat-input-element">
-            <mat-form-field>
-              <label>
-                <input
-                  matInput
-                  formControlName="email"
-                  placeholder="Email"
-                  name="email"
-                  type="email"
-                  required
-                >
-              </label>
-            </mat-form-field>
+          <div id="createdArticles">
+
+            <h3>Published articles</h3>
+            <div class="background-color-accent rect-height-200"><p>Coming soon!</p></div>
           </div>
 
-          <div class="mat-input-element">
-            <mat-form-field>
-              <label>
-                <input
-                  matInput
-                  formControlName="name"
-                  placeholder="Name"
-                  name="name"
-                  required
-                  (change)="onNameChanged($event.target.value)"
-                >
-              </label>
-              <mat-error *ngIf="accountEditFormGroup.controls.name.errors?.required">You must provide name</mat-error>
-            </mat-form-field>
+          <div id="createdComments">
+            <h3>Published comments</h3>
+            <div class="background-color-accent rect-height-200"><p>Coming soon!</p></div>
           </div>
 
-          <div fxLayout="row" fxLayoutGap="16px">
-            <mat-form-field>
-              <mat-label>Primary language</mat-label>
-
-              <mat-select
-                formControlName="primaryLanguageSelect"
-                [errorStateMatcher]="matcher"
-                required
-                (selectionChange)="onPrimaryLanguageChanged($event.value)"
-              >
-                <mat-option
-                  *ngFor="let language of languagesListFromApi2"
-                  [value]="language">{{language.langCode.toUpperCase()}}
-                </mat-option>
-              </mat-select>
-
-              <mat-error *ngIf="accountEditFormGroup.controls.primaryLanguageSelect.errors?.required"
-              >You must make a selection</mat-error>
-
-            </mat-form-field>
-
-          </div>
-
-          <p>
-            <button
-              mat-raised-button
-              color="accent"
-              type="submit"
-              [disabled]="!(accountEditFormGroup.dirty && accountEditFormGroup.valid)"
-            >Save changes</button>
-          </p>
-
-        </form>
+        </div>
 
       </div>
 

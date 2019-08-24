@@ -53,6 +53,14 @@ export class Api {
     };
   };
 
+  static ArticleEndpoint = class {
+    static URL = 'article/';
+
+    static Method = class {
+      static ALL_BY_AUTHOR_ID = 'allByAuthorId';
+    };
+  };
+
   private static currentPort(): string {
     let port = this.TOMCAT_PORT;
     if (window.location.protocol === this.SECURE_SCHEME) {

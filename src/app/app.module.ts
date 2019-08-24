@@ -44,6 +44,8 @@ import {GpUserService} from './service/GpUserService';
 import {GpAccountInteractor} from './service/GpAccountInteractor';
 import {DialogComponent} from './dialog/dialog.component';
 import {DialogService} from './service/ui/DialogService';
+import { ArticleComponent } from './article/article.component';
+import { ArticlesListComponent } from './articles-list/articles-list.component';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
@@ -62,7 +64,9 @@ const routes: Routes = [
     FooterComponent,
     FeedComponent,
     AccountComponent,
-    DialogComponent
+    DialogComponent,
+    ArticleComponent,
+    ArticlesListComponent
   ],
   entryComponents: [
     LoginComponent,

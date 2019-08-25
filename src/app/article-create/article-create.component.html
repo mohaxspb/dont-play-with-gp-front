@@ -5,61 +5,67 @@
       <h3>New article creation</h3>
     </mat-card-header>
     <mat-card-content>
-      <form
-        [formGroup]="articleCreateFormGroup"
-        name="accountEditForm"
-        (ngSubmit)="onArticleCreateClicked()"
-      >
 
-        <div class="mat-input-element">
-          <mat-form-field class="full-width-field">
-            <label>
-              <input
-                matInput
-                formControlName="name"
-                placeholder="Name"
-                name="name"
+      <div *ngIf="user!=null && languagesListFromApi!=null" id="articleFormContainer">
+
+        <form
+          [formGroup]="articleCreateFormGroup"
+          name="accountEditForm"
+          (ngSubmit)="onArticleCreateClicked()"
+        >
+
+          <div class="mat-input-element">
+            <mat-form-field class="full-width-field">
+              <label>
+                <input
+                  matInput
+                  formControlName="title"
+                  placeholder="Title"
+                  name="title"
+                  required
+                  (change)="onTitleChanged($event.target.value)"
+                >
+              </label>
+              <mat-error
+                *ngIf="articleCreateFormGroup.controls.title.errors?.required">You must provide title</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="16px">
+            <mat-form-field class="full-width-field">
+              <mat-label>Primary language</mat-label>
+
+              <mat-select
+                formControlName="primaryLanguageSelect"
+                [errorStateMatcher]="matcher"
                 required
-                (change)="onTitleChanged($event.target.value)"
+                (selectionChange)="onPrimaryLanguageChanged($event.value)"
               >
-            </label>
-            <mat-error *ngIf="articleCreateFormGroup.controls.name.errors?.required">You must provide name</mat-error>
-          </mat-form-field>
-        </div>
+                <mat-option
+                  *ngFor="let language of languagesListFromApi"
+                  [value]="language">{{language.langCode.toUpperCase()}}
+                </mat-option>
+              </mat-select>
 
-        <div fxLayout="row" fxLayoutGap="16px">
-          <mat-form-field class="full-width-field">
-            <mat-label>Primary language</mat-label>
+              <mat-error *ngIf="articleCreateFormGroup.controls.primaryLanguageSelect.errors?.required"
+              >You must make a selection</mat-error>
 
-            <mat-select
-              formControlName="primaryLanguageSelect"
-              [errorStateMatcher]="matcher"
-              required
-              (selectionChange)="onPrimaryLanguageChanged($event.value)"
-            >
-              <mat-option
-                *ngFor="let language of languagesListFromApi"
-                [value]="language">{{language.langCode.toUpperCase()}}
-              </mat-option>
-            </mat-select>
+            </mat-form-field>
 
-            <mat-error *ngIf="articleCreateFormGroup.controls.primaryLanguageSelect.errors?.required"
-            >You must make a selection</mat-error>
+          </div>
 
-          </mat-form-field>
+          <p>
+            <button
+              mat-raised-button
+              color="accent"
+              type="submit"
+              [disabled]="!(articleCreateFormGroup.dirty && articleCreateFormGroup.valid)"
+            >Save</button>
+          </p>
 
-        </div>
+        </form>
 
-        <p>
-          <button
-            mat-raised-button
-            color="accent"
-            type="submit"
-            [disabled]="!(articleCreateFormGroup.dirty && articleCreateFormGroup.valid)"
-          >Save</button>
-        </p>
-
-      </form>
+      </div>
     </mat-card-content>
   </mat-card>
 

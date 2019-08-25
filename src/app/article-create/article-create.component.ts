@@ -2,10 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {Language} from '../model/data/Language';
-import {GpLanguageService} from '../service/GpLanguageService';
+import {GpLanguageService} from '../service/data/GpLanguageService';
 import {GpUser} from '../model/auth/GpUser';
-import {UserProvider} from '../service/auth/user.subject';
-import {GpArticleService} from '../service/GpArticleService';
+import {UserProvider} from '../service/auth/UserProvider';
+import {GpArticleService} from '../service/data/GpArticleService';
+import {finalize, tap} from 'rxjs/operators';
+import {BehaviorSubject, zip} from 'rxjs';
 
 @Component({
   selector: 'app-article-create',
@@ -19,24 +21,45 @@ export class ArticleCreateComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   // data from api
-  // todo get from api
+  dataIsLoading = new BehaviorSubject<boolean>(false);
   languagesListFromApi: Language[];
 
-  // data
+  // local data
+  user: GpUser;
+
+  // article data
   title: string;
   articleLanguage: Language;
 
   constructor(
-    private userProvider: UserProvider,
     private languageService: GpLanguageService,
+    private userProvider: UserProvider,
     private articleService: GpArticleService,
     private fBuilder: FormBuilder,
   ) {
   }
 
   ngOnInit() {
-    // todo getUser and languages, then init form.
-    // also show progressbar
+    // todo show progressbar
+    this.dataIsLoading.next(true);
+
+    zip<[GpUser, Language[]]>(
+      this.userProvider.getNonNullUser(),
+      this.languageService.getLanguages()
+    )
+      .pipe(
+        tap((userAndLanguages: [GpUser, Language[]]) => {
+          this.user = userAndLanguages[0];
+          this.languagesListFromApi = userAndLanguages[1];
+        }),
+        finalize(() => this.dataIsLoading.next(false))
+      )
+      .subscribe((userAndLanguages: [GpUser, Language[]]) => {
+        console.log('userAndLanguages: %s', JSON.stringify(userAndLanguages));
+        // this.user = userAndLanguages[0];
+        // this.languagesListFromApi = userAndLanguages[1];
+        this.initForm();
+      });
   }
 
   onPrimaryLanguageChanged(language: Language) {
@@ -54,14 +77,14 @@ export class ArticleCreateComponent implements OnInit {
     // todo
   }
 
-  private initForm(user: GpUser, userLanguage: Language) {
+  private initForm() {
     this.articleCreateFormGroup = this.fBuilder.group({
       title: new FormControl(
         {value: null, disabled: false},
         [Validators.required]
       ),
       primaryLanguageSelect: new FormControl(
-        {value: userLanguage, disabled: false},
+        {value: null, disabled: false},
         [Validators.required]
       )
     });

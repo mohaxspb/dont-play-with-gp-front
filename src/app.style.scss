@@ -55,6 +55,16 @@ body {
   margin-top: 16px;
 }
 
+.default-margin-bottom {
+  margin-bottom: 16px;
+}
+
 .full-width-field {
   width: 100%;
+}
+
+.bottom-right-corner {
+  position: fixed  !important;
+  bottom: 16px;
+  right: 16px;
 }

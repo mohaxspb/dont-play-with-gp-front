@@ -7,7 +7,8 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatBottomSheetModule,
   MatButtonModule,
-  MatCardModule, MatDialogModule,
+  MatCardModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -17,7 +18,8 @@ import {
   MatRippleModule,
   MatSelectModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import {RouterModule, Routes} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -44,9 +46,8 @@ import {GpUserService} from './service/GpUserService';
 import {GpAccountInteractor} from './service/GpAccountInteractor';
 import {DialogComponent} from './dialog/dialog.component';
 import {DialogService} from './service/ui/DialogService';
-import { ArticleComponent } from './article/article.component';
-import { ArticlesListComponent } from './articles-list/articles-list.component';
-import { ArticleCreateComponent } from './article-create/article-create.component';
+import {ArticleComponent} from './article/article.component';
+import {ArticleCreateComponent} from './article-create/article-create.component';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
@@ -67,7 +68,6 @@ const routes: Routes = [
     AccountComponent,
     DialogComponent,
     ArticleComponent,
-    ArticlesListComponent,
     ArticleCreateComponent
   ],
   entryComponents: [
@@ -94,7 +94,8 @@ const routes: Routes = [
     MatInputModule,
     MatCardModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   providers: [
     GpApiService,

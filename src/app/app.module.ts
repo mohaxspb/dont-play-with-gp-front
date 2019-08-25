@@ -46,6 +46,7 @@ import {DialogComponent} from './dialog/dialog.component';
 import {DialogService} from './service/ui/DialogService';
 import { ArticleComponent } from './article/article.component';
 import { ArticlesListComponent } from './articles-list/articles-list.component';
+import { ArticleCreateComponent } from './article-create/article-create.component';
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
@@ -66,7 +67,8 @@ const routes: Routes = [
     AccountComponent,
     DialogComponent,
     ArticleComponent,
-    ArticlesListComponent
+    ArticlesListComponent,
+    ArticleCreateComponent
   ],
   entryComponents: [
     LoginComponent,

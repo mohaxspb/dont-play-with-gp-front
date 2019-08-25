@@ -5,7 +5,7 @@ import {AuthProvider} from '../service/auth/auth.state.subject';
 import {GpLanguageService} from '../service/GpLanguageService';
 import {UserProvider} from '../service/auth/user.subject';
 import {MatBottomSheet} from '@angular/material';
-import {User} from '../model/user';
+import {GpUser} from '../model/auth/GpUser';
 import {LoginComponent} from '../login/login.component';
 
 @Component({
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   title = 'dont-play-with-gp-web';
 
   authenticated: boolean | null;
-  user: User | null;
+  user: GpUser | null;
 
   constructor(
     private router: Router,
@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
       .subscribe((authenticated: boolean) => this.authenticated = authenticated);
     this.userProvider
       .user
-      .subscribe((user: User) => this.user = user);
+      .subscribe((user: GpUser) => this.user = user);
   }
 
   onLoginClicked() {

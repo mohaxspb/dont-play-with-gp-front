@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Language} from '../model/language';
+import {Language} from '../model/data/Language';
 
 @Injectable()
 export class GpLocalStorage {

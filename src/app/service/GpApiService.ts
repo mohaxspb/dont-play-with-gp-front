@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {User} from '../model/user';
+import {GpUser} from '../model/auth/GpUser';
 import {Observable} from 'rxjs';
 import {Api} from './Api';
 import {environment} from '../../environments/environment';
-import {Language} from '../model/language';
+import {Language} from '../model/data/Language';
+import {Article} from '../model/data/Article';
 
 
 @Injectable()
@@ -13,22 +14,22 @@ export class GpApiService {
   constructor(private http: HttpClient) {
   }
 
-  getUser(): Observable<User> {
+  getUser(): Observable<GpUser> {
     return this.http
-      .get<User>(
+      .get<GpUser>(
         Api.URL + Api.UsersEndpoint.URL + Api.UsersEndpoint.Method.ME,
         {withCredentials: true}
       );
   }
 
-  login(email: string, password: string): Observable<User> {
+  login(email: string, password: string): Observable<GpUser> {
     const formData = new FormData();
 
     formData.append('username', email);
     formData.append('password', password);
     formData.append(Api.TARGET_URL_PARAMETER, Api.URL + Api.UsersEndpoint.URL + Api.UsersEndpoint.Method.ME);
     return this.http
-      .post<User>(
+      .post<GpUser>(
         Api.URL + Api.Method.LOGIN,
         formData,
         {
@@ -59,7 +60,7 @@ export class GpApiService {
     formData.append('clientId', environment.clientId);
     formData.append(Api.TARGET_URL_PARAMETER, Api.URL + Api.UsersEndpoint.URL + Api.UsersEndpoint.Method.ME);
     return this.http
-      .post<User>(
+      .post<GpUser>(
         Api.URL + Api.EmailAuthEndpoint.URL + Api.EmailAuthEndpoint.Method.REGISTER,
         formData,
         {

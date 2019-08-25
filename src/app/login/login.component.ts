@@ -3,12 +3,12 @@ import {AuthService} from '../service/auth/auth.service';
 import {GpConstants, SocialProvider} from '../GpConstants';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
-import {User} from '../model/user';
+import {GpUser} from '../model/auth/GpUser';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef, MatSnackBar} from '@angular/material';
 import {GpLanguageService} from '../service/GpLanguageService';
 import {BehaviorSubject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
-import {Language} from '../model/language';
+import {Language} from '../model/data/Language';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ApiError} from '../model/ApiError';
 import {BottomSheetData} from '../model/ui/BottomSheetData';
@@ -123,7 +123,7 @@ export class LoginComponent implements OnInit {
           this.primaryLanguage.langCode
         )
         .subscribe(
-          (value: User) => {
+          (value: GpUser) => {
             console.log('register: ' + value);
             this.bottomSheetRef.dismiss();
           },
@@ -147,7 +147,7 @@ export class LoginComponent implements OnInit {
       this.authService
         .login(this.email, this.password)
         .subscribe(
-          (value: User) => {
+          (value: GpUser) => {
             console.log('login: ' + value);
             this.bottomSheetRef.dismiss();
           },

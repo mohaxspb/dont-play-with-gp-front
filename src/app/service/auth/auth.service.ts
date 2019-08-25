@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AuthProvider} from './auth.state.subject';
 import {UserProvider} from './user.subject';
-import {User} from '../../model/user';
+import {GpUser} from '../../model/auth/GpUser';
 import {GpApiService} from '../GpApiService';
 import {Api} from '../Api';
 import {SocialProvider} from '../../GpConstants';
@@ -33,7 +33,7 @@ export class AuthService {
       .pipe(
         catchError(() => of(null))
       )
-      .subscribe((user: User) => {
+      .subscribe((user: GpUser) => {
         this.onUserReceived(user);
       });
   }
@@ -51,7 +51,7 @@ export class AuthService {
       );
   }
 
-  login(email: string, password: string): Observable<User> {
+  login(email: string, password: string): Observable<GpUser> {
     return this.apiService
       .login(email, password)
       .pipe(
@@ -59,7 +59,7 @@ export class AuthService {
       );
   }
 
-  private onUserReceived(user: User | null) {
+  private onUserReceived(user: GpUser | null) {
     console.log('user: ' + JSON.stringify(user));
     this.authenticated = user != null;
     this.authProvider.authenticated.next(this.authenticated);

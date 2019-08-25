@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {UserProvider} from '../service/auth/user.subject';
 import {BehaviorSubject} from 'rxjs';
-import {User} from '../model/user';
+import {GpUser} from '../model/auth/GpUser';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {GpLanguageService} from '../service/GpLanguageService';
 import {GpAccountInteractor} from '../service/GpAccountInteractor';
-import {Language} from '../model/language';
+import {Language} from '../model/data/Language';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 import {DialogService} from '../service/ui/DialogService';
@@ -20,7 +19,7 @@ import {Router} from '@angular/router';
 export class AccountComponent implements OnInit {
 
   dataIsLoading = new BehaviorSubject<boolean>(false);
-  userFromApi: User;
+  userFromApi: GpUser;
 
   name: string;
   userLanguage: Language;
@@ -33,7 +32,6 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userProvider: UserProvider,
     private languageService: GpLanguageService,
     private accountInteractor: GpAccountInteractor,
     private fBuilder: FormBuilder,
@@ -56,7 +54,7 @@ export class AccountComponent implements OnInit {
         finalize(() => this.dataIsLoading.next(false))
       )
       .subscribe(
-        (userAndLanguages: [User, Language[]]) => {
+        (userAndLanguages: [GpUser, Language[]]) => {
           this.userFromApi = userAndLanguages[0];
           this.name = this.userFromApi.fullName;
           this.languagesListFromApi = userAndLanguages[1];
@@ -68,7 +66,7 @@ export class AccountComponent implements OnInit {
       );
   }
 
-  private initForm(user: User, userLanguage: Language) {
+  private initForm(user: GpUser, userLanguage: Language) {
     this.accountEditFormGroup = this.fBuilder.group({
       name: new FormControl(
         {value: user.fullName, disabled: false},
@@ -167,6 +165,5 @@ export class AccountComponent implements OnInit {
           console.error(error);
         }
       );
-    // .subscribe(value => this.router.navigateByUrl('/'))
   }
 }

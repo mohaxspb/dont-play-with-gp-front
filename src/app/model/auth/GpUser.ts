@@ -1,6 +1,6 @@
-import {Authority} from './authority';
+import {Authority} from './Authority';
 
-export class User {
+export class GpUser {
   id: number;
   email: string | null;
   fullName: string;

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GpApiService} from './GpApiService';
 import {GpLocalStorage} from './GpLocalStorage';
-import {Language} from '../model/language';
+import {Language} from '../model/data/Language';
 import {Observable, of} from 'rxjs';
 
 @Injectable()

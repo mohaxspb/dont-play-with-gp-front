@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {User} from '../../model/user';
+import {GpUser} from '../../model/auth/GpUser';
 import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class UserProvider {
-  public user: BehaviorSubject<User | null> = new BehaviorSubject(null);
+  public user: BehaviorSubject<GpUser | null> = new BehaviorSubject(null);
 }

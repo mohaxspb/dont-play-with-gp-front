@@ -29,7 +29,7 @@ export class AccountComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-  languagesListFromApi2: Language[];
+  languagesListFromApi: Language[];
 
   constructor(
     private router: Router,
@@ -59,9 +59,9 @@ export class AccountComponent implements OnInit {
         (userAndLanguages: [User, Language[]]) => {
           this.userFromApi = userAndLanguages[0];
           this.name = this.userFromApi.fullName;
-          this.languagesListFromApi2 = userAndLanguages[1];
+          this.languagesListFromApi = userAndLanguages[1];
 
-          this.userLanguage = this.languagesListFromApi2.find(value => value.id === this.userFromApi.primaryLanguageId);
+          this.userLanguage = this.languagesListFromApi.find(value => value.id === this.userFromApi.primaryLanguageId);
 
           this.initForm(this.userFromApi, this.userLanguage);
         }

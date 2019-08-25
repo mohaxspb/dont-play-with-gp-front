@@ -1,7 +1,7 @@
 <div class="account-container">
 
-  <mat-card class="account-card">
-    <mat-card-header class="account-card-header">
+  <mat-card>
+    <mat-card-header>
       <mat-card-title>Profile</mat-card-title>
     </mat-card-header>
 
@@ -98,7 +98,7 @@
                   (selectionChange)="onPrimaryLanguageChanged($event.value)"
                 >
                   <mat-option
-                    *ngFor="let language of languagesListFromApi2"
+                    *ngFor="let language of languagesListFromApi"
                     [value]="language">{{language.langCode.toUpperCase()}}
                   </mat-option>
                 </mat-select>

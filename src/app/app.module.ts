@@ -56,6 +56,7 @@ const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'feed'},
   {path: 'feed', pathMatch: 'full', component: FeedComponent},
   {path: 'account', pathMatch: 'full', component: AccountComponent},
+  {path: 'create-article', pathMatch: 'full', component: ArticleCreateComponent},
 ];
 
 @NgModule({

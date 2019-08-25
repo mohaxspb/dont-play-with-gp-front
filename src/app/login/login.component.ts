@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {AuthService} from '../service/auth/auth.service';
 import {GpConstants, SocialProvider} from '../GpConstants';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {User} from '../model/user';
-import {MatBottomSheetRef, MatSnackBar} from '@angular/material';
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef, MatSnackBar} from '@angular/material';
 import {GpLanguageService} from '../service/GpLanguageService';
 import {BehaviorSubject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {Language} from '../model/language';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ApiError} from '../model/ApiError';
+import {BottomSheetData} from '../model/ui/BottomSheetData';
 
 @Component({
   selector: 'app-login',
@@ -50,7 +51,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private languageService: GpLanguageService,
     private fBuilder: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public inputData?: BottomSheetData | null
   ) {
   }
 

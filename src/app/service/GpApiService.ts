@@ -85,4 +85,8 @@ export class GpApiService {
         },
       );
   }
+
+  getArticleById(id: number): Observable<Article> {
+    return this.http.get<Article>(Api.URL + Api.ArticleEndpoint.URL + '/' + id);
+  }
 }

@@ -3,8 +3,7 @@ import {BehaviorSubject} from 'rxjs';
 import {GpUser} from '../model/auth/GpUser';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
-import {GpLanguageService} from '../service/GpLanguageService';
-import {GpAccountInteractor} from '../service/GpAccountInteractor';
+import {GpAccountInteractor} from '../service/auth/GpAccountInteractor';
 import {Language} from '../model/data/Language';
 import {finalize} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
@@ -32,7 +31,6 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private languageService: GpLanguageService,
     private accountInteractor: GpAccountInteractor,
     private fBuilder: FormBuilder,
     private snackBar: MatSnackBar,

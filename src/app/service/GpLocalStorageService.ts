@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Language} from '../model/data/Language';
 
 @Injectable()
-export class GpLocalStorage {
+export class GpLocalStorageService {
 
   static Keys = class {
     static LANGUAGES = 'LANGUAGES';
@@ -12,7 +12,7 @@ export class GpLocalStorage {
   }
 
   getLanguages(): Language[] | null {
-    const rawLanguages = localStorage.getItem(GpLocalStorage.Keys.LANGUAGES);
+    const rawLanguages = localStorage.getItem(GpLocalStorageService.Keys.LANGUAGES);
     if (rawLanguages == null) {
       // rawLanguages = '[]';
       return null;
@@ -21,6 +21,6 @@ export class GpLocalStorage {
   }
 
   setLanguages(languages: Language[]) {
-    localStorage.setItem(GpLocalStorage.Keys.LANGUAGES, JSON.stringify(languages));
+    localStorage.setItem(GpLocalStorageService.Keys.LANGUAGES, JSON.stringify(languages));
   }
 }

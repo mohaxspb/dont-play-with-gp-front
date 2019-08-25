@@ -5,7 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {GpUser} from '../model/auth/GpUser';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef, MatSnackBar} from '@angular/material';
-import {GpLanguageService} from '../service/GpLanguageService';
+import {GpLanguageService} from '../service/data/GpLanguageService';
 import {BehaviorSubject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {Language} from '../model/data/Language';

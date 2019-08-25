@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AuthProvider} from './auth.state.subject';
-import {UserProvider} from './user.subject';
+import {UserProvider} from './UserProvider';
 import {GpUser} from '../../model/auth/GpUser';
 import {GpApiService} from '../GpApiService';
 import {Api} from '../Api';
@@ -63,7 +63,7 @@ export class AuthService {
     console.log('user: ' + JSON.stringify(user));
     this.authenticated = user != null;
     this.authProvider.authenticated.next(this.authenticated);
-    this.userProvider.user.next(user);
+    this.userProvider.call(user);
   }
 
   register(email: string, password: string, name: string, primaryLanguage: string) {

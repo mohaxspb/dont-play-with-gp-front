@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
-import {GpApiService} from './GpApiService';
-import {GpLocalStorage} from './GpLocalStorage';
-import {Language} from '../model/data/Language';
 import {Observable, of} from 'rxjs';
+import {GpApiService} from '../GpApiService';
+import {GpLocalStorageService} from '../GpLocalStorageService';
+import {Language} from '../../model/data/Language';
 
 @Injectable()
 export class GpLanguageService {
 
   constructor(
     private apiService: GpApiService,
-    private localStorageService: GpLocalStorage
+    private localStorageService: GpLocalStorageService
   ) {
   }
 

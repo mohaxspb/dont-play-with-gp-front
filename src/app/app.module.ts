@@ -30,11 +30,12 @@ import localeEn from '@angular/common/locales/en';
 import localeRu from '@angular/common/locales/ru';
 // services
 import {AuthService} from './service/auth/auth.service';
-import {UserProvider} from './service/auth/user.subject';
+import {UserProvider} from './service/auth/UserProvider';
 import {AuthProvider} from './service/auth/auth.state.subject';
 import {GpApiService} from './service/GpApiService';
-import {GpLocalStorage} from './service/GpLocalStorage';
-import {GpLanguageService} from './service/GpLanguageService';
+import {GpLocalStorageService} from './service/GpLocalStorageService';
+import {GpLanguageService} from './service/data/GpLanguageService';
+import {GpArticleService} from './service/data/GpArticleService';
 // components
 import {AppComponent} from './main/app.component';
 import {HeaderComponent} from './header/header.component';
@@ -42,8 +43,8 @@ import {FooterComponent} from './footer/footer.component';
 import {FeedComponent} from './feed/feed.component';
 import {AccountComponent} from './account/account.component';
 import {LoginComponent} from './login/login.component';
-import {GpUserService} from './service/GpUserService';
-import {GpAccountInteractor} from './service/GpAccountInteractor';
+import {GpUserService} from './service/auth/GpUserService';
+import {GpAccountInteractor} from './service/auth/GpAccountInteractor';
 import {DialogComponent} from './dialog/dialog.component';
 import {DialogService} from './service/ui/DialogService';
 import {ArticleComponent} from './article/article.component';
@@ -99,14 +100,15 @@ const routes: Routes = [
     MatTooltipModule
   ],
   providers: [
+    GpLocalStorageService,
     GpApiService,
     GpUserService,
     GpAccountInteractor,
     AuthService,
     AuthProvider,
     UserProvider,
+    GpArticleService,
     GpLanguageService,
-    GpLocalStorage,
     DialogService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ],

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {GpApiService} from './GpApiService';
+import {GpApiService} from '../GpApiService';
 import {Observable} from 'rxjs';
-import {GpUser} from '../model/auth/GpUser';
+import {GpUser} from '../../model/auth/GpUser';
 
 @Injectable()
 export class GpUserService {

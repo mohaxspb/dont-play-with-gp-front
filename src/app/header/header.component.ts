@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../service/auth/auth.service';
 import {AuthProvider} from '../service/auth/auth.state.subject';
-import {GpLanguageService} from '../service/GpLanguageService';
-import {UserProvider} from '../service/auth/user.subject';
+import {GpLanguageService} from '../service/data/GpLanguageService';
+import {UserProvider} from '../service/auth/UserProvider';
 import {MatBottomSheet} from '@angular/material';
 import {GpUser} from '../model/auth/GpUser';
 import {LoginComponent} from '../login/login.component';
@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
       .authenticated
       .subscribe((authenticated: boolean) => this.authenticated = authenticated);
     this.userProvider
-      .user
+      .getUser()
       .subscribe((user: GpUser) => this.user = user);
   }
 

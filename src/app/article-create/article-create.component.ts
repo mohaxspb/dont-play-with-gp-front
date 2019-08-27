@@ -29,6 +29,7 @@ export class ArticleCreateComponent implements OnInit {
 
   // article data
   title: string;
+  shortDescription: string;
   articleLanguage: Language;
 
   constructor(
@@ -51,6 +52,11 @@ export class ArticleCreateComponent implements OnInit {
   onTitleChanged(title: string) {
     console.log('onTitleChanged: %s', title);
     this.title = title;
+  }
+
+  onShortDescriptionChanged(shortDescription: string) {
+    console.log('onShortDescriptionChanged: %s', shortDescription);
+    this.shortDescription = shortDescription;
   }
 
   onArticleCreateClicked() {

@@ -1,4 +1,6 @@
-export class Article {
+import {ArticleTranslationVersion} from './ArticleTranslationVersion';
+
+export class ArticleTranslation {
   id: number;
 
   langId: number;
@@ -20,4 +22,6 @@ export class Article {
 
   created: string;
   updated: string;
+
+  versions: [ArticleTranslationVersion];
 }

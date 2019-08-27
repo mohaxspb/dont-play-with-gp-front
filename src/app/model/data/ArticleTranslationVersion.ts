@@ -1,4 +1,4 @@
-export class Article {
+export class ArticleTranslationVersion {
   id: number;
 
   articleTranslationId: number;

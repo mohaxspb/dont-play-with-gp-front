@@ -1,3 +1,5 @@
+import {ArticleTranslation} from './ArticleTranslation';
+
 export class Article {
   id: number;
 
@@ -28,4 +30,6 @@ export class Article {
 
   created: string;
   updated: string;
+
+  translations: [ArticleTranslation];
 }

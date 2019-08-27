@@ -26,8 +26,10 @@ export class ArticleCreateComponent implements OnInit {
 
   // local data
   user: GpUser;
+  articleIsOriginal = true;
 
   // article data
+
   title: string;
   shortDescription: string;
   articleLanguage: Language;
@@ -116,5 +118,10 @@ export class ArticleCreateComponent implements OnInit {
         console.log('userAndLanguages: %s', JSON.stringify(userAndLanguages));
         this.initForm();
       });
+  }
+
+  onArticleIsOriginalClicked(checked: boolean) {
+    console.log('onArticleIsOriginalClicked: %s', checked);
+    this.articleIsOriginal = checked;
   }
 }

@@ -59,6 +59,11 @@ export class ArticleCreateComponent implements OnInit {
     this.shortDescription = shortDescription;
   }
 
+  onDataRefreshClicked() {
+    console.log('onDataRefreshClicked');
+    this.loadInitialData();
+  }
+
   onArticleCreateClicked() {
     console.log('onArticleCreateClicked');
     // todo
@@ -109,14 +114,7 @@ export class ArticleCreateComponent implements OnInit {
       )
       .subscribe((userAndLanguages: [GpUser, Language[]]) => {
         console.log('userAndLanguages: %s', JSON.stringify(userAndLanguages));
-        // this.user = userAndLanguages[0];
-        // this.languagesListFromApi = userAndLanguages[1];
         this.initForm();
       });
-  }
-
-  onDataRefreshClicked() {
-    console.log('onDataRefreshClicked');
-    this.loadInitialData();
   }
 }

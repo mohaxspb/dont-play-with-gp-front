@@ -70,6 +70,10 @@ export class ArticleCreateComponent implements OnInit {
         {value: null, disabled: false},
         [Validators.required]
       ),
+      shortDescription: new FormControl(
+        {value: null, disabled: false},
+        []
+      ),
       primaryLanguageSelect: new FormControl(
         {value: null, disabled: false},
         [Validators.required]

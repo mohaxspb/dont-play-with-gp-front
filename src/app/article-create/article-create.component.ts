@@ -40,26 +40,7 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    // todo show progressbar
-    this.dataIsLoading.next(true);
-
-    zip<[GpUser, Language[]]>(
-      this.userProvider.getNonNullUser(),
-      this.languageService.getLanguages()
-    )
-      .pipe(
-        tap((userAndLanguages: [GpUser, Language[]]) => {
-          this.user = userAndLanguages[0];
-          this.languagesListFromApi = userAndLanguages[1];
-        }),
-        finalize(() => this.dataIsLoading.next(false))
-      )
-      .subscribe((userAndLanguages: [GpUser, Language[]]) => {
-        console.log('userAndLanguages: %s', JSON.stringify(userAndLanguages));
-        // this.user = userAndLanguages[0];
-        // this.languagesListFromApi = userAndLanguages[1];
-        this.initForm();
-      });
+    this.loadInitialData();
   }
 
   onPrimaryLanguageChanged(language: Language) {
@@ -100,5 +81,32 @@ export class ArticleCreateComponent implements OnInit {
     //     }
     //   }
     // });
+  }
+
+  private loadInitialData() {
+    this.dataIsLoading.next(true);
+
+    zip<[GpUser, Language[]]>(
+      this.userProvider.getNonNullUser(),
+      this.languageService.getLanguages()
+    )
+      .pipe(
+        tap((userAndLanguages: [GpUser, Language[]]) => {
+          this.user = userAndLanguages[0];
+          this.languagesListFromApi = userAndLanguages[1];
+        }),
+        finalize(() => this.dataIsLoading.next(false))
+      )
+      .subscribe((userAndLanguages: [GpUser, Language[]]) => {
+        console.log('userAndLanguages: %s', JSON.stringify(userAndLanguages));
+        // this.user = userAndLanguages[0];
+        // this.languagesListFromApi = userAndLanguages[1];
+        this.initForm();
+      });
+  }
+
+  onDataRefreshClicked() {
+    console.log('onDataRefreshClicked');
+    this.loadInitialData();
   }
 }

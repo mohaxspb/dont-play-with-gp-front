@@ -6,6 +6,25 @@
     </mat-card-header>
     <mat-card-content>
 
+      <div>
+
+        <mat-spinner
+          *ngIf="dataIsLoading | async"
+          class="center-inside"
+          [diameter]="24"
+        ></mat-spinner>
+
+        <button
+          *ngIf="user == null && !(dataIsLoading | async)"
+          class="default-margin-left"
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onDataRefreshClicked()"
+        >Refresh</button>
+
+      </div>
+
       <div *ngIf="user!=null && languagesListFromApi!=null" id="articleFormContainer">
 
         <form

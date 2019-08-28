@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   private onUserReceived(user: GpUser | null) {
-    console.log('user: ' + JSON.stringify(user));
+    // console.log('user: ' + JSON.stringify(user));
     this.authenticated = user != null;
     this.authProvider.authenticated.next(this.authenticated);
     this.userProvider.call(user);

@@ -2,7 +2,8 @@
 
   <mat-card>
     <mat-card-header>
-      <h3>New article creation</h3>
+      <mat-icon mat-card-avatar color="accent">edit</mat-icon>
+      <mat-card-title>New article creation</mat-card-title>
     </mat-card-header>
     <mat-card-content>
 
@@ -35,7 +36,6 @@
 
           <mat-card>
             <mat-card-header>
-              <!--@formatter:off-->
               <div class="mat-input-element">
                 <mat-checkbox
                   formControlName="articleIsFromAnotherSite"
@@ -44,8 +44,6 @@
                   (change)="onArticleIsFromAnotherSiteClicked($event.checked)"
                 >Article is from another site</mat-checkbox>
               </div>
-
-              <!--@formatter:on-->
             </mat-card-header>
             <mat-card-content *ngIf="articleIsFromAnotherSite">
 
@@ -154,6 +152,7 @@
 
           <div class="full-width-field default-margin-bottom">
             <label>Article text</label>
+            <!--suppress AngularUndefinedBinding -->
             <angular-markdown-editor
               textareaId="editor1"
               rows="12"
@@ -179,8 +178,6 @@
               type="submit"
               [disabled]="!articleCreateFormGroup.valid"
             >Save</button>
-            <!--            disabled="{{ !articleCreateFormGroup.valid}}"-->
-            <!--            [disabled]="!(articleCreateFormGroup.dirty && articleCreateFormGroup.valid)"-->
           </p>
 
         </form>

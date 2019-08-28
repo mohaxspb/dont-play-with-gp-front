@@ -52,12 +52,16 @@ export class ArticleCreateComponent implements OnInit {
     console.log('onArticleIsFromAnotherSiteClicked: %s', checked);
     this.articleIsFromAnotherSite = checked;
 
+    // author name is optional
     if (this.articleIsFromAnotherSite) {
       this.articleCreateFormGroup.controls.sourceTitle.setValidators([Validators.required]);
+      this.articleCreateFormGroup.controls.sourceUrl.setValidators([Validators.required]);
     } else {
       this.articleCreateFormGroup.controls.sourceTitle.clearValidators();
+      this.articleCreateFormGroup.controls.sourceUrl.clearValidators();
     }
     this.articleCreateFormGroup.controls.sourceTitle.updateValueAndValidity();
+    this.articleCreateFormGroup.controls.sourceUrl.updateValueAndValidity();
   }
 
   onSourceTitleChanged(sourceTitle: string) {
@@ -107,6 +111,14 @@ export class ArticleCreateComponent implements OnInit {
         []
       ),
       sourceTitle: new FormControl(
+        {value: null, disabled: false},
+        [Validators.required]
+      ),
+      sourceAuthorName: new FormControl(
+        {value: null, disabled: false},
+        []
+      ),
+      sourceUrl: new FormControl(
         {value: null, disabled: false},
         [Validators.required]
       ),

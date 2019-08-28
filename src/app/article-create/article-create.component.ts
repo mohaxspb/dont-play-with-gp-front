@@ -52,33 +52,12 @@ export class ArticleCreateComponent implements OnInit {
     console.log('onArticleIsFromAnotherSiteClicked: %s', checked);
     this.articleIsFromAnotherSite = checked;
 
-    // const validators = [];
-    // if (this.articleIsFromAnotherSite) {
-    //   validators.push(Validators.required);
-    //   // this.articleCreateFormGroup.controls.sourceTitle.setValidators(validators);
-    // }
-    // this.articleCreateFormGroup.controls.sourceTitle.setValidators(validators);
-    // // else {
-    // //   this.articleCreateFormGroup.controls.sourceTitle.clearValidators();
-    // // }
-    // this.articleCreateFormGroup.updateValueAndValidity();
-
-
-    // const validators = [];
-    // if (this.articleIsFromAnotherSite) {
-    //   validators.push(Validators.required);
-    // }
-    // this.articleCreateFormGroup.controls.sourceTitle.setValidators(validators);
-    // this.articleCreateFormGroup.updateValueAndValidity();
-
     if (this.articleIsFromAnotherSite) {
       this.articleCreateFormGroup.controls.sourceTitle.setValidators([Validators.required]);
-      // this.articleCreateFormGroup.controls.sourceTitle.updateValueAndValidity();
     } else {
       this.articleCreateFormGroup.controls.sourceTitle.clearValidators();
     }
     this.articleCreateFormGroup.controls.sourceTitle.updateValueAndValidity();
-    // this.articleCreateFormGroup.updateValueAndValidity();
   }
 
   onSourceTitleChanged(sourceTitle: string) {
@@ -123,8 +102,7 @@ export class ArticleCreateComponent implements OnInit {
 
   private initForm() {
     this.articleCreateFormGroup = this.fBuilder.group({
-      articleIsFromAnotherSite: new FormControl(/*true),*/
-        // {value: this.articleIsFromAnotherSite, disabled: false},
+      articleIsFromAnotherSite: new FormControl(
         {value: true, disabled: false},
         []
       ),

@@ -61,8 +61,6 @@
                       required="{{articleIsFromAnotherSite}}"
                       (change)="onSourceTitleChanged($event.target.value)"
                     >
-<!--                    required="{{articleIsFromAnotherSite}}"-->
-<!--                    disabled="{{!articleIsFromAnotherSite}}"-->
                   </label>
                   <mat-error
                     *ngIf="articleCreateFormGroup.controls.sourceTitle.errors?.required">You must provide title</mat-error>

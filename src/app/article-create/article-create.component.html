@@ -152,6 +152,17 @@
             </mat-form-field>
           </div>
 
+          <div class="full-width-field">
+            <label>Article text</label>
+            <angular-markdown-editor
+              textareaId="editor1"
+              rows="12"
+              formControlName="markdownText"
+              (onChange)="onTextChanged($event.target.value)"
+            >
+            </angular-markdown-editor>
+          </div>
+
           <p>
             <button
               mat-raised-button
@@ -159,8 +170,8 @@
               type="submit"
               [disabled]="!articleCreateFormGroup.valid"
             >Save</button>
-<!--            disabled="{{ !articleCreateFormGroup.valid}}"-->
-<!--            [disabled]="!(articleCreateFormGroup.dirty && articleCreateFormGroup.valid)"-->
+            <!--            disabled="{{ !articleCreateFormGroup.valid}}"-->
+            <!--            [disabled]="!(articleCreateFormGroup.dirty && articleCreateFormGroup.valid)"-->
           </p>
 
         </form>

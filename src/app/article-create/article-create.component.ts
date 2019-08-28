@@ -32,9 +32,11 @@ export class ArticleCreateComponent implements OnInit {
   sourceTitle: string | null;
   sourceUrl: string | null;
   sourceAuthorName: string | null;
+  articleLanguage: Language;
+
   title: string;
   shortDescription: string;
-  articleLanguage: Language;
+  text: string;
 
   constructor(
     private languageService: GpLanguageService,
@@ -94,6 +96,11 @@ export class ArticleCreateComponent implements OnInit {
     this.shortDescription = shortDescription;
   }
 
+  onTextChanged(text: string) {
+    console.log('onTextChanged: %s', text);
+    this.text = text;
+  }
+
   onDataRefreshClicked() {
     console.log('onDataRefreshClicked');
     this.loadInitialData();
@@ -109,6 +116,10 @@ export class ArticleCreateComponent implements OnInit {
       articleIsFromAnotherSite: new FormControl(
         {value: true, disabled: false},
         []
+      ),
+      primaryLanguageSelect: new FormControl(
+        {value: null, disabled: false},
+        [Validators.required]
       ),
       sourceTitle: new FormControl(
         {value: null, disabled: false},
@@ -130,7 +141,7 @@ export class ArticleCreateComponent implements OnInit {
         {value: null, disabled: false},
         []
       ),
-      primaryLanguageSelect: new FormControl(
+      markdownText: new FormControl(
         {value: null, disabled: false},
         [Validators.required]
       )

@@ -49,6 +49,12 @@ import {DialogComponent} from './dialog/dialog.component';
 import {DialogService} from './service/ui/DialogService';
 import {ArticleComponent} from './article/article.component';
 import {ArticleCreateComponent} from './article-create/article-create.component';
+import {AngularMarkdownEditorModule} from 'angular-markdown-editor';
+import {MarkdownModule} from 'ngx-markdown';
+
+// test for markdown
+// import * as $ from 'jquery';
+declare let $: any;
 
 registerLocaleData(localeEn);
 registerLocaleData(localeRu);
@@ -98,7 +104,9 @@ const routes: Routes = [
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MarkdownModule.forRoot(),
+    AngularMarkdownEditorModule.forRoot({ iconlibrary: 'fa' })
   ],
   providers: [
     GpLocalStorageService,

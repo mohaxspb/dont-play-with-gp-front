@@ -47,3 +47,5 @@ or this article: https://angular-templates.io/tutorials/about/angular-internatio
 See [Angular-Markdown-Editor](https://github.com/ghiscoding/angular-markdown-editor)
 
 And [ngx-markdown](https://github.com/jfcere/ngx-markdown)
+
+In case of problems, try this one: https://github.com/lon-yang/ngx-markdown-editor#readme

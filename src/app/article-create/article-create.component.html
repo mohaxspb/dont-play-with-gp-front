@@ -152,7 +152,7 @@
             </mat-form-field>
           </div>
 
-          <div class="full-width-field">
+          <div class="full-width-field default-margin-bottom">
             <label>Article text</label>
             <angular-markdown-editor
               textareaId="editor1"
@@ -161,6 +161,15 @@
               (onChange)="onTextChanged($event.target.value)"
             >
             </angular-markdown-editor>
+          </div>
+
+          <div id="textPreview" class="default-margin-bottom">
+            <label>Preview</label>
+            <mat-card>
+              <mat-card-content>
+                <markdown [data]="text"></markdown>
+              </mat-card-content>
+            </mat-card>
           </div>
 
           <p>

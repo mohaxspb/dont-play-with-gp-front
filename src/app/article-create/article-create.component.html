@@ -38,16 +38,16 @@
               <!--@formatter:off-->
               <div class="mat-input-element">
                 <mat-checkbox
-                  formControlName="isOriginalCheckBox"
-                  name="isOriginalCheckBox"
+                  formControlName="articleIsFromAnotherSite"
+                  name="articleIsFromAnotherSite"
                   color="primary"
-                  (change)="onArticleIsOriginalClicked($event.checked)"
-                >Article is original</mat-checkbox>
+                  (change)="onArticleIsFromAnotherSiteClicked($event.checked)"
+                >Article is from another site</mat-checkbox>
               </div>
 
               <!--@formatter:on-->
             </mat-card-header>
-            <mat-card-content>
+            <mat-card-content *ngIf="articleIsFromAnotherSite">
 
               <!--              todo 3 optional inputs, depended on checkbox above-->
               <div id="input-source-title" class="mat-input-element">
@@ -55,19 +55,44 @@
                   <label>
                     <input
                       matInput
-                      formControlName="title"
-                      placeholder="Title"
-                      name="title"
-                      [required]="!articleIsOriginal"
-                      (change)="onTitleChanged($event.target.value)"
+                      formControlName="sourceTitle"
+                      placeholder="Source title"
+                      name="sourceTitle"
+                      required="{{articleIsFromAnotherSite}}"
+                      (change)="onSourceTitleChanged($event.target.value)"
                     >
+<!--                    required="{{articleIsFromAnotherSite}}"-->
+<!--                    disabled="{{!articleIsFromAnotherSite}}"-->
                   </label>
                   <mat-error
-                    *ngIf="articleCreateFormGroup.controls.title.errors?.required">You must provide title</mat-error>
+                    *ngIf="articleCreateFormGroup.controls.sourceTitle.errors?.required">You must provide title</mat-error>
                 </mat-form-field>
               </div>
             </mat-card-content>
           </mat-card>
+
+          <div>
+            <mat-form-field class="full-width-field default-margin-top">
+              <mat-label>Primary language</mat-label>
+
+              <mat-select
+                formControlName="primaryLanguageSelect"
+                [errorStateMatcher]="matcher"
+                required
+                (selectionChange)="onPrimaryLanguageChanged($event.value)"
+              >
+                <mat-option
+                  *ngFor="let language of languagesListFromApi"
+                  [value]="language">{{language.langCode.toUpperCase()}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="articleCreateFormGroup.controls.primaryLanguageSelect.errors?.required"
+              >You must make a selection</mat-error>
+
+            </mat-form-field>
+
+          </div>
 
           <div id="input-title" class="mat-input-element">
             <mat-form-field class="full-width-field">
@@ -101,36 +126,15 @@
             </mat-form-field>
           </div>
 
-          <div fxLayout="row" fxLayoutGap="16px">
-            <mat-form-field class="full-width-field">
-              <mat-label>Primary language</mat-label>
-
-              <mat-select
-                formControlName="primaryLanguageSelect"
-                [errorStateMatcher]="matcher"
-                required
-                (selectionChange)="onPrimaryLanguageChanged($event.value)"
-              >
-                <mat-option
-                  *ngFor="let language of languagesListFromApi"
-                  [value]="language">{{language.langCode.toUpperCase()}}
-                </mat-option>
-              </mat-select>
-
-              <mat-error *ngIf="articleCreateFormGroup.controls.primaryLanguageSelect.errors?.required"
-              >You must make a selection</mat-error>
-
-            </mat-form-field>
-
-          </div>
-
           <p>
             <button
               mat-raised-button
               color="accent"
               type="submit"
-              [disabled]="!(articleCreateFormGroup.dirty && articleCreateFormGroup.valid)"
+              [disabled]="!articleCreateFormGroup.valid"
             >Save</button>
+<!--            disabled="{{ !articleCreateFormGroup.valid}}"-->
+<!--            [disabled]="!(articleCreateFormGroup.dirty && articleCreateFormGroup.valid)"-->
           </p>
 
         </form>

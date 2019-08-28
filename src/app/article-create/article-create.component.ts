@@ -26,10 +26,12 @@ export class ArticleCreateComponent implements OnInit {
 
   // local data
   user: GpUser;
-  articleIsOriginal = true;
+  articleIsFromAnotherSite = true;
 
   // article data
-
+  sourceTitle: string | null;
+  sourceUrl: string | null;
+  sourceAuthorName: string | null;
   title: string;
   shortDescription: string;
   articleLanguage: Language;
@@ -44,6 +46,54 @@ export class ArticleCreateComponent implements OnInit {
 
   ngOnInit() {
     this.loadInitialData();
+  }
+
+  onArticleIsFromAnotherSiteClicked(checked: boolean) {
+    console.log('onArticleIsFromAnotherSiteClicked: %s', checked);
+    this.articleIsFromAnotherSite = checked;
+
+    // const validators = [];
+    // if (this.articleIsFromAnotherSite) {
+    //   validators.push(Validators.required);
+    //   // this.articleCreateFormGroup.controls.sourceTitle.setValidators(validators);
+    // }
+    // this.articleCreateFormGroup.controls.sourceTitle.setValidators(validators);
+    // // else {
+    // //   this.articleCreateFormGroup.controls.sourceTitle.clearValidators();
+    // // }
+    // this.articleCreateFormGroup.updateValueAndValidity();
+
+
+    // const validators = [];
+    // if (this.articleIsFromAnotherSite) {
+    //   validators.push(Validators.required);
+    // }
+    // this.articleCreateFormGroup.controls.sourceTitle.setValidators(validators);
+    // this.articleCreateFormGroup.updateValueAndValidity();
+
+    if (this.articleIsFromAnotherSite) {
+      this.articleCreateFormGroup.controls.sourceTitle.setValidators([Validators.required]);
+      // this.articleCreateFormGroup.controls.sourceTitle.updateValueAndValidity();
+    } else {
+      this.articleCreateFormGroup.controls.sourceTitle.clearValidators();
+    }
+    this.articleCreateFormGroup.controls.sourceTitle.updateValueAndValidity();
+    // this.articleCreateFormGroup.updateValueAndValidity();
+  }
+
+  onSourceTitleChanged(sourceTitle: string) {
+    console.log('onSourceTitleChanged: %s', sourceTitle);
+    this.sourceTitle = sourceTitle;
+  }
+
+  onSourceUrlChanged(sourceUrl: string) {
+    console.log('onSourceUrlChanged: %s', sourceUrl);
+    this.sourceUrl = sourceUrl;
+  }
+
+  onSourceAuthorNameChanged(sourceAuthorName: string) {
+    console.log('onSourceAuthorNameChanged: %s', sourceAuthorName);
+    this.sourceAuthorName = sourceAuthorName;
   }
 
   onPrimaryLanguageChanged(language: Language) {
@@ -73,6 +123,15 @@ export class ArticleCreateComponent implements OnInit {
 
   private initForm() {
     this.articleCreateFormGroup = this.fBuilder.group({
+      articleIsFromAnotherSite: new FormControl(/*true),*/
+        // {value: this.articleIsFromAnotherSite, disabled: false},
+        {value: true, disabled: false},
+        []
+      ),
+      sourceTitle: new FormControl(
+        {value: null, disabled: false},
+        [Validators.required]
+      ),
       title: new FormControl(
         {value: null, disabled: false},
         [Validators.required]
@@ -85,6 +144,10 @@ export class ArticleCreateComponent implements OnInit {
         {value: null, disabled: false},
         [Validators.required]
       )
+    });
+
+    this.articleCreateFormGroup.valueChanges.subscribe((changes) => {
+      console.log('valueChanges: %s', JSON.stringify(changes));
     });
 
     // todo may be we need it to edit article
@@ -115,13 +178,8 @@ export class ArticleCreateComponent implements OnInit {
         finalize(() => this.dataIsLoading.next(false))
       )
       .subscribe((userAndLanguages: [GpUser, Language[]]) => {
-        console.log('userAndLanguages: %s', JSON.stringify(userAndLanguages));
+        // console.log('userAndLanguages: %s', JSON.stringify(userAndLanguages));
         this.initForm();
       });
-  }
-
-  onArticleIsOriginalClicked(checked: boolean) {
-    console.log('onArticleIsOriginalClicked: %s', checked);
-    this.articleIsOriginal = checked;
   }
 }

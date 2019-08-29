@@ -29,10 +29,11 @@ export class ArticleCreateComponent implements OnInit {
   articleIsFromAnotherSite = true;
 
   // article data
+  articleLanguage: Language;
+
   sourceTitle: string | null;
   sourceUrl: string | null;
   sourceAuthorName: string | null;
-  articleLanguage: Language;
 
   title: string;
   shortDescription: string;
@@ -66,6 +67,11 @@ export class ArticleCreateComponent implements OnInit {
     this.articleCreateFormGroup.controls.sourceUrl.updateValueAndValidity();
   }
 
+  onPrimaryLanguageChanged(language: Language) {
+    console.log('onPrimaryLanguageChanged: %s', JSON.stringify(language));
+    this.articleLanguage = language;
+  }
+
   onSourceTitleChanged(sourceTitle: string) {
     console.log('onSourceTitleChanged: %s', sourceTitle);
     this.sourceTitle = sourceTitle;
@@ -79,11 +85,6 @@ export class ArticleCreateComponent implements OnInit {
   onSourceAuthorNameChanged(sourceAuthorName: string) {
     console.log('onSourceAuthorNameChanged: %s', sourceAuthorName);
     this.sourceAuthorName = sourceAuthorName;
-  }
-
-  onPrimaryLanguageChanged(language: Language) {
-    console.log('onPrimaryLanguageChanged: %s', JSON.stringify(language));
-    this.articleLanguage = language;
   }
 
   onTitleChanged(title: string) {

@@ -7,7 +7,8 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatBottomSheetModule,
   MatButtonModule,
-  MatCardModule, MatCheckboxModule,
+  MatCardModule,
+  MatCheckboxModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
@@ -18,6 +19,7 @@ import {
   MatRippleModule,
   MatSelectModule,
   MatSnackBarModule,
+  MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -52,7 +54,7 @@ import {ArticleCreateComponent} from './article-create/article-create.component'
 import {AngularMarkdownEditorModule} from 'angular-markdown-editor';
 import {MarkdownModule} from 'ngx-markdown';
 
-// test for markdown
+// need this for markdown lib
 // import * as $ from 'jquery';
 declare let $: any;
 
@@ -84,6 +86,8 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forRoot(routes, {useHash: true}),
+    MarkdownModule.forRoot(),
+    AngularMarkdownEditorModule.forRoot({iconlibrary: 'fa'}),
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -105,8 +109,7 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatCheckboxModule,
-    MarkdownModule.forRoot(),
-    AngularMarkdownEditorModule.forRoot({ iconlibrary: 'fa' })
+    MatTabsModule
   ],
   providers: [
     GpLocalStorageService,

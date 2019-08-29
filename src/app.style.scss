@@ -68,7 +68,11 @@ body {
 }
 
 .bottom-right-corner {
-  position: fixed  !important;
+  position: fixed !important;
   bottom: 16px;
   right: 16px;
+}
+
+.default-padding-around {
+  padding: 16px;
 }

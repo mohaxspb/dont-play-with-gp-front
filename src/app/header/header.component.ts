@@ -63,4 +63,7 @@ export class HeaderComponent implements OnInit {
     return !value;
   }
 
+  onTitleClicked() {
+    this.router.navigateByUrl('');
+  }
 }

@@ -58,6 +58,7 @@ export class Api {
 
     static Method = class {
       static ALL_BY_AUTHOR_ID = 'allByAuthorId';
+      static CREATE = 'create';
     };
   };
 

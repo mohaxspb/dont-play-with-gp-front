@@ -34,7 +34,7 @@
           (ngSubmit)="onArticleCreateClicked()"
         >
 
-          <mat-card>
+          <mat-card id="input-sourceData">
             <mat-card-header>
               <div class="mat-input-element">
                 <mat-checkbox
@@ -95,7 +95,9 @@
             </mat-card-content>
           </mat-card>
 
-          <div>
+          <!--          todo image input, do it as in scp-reader-web-->
+
+          <div id="input-primaryLanguage">
             <mat-form-field class="full-width-field default-margin-top">
               <mat-label>Primary language</mat-label>
 
@@ -150,7 +152,7 @@
             </mat-form-field>
           </div>
 
-          <div id="article-text-translations">
+          <div id="article-text">
             <div class="full-width-field default-margin-bottom">
               <label>Article text</label>
               <!--suppress AngularUndefinedBinding -->
@@ -174,7 +176,7 @@
           </div>
 
 
-          <p>
+          <p id="submit">
             <button
               mat-raised-button
               color="accent"

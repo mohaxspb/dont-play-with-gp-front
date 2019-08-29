@@ -31,10 +31,12 @@ export class ArticleCreateComponent implements OnInit {
   // article data
   articleLanguage: Language;
 
+  // todo image Url
+
   sourceTitle: string | null;
   sourceUrl: string | null;
-  sourceAuthorName: string | null;
 
+  sourceAuthorName: string | null;
   title: string;
   shortDescription: string;
   text: string;
@@ -109,7 +111,21 @@ export class ArticleCreateComponent implements OnInit {
 
   onArticleCreateClicked() {
     console.log('onArticleCreateClicked');
-    // todo
+    // todo show/hide progress, block interface, then navigate to article page.
+    this.articleService
+      .createArticle(
+        this.articleLanguage.id,
+        this.sourceTitle,
+        this.sourceAuthorName,
+        this.sourceUrl,
+        this.title,
+        this.shortDescription,
+        this.text
+        // todo image Url
+      )
+      .subscribe(() => {
+        // todo
+      });
   }
 
   private initForm() {
@@ -151,18 +167,6 @@ export class ArticleCreateComponent implements OnInit {
     this.articleCreateFormGroup.valueChanges.subscribe((changes) => {
       console.log('valueChanges: %s', JSON.stringify(changes));
     });
-
-    // todo may be we need it to edit article
-    // const initialValues = {name: user.fullName, primaryLanguageSelect: userLanguage};
-    // this.articleCreateFormGroup.valueChanges.subscribe((changes) => {
-    //   for (const prop in changes) {
-    //     if (changes.hasOwnProperty(prop)) {
-    //       if (changes[prop] === initialValues[prop]) {
-    //         this.articleCreateFormGroup.get(prop).markAsPristine();
-    //       }
-    //     }
-    //   }
-    // });
   }
 
   private loadInitialData() {
@@ -179,9 +183,6 @@ export class ArticleCreateComponent implements OnInit {
         }),
         finalize(() => this.dataIsLoading.next(false))
       )
-      .subscribe((userAndLanguages: [GpUser, Language[]]) => {
-        // console.log('userAndLanguages: %s', JSON.stringify(userAndLanguages));
-        this.initForm();
-      });
+      .subscribe(() => this.initForm());
   }
 }

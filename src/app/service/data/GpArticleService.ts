@@ -12,4 +12,26 @@ export class GpArticleService {
   getArticleById(id: number): Observable<Article> {
     return this.apiService.getArticleById(id);
   }
+
+  createArticle(
+    languageId: number,
+    sourceTitle: string | null,
+    sourceAuthorName: string | null,
+    sourceUrl: string | null,
+    title: string,
+    shortDescription: string | null,
+    text: string
+    // todo image Url
+  ): Observable<Article> {
+    return this.apiService
+      .createArticle(
+        languageId,
+        sourceTitle,
+        sourceAuthorName,
+        sourceUrl,
+        title,
+        shortDescription,
+        text
+      );
+  }
 }

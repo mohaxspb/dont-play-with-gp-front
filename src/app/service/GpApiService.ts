@@ -87,6 +87,33 @@ export class GpApiService {
   }
 
   getArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(Api.URL + Api.ArticleEndpoint.URL + '/' + id);
+    return this.http.get<Article>(Api.URL + Api.ArticleEndpoint.URL + id);
+  }
+
+  createArticle(
+    languageId: number,
+    sourceTitle: string | null,
+    sourceAuthorName: string | null,
+    sourceUrl: string | null,
+    title: string,
+    shortDescription: string | null,
+    text: string
+    // todo image Url
+  ): Observable<Article> {
+    const formData = new FormData();
+    formData.append('languageId', languageId.toString());
+    formData.append('sourceTitle', sourceTitle);
+    formData.append('sourceAuthorName', sourceAuthorName);
+    formData.append('sourceUrl', sourceUrl);
+    formData.append('title', title);
+    formData.append('text', text);
+    return this.http
+      .post<Article>(
+        Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.CREATE,
+        formData,
+        {
+          withCredentials: true
+        }
+      );
   }
 }

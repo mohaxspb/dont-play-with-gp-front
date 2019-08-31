@@ -6,9 +6,9 @@ import {GpLanguageService} from '../service/data/GpLanguageService';
 import {GpUser} from '../model/auth/GpUser';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {delay, finalize, tap} from 'rxjs/operators';
+import {finalize, tap} from 'rxjs/operators';
 import {BehaviorSubject, zip} from 'rxjs';
-import {GpConstants, URL_PATTERN} from '../GpConstants';
+import {URL_PATTERN} from '../GpConstants';
 
 @Component({
   selector: 'app-article-create',
@@ -62,7 +62,7 @@ export class ArticleCreateComponent implements OnInit {
     // author name is optional
     if (this.articleIsFromAnotherSite) {
       this.articleCreateFormGroup.controls.sourceTitle.setValidators([Validators.required]);
-      this.articleCreateFormGroup.controls.sourceUrl.setValidators([Validators.required,  Validators.pattern(URL_PATTERN)]);
+      this.articleCreateFormGroup.controls.sourceUrl.setValidators([Validators.required, Validators.pattern(URL_PATTERN)]);
     } else {
       this.articleCreateFormGroup.controls.sourceTitle.clearValidators();
       this.articleCreateFormGroup.controls.sourceUrl.clearValidators();
@@ -113,7 +113,7 @@ export class ArticleCreateComponent implements OnInit {
 
   onArticleCreateClicked() {
     console.log('onArticleCreateClicked');
-    // todo show/hide progress, block interface, then navigate to article page.
+
     this.progressInAction.next(true);
     this.articleService
       .createArticle(
@@ -127,12 +127,10 @@ export class ArticleCreateComponent implements OnInit {
         // todo image Url
       )
       .pipe(
-        //todo check it
-        delay(2000),
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(() => {
-        // todo
+        // todo navigate to article page.
       });
   }
 

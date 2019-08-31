@@ -179,7 +179,6 @@
             </div>
           </div>
 
-
           <p id="submit">
             <button
               mat-raised-button
@@ -191,10 +190,13 @@
 
         </form>
 
-        <div *ngIf="progressInAction|async" id="data-sending-indication" class="background-half-transparent-white">
+        <div *ngIf="progressInAction|async"
+             class="background-half-transparent-white cover"
+             id="data-sending-indication"
+        >
 
           <mat-spinner
-            class="center-inside"
+            class="center-inside-both-axis"
             [diameter]="24"
           ></mat-spinner>
 
@@ -203,6 +205,5 @@
       </div>
     </mat-card-content>
   </mat-card>
-
 
 </div>

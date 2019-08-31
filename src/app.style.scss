@@ -63,6 +63,20 @@ body {
   margin: auto;
 }
 
+.center-inside-both-axis {
+  margin: auto;
+  top: 50%;
+}
+
+.cover {
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+ }
+
+
 .full-width-field {
   width: 100%;
 }
@@ -78,5 +92,5 @@ body {
 }
 
 .background-half-transparent-white {
-  background: transparentize($white-87-opacity, 0);
+  background: rgba(255, 255, 255, 0.5)
 }

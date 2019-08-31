@@ -33,10 +33,10 @@ export class ArticleCreateComponent implements OnInit {
 
   // todo image Url
 
-  sourceTitle: string | null;
-  sourceUrl: string | null;
+  sourceTitle: string | null = null;
+  sourceUrl: string | null = null;
+  sourceAuthorName: string | null = null;
 
-  sourceAuthorName: string | null;
   title: string;
   shortDescription: string;
   text: string;

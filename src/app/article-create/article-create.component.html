@@ -138,17 +138,19 @@
           </div>
 
           <div id="input-shortDescription" class="mat-input-element">
-            <mat-form-field class="full-width-field">
-              <label>
-                <textarea
-                  matInput
-                  formControlName="shortDescription"
-                  placeholder="Short description"
-                  name="shortDescription"
-                  (change)="onShortDescriptionChanged($event.target.value)"
-                  rows="4"
-                ></textarea>
-              </label>
+            <mat-form-field class="mat-input-element">
+              <!--suppress HtmlFormInputWithoutLabel -->
+              <textarea
+                class="mat-input-element"
+                matInput
+                matTextareaAutosize
+                matAutosizeMinRows=1
+                matAutosizeMaxRows=5
+                formControlName="shortDescription"
+                placeholder="Short description"
+                name="shortDescription"
+                (change)="onShortDescriptionChanged($event.target.value)"
+              ></textarea>
             </mat-form-field>
           </div>
 

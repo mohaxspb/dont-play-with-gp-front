@@ -101,12 +101,22 @@ export class GpApiService {
     // todo image Url
   ): Observable<Article> {
     const formData = new FormData();
-    formData.append('languageId', languageId.toString());
-    formData.append('sourceTitle', sourceTitle);
-    formData.append('sourceAuthorName', sourceAuthorName);
-    formData.append('sourceUrl', sourceUrl);
+    if (sourceTitle != null) {
+      formData.append('sourceTitle', sourceTitle);
+    }
+    if (sourceAuthorName != null) {
+      formData.append('sourceAuthorName', sourceAuthorName);
+    }
+    if (sourceUrl != null) {
+      formData.append('sourceUrl', sourceUrl);
+    }
+    formData.append('articleLanguageId', languageId.toString());
     formData.append('title', title);
+    if (shortDescription != null) {
+      formData.append('shortDescription', shortDescription);
+    }
     formData.append('text', text);
+    // todo image Url
     return this.http
       .post<Article>(
         Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.CREATE,

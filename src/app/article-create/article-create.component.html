@@ -90,6 +90,8 @@
                   </label>
                   <mat-error
                     *ngIf="articleCreateFormGroup.controls.sourceUrl.errors?.required">You must provide url</mat-error>
+                  <mat-error
+                    *ngIf="articleCreateFormGroup.controls.sourceUrl.errors?.pattern">Url is not valid</mat-error>
                 </mat-form-field>
               </div>
             </mat-card-content>

@@ -8,6 +8,7 @@ import {UserProvider} from '../service/auth/UserProvider';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {finalize, tap} from 'rxjs/operators';
 import {BehaviorSubject, zip} from 'rxjs';
+import {GpConstants, URL_PATTERN} from '../GpConstants';
 
 @Component({
   selector: 'app-article-create',
@@ -60,7 +61,7 @@ export class ArticleCreateComponent implements OnInit {
     // author name is optional
     if (this.articleIsFromAnotherSite) {
       this.articleCreateFormGroup.controls.sourceTitle.setValidators([Validators.required]);
-      this.articleCreateFormGroup.controls.sourceUrl.setValidators([Validators.required]);
+      this.articleCreateFormGroup.controls.sourceUrl.setValidators([Validators.required,  Validators.pattern(URL_PATTERN)]);
     } else {
       this.articleCreateFormGroup.controls.sourceTitle.clearValidators();
       this.articleCreateFormGroup.controls.sourceUrl.clearValidators();
@@ -148,7 +149,7 @@ export class ArticleCreateComponent implements OnInit {
       ),
       sourceUrl: new FormControl(
         {value: null, disabled: false},
-        [Validators.required]
+        [Validators.required, Validators.pattern(URL_PATTERN)]
       ),
       title: new FormControl(
         {value: null, disabled: false},

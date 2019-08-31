@@ -6,7 +6,7 @@ import {GpLanguageService} from '../service/data/GpLanguageService';
 import {GpUser} from '../model/auth/GpUser';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {finalize, tap} from 'rxjs/operators';
+import {delay, finalize, tap} from 'rxjs/operators';
 import {BehaviorSubject, zip} from 'rxjs';
 import {GpConstants, URL_PATTERN} from '../GpConstants';
 
@@ -23,6 +23,7 @@ export class ArticleCreateComponent implements OnInit {
 
   // data from api
   dataIsLoading = new BehaviorSubject<boolean>(false);
+  progressInAction = new BehaviorSubject<boolean>(false);
   languagesListFromApi: Language[];
 
   // local data
@@ -113,6 +114,7 @@ export class ArticleCreateComponent implements OnInit {
   onArticleCreateClicked() {
     console.log('onArticleCreateClicked');
     // todo show/hide progress, block interface, then navigate to article page.
+    this.progressInAction.next(true);
     this.articleService
       .createArticle(
         this.articleLanguage.id,
@@ -123,6 +125,11 @@ export class ArticleCreateComponent implements OnInit {
         this.shortDescription,
         this.text
         // todo image Url
+      )
+      .pipe(
+        //todo check it
+        delay(2000),
+        finalize(() => this.progressInAction.next(false))
       )
       .subscribe(() => {
         // todo

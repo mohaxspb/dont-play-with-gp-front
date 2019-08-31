@@ -191,6 +191,15 @@
 
         </form>
 
+        <div *ngIf="progressInAction|async" id="data-sending-indication" class="background-half-transparent-white">
+
+          <mat-spinner
+            class="center-inside"
+            [diameter]="24"
+          ></mat-spinner>
+
+        </div>
+
       </div>
     </mat-card-content>
   </mat-card>

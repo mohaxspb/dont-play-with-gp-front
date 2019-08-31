@@ -76,3 +76,7 @@ body {
 .default-padding-around {
   padding: 16px;
 }
+
+.background-half-transparent-white {
+  background: transparentize($white-87-opacity, 0);
+}

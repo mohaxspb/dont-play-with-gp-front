@@ -1,4 +1,5 @@
 import {ArticleTranslation} from './ArticleTranslation';
+import {GpUser} from '../auth/GpUser';
 
 export class Article {
   id: number;
@@ -32,4 +33,7 @@ export class Article {
   updated: string;
 
   translations: [ArticleTranslation];
+  author: GpUser | null;
+  approver: GpUser | null;
+  publisher: GpUser | null;
 }

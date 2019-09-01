@@ -1,3 +1,5 @@
+import {GpUser} from '../auth/GpUser';
+
 export class ArticleTranslationVersion {
   id: number;
 
@@ -16,4 +18,8 @@ export class ArticleTranslationVersion {
 
   created: string;
   updated: string;
+
+  author: GpUser | null;
+  approver: GpUser | null;
+  publisher: GpUser | null;
 }

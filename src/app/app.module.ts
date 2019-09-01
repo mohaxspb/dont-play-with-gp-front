@@ -66,6 +66,7 @@ const routes: Routes = [
   {path: 'feed', pathMatch: 'full', component: FeedComponent},
   {path: 'account', pathMatch: 'full', component: AccountComponent},
   {path: 'create-article', pathMatch: 'full', component: ArticleCreateComponent},
+  {path: 'article/:articleId', pathMatch: 'full', component: ArticleComponent},
 ];
 
 @NgModule({

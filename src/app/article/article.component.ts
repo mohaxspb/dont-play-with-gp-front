@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 
 @Component({
   selector: 'app-article',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticleComponent implements OnInit {
 
-  constructor() { }
+  articleId: number;
+
+  constructor(
+    private route: ActivatedRoute
+  ) {
+  }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(
+      (params: ParamMap) => {
+        this.articleId = parseInt(params.get('articleId'), 0);
+        console.log('articleId: ', this.articleId);
+      }
+    );
   }
 
 }

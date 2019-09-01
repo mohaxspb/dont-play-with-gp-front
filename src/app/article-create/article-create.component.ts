@@ -9,6 +9,11 @@ import {GpArticleService} from '../service/data/GpArticleService';
 import {finalize, tap} from 'rxjs/operators';
 import {BehaviorSubject, zip} from 'rxjs';
 import {URL_PATTERN} from '../GpConstants';
+import {Router} from '@angular/router';
+import {Article} from '../model/data/Article';
+import {MatSnackBar} from '@angular/material';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ApiError} from '../model/ApiError';
 
 @Component({
   selector: 'app-article-create',
@@ -47,6 +52,8 @@ export class ArticleCreateComponent implements OnInit {
     private languageService: GpLanguageService,
     private userProvider: UserProvider,
     private articleService: GpArticleService,
+    private snackBar: MatSnackBar,
+    private router: Router,
     private fBuilder: FormBuilder,
   ) {
   }
@@ -129,9 +136,12 @@ export class ArticleCreateComponent implements OnInit {
       .pipe(
         finalize(() => this.progressInAction.next(false))
       )
-      .subscribe(() => {
-        // todo navigate to article page.
-      });
+      .subscribe(
+        (article: Article) => {
+          this.router.navigateByUrl('article/' + article.id);
+        },
+
+      );
   }
 
   private initForm() {
@@ -190,5 +200,9 @@ export class ArticleCreateComponent implements OnInit {
         finalize(() => this.dataIsLoading.next(false))
       )
       .subscribe(() => this.initForm());
+  }
+
+  private showMessage(message: string) {
+    this.snackBar.open(message);
   }
 }

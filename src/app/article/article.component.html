@@ -34,7 +34,6 @@
             <a href="{{article.sourceUrl}}">{{article.sourceTitle}}</a>
             <span *ngIf="article.sourceAuthorName!=null" class="default-margin-left">By {{article.sourceAuthorName}}</span>
           </div>
-          <!--      todo get author-->
           <div *ngIf="article.sourceTitle==null">Author: {{article.author?.fullName}}</div>
         </mat-card-content>
       </mat-card>

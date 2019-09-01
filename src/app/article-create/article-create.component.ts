@@ -11,9 +11,8 @@ import {BehaviorSubject, zip} from 'rxjs';
 import {URL_PATTERN} from '../GpConstants';
 import {Router} from '@angular/router';
 import {Article} from '../model/data/Article';
-import {MatSnackBar} from '@angular/material';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ApiError} from '../model/ApiError';
+import {NotificationService} from '../service/NotificationService';
+import {NavigationUtils} from '../utils/NavigationUtils';
 
 @Component({
   selector: 'app-article-create',
@@ -52,7 +51,7 @@ export class ArticleCreateComponent implements OnInit {
     private languageService: GpLanguageService,
     private userProvider: UserProvider,
     private articleService: GpArticleService,
-    private snackBar: MatSnackBar,
+    private notificationService: NotificationService,
     private router: Router,
     private fBuilder: FormBuilder,
   ) {
@@ -137,10 +136,8 @@ export class ArticleCreateComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        (article: Article) => {
-          this.router.navigateByUrl('article/' + article.id);
-        },
-
+        (article: Article) => this.router.navigateByUrl('article/' + article.id).then(() => NavigationUtils.scrollToTop()),
+        error => this.notificationService.showError(error)
       );
   }
 
@@ -200,9 +197,5 @@ export class ArticleCreateComponent implements OnInit {
         finalize(() => this.dataIsLoading.next(false))
       )
       .subscribe(() => this.initForm());
-  }
-
-  private showMessage(message: string) {
-    this.snackBar.open(message);
   }
 }

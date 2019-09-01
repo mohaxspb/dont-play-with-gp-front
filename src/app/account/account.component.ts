@@ -6,9 +6,9 @@ import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {GpAccountInteractor} from '../service/auth/GpAccountInteractor';
 import {Language} from '../model/data/Language';
 import {finalize} from 'rxjs/operators';
-import {MatSnackBar} from '@angular/material';
 import {DialogService} from '../service/ui/DialogService';
 import {Router} from '@angular/router';
+import {NotificationService} from '../service/NotificationService';
 
 @Component({
   selector: 'app-account',
@@ -33,7 +33,7 @@ export class AccountComponent implements OnInit {
     private router: Router,
     private accountInteractor: GpAccountInteractor,
     private fBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
+    private notificationService: NotificationService,
     private dialogsService: DialogService
   ) {
   }
@@ -109,7 +109,7 @@ export class AccountComponent implements OnInit {
 
   onAvatarEditClicked() {
     console.log('onAvatarEditClicked');
-    this.showMessage('Not implemented yet, sorry)');
+    this.notificationService.showMessage('Not implemented yet, sorry)');
     // todo
   }
 
@@ -120,7 +120,7 @@ export class AccountComponent implements OnInit {
 
   onChangePasswordClicked() {
     console.log('onChangePasswordClicked');
-    this.showMessage('Not implemented yet, sorry)');
+    this.notificationService.showMessage('Not implemented yet, sorry)');
     // todo
   }
 
@@ -143,25 +143,18 @@ export class AccountComponent implements OnInit {
       });
   }
 
-  showMessage(message: string) {
-    this.snackBar.open(message);
-  }
-
   isNullOrEmptyOrUndefined(value) {
     return !value;
   }
 
   private deleteAccount(id: number) {
     console.log('deleteAccount: %d', id);
-    // todo
     this.accountInteractor
       .deleteAccount(id)
       .subscribe(
-        value => {
+        () => {
         },
-        error => {
-          console.error(error);
-        }
+        error => this.notificationService.showError(error)
       );
   }
 }

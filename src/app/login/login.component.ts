@@ -4,14 +4,13 @@ import {GpConstants, SocialProvider} from '../GpConstants';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {GpUser} from '../model/auth/GpUser';
-import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef, MatSnackBar} from '@angular/material';
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material';
 import {GpLanguageService} from '../service/data/GpLanguageService';
 import {BehaviorSubject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {Language} from '../model/data/Language';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ApiError} from '../model/ApiError';
 import {BottomSheetData} from '../model/ui/BottomSheetData';
+import {NotificationService} from '../service/NotificationService';
 
 @Component({
   selector: 'app-login',
@@ -51,7 +50,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private languageService: GpLanguageService,
     private fBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
+    private notificationService: NotificationService,
     @Inject(MAT_BOTTOM_SHEET_DATA) public inputData?: BottomSheetData | null
   ) {
   }
@@ -127,21 +126,7 @@ export class LoginComponent implements OnInit {
             console.log('register: ' + value);
             this.bottomSheetRef.dismiss();
           },
-          error => {
-            if (error instanceof HttpErrorResponse) {
-              console.log('message: %s/%s', error.message, JSON.stringify(error.error));
-              try {
-                const parsedServerError: ApiError = error.error;
-                this.showMessage(parsedServerError.message);
-              } catch (e) {
-                console.error(e);
-                this.showMessage('Unexpected error occurred.');
-              }
-            } else {
-              console.log('error is instance of: %s', error.constructor.name);
-              this.showMessage('Unexpected error occurred.');
-            }
-          }
+          error => this.notificationService.showError(error)
         );
     } else {
       this.authService
@@ -152,9 +137,8 @@ export class LoginComponent implements OnInit {
             this.bottomSheetRef.dismiss();
           },
           error => {
-            console.error(error);
             // todo message localization
-            this.showMessage('Error. May be wrong email and/or password.');
+            this.notificationService.showMessage('Error. May be wrong email and/or password.');
           }
         );
     }
@@ -209,9 +193,5 @@ export class LoginComponent implements OnInit {
       .pipe(
         finalize(() => this.languagesAreLoading.next(false))
       );
-  }
-
-  private showMessage(message: string) {
-    this.snackBar.open(message);
   }
 }

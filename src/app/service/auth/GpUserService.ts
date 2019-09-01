@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
-import {GpApiService} from './GpApiService';
+import {GpApiService} from '../GpApiService';
 import {Observable} from 'rxjs';
-import {User} from '../model/user';
+import {GpUser} from '../../model/auth/GpUser';
 
 @Injectable()
 export class GpUserService {
 
   constructor(
-    private apiService: GpApiService,
+    private apiService: GpApiService
   ) {
   }
 
-  getUser(): Observable<User> {
+  getUser(): Observable<GpUser> {
     return this.apiService.getUser();
   }
 

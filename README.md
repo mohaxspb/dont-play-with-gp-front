@@ -41,3 +41,11 @@ Then, copy it, rename to `messages.LOCALE_CODE_HERE_IE_ru.xlf` and translate, vi
 
 For details see documentation: https://angular.io/guide/i18n#the-app-and-its-translation-file
 or this article: https://angular-templates.io/tutorials/about/angular-internationalization-i18n-multi-language-app
+
+## Markdown editor lib
+
+See [Angular-Markdown-Editor](https://github.com/ghiscoding/angular-markdown-editor)
+
+And [ngx-markdown](https://github.com/jfcere/ngx-markdown)
+
+In case of problems, try this one: https://github.com/lon-yang/ngx-markdown-editor#readme

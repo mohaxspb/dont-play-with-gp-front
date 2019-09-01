@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../service/auth/auth.service';
 import {AuthProvider} from '../service/auth/auth.state.subject';
-import {GpLanguageService} from '../service/GpLanguageService';
-import {UserProvider} from '../service/auth/user.subject';
+import {GpLanguageService} from '../service/data/GpLanguageService';
+import {UserProvider} from '../service/auth/UserProvider';
 import {MatBottomSheet} from '@angular/material';
-import {User} from '../model/user';
+import {GpUser} from '../model/auth/GpUser';
 import {LoginComponent} from '../login/login.component';
 
 @Component({
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   title = 'dont-play-with-gp-web';
 
   authenticated: boolean | null;
-  user: User | null;
+  user: GpUser | null;
 
   constructor(
     private router: Router,
@@ -38,8 +38,8 @@ export class HeaderComponent implements OnInit {
       .authenticated
       .subscribe((authenticated: boolean) => this.authenticated = authenticated);
     this.userProvider
-      .user
-      .subscribe((user: User) => this.user = user);
+      .getUser()
+      .subscribe((user: GpUser) => this.user = user);
   }
 
   onLoginClicked() {
@@ -63,4 +63,7 @@ export class HeaderComponent implements OnInit {
     return !value;
   }
 
+  onTitleClicked() {
+    this.router.navigateByUrl('');
+  }
 }

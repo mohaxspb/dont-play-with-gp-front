@@ -1,7 +1,7 @@
 <div class="account-container">
 
-  <mat-card class="account-card">
-    <mat-card-header class="account-card-header">
+  <mat-card>
+    <mat-card-header>
       <mat-card-title>Profile</mat-card-title>
     </mat-card-header>
 
@@ -34,17 +34,20 @@
         fxLayoutGap.lt-sm="16px"
       >
         <div>
-          <div>
-            <img
-              *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)"
-              class="avatar"
-              src="{{userFromApi.avatar}}"
-              alt="avatar"
-            />
-            <mat-icon class="avatar" *ngIf="isNullOrEmptyOrUndefined(userFromApi.avatar)">person</mat-icon>
-            <button mat-mini-fab aria-label="Edit avatar" class="avatar-edit-fab" (click)="onAvatarEditClicked()">
-              <mat-icon>edit</mat-icon>
-            </button>
+          <div fxLayoutAlign.lt-sm="space-around">
+            <div>
+              <img
+                *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)"
+                class="avatar"
+                src="{{userFromApi.avatar}}"
+                alt="avatar"
+              />
+              <mat-icon class="avatar" *ngIf="isNullOrEmptyOrUndefined(userFromApi.avatar)">person</mat-icon>
+              <button mat-mini-fab aria-label="Edit avatar" class="avatar-edit-fab" (click)="onAvatarEditClicked()">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+
           </div>
 
           <form
@@ -54,7 +57,7 @@
           >
 
             <div class="mat-input-element">
-              <mat-form-field>
+              <mat-form-field class="full-width-field">
                 <label>
                   <input
                     matInput
@@ -69,7 +72,7 @@
             </div>
 
             <div class="mat-input-element">
-              <mat-form-field>
+              <mat-form-field class="full-width-field">
                 <label>
                   <input
                     matInput
@@ -85,7 +88,7 @@
             </div>
 
             <div fxLayout="row" fxLayoutGap="16px">
-              <mat-form-field>
+              <mat-form-field class="full-width-field">
                 <mat-label>Primary language</mat-label>
 
                 <mat-select
@@ -95,7 +98,7 @@
                   (selectionChange)="onPrimaryLanguageChanged($event.value)"
                 >
                   <mat-option
-                    *ngFor="let language of languagesListFromApi2"
+                    *ngFor="let language of languagesListFromApi"
                     [value]="language">{{language.langCode.toUpperCase()}}
                   </mat-option>
                 </mat-select>

@@ -1,5 +1,14 @@
 <mat-toolbar color="primary">
-  <span routerLinkActive="active" routerLink="">{{title}}</span>
+  <div
+    matRipple
+    class="noselect default-padding-around"
+    fxLayout="row"
+    fxLayoutAlign="space-around center"
+    (click)="onTitleClicked()"
+  >
+    <span>{{title}}</span>
+  </div>
+
   <span class="toolbar-spacer"></span>
   <div
     class="noselect"

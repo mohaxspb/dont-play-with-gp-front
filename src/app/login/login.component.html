@@ -1,5 +1,7 @@
 <div class="login-bottom-sheet" fxLayout="column" fxLayoutGap="16px">
 
+  <h3 *ngIf="inputData!=null" class="color-primary">{{inputData?.title}}</h3>
+
   <h3 *ngIf=!createNewAccountFormTypeEnabled>Login with email</h3>
   <h3 *ngIf=createNewAccountFormTypeEnabled>Register with email</h3>
 

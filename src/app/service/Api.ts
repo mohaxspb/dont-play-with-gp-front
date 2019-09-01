@@ -57,6 +57,7 @@ export class Api {
     static URL = 'article/';
 
     static Method = class {
+      static FULL = 'full/';
       static ALL_BY_AUTHOR_ID = 'allByAuthorId';
       static CREATE = 'create';
     };

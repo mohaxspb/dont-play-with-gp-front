@@ -1,1 +1,37 @@
-<p>article works!</p>
+<div>
+
+  <div id="data-loading-indication">
+
+    <mat-spinner
+      *ngIf="dataIsLoading | async"
+      class="center-inside"
+      [diameter]="24"
+    ></mat-spinner>
+
+    <button
+      *ngIf="article==null && !(dataIsLoading | async)"
+      class="default-margin-left"
+      mat-raised-button
+      color="warn"
+      type="button"
+      (click)="onDataRefreshClicked()"
+    >Refresh</button>
+
+  </div>
+
+  <div id="article-content" *ngIf="article!=null">
+
+    <header>
+      <!--    todo title, author, source, pubDate, image-->
+      <!--      todo get lang from user/browser and use it-->
+      <h2>{{article.translations[0].title}}</h2>
+    </header>
+
+    <article>
+      <!--    todo text (markdown)-->
+      <!--      todo get lang from user/browser and use it. Also get latest approved and published version-->
+      <markdown [data]="article.translations[0].versions[0].text"></markdown>
+    </article>
+  </div>
+
+</div>

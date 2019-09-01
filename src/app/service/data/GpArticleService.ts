@@ -13,6 +13,10 @@ export class GpArticleService {
     return this.apiService.getArticleById(id);
   }
 
+  getFullArticleById(id: number): Observable<Article> {
+    return this.apiService.getFullArticleById(id);
+  }
+
   createArticle(
     languageId: number,
     sourceTitle: string | null,

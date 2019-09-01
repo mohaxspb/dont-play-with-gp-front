@@ -90,6 +90,10 @@ export class GpApiService {
     return this.http.get<Article>(Api.URL + Api.ArticleEndpoint.URL + id);
   }
 
+  getFullArticleById(id: number): Observable<Article> {
+    return this.http.get<Article>(Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.FULL + id);
+  }
+
   createArticle(
     languageId: number,
     sourceTitle: string | null,

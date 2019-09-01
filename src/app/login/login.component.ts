@@ -10,7 +10,7 @@ import {BehaviorSubject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {Language} from '../model/data/Language';
 import {BottomSheetData} from '../model/ui/BottomSheetData';
-import {NotificationService} from '../service/NotificationService';
+import {NotificationService} from '../service/ui/NotificationService';
 
 @Component({
   selector: 'app-login',

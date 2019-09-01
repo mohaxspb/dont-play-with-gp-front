@@ -11,7 +11,7 @@ import {BehaviorSubject, zip} from 'rxjs';
 import {URL_PATTERN} from '../GpConstants';
 import {Router} from '@angular/router';
 import {Article} from '../model/data/Article';
-import {NotificationService} from '../service/NotificationService';
+import {NotificationService} from '../service/ui/NotificationService';
 import {NavigationUtils} from '../utils/NavigationUtils';
 
 @Component({

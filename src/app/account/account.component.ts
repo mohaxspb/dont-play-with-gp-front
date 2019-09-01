@@ -8,7 +8,7 @@ import {Language} from '../model/data/Language';
 import {finalize} from 'rxjs/operators';
 import {DialogService} from '../service/ui/DialogService';
 import {Router} from '@angular/router';
-import {NotificationService} from '../service/NotificationService';
+import {NotificationService} from '../service/ui/NotificationService';
 
 @Component({
   selector: 'app-account',

@@ -28,4 +28,8 @@ export class GpLanguageService {
       return of(languages);
     }
   }
+
+  getBrowserLanguageCode(): string {
+    return window.navigator.language.substr(0, 2);
+  }
 }

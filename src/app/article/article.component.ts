@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {BehaviorSubject} from 'rxjs';
-import {NotificationService} from '../service/NotificationService';
+import {NotificationService} from '../service/ui/NotificationService';
 import {finalize} from 'rxjs/operators';
 import {Article} from '../model/data/Article';
 

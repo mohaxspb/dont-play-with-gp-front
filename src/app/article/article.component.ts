@@ -21,6 +21,7 @@ import {AuthorityType} from '../model/auth/Authority';
 export class ArticleComponent implements OnInit {
 
   dataIsLoading = new BehaviorSubject<boolean>(false);
+  // todo coverProgress as in articleCreate component
 
   articleId: number;
 
@@ -62,7 +63,7 @@ export class ArticleComponent implements OnInit {
   onApproveArticleChanged(checked: boolean) {
     console.log('onApproveArticleChanged: %s', checked);
 
-    // fixme test
+    // todo progress
     this.articleService.approveArticle(this.article.id, checked)
       .subscribe(
         value => {

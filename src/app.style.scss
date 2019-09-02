@@ -18,6 +18,11 @@ body {
   font-family: Roboto, sans-serif;
 }
 
+.mat-button-toggle-checked {
+  background-color: mat-color($accent);
+  color: mat-color($accent, default-contrast);
+}
+
 .color-primary {
   color: mat-color($primary);
 }

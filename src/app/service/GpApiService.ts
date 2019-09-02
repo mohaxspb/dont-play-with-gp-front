@@ -6,6 +6,8 @@ import {Api} from './Api';
 import {environment} from '../../environments/environment';
 import {Language} from '../model/data/Language';
 import {Article} from '../model/data/Article';
+import {ArticleTranslation} from '../model/data/ArticleTranslation';
+import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
 
 
 @Injectable()
@@ -146,6 +148,50 @@ export class GpApiService {
     const formData = new FormData().append('publish', String(publish));
     return this.http.post<Article>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.PUBLISH,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  approveArticleTranslation(approve: boolean): Observable<ArticleTranslation> {
+    const formData = new FormData().append('approve', String(approve));
+    return this.http.post<ArticleTranslation>(
+      Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.APPROVE,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  publishArticleTranslation(publish: boolean): Observable<ArticleTranslation> {
+    const formData = new FormData().append('publish', String(publish));
+    return this.http.post<ArticleTranslation>(
+      Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.PUBLISH,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  approveArticleTranslationVersion(approve: boolean): Observable<ArticleTranslationVersion> {
+    const formData = new FormData().append('approve', String(approve));
+    return this.http.post<ArticleTranslationVersion>(
+      Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.APPROVE,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  publishArticleTranslationVersion(publish: boolean): Observable<ArticleTranslationVersion> {
+    const formData = new FormData().append('publish', String(publish));
+    return this.http.post<ArticleTranslationVersion>(
+      Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.PUBLISH,
       formData,
       {
         withCredentials: true

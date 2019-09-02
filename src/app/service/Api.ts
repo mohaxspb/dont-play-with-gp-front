@@ -65,6 +65,30 @@ export class Api {
     };
   };
 
+  static ArticleTranslationEndpoint = class {
+    static URL = 'article/translation/';
+
+    static Method = class {
+      static FULL = 'full/';
+      static ALL_BY_AUTHOR_ID = 'allByAuthorId';
+      static CREATE = 'create';
+      static APPROVE = 'approve';
+      static PUBLISH = 'publish';
+    };
+  };
+
+  static ArticleTranslationVersionEndpoint = class {
+    static URL = 'article/translation/version/';
+
+    static Method = class {
+      static FULL = 'full/';
+      static ALL_BY_AUTHOR_ID = 'allByAuthorId';
+      static CREATE = 'create';
+      static APPROVE = 'approve';
+      static PUBLISH = 'publish';
+    };
+  };
+
   private static currentPort(): string {
     let port = this.TOMCAT_PORT;
     if (window.location.protocol === this.SECURE_SCHEME) {

@@ -51,6 +51,7 @@ export class ArticleComponent implements OnInit {
   }
 
   private loadInitialData() {
+    console.log('loadInitialData');
     this.dataIsLoading.next(true);
 
     zip(
@@ -71,16 +72,14 @@ export class ArticleComponent implements OnInit {
           const pathParams = paramsAndLanguages[0];
           const queryParams = paramsAndLanguages[1];
 
-          this.articleId = parseInt(pathParams.get('articleId'), 0);
-          console.log('articleId: ', this.articleId);
-
           console.log('pathParams', pathParams);
           console.log('queryParams', queryParams);
+
+          this.articleId = parseInt(pathParams.get('articleId'), 0);
 
           this.languages = paramsAndLanguages[2];
 
           const passedLangId = queryParams.get('langId');
-          console.log('passedLangId: %s', passedLangId);
           if (passedLangId != null) {
             this.selectedLanguage = GpLanguageService.getLanguageById(this.languages, parseInt(passedLangId.toString(), 10));
           }

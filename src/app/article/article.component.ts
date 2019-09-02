@@ -59,9 +59,39 @@ export class ArticleComponent implements OnInit {
     }
   }
 
+  onApproveArticleChanged(checked: boolean) {
+    console.log('onApproveArticleChanged: %s', checked);
+
+    // fixme test
+    this.articleService.approveArticle(this.article.id, checked)
+      .subscribe(
+        value => {
+          console.log('approveArticle: %s', JSON.stringify(value));
+          this.article = value;
+        },
+        error => {
+          this.article.approved = !checked;
+          this.notificationService.showError(error);
+        }
+      );
+  }
+
   onPublishArticleChanged(checked: boolean) {
     console.log('onPublishArticleChanged: %s', checked);
     // todo make published after dialog show
+
+    // fixme test
+    this.articleService.publishArticle(this.article.id, checked)
+      .subscribe(
+        value => {
+          console.log('publishArticle: %s', JSON.stringify(value));
+          this.article = value;
+        },
+        error => {
+          this.article.published = !checked;
+          this.notificationService.showError(error);
+        }
+      );
   }
 
   onPublishTranslationChanged(checked: boolean) {
@@ -119,7 +149,8 @@ export class ArticleComponent implements OnInit {
           if (passedLangId != null) {
             this.selectedLanguage = GpLanguageService.getLanguageById(this.languages, parseInt(passedLangId.toString(), 10));
           }
-        }
+        },
+        error => this.notificationService.showError(error)
       );
   }
 

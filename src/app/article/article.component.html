@@ -29,12 +29,33 @@
 
           <div *ngIf="!article.published" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
             <span>Not published</span>
-            <mat-slide-toggle
-              *ngIf="isAdmin()"
-              [(ngModel)]="article.published"
-              [labelPosition]="'before'"
-              (change)="onPublishArticleChanged($event.checked)"
-            >Publish article</mat-slide-toggle>
+            <div fxLayout.gt-xs="row" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
+              <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+                <mat-slide-toggle
+                  [disabled]="!article.approved"
+                  *ngIf="isAdmin()"
+                  [(ngModel)]="article.published"
+                  [labelPosition]="'before'"
+                  (change)="onPublishArticleChanged($event.checked)"
+                >Publish article</mat-slide-toggle>
+                <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
+              </div>
+
+              <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+                <!--                todo disable based on translations-->
+                <!--                [disabled]="!article.approved"-->
+                <mat-slide-toggle
+                  *ngIf="isAdmin()"
+                  [(ngModel)]="article.approved"
+                  [labelPosition]="'before'"
+                  (change)="onApproveArticleChanged($event.checked)"
+                >Approve article</mat-slide-toggle>
+                <!--                todo error based on translations-->
+                <!--                <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>-->
+              </div>
+            </div>
+
+
           </div>
           <h2>{{selectedTranslation.title}}</h2>
 

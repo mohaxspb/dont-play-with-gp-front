@@ -96,7 +96,7 @@
             [labelPosition]="'before'"
             (change)="onPublishTranslationChanged($event.checked)"
           >Publish translation</mat-slide-toggle>
-          <mat-error *ngIf="!selectedTranslation.approved">Version is not approved!</mat-error>
+          <mat-error *ngIf="!selectedTranslation.approved">Translation is not approved!</mat-error>
         </div>
 
         <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">

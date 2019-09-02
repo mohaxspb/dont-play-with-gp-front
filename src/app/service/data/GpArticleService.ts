@@ -41,27 +41,27 @@ export class GpArticleService {
       );
   }
 
-  approveArticle(approve: boolean): Observable<Article> {
-    return this.apiService.approveArticle(approve);
+  approveArticle(id: number, approve: boolean): Observable<Article> {
+    return this.apiService.approveArticle(id, approve);
   }
 
-  publishArticle(publish: boolean): Observable<Article> {
-    return this.apiService.publishArticle(publish);
+  publishArticle(id: number, publish: boolean): Observable<Article> {
+    return this.apiService.publishArticle(id, publish);
   }
 
-  approveArticleTranslation(approve: boolean): Observable<ArticleTranslation> {
-    return this.apiService.approveArticleTranslation(approve);
+  approveArticleTranslation(id: number, approve: boolean): Observable<ArticleTranslation> {
+    return this.apiService.approveArticleTranslation(id, approve);
   }
 
-  publishArticleTranslation(publish: boolean): Observable<ArticleTranslation> {
-    return this.apiService.publishArticleTranslation(publish);
+  publishArticleTranslation(id: number, publish: boolean): Observable<ArticleTranslation> {
+    return this.apiService.publishArticleTranslation(id, publish);
   }
 
-  approveArticleTranslationVersion(approve: boolean): Observable<ArticleTranslationVersion> {
-    return this.apiService.approveArticleTranslationVersion(approve);
+  approveArticleTranslationVersion(id: number, approve: boolean): Observable<ArticleTranslationVersion> {
+    return this.apiService.approveArticleTranslationVersion(id, approve);
   }
 
-  publishArticleTranslationVersion(publish: boolean): Observable<ArticleTranslationVersion> {
-    return this.apiService.publishArticleTranslationVersion(publish);
+  publishArticleTranslationVersion(id: number, publish: boolean): Observable<ArticleTranslationVersion> {
+    return this.apiService.publishArticleTranslationVersion(id, publish);
   }
 }

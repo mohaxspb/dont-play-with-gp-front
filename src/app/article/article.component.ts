@@ -9,6 +9,8 @@ import {UserProvider} from '../service/auth/UserProvider';
 import {GpLanguageService} from '../service/data/GpLanguageService';
 import {GpUser} from '../model/auth/GpUser';
 import {Language} from '../model/data/Language';
+import {ArticleTranslation} from '../model/data/ArticleTranslation';
+import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
 
 @Component({
   selector: 'app-article',
@@ -27,6 +29,9 @@ export class ArticleComponent implements OnInit {
 
   preferredLanguage: Language;
   selectedLanguage: Language | null = null;
+
+  selectedTranslation: ArticleTranslation;
+  selectedTranslationVersion: ArticleTranslationVersion;
 
   constructor(
     private route: ActivatedRoute,
@@ -104,6 +109,8 @@ export class ArticleComponent implements OnInit {
           this.article = data[0];
           this.user = data[1];
 
+          console.log('article: %s', this.article.created);
+
           // preferred lang calculation
           this.preferredLanguage = this.calculatePreferredLanguage(this.user, this.languages);
           // selected lang calculation
@@ -116,6 +123,10 @@ export class ArticleComponent implements OnInit {
           }
           console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
           console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
+
+          this.selectedTranslation = this.calculateSelectedTranslation();
+
+          this.selectedTranslationVersion = this.calculateVersion();
         },
         error => this.notificationService.showError(error)
       );
@@ -155,5 +166,31 @@ export class ArticleComponent implements OnInit {
         return GpLanguageService.getLanguageById(languages, article.originalLangId);
       }
     }
+  }
+
+  private calculateSelectedTranslation(): ArticleTranslation {
+    return this.article.translations.find(value => value.langId === this.selectedLanguage.id);
+  }
+
+  /**
+   * get most recent published or most recent approved or most recent updated
+   */
+  private calculateVersion(): ArticleTranslationVersion {
+    const versions = this.selectedTranslation.versions;
+    const mostRecentPublished = versions
+      .filter(value => value.published)
+      .sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime());
+    if (mostRecentPublished.length !== 0) {
+      return mostRecentPublished[0];
+    }
+
+    const mostRecentApproved = versions
+      .filter(value => value.approved)
+      .sort((a, b) => b.approvedDate.getTime() - a.approvedDate.getTime());
+    if (mostRecentApproved.length !== 0) {
+      return mostRecentApproved[0];
+    }
+
+    return versions.sort((a, b) => b.updated.getTime() - a.updated.getTime())[0];
   }
 }

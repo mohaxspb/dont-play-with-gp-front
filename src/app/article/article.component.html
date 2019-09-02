@@ -24,15 +24,15 @@
     <header class="default-margin-bottom">
       <mat-card>
         <mat-card-content>
-          <!--    todo title, author, source, pubDate, image-->
-          <!--      todo get lang from user/browser and use it-->
+          <!--    todo image-->
           <span *ngIf="article.published">{{article.publishedDate}}</span>
           <span *ngIf="!article.published">Not published</span>
-          <h2>{{article.translations[0].title}}</h2>
+          <h2>{{selectedTranslation.title}}</h2>
 
           <div id="sourceData" *ngIf="article.sourceTitle!=null">
             <a href="{{article.sourceUrl}}">{{article.sourceTitle}}</a>
-            <span *ngIf="article.sourceAuthorName!=null" class="default-margin-left">By {{article.sourceAuthorName}}</span>
+            <span *ngIf="article.sourceAuthorName!=null"
+                  class="default-margin-left">By {{article.sourceAuthorName}}</span>
           </div>
           <div *ngIf="article.sourceTitle==null">Author: {{article.author?.fullName}}</div>
         </mat-card-content>
@@ -43,10 +43,7 @@
     <!--    todo select for lang-->
 
     <article>
-      <!--    todo text (markdown)-->
-      <!--      todo get lang from user/browser and use it. Also get latest approved and published version-->
-      <!--      maybe use subject with text version?-->
-      <markdown [data]="article.translations[0].versions[0].text"></markdown>
+      <markdown [data]="selectedTranslationVersion.text"></markdown>
     </article>
   </div>
 

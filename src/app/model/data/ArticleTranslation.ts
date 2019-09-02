@@ -15,14 +15,14 @@ export class ArticleTranslation {
 
   approved: boolean;
   approverId: number | null;
-  approvedDate: string | null;
+  approvedDate: Date | null;
 
   published: boolean;
   publisherId: number | null;
-  publishedDate: string | null;
+  publishedDate: Date | null;
 
-  created: string;
-  updated: string;
+  created: Date;
+  updated: Date;
 
   versions: [ArticleTranslationVersion];
   author: GpUser | null;

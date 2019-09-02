@@ -80,12 +80,13 @@ export class ArticleComponent implements OnInit {
     console.log('onPublishArticleChanged: %s', checked);
     // todo make published after dialog show
 
-    // fixme test
+    // todo progress
     this.articleService.publishArticle(this.article.id, checked)
       .subscribe(
         value => {
           console.log('publishArticle: %s', JSON.stringify(value));
           this.article = value;
+          // fixme think if we need to reset data (selected trans and ver)
         },
         error => {
           this.article.published = !checked;
@@ -94,9 +95,53 @@ export class ArticleComponent implements OnInit {
       );
   }
 
+  onApproveTranslationChanged(checked: boolean) {
+    console.log('onApproveTranslationChanged: %s', checked);
+
+    // todo progress
+    this.articleService.approveArticleTranslation(this.selectedTranslation.id, checked)
+      .subscribe(
+        value => {
+          console.log('approveArticleTranslation: %s', JSON.stringify(value));
+
+          const selectedTranslationIndex = this.article
+            .translations.findIndex(translation => translation.id === this.selectedTranslation.id);
+          this.article.translations[selectedTranslationIndex] = value;
+
+          console.log('Updated article: %s', JSON.stringify(this.article));
+        },
+        error => {
+          this.selectedTranslation.approved = !checked;
+          this.notificationService.showError(error);
+        }
+      );
+  }
+
   onPublishTranslationChanged(checked: boolean) {
     console.log('onPublishTranslationChanged: %s', checked);
     // todo make published after dialog show
+  }
+
+  onApproveVersionChanged(checked: boolean) {
+    console.log('onApproveVersionChanged: %s', checked);
+
+    // todo progress
+    this.articleService.approveArticleTranslationVersion(this.selectedTranslationVersion.id, checked)
+      .subscribe(
+        value => {
+          console.log('approveArticleTranslationVersion: %s', JSON.stringify(value));
+          const selectedTranslationIndex = this.article
+            .translations.findIndex(translation => translation.id === this.selectedTranslation.id);
+          const selectedVersionIndex = this.article.translations[selectedTranslationIndex]
+            .versions.findIndex(version => version.id === this.selectedTranslationVersion.id);
+          this.article.translations[selectedTranslationIndex].versions[selectedVersionIndex] = value;
+          console.log('Updated article: %s', JSON.stringify(this.article));
+        },
+        error => {
+          this.selectedTranslationVersion.approved = !checked;
+          this.notificationService.showError(error);
+        }
+      );
   }
 
   onPublishVersionChanged(checked: boolean) {

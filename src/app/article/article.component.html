@@ -29,11 +29,14 @@
 
           <div *ngIf="!article.published" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
             <span>Not published</span>
-            <div fxLayout.gt-xs="row" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
+            <div *ngIf="isAdmin()"
+                 fxLayout.gt-xs="row"
+                 fxLayout="column"
+                 fxLayoutAlign="start start"
+                 fxLayoutGap="16px">
               <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
                 <mat-slide-toggle
                   [disabled]="!article.approved"
-                  *ngIf="isAdmin()"
                   [(ngModel)]="article.published"
                   [labelPosition]="'before'"
                   (change)="onPublishArticleChanged($event.checked)"
@@ -45,18 +48,16 @@
                 <!--                todo disable based on translations-->
                 <!--                [disabled]="!article.approved"-->
                 <mat-slide-toggle
-                  *ngIf="isAdmin()"
                   [(ngModel)]="article.approved"
                   [labelPosition]="'before'"
                   (change)="onApproveArticleChanged($event.checked)"
                 >Approve article</mat-slide-toggle>
                 <!--                todo error based on translations-->
-                <!--                <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>-->
+                <!--                <mat-error *ngIf="isAdmin() && !article.approved">Article is not approved!</mat-error>-->
               </div>
             </div>
-
-
           </div>
+
           <h2>{{selectedTranslation.title}}</h2>
 
           <div id="sourceData" *ngIf="article.sourceTitle!=null">
@@ -81,12 +82,31 @@
         >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
       </mat-button-toggle-group>
 
-      <mat-slide-toggle
-        *ngIf="isAdmin()"
-        [labelPosition]="'before'"
-        [(ngModel)]="selectedTranslation.published"
-        (change)="onPublishTranslationChanged($event.checked)"
-      >Publish translation</mat-slide-toggle>
+      <div id="translation-approve-publish"
+           *ngIf="isAdmin()"
+           fxLayout.gt-xs="row"
+           fxLayout="column"
+           fxLayoutAlign="start start"
+           fxLayoutGap="16px"
+      >
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-slide-toggle
+            [disabled]="!selectedTranslation.approved"
+            [(ngModel)]="selectedTranslation.published"
+            [labelPosition]="'before'"
+            (change)="onPublishTranslationChanged($event.checked)"
+          >Publish translation</mat-slide-toggle>
+          <mat-error *ngIf="!selectedTranslation.approved">Version is not approved!</mat-error>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-slide-toggle
+            [(ngModel)]="selectedTranslation.approved"
+            [labelPosition]="'before'"
+            (change)="onApproveTranslationChanged($event.checked)"
+          >Approve translation</mat-slide-toggle>
+        </div>
+      </div>
 
     </div>
 
@@ -94,12 +114,32 @@
 
       <markdown [data]="selectedTranslationVersion.text"></markdown>
 
-      <mat-slide-toggle
+      <div id="version-approve-publish"
         *ngIf="isAdmin()"
-        [labelPosition]="'before'"
-        [(ngModel)]="selectedTranslationVersion.published"
-        (change)="onPublishVersionChanged($event.checked)"
-      >Publish version</mat-slide-toggle>
+           fxLayout.gt-xs="row"
+           fxLayout="column"
+           fxLayoutAlign="start start"
+           fxLayoutGap="16px"
+      >
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-slide-toggle
+            [disabled]="!selectedTranslationVersion.approved"
+            [(ngModel)]="selectedTranslationVersion.published"
+            [labelPosition]="'before'"
+            (change)="onPublishVersionChanged($event.checked)"
+          >Publish version</mat-slide-toggle>
+          <mat-error *ngIf="!selectedTranslationVersion.approved">Version is not approved!</mat-error>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-slide-toggle
+            [(ngModel)]="selectedTranslationVersion.approved"
+            [labelPosition]="'before'"
+            (change)="onApproveVersionChanged($event.checked)"
+          >Approve version</mat-slide-toggle>
+        </div>
+      </div>
+
     </article>
   </div>
 

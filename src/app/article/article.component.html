@@ -40,17 +40,14 @@
 
     </header>
 
-    <!--    todo select for lang. May be user button toggle?-->
-    <mat-label>Choose language</mat-label>
-    <mat-select
-      class="max-width-200 default-margin-left"
-      [ngModel]="selectedLanguage"
-      (selectionChange)="onLanguageSelected($event.value)"
-    >
-      <mat-option
-        *ngFor="let language of availableArticleLanguages"
-        [value]="language">{{language.langCode.toUpperCase()}}</mat-option>
-    </mat-select>
+    <mat-button-toggle-group
+      [value]="selectedLanguage"
+      (change)="onLanguageSelected($event.value)">
+      <mat-button-toggle
+        *ngFor="let lang of availableArticleLanguages"
+        [value]="lang"
+      >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
+    </mat-button-toggle-group>
 
     <article class="default-margin-top">
       <markdown [data]="selectedTranslationVersion.text"></markdown>

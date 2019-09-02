@@ -7,6 +7,7 @@ import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatBottomSheetModule,
   MatButtonModule,
+  MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
   MatDialogModule,
@@ -24,7 +25,7 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import {RouterModule, Routes} from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 // internalization
 import {registerLocaleData} from '@angular/common';
@@ -111,7 +112,7 @@ const routes: Routes = [
     MatTooltipModule,
     MatCheckboxModule,
     MatTabsModule,
-    FormsModule
+    MatButtonToggleModule
   ],
   providers: [
     GpLocalStorageService,

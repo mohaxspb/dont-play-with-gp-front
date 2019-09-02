@@ -26,7 +26,16 @@
         <mat-card-content>
           <!--    todo image-->
           <span *ngIf="article.published">{{article.publishedDate}}</span>
-          <span *ngIf="!article.published">Not published</span>
+
+          <div *ngIf="!article.published" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+            <span>Not published</span>
+            <mat-slide-toggle
+              *ngIf="isAdmin()"
+              [(ngModel)]="article.published"
+              [labelPosition]="'before'"
+              (change)="onPublishArticleChanged($event.checked)"
+            >Publish article</mat-slide-toggle>
+          </div>
           <h2>{{selectedTranslation.title}}</h2>
 
           <div id="sourceData" *ngIf="article.sourceTitle!=null">
@@ -40,17 +49,36 @@
 
     </header>
 
-    <mat-button-toggle-group
-      [value]="selectedLanguage"
-      (change)="onLanguageSelected($event.value)">
-      <mat-button-toggle
-        *ngFor="let lang of availableArticleLanguages"
-        [value]="lang"
-      >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
-    </mat-button-toggle-group>
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
+
+      <mat-button-toggle-group
+        [value]="selectedLanguage"
+        (change)="onLanguageSelected($event.value)">
+        <mat-button-toggle
+          *ngFor="let lang of availableArticleLanguages"
+          [value]="lang"
+        >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-slide-toggle
+        *ngIf="isAdmin()"
+        [labelPosition]="'before'"
+        [(ngModel)]="selectedTranslation.published"
+        (change)="onPublishTranslationChanged($event.checked)"
+      >Publish translation</mat-slide-toggle>
+
+    </div>
 
     <article class="default-margin-top">
+
       <markdown [data]="selectedTranslationVersion.text"></markdown>
+
+      <mat-slide-toggle
+        *ngIf="isAdmin()"
+        [labelPosition]="'before'"
+        [(ngModel)]="selectedTranslationVersion.published"
+        (change)="onPublishVersionChanged($event.checked)"
+      >Publish version</mat-slide-toggle>
     </article>
   </div>
 

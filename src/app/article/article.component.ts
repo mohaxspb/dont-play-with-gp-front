@@ -1,16 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {BehaviorSubject, zip} from 'rxjs';
+import {BehaviorSubject, of, zip} from 'rxjs';
 import {NotificationService} from '../service/ui/NotificationService';
-import {finalize} from 'rxjs/operators';
+import {catchError, finalize} from 'rxjs/operators';
 import {Article} from '../model/data/Article';
-import {UserProvider} from '../service/auth/UserProvider';
 import {GpLanguageService} from '../service/data/GpLanguageService';
 import {GpUser} from '../model/auth/GpUser';
 import {Language} from '../model/data/Language';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
+import {GpUserService} from '../service/auth/GpUserService';
+import {AuthorityType} from '../model/auth/Authority';
 
 @Component({
   selector: 'app-article',
@@ -25,7 +26,7 @@ export class ArticleComponent implements OnInit {
 
   article: Article;
   languages: [Language] = null;
-  user: GpUser | null;
+  user: GpUser | null = null;
 
   preferredLanguage: Language;
   selectedLanguage: Language | null = null;
@@ -38,7 +39,8 @@ export class ArticleComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private articleService: GpArticleService,
-    private userProvider: UserProvider,
+    // private userProvider: UserProvider,
+    private userService: GpUserService,
     private languageService: GpLanguageService,
     private notificationService: NotificationService
   ) {
@@ -57,12 +59,31 @@ export class ArticleComponent implements OnInit {
     }
   }
 
+  onPublishArticleChanged(checked: boolean) {
+    console.log('onPublishArticleChanged: %s', checked);
+    // todo make published after dialog show
+  }
+
+  onPublishTranslationChanged(checked: boolean) {
+    console.log('onPublishTranslationChanged: %s', checked);
+    // todo make published after dialog show
+  }
+
+  onPublishVersionChanged(checked: boolean) {
+    console.log('onPublishVersionChanged: %s', checked);
+    // todo make published after dialog show
+  }
+
   onLanguageSelected(language: Language) {
-    console.log('onLanguageSelected: %s', JSON.stringify(language));
+    // console.log('onLanguageSelected: %s', JSON.stringify(language));
     this.selectedLanguage = language;
 
     this.selectedTranslation = this.calculateSelectedTranslation();
     this.selectedTranslationVersion = this.calculateVersion();
+  }
+
+  isAdmin(): boolean {
+    return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
   }
 
   private loadInitialData() {
@@ -109,10 +130,12 @@ export class ArticleComponent implements OnInit {
 
     zip(
       this.articleService.getFullArticleById(this.articleId),
-      this.userProvider.getUser()
+      this.userService.getUser().pipe(catchError(err => of(null)))
     )
       .pipe(
-        finalize(() => this.dataIsLoading.next(false))
+        finalize(() => {
+          this.dataIsLoading.next(false);
+        })
       )
       .subscribe(
         (data: [Article, GpUser | null]) => {

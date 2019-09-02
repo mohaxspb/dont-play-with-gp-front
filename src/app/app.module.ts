@@ -24,7 +24,7 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import {RouterModule, Routes} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 // internalization
 import {registerLocaleData} from '@angular/common';
@@ -110,7 +110,8 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatCheckboxModule,
-    MatTabsModule
+    MatTabsModule,
+    FormsModule
   ],
   providers: [
     GpLocalStorageService,

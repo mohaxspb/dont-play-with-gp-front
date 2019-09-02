@@ -30,6 +30,8 @@ export class ArticleComponent implements OnInit {
   preferredLanguage: Language;
   selectedLanguage: Language | null = null;
 
+  availableArticleLanguages: Array<Language>;
+
   selectedTranslation: ArticleTranslation;
   selectedTranslationVersion: ArticleTranslationVersion;
 
@@ -53,6 +55,14 @@ export class ArticleComponent implements OnInit {
     } else {
       this.loadArticle();
     }
+  }
+
+  onLanguageSelected(language: Language) {
+    console.log('onLanguageSelected: %s', JSON.stringify(language));
+    this.selectedLanguage = language;
+
+    this.selectedTranslation = this.calculateSelectedTranslation();
+    this.selectedTranslationVersion = this.calculateVersion();
   }
 
   private loadInitialData() {
@@ -124,8 +134,10 @@ export class ArticleComponent implements OnInit {
           console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
           console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
 
-          this.selectedTranslation = this.calculateSelectedTranslation();
+          this.availableArticleLanguages = this.calculateAvailableArticleLanguages();
+          console.log(this.availableArticleLanguages);
 
+          this.selectedTranslation = this.calculateSelectedTranslation();
           this.selectedTranslationVersion = this.calculateVersion();
         },
         error => this.notificationService.showError(error)
@@ -192,5 +204,9 @@ export class ArticleComponent implements OnInit {
     }
 
     return versions.sort((a, b) => b.updated.getTime() - a.updated.getTime())[0];
+  }
+
+  private calculateAvailableArticleLanguages(): Array<Language> {
+    return this.article.translations.map(translation => this.languages.find(lang => translation.langId === lang.id));
   }
 }

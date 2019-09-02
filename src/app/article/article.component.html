@@ -9,7 +9,7 @@
     ></mat-spinner>
 
     <button
-      *ngIf="article==null && !(dataIsLoading | async)"
+      *ngIf="!(dataIsLoading | async) && (languages==null || article==null)"
       class="default-margin-left"
       mat-raised-button
       color="warn"

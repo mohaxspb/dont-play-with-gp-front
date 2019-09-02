@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Language} from '../model/data/Language';
+import {LanguageUtils} from '../utils/LanguageUtils';
+
 
 @Injectable()
 export class GpLocalStorageService {
-
-  public static DEFAULT_LANG_CODE = 'en';
 
   static Keys = class {
     static LANGUAGES = 'LANGUAGES';
@@ -33,7 +33,7 @@ export class GpLocalStorageService {
   getDefaultLangCode(): string {
     let defaultLangCode = localStorage.getItem(GpLocalStorageService.Keys.DEFAULT_LANG_CODE);
     if (defaultLangCode == null) {
-      defaultLangCode = GpLocalStorageService.DEFAULT_LANG_CODE;
+      defaultLangCode = LanguageUtils.getBrowserLanguageCode();
       this.setDefaultLangCode(defaultLangCode);
     }
     return defaultLangCode;

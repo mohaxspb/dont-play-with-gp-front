@@ -120,6 +120,12 @@ export class ArticleCreateComponent implements OnInit {
   onArticleCreateClicked() {
     console.log('onArticleCreateClicked');
 
+    // test
+    // this.router.navigate(['article/' + 43], {queryParams: {langId: 1}})
+    //   .then(() => NavigationUtils.scrollToTop());
+    //
+    // return;
+
     this.progressInAction.next(true);
     this.articleService
       .createArticle(
@@ -136,7 +142,11 @@ export class ArticleCreateComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        (article: Article) => this.router.navigateByUrl('article/' + article.id).then(() => NavigationUtils.scrollToTop()),
+        (article: Article) => this.router.navigate(
+          ['article/' + article.id],
+          {queryParams: {langId: article.originalLangId}}
+        )
+          .then(() => NavigationUtils.scrollToTop()),
         error => this.notificationService.showError(error)
       );
   }

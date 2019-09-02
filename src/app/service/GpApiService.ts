@@ -130,4 +130,26 @@ export class GpApiService {
         }
       );
   }
+
+  approveArticle(approve: boolean): Observable<Article> {
+    const formData = new FormData().append('approve', String(approve));
+    return this.http.post<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.APPROVE,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  publishArticle(publish: boolean): Observable<Article> {
+    const formData = new FormData().append('publish', String(publish));
+    return this.http.post<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.PUBLISH,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
 }

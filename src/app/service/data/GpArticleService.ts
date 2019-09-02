@@ -38,4 +38,12 @@ export class GpArticleService {
         text
       );
   }
+
+  approveArticle(approve: boolean): Observable<Article> {
+    return this.apiService.approveArticle(approve);
+  }
+
+  publishArticle(publish: boolean): Observable<Article> {
+    return this.apiService.publishArticle(publish);
+  }
 }

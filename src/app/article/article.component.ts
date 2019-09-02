@@ -218,15 +218,12 @@ export class ArticleComponent implements OnInit {
           this.article = data[0];
           this.user = data[1];
 
-          console.log('article: %s', this.article.created);
-
           // preferred lang calculation
           this.preferredLanguage = this.calculatePreferredLanguage(this.user, this.languages);
-          // selected lang calculation
 
+          // selected lang calculation
           // this can be passed from outside (click on concrete translation). If not - calculate it
           console.log('this.selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
-          console.log('this.article.originalLangId: %s', this.article.originalLangId);
           if (this.selectedLanguage == null) {
             this.selectedLanguage = this.calculateSelectedLanguage(this.article, this.preferredLanguage, this.languages);
           }

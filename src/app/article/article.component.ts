@@ -291,6 +291,8 @@ export class ArticleComponent implements OnInit {
   }
 
   private calculateAvailableArticleLanguages(): Array<Language> {
+    // todo in case of NOT admin or author show only published ones.
+    // fixme or, may be, handle it on server...
     return this.article.translations.map(translation => this.languages.find(lang => translation.langId === lang.id));
   }
 
@@ -300,11 +302,11 @@ export class ArticleComponent implements OnInit {
     if (publish) {
       action = 'publish';
     } else {
-      action = 'unpublish';
+      action = 'hide';
     }
     this.dialogsService
       .confirm(
-        'Publish ' + dataType,
+        action + ' ' + dataType,
         'Are you sure you want to ' + action + ' this ' + dataType + '?\n' +
         'It will be available for everyone immediately!',
         action

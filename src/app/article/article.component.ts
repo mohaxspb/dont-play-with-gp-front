@@ -96,7 +96,6 @@ export class ArticleComponent implements OnInit {
         value => {
           console.log('publishArticle: %s', JSON.stringify(value));
           this.article = value;
-          // fixme think if we need to reset data (selected trans and ver)
         },
         error => {
           this.article.published = !checked;

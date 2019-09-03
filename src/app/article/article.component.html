@@ -110,6 +110,13 @@
 
       <markdown [data]="selectedTranslationVersion.text"></markdown>
 
+      <div id="authors">
+        <span *ngIf="selectedTranslation.langId!=article.originalLangId"
+        >Translated by {{selectedTranslation.author.fullName}}</span>
+        <span *ngIf="selectedTranslationVersion.authorId!=selectedTranslation.authorId"
+        > and edited by {{selectedTranslationVersion.author.fullName}}</span>
+      </div>
+
       <div id="approve-publish-version"
            *ngIf="isAdmin()"
            fxLayout.gt-xs="row"
@@ -138,8 +145,7 @@
 
     </article>
 
-    <div id="data-sending-indication"
-         *ngIf="progressInAction|async"
+    <div *ngIf="progressInAction|async"
          id="data-sending-indication"
          class="background-half-transparent-white cover"
          (click)="$event.stopPropagation()"

@@ -25,32 +25,33 @@
       <mat-card>
         <mat-card-content>
           <!--    todo image-->
-          <span *ngIf="article.published">{{article.publishedDate}}</span>
 
-          <div *ngIf="!article.published" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
-            <span>Not published</span>
-            <div id="approve-publish-article" *ngIf="isAdmin()"
-                 fxLayout.gt-xs="row"
-                 fxLayout="column"
-                 fxLayoutAlign="start start"
-                 fxLayoutGap="16px">
-              <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-                <mat-slide-toggle
-                  [disabled]="!article.approved"
-                  [(ngModel)]="article.published"
-                  [labelPosition]="'before'"
-                  (change)="onPublishArticleChanged($event.checked)"
-                >Publish article</mat-slide-toggle>
-                <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
-              </div>
+          <div id="published-date" class="default-margin-bottom">
+            <span *ngIf="article.published">{{article.publishedDate}}</span>
+            <span *ngIf="!article.published">Not published</span>
+          </div>
 
-              <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-                <mat-slide-toggle
-                  [(ngModel)]="article.approved"
-                  [labelPosition]="'before'"
-                  (change)="onApproveArticleChanged($event.checked)"
-                >Approve article</mat-slide-toggle>
-              </div>
+          <div id="approve-publish-article" *ngIf="isAdmin()"
+               fxLayout.gt-xs="row"
+               fxLayout="column"
+               fxLayoutAlign="start start"
+               fxLayoutGap="16px">
+            <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+              <mat-slide-toggle
+                [disabled]="!article.approved"
+                [(ngModel)]="article.published"
+                [labelPosition]="'before'"
+                (change)="onPublishArticleChanged($event.checked)"
+              >Publish article</mat-slide-toggle>
+              <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+              <mat-slide-toggle
+                [(ngModel)]="article.approved"
+                [labelPosition]="'before'"
+                (change)="onApproveArticleChanged($event.checked)"
+              >Approve article</mat-slide-toggle>
             </div>
           </div>
 

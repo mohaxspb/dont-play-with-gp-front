@@ -12,6 +12,7 @@ import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
 import {GpUserService} from '../service/auth/GpUserService';
 import {AuthorityType} from '../model/auth/Authority';
+import {DialogService} from '../service/ui/DialogService';
 
 @Component({
   selector: 'app-article',
@@ -40,10 +41,10 @@ export class ArticleComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private articleService: GpArticleService,
-    // private userProvider: UserProvider,
     private userService: GpUserService,
     private languageService: GpLanguageService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private dialogsService: DialogService
   ) {
   }
 
@@ -71,34 +72,11 @@ export class ArticleComponent implements OnInit {
       )
       .subscribe(
         value => {
-          console.log('approveArticle: %s', JSON.stringify(value));
+          // console.log('approveArticle: %s', JSON.stringify(value));
           this.article = value;
         },
         error => {
           this.article.approved = !checked;
-          this.notificationService.showError(error);
-        }
-      );
-  }
-
-  onPublishArticleChanged(checked: boolean) {
-    console.log('onPublishArticleChanged: %s', checked);
-    // todo make published after dialog show
-
-    this.progressInAction.next(true);
-
-    this.articleService
-      .publishArticle(this.article.id, checked)
-      .pipe(
-        finalize(() => this.progressInAction.next(false))
-      )
-      .subscribe(
-        value => {
-          console.log('publishArticle: %s', JSON.stringify(value));
-          this.article = value;
-        },
-        error => {
-          this.article.published = !checked;
           this.notificationService.showError(error);
         }
       );
@@ -115,25 +93,12 @@ export class ArticleComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        value => {
-          // console.log('approveArticleTranslation: %s', JSON.stringify(value));
-
-          const selectedTranslationIndex = this.article
-            .translations.findIndex(translation => translation.id === this.selectedTranslation.id);
-          this.article.translations[selectedTranslationIndex] = value;
-
-          // console.log('Updated article: %s', JSON.stringify(this.article));
-        },
+        value => this.article.translations[this.getSelectedTranslationIndexInArticle()] = value,
         error => {
           this.selectedTranslation.approved = !checked;
           this.notificationService.showError(error);
         }
       );
-  }
-
-  onPublishTranslationChanged(checked: boolean) {
-    console.log('onPublishTranslationChanged: %s', checked);
-    // todo make published after dialog show
   }
 
   onApproveVersionChanged(checked: boolean) {
@@ -147,15 +112,9 @@ export class ArticleComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        value => {
-          // console.log('approveArticleTranslationVersion: %s', JSON.stringify(value));
-          const selectedTranslationIndex = this.article
-            .translations.findIndex(translation => translation.id === this.selectedTranslation.id);
-          const selectedVersionIndex = this.article.translations[selectedTranslationIndex]
-            .versions.findIndex(version => version.id === this.selectedTranslationVersion.id);
-          this.article.translations[selectedTranslationIndex].versions[selectedVersionIndex] = value;
-          // console.log('Updated article: %s', JSON.stringify(this.article));
-        },
+        value => this.article
+          .translations[this.getSelectedTranslationIndexInArticle()]
+          .versions[this.getSelectedVersionIndexInSelectedTranslation()] = value,
         error => {
           this.selectedTranslationVersion.approved = !checked;
           this.notificationService.showError(error);
@@ -163,9 +122,19 @@ export class ArticleComponent implements OnInit {
       );
   }
 
+  onPublishArticleChanged(checked: boolean) {
+    console.log('onPublishArticleChanged: %s', checked);
+    this.showPublishConfirmDialog(DataType.ARTICLE, this.article.id, checked);
+  }
+
+  onPublishTranslationChanged(checked: boolean) {
+    console.log('onPublishTranslationChanged: %s', checked);
+    this.showPublishConfirmDialog(DataType.TRANSLATION, this.selectedTranslation.id, checked);
+  }
+
   onPublishVersionChanged(checked: boolean) {
     console.log('onPublishVersionChanged: %s', checked);
-    // todo make published after dialog show
+    this.showPublishConfirmDialog(DataType.VERSION, this.selectedTranslationVersion.id, checked);
   }
 
   onLanguageSelected(language: Language) {
@@ -225,7 +194,7 @@ export class ArticleComponent implements OnInit {
 
     zip(
       this.articleService.getFullArticleById(this.articleId),
-      this.userService.getUser().pipe(catchError(err => of(null)))
+      this.userService.getUser().pipe(catchError(() => of(null)))
     )
       .pipe(
         finalize(() => {
@@ -324,4 +293,118 @@ export class ArticleComponent implements OnInit {
   private calculateAvailableArticleLanguages(): Array<Language> {
     return this.article.translations.map(translation => this.languages.find(lang => translation.langId === lang.id));
   }
+
+  // todo translation
+  private showPublishConfirmDialog(dataType: DataType, id: number, publish: boolean) {
+    let action: string;
+    if (publish) {
+      action = 'publish';
+    } else {
+      action = 'unpublish';
+    }
+    this.dialogsService
+      .confirm(
+        'Publish ' + dataType,
+        'Are you sure you want to ' + action + ' this ' + dataType + '?\n' +
+        'It will be available for everyone immediately!',
+        action
+      )
+      .subscribe((res: boolean) => {
+        if (res) {
+          switch (dataType) {
+            case DataType.ARTICLE:
+              this.publishArticle(id, publish);
+              break;
+            case DataType.TRANSLATION:
+              this.publishArticleTranslation(id, publish);
+              break;
+            case DataType.VERSION:
+              this.publishArticleTranslationVersion(id, publish);
+              break;
+          }
+        } else {
+          console.log('Do not publish!');
+          switch (dataType) {
+            case DataType.ARTICLE:
+              this.article.published = !this.article.published;
+              break;
+            case DataType.TRANSLATION:
+              this.selectedTranslation.published = !this.selectedTranslation.published;
+              break;
+            case DataType.VERSION:
+              this.selectedTranslationVersion.published = !this.selectedTranslationVersion.published;
+              break;
+
+          }
+        }
+      });
+  }
+
+  private publishArticle(id: number, publish: boolean) {
+    this.progressInAction.next(true);
+
+    this.articleService
+      .publishArticle(id, publish)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
+      .subscribe(
+        value => this.article = value,
+        error => {
+          this.article.published = !publish;
+          this.notificationService.showError(error);
+        }
+      );
+  }
+
+  private publishArticleTranslation(id: number, publish: boolean) {
+    this.progressInAction.next(true);
+
+    this.articleService
+      .publishArticleTranslation(id, publish)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
+      .subscribe(
+        value => this.article.translations[this.getSelectedTranslationIndexInArticle()] = value,
+        error => {
+          this.selectedTranslation.published = !publish;
+          this.notificationService.showError(error);
+        }
+      );
+  }
+
+  private publishArticleTranslationVersion(id: number, publish: boolean) {
+    this.progressInAction.next(true);
+
+    this.articleService
+      .publishArticleTranslationVersion(id, publish)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
+      .subscribe(
+        value => this.article
+          .translations[this.getSelectedTranslationIndexInArticle()]
+          .versions[this.getSelectedVersionIndexInSelectedTranslation()] = value,
+        error => {
+          this.selectedTranslationVersion.published = !publish;
+          this.notificationService.showError(error);
+        }
+      );
+  }
+
+  private getSelectedTranslationIndexInArticle(): number {
+    return this.article.translations.findIndex(translation => translation.id === this.selectedTranslation.id);
+  }
+
+  private getSelectedVersionIndexInSelectedTranslation(): number {
+    return this.article.translations[this.getSelectedTranslationIndexInArticle()]
+      .versions.findIndex(version => version.id === this.selectedTranslationVersion.id);
+  }
+}
+
+export enum DataType {
+  ARTICLE = 'article',
+  TRANSLATION = 'translation',
+  VERSION = 'version'
 }

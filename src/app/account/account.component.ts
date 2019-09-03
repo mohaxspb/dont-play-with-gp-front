@@ -130,7 +130,7 @@ export class AccountComponent implements OnInit {
     this.showConfirmAccountDeleteDialog(this.userFromApi.id);
   }
 
-  showConfirmAccountDeleteDialog(id: number) {
+  private showConfirmAccountDeleteDialog(id: number) {
     this.dialogsService
     // todo translation
       .confirm('Delete account', 'Are you sure you want to delete account? This can\'t be undone!', 'Delete account')

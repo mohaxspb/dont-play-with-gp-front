@@ -1,6 +1,6 @@
 <div>
-  <h3>{{ title }}</h3>
-  <p>{{ message }}</p>
+  <h3>{{title}}</h3>
+  <p class="show-line-breaks">{{message}}</p>
 
   <div fxLayoutAlign="space-between">
 
@@ -14,6 +14,7 @@
       mat-raised-button
       type="button"
       color="warn"
+      class="text-capitalize"
       (click)="dialogRef.close(true)"
     >{{action}}</button>
 

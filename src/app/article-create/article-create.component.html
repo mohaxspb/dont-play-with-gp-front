@@ -1,10 +1,12 @@
 <div>
 
   <mat-card>
+
     <mat-card-header>
       <mat-icon mat-card-avatar color="accent">edit</mat-icon>
       <mat-card-title>New article creation</mat-card-title>
     </mat-card-header>
+
     <mat-card-content>
 
       <div id="data-loading-indication">
@@ -191,8 +193,8 @@
         </form>
 
         <div *ngIf="progressInAction|async"
-             class="background-half-transparent-white cover"
              id="data-sending-indication"
+             class="background-half-transparent-white cover"
         >
 
           <mat-spinner

@@ -21,7 +21,7 @@ import {AuthorityType} from '../model/auth/Authority';
 export class ArticleComponent implements OnInit {
 
   dataIsLoading = new BehaviorSubject<boolean>(false);
-  // todo coverProgress as in articleCreate component
+  progressInAction = new BehaviorSubject<boolean>(false);
 
   articleId: number;
 
@@ -63,8 +63,12 @@ export class ArticleComponent implements OnInit {
   onApproveArticleChanged(checked: boolean) {
     console.log('onApproveArticleChanged: %s', checked);
 
-    // todo progress
-    this.articleService.approveArticle(this.article.id, checked)
+    this.progressInAction.next(true);
+    this.articleService
+      .approveArticle(this.article.id, checked)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
       .subscribe(
         value => {
           console.log('approveArticle: %s', JSON.stringify(value));
@@ -81,8 +85,13 @@ export class ArticleComponent implements OnInit {
     console.log('onPublishArticleChanged: %s', checked);
     // todo make published after dialog show
 
-    // todo progress
-    this.articleService.publishArticle(this.article.id, checked)
+    this.progressInAction.next(true);
+
+    this.articleService
+      .publishArticle(this.article.id, checked)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
       .subscribe(
         value => {
           console.log('publishArticle: %s', JSON.stringify(value));
@@ -99,17 +108,22 @@ export class ArticleComponent implements OnInit {
   onApproveTranslationChanged(checked: boolean) {
     console.log('onApproveTranslationChanged: %s', checked);
 
-    // todo progress
-    this.articleService.approveArticleTranslation(this.selectedTranslation.id, checked)
+    this.progressInAction.next(true);
+
+    this.articleService
+      .approveArticleTranslation(this.selectedTranslation.id, checked)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
       .subscribe(
         value => {
-          console.log('approveArticleTranslation: %s', JSON.stringify(value));
+          // console.log('approveArticleTranslation: %s', JSON.stringify(value));
 
           const selectedTranslationIndex = this.article
             .translations.findIndex(translation => translation.id === this.selectedTranslation.id);
           this.article.translations[selectedTranslationIndex] = value;
 
-          console.log('Updated article: %s', JSON.stringify(this.article));
+          // console.log('Updated article: %s', JSON.stringify(this.article));
         },
         error => {
           this.selectedTranslation.approved = !checked;
@@ -126,17 +140,22 @@ export class ArticleComponent implements OnInit {
   onApproveVersionChanged(checked: boolean) {
     console.log('onApproveVersionChanged: %s', checked);
 
-    // todo progress
-    this.articleService.approveArticleTranslationVersion(this.selectedTranslationVersion.id, checked)
+    this.progressInAction.next(true);
+
+    this.articleService
+      .approveArticleTranslationVersion(this.selectedTranslationVersion.id, checked)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
       .subscribe(
         value => {
-          console.log('approveArticleTranslationVersion: %s', JSON.stringify(value));
+          // console.log('approveArticleTranslationVersion: %s', JSON.stringify(value));
           const selectedTranslationIndex = this.article
             .translations.findIndex(translation => translation.id === this.selectedTranslation.id);
           const selectedVersionIndex = this.article.translations[selectedTranslationIndex]
             .versions.findIndex(version => version.id === this.selectedTranslationVersion.id);
           this.article.translations[selectedTranslationIndex].versions[selectedVersionIndex] = value;
-          console.log('Updated article: %s', JSON.stringify(this.article));
+          // console.log('Updated article: %s', JSON.stringify(this.article));
         },
         error => {
           this.selectedTranslationVersion.approved = !checked;

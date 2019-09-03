@@ -29,7 +29,7 @@
 
           <div *ngIf="!article.published" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
             <span>Not published</span>
-            <div *ngIf="isAdmin()"
+            <div id="approve-publish-article" *ngIf="isAdmin()"
                  fxLayout.gt-xs="row"
                  fxLayout="column"
                  fxLayoutAlign="start start"
@@ -45,15 +45,11 @@
               </div>
 
               <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-                <!--                todo disable based on translations-->
-                <!--                [disabled]="!article.approved"-->
                 <mat-slide-toggle
                   [(ngModel)]="article.approved"
                   [labelPosition]="'before'"
                   (change)="onApproveArticleChanged($event.checked)"
                 >Approve article</mat-slide-toggle>
-                <!--                todo error based on translations-->
-                <!--                <mat-error *ngIf="isAdmin() && !article.approved">Article is not approved!</mat-error>-->
               </div>
             </div>
           </div>
@@ -82,7 +78,7 @@
         >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
       </mat-button-toggle-group>
 
-      <div id="translation-approve-publish"
+      <div id="approve-publish-translation"
            *ngIf="isAdmin()"
            fxLayout.gt-xs="row"
            fxLayout="column"
@@ -114,8 +110,8 @@
 
       <markdown [data]="selectedTranslationVersion.text"></markdown>
 
-      <div id="version-approve-publish"
-        *ngIf="isAdmin()"
+      <div id="approve-publish-version"
+           *ngIf="isAdmin()"
            fxLayout.gt-xs="row"
            fxLayout="column"
            fxLayoutAlign="start start"
@@ -141,6 +137,20 @@
       </div>
 
     </article>
+
+    <div id="data-sending-indication"
+         *ngIf="progressInAction|async"
+         id="data-sending-indication"
+         class="background-half-transparent-white cover"
+         (click)="$event.stopPropagation()"
+    >
+
+      <mat-spinner
+        class="center-inside-both-axis"
+        [diameter]="24"
+      ></mat-spinner>
+
+    </div>
   </div>
 
 </div>

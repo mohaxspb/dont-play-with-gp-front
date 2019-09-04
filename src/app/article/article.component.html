@@ -83,10 +83,23 @@
         </mat-button-toggle-group>
 
         <button
-        mat-mini-fab
-        color="primary"
-        (click)="onTranslationAddClicked()"
-        ><mat-icon>add</mat-icon></button>
+          *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
+          mat-mini-fab
+          color="primary"
+          matTooltip="Edit translation"
+          (click)="onTranslationAddClicked()"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-mini-fab
+          color="primary"
+          matTooltip="Add translation"
+          (click)="onTranslationAddClicked()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
 
       </div>
 

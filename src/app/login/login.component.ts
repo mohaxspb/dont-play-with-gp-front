@@ -11,6 +11,7 @@ import {finalize} from 'rxjs/operators';
 import {Language} from '../model/data/Language';
 import {BottomSheetData} from '../model/ui/BottomSheetData';
 import {NotificationService} from '../service/ui/NotificationService';
+import {GpLocalStorageService} from '../service/GpLocalStorageService';
 
 @Component({
   selector: 'app-login',
@@ -47,44 +48,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private bottomSheetRef: MatBottomSheetRef<LoginComponent>,
+    private localStorageService: GpLocalStorageService,
     private authService: AuthService,
     private languageService: GpLanguageService,
     private fBuilder: FormBuilder,
     private notificationService: NotificationService,
     @Inject(MAT_BOTTOM_SHEET_DATA) public inputData?: BottomSheetData | null
   ) {
-  }
-
-  private initForm() {
-    this.loginRegisterFormGroup = this.fBuilder.group({
-      name: new FormControl({value: undefined, disabled: true}, [Validators.required]),
-      email: new FormControl(
-        {value: undefined, disabled: false},
-        [Validators.required, Validators.email]
-      ),
-      password: new FormControl(
-        {value: undefined, disabled: false},
-        [
-          Validators.required,
-          Validators.minLength(this.passwordMinLength),
-          Validators.maxLength(this.passwordMaxLength)
-        ]
-      ),
-      passwordConfirm: new FormControl(
-        {value: undefined, disabled: true},
-        [
-          Validators.required,
-          Validators.minLength(this.passwordMinLength),
-          Validators.maxLength(this.passwordMaxLength)
-        ]
-      ),
-      primaryLanguageSelect: new FormControl(
-        {value: undefined, disabled: true},
-        [
-          Validators.required
-        ]
-      )
-    });
   }
 
   ngOnInit() {
@@ -94,18 +64,22 @@ export class LoginComponent implements OnInit {
   }
 
   onGitHubLoginClicked() {
+    this.saveTargetUrl();
     AuthService.socialLogin(SocialProvider.GITHUB);
   }
 
   onVkLoginClicked() {
+    this.saveTargetUrl();
     AuthService.socialLogin(SocialProvider.VK);
   }
 
   onFacebookLoginClicked() {
+    this.saveTargetUrl();
     AuthService.socialLogin(SocialProvider.FACEBOOK);
   }
 
   onGoogleLoginClicked() {
+    this.saveTargetUrl();
     AuthService.socialLogin(SocialProvider.GOOGLE);
   }
 
@@ -136,7 +110,7 @@ export class LoginComponent implements OnInit {
             console.log('login: ' + value);
             this.bottomSheetRef.dismiss();
           },
-          error => {
+          () => {
             // todo message localization
             this.notificationService.showMessage('Error. May be wrong email and/or password.');
           }
@@ -186,6 +160,38 @@ export class LoginComponent implements OnInit {
     this.updateLanguages();
   }
 
+  private initForm() {
+    this.loginRegisterFormGroup = this.fBuilder.group({
+      name: new FormControl({value: undefined, disabled: true}, [Validators.required]),
+      email: new FormControl(
+        {value: undefined, disabled: false},
+        [Validators.required, Validators.email]
+      ),
+      password: new FormControl(
+        {value: undefined, disabled: false},
+        [
+          Validators.required,
+          Validators.minLength(this.passwordMinLength),
+          Validators.maxLength(this.passwordMaxLength)
+        ]
+      ),
+      passwordConfirm: new FormControl(
+        {value: undefined, disabled: true},
+        [
+          Validators.required,
+          Validators.minLength(this.passwordMinLength),
+          Validators.maxLength(this.passwordMaxLength)
+        ]
+      ),
+      primaryLanguageSelect: new FormControl(
+        {value: undefined, disabled: true},
+        [
+          Validators.required
+        ]
+      )
+    });
+  }
+
   private updateLanguages() {
     this.languagesAreLoading.next(true);
     this.languagesListFromApi = this.languageService
@@ -193,5 +199,12 @@ export class LoginComponent implements OnInit {
       .pipe(
         finalize(() => this.languagesAreLoading.next(false))
       );
+  }
+
+  private saveTargetUrl() {
+    console.log('saveTargetUrl: %s', window.location.hash);
+    if (window.location.hash.length > 1) {
+      this.localStorageService.setTargetUrl(window.location.hash.substr(1));
+    }
   }
 }

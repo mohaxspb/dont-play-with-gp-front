@@ -62,7 +62,9 @@
             <span *ngIf="article.sourceAuthorName!=null"
                   class="default-margin-left">By {{article.sourceAuthorName}}</span>
           </div>
+
           <div *ngIf="article.sourceTitle==null">Author: {{article.author?.fullName}}</div>
+
         </mat-card-content>
       </mat-card>
 
@@ -70,14 +72,23 @@
 
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
 
-      <mat-button-toggle-group
-        [value]="selectedLanguage"
-        (change)="onLanguageSelected($event.value)">
-        <mat-button-toggle
-          *ngFor="let lang of availableArticleLanguages"
-          [value]="lang"
-        >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
-      </mat-button-toggle-group>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+        <mat-button-toggle-group
+          [value]="selectedLanguage"
+          (change)="onLanguageSelected($event.value)">
+          <mat-button-toggle
+            *ngFor="let lang of availableArticleLanguages"
+            [value]="lang"
+          >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <button
+        mat-fab
+        color="primary"
+        (click)="onTranslationAddClicked()"
+        ><mat-icon>create</mat-icon></button>
+
+      </div>
 
       <div id="approve-publish-translation"
            *ngIf="isAdmin()"

@@ -13,6 +13,8 @@ import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion
 import {GpUserService} from '../service/auth/GpUserService';
 import {AuthorityType} from '../model/auth/Authority';
 import {DialogService} from '../service/ui/DialogService';
+import {LoginComponent} from '../login/login.component';
+import {MatBottomSheet} from '@angular/material';
 
 @Component({
   selector: 'app-article',
@@ -44,7 +46,8 @@ export class ArticleComponent implements OnInit {
     private userService: GpUserService,
     private languageService: GpLanguageService,
     private notificationService: NotificationService,
-    private dialogsService: DialogService
+    private dialogsService: DialogService,
+    private bottomSheet: MatBottomSheet
   ) {
   }
 
@@ -145,6 +148,17 @@ export class ArticleComponent implements OnInit {
     this.selectedTranslationVersion = this.calculateVersion();
   }
 
+  onTranslationAddClicked() {
+    console.log('onTranslationAddClicked: %s/%s', window.location.href);
+    // show login or translation create component
+    if (this.user == null) {
+      this.bottomSheet.open(LoginComponent, {data: {title: 'To add translation you should'}});
+    } else {
+      // todo navigate to translation create component.
+      // mostly same as article create, except of source and image and origLang
+    }
+  }
+
   isAdmin(): boolean {
     return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
   }
@@ -194,6 +208,7 @@ export class ArticleComponent implements OnInit {
 
     zip(
       this.articleService.getFullArticleById(this.articleId),
+      //todo think about combine latest with userProvider.
       this.userService.getUser().pipe(catchError(() => of(null)))
     )
       .pipe(

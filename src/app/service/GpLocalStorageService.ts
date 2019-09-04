@@ -9,6 +9,7 @@ export class GpLocalStorageService {
   static Keys = class {
     static LANGUAGES = 'LANGUAGES';
     static DEFAULT_LANG_CODE = 'DEFAULT_LANG_CODE';
+    static TARGET_URL = 'TARGET_URL';
   };
 
   constructor() {
@@ -37,5 +38,17 @@ export class GpLocalStorageService {
       this.setDefaultLangCode(defaultLangCode);
     }
     return defaultLangCode;
+  }
+
+  setTargetUrl(targetUrl: string) {
+    localStorage.setItem(GpLocalStorageService.Keys.TARGET_URL, targetUrl);
+  }
+
+  removeTargetUrl() {
+    localStorage.removeItem(GpLocalStorageService.Keys.TARGET_URL);
+  }
+
+  getTargetUrl(): string | null {
+    return localStorage.getItem(GpLocalStorageService.Keys.TARGET_URL);
   }
 }

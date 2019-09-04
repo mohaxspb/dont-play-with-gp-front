@@ -72,7 +72,7 @@
 
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
 
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+      <div id="translations" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
         <mat-button-toggle-group
           [value]="selectedLanguage"
           (change)="onLanguageSelected($event.value)">
@@ -83,10 +83,10 @@
         </mat-button-toggle-group>
 
         <button
-        mat-fab
+        mat-mini-fab
         color="primary"
         (click)="onTranslationAddClicked()"
-        ><mat-icon>create</mat-icon></button>
+        ><mat-icon>add</mat-icon></button>
 
       </div>
 

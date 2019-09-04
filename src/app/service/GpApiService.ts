@@ -89,11 +89,21 @@ export class GpApiService {
   }
 
   getArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(Api.URL + Api.ArticleEndpoint.URL + id);
+    return this.http.get<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + id,
+      {
+        withCredentials: true
+      }
+    );
   }
 
   getFullArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.FULL + id);
+    return this.http.get<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.FULL + id,
+      {
+        withCredentials: true
+      }
+    );
   }
 
   createArticle(

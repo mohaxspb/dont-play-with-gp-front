@@ -28,7 +28,7 @@
 
       </div>
 
-      <div *ngIf="user!=null && languagesListFromApi!=null" id="articleFormContainer">
+      <div id="articleFormContainer" *ngIf="user!=null && languagesListFromApi!=null">
 
         <form
           [formGroup]="articleCreateFormGroup"

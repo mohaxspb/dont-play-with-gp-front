@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {BehaviorSubject, zip} from 'rxjs';
 import {NotificationService} from '../service/ui/NotificationService';
@@ -16,6 +16,7 @@ import {DialogService} from '../service/ui/DialogService';
 import {LoginComponent} from '../login/login.component';
 import {MatBottomSheet} from '@angular/material';
 import {UserProvider} from '../service/auth/UserProvider';
+import {ActionType} from '../article-create/article-create.component';
 
 @Component({
   selector: 'app-article',
@@ -43,6 +44,7 @@ export class ArticleComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private articleService: GpArticleService,
     private userService: GpUserService,
     private userProvider: UserProvider,
@@ -165,14 +167,44 @@ export class ArticleComponent implements OnInit {
   }
 
   onTranslationAddClicked() {
-    console.log('onTranslationAddClicked: %s/%s', window.location.href);
+    console.log('onTranslationAddClicked');
     // show login or translation create component
     if (this.user == null) {
       this.bottomSheet.open(LoginComponent, {data: {title: 'To add translation you should'}});
     } else {
-      // todo navigate to translation create component.
+      // navigate to translation create component.
       // mostly same as article create, except of source and image and origLang
+      // maybe we should use same component with blocked fields
+      this.router.navigate(
+        ['create-article'],
+        {
+          queryParams: {
+            articleId: this.article.id,
+            actionType: ActionType.ADD_TRANSLATION,
+            entityId: this.article.id
+          }
+        }
+      );
     }
+  }
+
+  onTranslationEditClicked() {
+    console.log('onTranslationEditClicked');
+    // only author or admin could call this, so no need to login
+
+    // navigate to translation create component.
+    // mostly same as article create, except of source and image and origLang
+    // maybe we should use same component with blocked fields
+    this.router.navigate(
+      ['create-article'],
+      {
+        queryParams: {
+          articleId: this.article.id,
+          actionType: ActionType.EDIT_TRANSLATION,
+          entityId: this.selectedTranslation.id
+        }
+      }
+    );
   }
 
   isAdmin(): boolean {
@@ -318,8 +350,6 @@ export class ArticleComponent implements OnInit {
   }
 
   private calculateAvailableArticleLanguages(): Array<Language> {
-    // todo in case of NOT admin or author show only published ones.
-    // fixme or, may be, handle it on server...
     return this.article.translations.map(translation => this.languages.find(lang => translation.langId === lang.id));
   }
 

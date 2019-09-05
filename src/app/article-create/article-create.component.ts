@@ -6,10 +6,10 @@ import {GpLanguageService} from '../service/data/GpLanguageService';
 import {GpUser} from '../model/auth/GpUser';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {finalize, tap} from 'rxjs/operators';
-import {BehaviorSubject, zip} from 'rxjs';
+import {finalize, flatMap, tap} from 'rxjs/operators';
+import {BehaviorSubject, of, zip} from 'rxjs';
 import {URL_PATTERN} from '../GpConstants';
-import {Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Article} from '../model/data/Article';
 import {NotificationService} from '../service/ui/NotificationService';
 import {NavigationUtils} from '../utils/NavigationUtils';
@@ -28,7 +28,7 @@ export class ArticleCreateComponent implements OnInit {
   // data from api
   dataIsLoading = new BehaviorSubject<boolean>(false);
   progressInAction = new BehaviorSubject<boolean>(false);
-  languagesListFromApi: Language[];
+  languagesListFromApi: [Language];
 
   // local data
   user: GpUser;
@@ -47,13 +47,21 @@ export class ArticleCreateComponent implements OnInit {
   shortDescription: string;
   text: string;
 
+  // add/edit data
+  article: Article | null = null;
+
+  articleId: number | null = null;
+  actionType: ActionType | null = null;
+  entityId: number | null = null;
+
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private fBuilder: FormBuilder,
     private languageService: GpLanguageService,
     private userProvider: UserProvider,
     private articleService: GpArticleService,
-    private notificationService: NotificationService,
-    private router: Router,
-    private fBuilder: FormBuilder,
+    private notificationService: NotificationService
   ) {
   }
 
@@ -152,26 +160,32 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   private initForm() {
+    const isEditArticleMode = this.actionType !== null && this.actionType === ActionType.EDIT_ARTICLE;
+    const isEditTranslationMode = this.actionType !== null && this.actionType === ActionType.EDIT_TRANSLATION;
+    const articlePrimaryLang = this.article !== null
+      ? GpLanguageService.getLanguageById(this.languagesListFromApi, this.article.originalLangId)
+      : null;
     this.articleCreateFormGroup = this.fBuilder.group({
+      // todo correctly fill inputs from this.article
       articleIsFromAnotherSite: new FormControl(
-        {value: true, disabled: false},
+        {value: this.article !== null ? this.article.sourceUrl !== null : true, disabled: isEditArticleMode},
         []
       ),
-      primaryLanguageSelect: new FormControl(
-        {value: null, disabled: false},
-        [Validators.required]
-      ),
       sourceTitle: new FormControl(
-        {value: null, disabled: false},
+        {value: this.article !== null ? this.article.sourceTitle : null, disabled: isEditArticleMode},
         [Validators.required]
       ),
       sourceAuthorName: new FormControl(
-        {value: null, disabled: false},
+        {value: this.article !== null ? this.article.sourceAuthorName : null, disabled: isEditArticleMode},
         []
       ),
       sourceUrl: new FormControl(
-        {value: null, disabled: false},
+        {value: this.article !== null ? this.article.sourceUrl : null, disabled: isEditArticleMode},
         [Validators.required, Validators.pattern(URL_PATTERN)]
+      ),
+      primaryLanguageSelect: new FormControl(
+        {value: articlePrimaryLang, disabled: isEditArticleMode},
+        [Validators.required]
       ),
       title: new FormControl(
         {value: null, disabled: false},
@@ -182,7 +196,7 @@ export class ArticleCreateComponent implements OnInit {
         []
       ),
       markdownText: new FormControl(
-        {value: null, disabled: false},
+        {value: null, disabled: isEditArticleMode},
         [Validators.required]
       )
     });
@@ -195,17 +209,50 @@ export class ArticleCreateComponent implements OnInit {
   private loadInitialData() {
     this.dataIsLoading.next(true);
 
-    zip<[GpUser, Language[]]>(
+    zip<[GpUser, Language[], Article | null]>(
       this.userProvider.getNonNullUser(),
-      this.languageService.getLanguages()
+      this.languageService.getLanguages(),
+      // check type and load article if need;
+      this.route.queryParamMap
+        .pipe(
+          flatMap((queryParams: ParamMap) => {
+            const articleId = queryParams.get('articleId');
+            const actionType = queryParams.get('actionType');
+            const entityId = queryParams.get('entityId');
+            console.log('articleId, actionType, entityId: %s/%s/%s: ', articleId, actionType, entityId);
+            if (articleId !== null) {
+              this.articleId = Number(articleId);
+              this.actionType = ActionType[actionType];
+              this.entityId = Number(entityId);
+              console.log('articleId, actionType, entityId: %s/%s/%s: ', this.articleId, this.actionType, this.entityId);
+              return this.articleService.getArticleById(this.articleId);
+            } else {
+              return of(null);
+            }
+          })
+        )
     )
       .pipe(
-        tap((userAndLanguages: [GpUser, Language[]]) => {
-          this.user = userAndLanguages[0];
-          this.languagesListFromApi = userAndLanguages[1];
+        tap((userLanguagesAndArticle: [GpUser, [Language], Article | null]) => {
+          this.user = userLanguagesAndArticle[0];
+          this.languagesListFromApi = userLanguagesAndArticle[1];
+          this.article = userLanguagesAndArticle[2];
         }),
         finalize(() => this.dataIsLoading.next(false))
       )
-      .subscribe(() => this.initForm());
+      .subscribe(
+        () => {
+          this.initForm();
+        },
+        error => this.notificationService.showError(error)
+      );
   }
+}
+
+export enum ActionType {
+  EDIT_ARTICLE = 'EDIT_ARTICLE',
+  ADD_TRANSLATION = 'ADD_TRANSLATION',
+  EDIT_TRANSLATION = 'ADD_VERSION',
+  ADD_VERSION = 'ADD_VERSION',
+  EDIT_VERSION = 'ADD_VERSION'
 }

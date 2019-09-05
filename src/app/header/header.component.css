@@ -16,3 +16,9 @@
 .user-name {
   margin-right: 16px;
 }
+
+.avatar-icon {
+  vertical-align: middle;
+
+  margin: 8px 16px;
+}

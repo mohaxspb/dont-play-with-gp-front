@@ -7,7 +7,7 @@
 
     <mat-card-content>
 
-      <div>
+      <div id="data-loading-indicator">
 
         <mat-spinner
           *ngIf="dataIsLoading | async"
@@ -35,15 +35,38 @@
       >
         <div>
           <div id="avatar" fxLayoutAlign.lt-sm="space-around">
-            <div>
+
+            <div id="image-avatar" *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)">
               <img
-                *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)"
-                class="avatar"
+                class="avatar default-margin-bottom"
                 src="{{userFromApi.avatar}}"
                 alt="avatar"
               />
-              <mat-icon class="avatar" *ngIf="isNullOrEmptyOrUndefined(userFromApi.avatar)">person</mat-icon>
-              <button mat-mini-fab aria-label="Edit avatar" class="avatar-edit-fab" (click)="onAvatarEditClicked()">
+
+              <button
+                mat-mini-fab
+                class="avatar-edit-fab"
+                aria-label="Edit avatar"
+                (click)="onAvatarEditClicked()">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+
+            <div id="icon-avatar"
+                 *ngIf="isNullOrEmptyOrUndefined(userFromApi.avatar)"
+                 class="default-margin-bottom"
+                 fxLayout>
+
+              <mat-icon
+                class="avatar-icon background-color-primary"
+                fxLayoutAlign="center center"
+              >person</mat-icon>
+
+              <button
+                mat-mini-fab
+                class="avatar-edit-fab-icon-avatar"
+                aria-label="Edit avatar"
+                (click)="onAvatarEditClicked()">
                 <mat-icon>edit</mat-icon>
               </button>
             </div>

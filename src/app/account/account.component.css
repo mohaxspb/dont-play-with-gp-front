@@ -7,15 +7,25 @@
   width: 72px;
   height: 72px;
 
-  margin-bottom: 16px;
-
   border-radius: 50%;
 
   object-fit: cover;
 }
 
+.avatar-icon {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 50%;
+}
+
 .avatar-edit-fab {
-  bottom: 24px;
+  top: 24px;
+  right: 24px;
+}
+
+.avatar-edit-fab-icon-avatar {
+  top: 48px;
   right: 24px;
 }
 

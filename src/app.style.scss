@@ -35,6 +35,10 @@ body {
   background: mat-color($accent);
 }
 
+.background-color-primary {
+  background: mat-color($primary);
+}
+
 /**
  * prevents text selection
  * see [https://stackoverflow.com/a/9314458/3212712]
@@ -81,7 +85,6 @@ body {
   height: 100%;
   z-index: 1;
 }
-
 
 .full-width-field {
   width: 100%;

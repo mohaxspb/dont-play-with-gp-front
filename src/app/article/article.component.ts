@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {BehaviorSubject, of, zip} from 'rxjs';
+import {BehaviorSubject, zip} from 'rxjs';
 import {NotificationService} from '../service/ui/NotificationService';
-import {catchError, finalize} from 'rxjs/operators';
+import {finalize} from 'rxjs/operators';
 import {Article} from '../model/data/Article';
 import {GpLanguageService} from '../service/data/GpLanguageService';
 import {GpUser} from '../model/auth/GpUser';
@@ -15,6 +15,7 @@ import {AuthorityType} from '../model/auth/Authority';
 import {DialogService} from '../service/ui/DialogService';
 import {LoginComponent} from '../login/login.component';
 import {MatBottomSheet} from '@angular/material';
+import {UserProvider} from '../service/auth/UserProvider';
 
 @Component({
   selector: 'app-article',
@@ -44,6 +45,7 @@ export class ArticleComponent implements OnInit {
     private route: ActivatedRoute,
     private articleService: GpArticleService,
     private userService: GpUserService,
+    private userProvider: UserProvider,
     private languageService: GpLanguageService,
     private notificationService: NotificationService,
     private dialogsService: DialogService,
@@ -53,6 +55,20 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit() {
     this.loadInitialData();
+
+    // handle user changed
+    this.userProvider
+      .getUser()
+      .subscribe(value => {
+        console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
+        if ((this.user === null && value !== null) || (this.user !== null && value === null)) {
+          this.user = value;
+          // update article if user changed (i.e. login with admin authority)
+          if (this.article != null) {
+            this.loadArticle();
+          }
+        }
+      });
   }
 
   onDataRefreshClicked() {
@@ -206,20 +222,16 @@ export class ArticleComponent implements OnInit {
 
     this.dataIsLoading.next(true);
 
-    zip(
-      this.articleService.getFullArticleById(this.articleId),
-      //todo think about combine latest with userProvider.
-      this.userService.getUser().pipe(catchError(() => of(null)))
-    )
+    this.articleService
+      .getFullArticleById(this.articleId)
       .pipe(
         finalize(() => {
           this.dataIsLoading.next(false);
         })
       )
       .subscribe(
-        (data: [Article, GpUser | null]) => {
-          this.article = data[0];
-          this.user = data[1];
+        (article: Article) => {
+          this.article = article;
 
           // preferred lang calculation
           this.preferredLanguage = this.calculatePreferredLanguage(this.user, this.languages);

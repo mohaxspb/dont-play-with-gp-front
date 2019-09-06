@@ -31,8 +31,12 @@
             <span *ngIf="!article.published">Not published</span>
           </div>
 
-          <div fxLayout fxLayoutAlign="start center" fxLayoutGap="16px">
-            <div id="approve-publish-article" *ngIf="isAdmin()"
+          <div id="approve-publish-article" *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
+               fxLayout
+               fxLayoutAlign="start center"
+               fxLayoutGap="16px"
+          >
+            <div *ngIf="isAdmin()"
                  fxLayout.gt-xs="row"
                  fxLayout="column"
                  fxLayoutAlign="start start"
@@ -66,7 +70,6 @@
             >
               <mat-icon>edit</mat-icon>
             </button>
-
 
           </div>
 
@@ -150,43 +153,73 @@
 
       <markdown [data]="selectedTranslationVersion.text"></markdown>
 
-      <div id="authors">
+      <div id="authors" class="default-margin-bottom">
         <span *ngIf="selectedTranslation.langId!=article.originalLangId"
         >Translated by {{selectedTranslation.author.fullName}}</span>
         <span *ngIf="selectedTranslationVersion.authorId!=selectedTranslation.authorId"
         > and edited by {{selectedTranslationVersion.author.fullName}}</span>
       </div>
 
-      <div id="approve-publish-version"
-           *ngIf="isAdmin()"
-           fxLayout.gt-xs="row"
-           fxLayout="column"
-           fxLayoutAlign="start start"
-           fxLayoutGap="16px"
-      >
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-          <mat-slide-toggle
-            [disabled]="!selectedTranslationVersion.approved"
-            [(ngModel)]="selectedTranslationVersion.published"
-            [labelPosition]="'before'"
-            (change)="onPublishVersionChanged($event.checked)"
-          >Publish version</mat-slide-toggle>
-          <mat-error *ngIf="!selectedTranslationVersion.approved">Version is not approved!</mat-error>
+      <div fxLayout fxLayoutAlign="start center" fxLayoutGap="16px">
+
+        <div id="approve-publish-version"
+             fxLayout.gt-xs="row"
+             fxLayout="column"
+             fxLayoutAlign="start start"
+             fxLayoutGap="16px"
+        >
+          <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+            <mat-slide-toggle
+              [disabled]="!selectedTranslationVersion.approved"
+              [(ngModel)]="selectedTranslationVersion.published"
+              [labelPosition]="'before'"
+              (change)="onPublishVersionChanged($event.checked)"
+            >Publish version</mat-slide-toggle>
+            <mat-error *ngIf="!selectedTranslationVersion.approved">Version is not approved!</mat-error>
+          </div>
+
+          <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+            <mat-slide-toggle
+              [(ngModel)]="selectedTranslationVersion.approved"
+              [labelPosition]="'before'"
+              (change)="onApproveVersionChanged($event.checked)"
+            >Approve version</mat-slide-toggle>
+          </div>
         </div>
 
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-          <mat-slide-toggle
-            [(ngModel)]="selectedTranslationVersion.approved"
-            [labelPosition]="'before'"
-            (change)="onApproveVersionChanged($event.checked)"
-          >Approve version</mat-slide-toggle>
+        <div
+          fxLayout.gt-xs="row"
+          fxLayout="column"
+          fxLayoutAlign="start start"
+          fxLayoutGap="16px"
+        >
+          <button
+            *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
+            mat-mini-fab
+            color="primary"
+            matTooltip="Edit version"
+            (click)="onVersionEditClicked()"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button
+            mat-mini-fab
+            color="primary"
+            matTooltip="Add version of text"
+            (click)="onVersionAddClicked()"
+          >
+            <!-- we use edit icon as it seems to be more ... better -->
+            <mat-icon>add</mat-icon>
+          </button>
         </div>
+
+
       </div>
 
     </article>
 
-    <div *ngIf="progressInAction|async"
-         id="data-sending-indication"
+    <div id="data-sending-indication" *ngIf="progressInAction|async"
          class="background-half-transparent-white cover"
          (click)="$event.stopPropagation()"
     >

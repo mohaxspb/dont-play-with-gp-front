@@ -188,9 +188,6 @@ export class ArticleComponent implements OnInit {
     if (this.user == null) {
       this.bottomSheet.open(LoginComponent, {data: {title: 'To add translation you should'}});
     } else {
-      // navigate to translation create component.
-      // mostly same as article create, except of source and image and origLang
-      // maybe we should use same component with blocked fields
       this.router.navigate(
         ['create-article'],
         {
@@ -202,6 +199,40 @@ export class ArticleComponent implements OnInit {
         }
       );
     }
+  }
+
+  onVersionAddClicked() {
+    console.log('onVersionAddClicked');
+    if (this.user == null) {
+      this.bottomSheet.open(LoginComponent, {data: {title: 'To add version you should'}});
+    } else {
+      this.router.navigate(
+        ['create-article'],
+        {
+          queryParams: {
+            articleId: this.article.id,
+            actionType: ActionType.ADD_VERSION,
+            entityId: this.selectedTranslationVersion.id
+          }
+        }
+      );
+    }
+  }
+
+  onVersionEditClicked() {
+    console.log('onVersionEditClicked');
+    // only author or admin could see it, so no need to login
+
+    this.router.navigate(
+      ['create-article'],
+      {
+        queryParams: {
+          articleId: this.article.id,
+          actionType: ActionType.EDIT_VERSION,
+          entityId: this.selectedTranslationVersion.id
+        }
+      }
+    );
   }
 
   onTranslationEditClicked() {

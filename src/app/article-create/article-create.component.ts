@@ -48,6 +48,8 @@ export class ArticleCreateComponent implements OnInit {
   text: string;
 
   // add/edit data
+  actionTitle = 'New article creation';
+
   article: Article | null = null;
 
   articleId: number | null = null;
@@ -223,6 +225,23 @@ export class ArticleCreateComponent implements OnInit {
             if (articleId !== null) {
               this.articleId = Number(articleId);
               this.actionType = ActionType[actionType];
+              switch (actionType) {
+                case ActionType.EDIT_ARTICLE:
+                  this.actionTitle = 'Edit article';
+                  break;
+                case ActionType.ADD_TRANSLATION:
+                  this.actionTitle = 'Add translation';
+                  break;
+                case ActionType.EDIT_TRANSLATION:
+                  this.actionTitle = 'Edit translation';
+                  break;
+                case ActionType.ADD_VERSION:
+                  this.actionTitle = 'Add version';
+                  break;
+                case ActionType.EDIT_VERSION:
+                  this.actionTitle = 'Edit version';
+                  break;
+              }
               this.entityId = Number(entityId);
               console.log('articleId, actionType, entityId: %s/%s/%s: ', this.articleId, this.actionType, this.entityId);
               return this.articleService.getArticleById(this.articleId);

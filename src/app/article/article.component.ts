@@ -166,6 +166,22 @@ export class ArticleComponent implements OnInit {
     this.selectedTranslationVersion = this.calculateVersion();
   }
 
+  onArticleEditClicked() {
+    console.log('onArticleEditClicked');
+    // only author or admin could see it, so no need to login
+
+    this.router.navigate(
+      ['create-article'],
+      {
+        queryParams: {
+          articleId: this.article.id,
+          actionType: ActionType.EDIT_ARTICLE,
+          entityId: this.article.id
+        }
+      }
+    );
+  }
+
   onTranslationAddClicked() {
     console.log('onTranslationAddClicked');
     // show login or translation create component
@@ -190,7 +206,7 @@ export class ArticleComponent implements OnInit {
 
   onTranslationEditClicked() {
     console.log('onTranslationEditClicked');
-    // only author or admin could call this, so no need to login
+    // only author or admin could see it, so no need to login
 
     // navigate to translation create component.
     // mostly same as article create, except of source and image and origLang

@@ -31,28 +31,43 @@
             <span *ngIf="!article.published">Not published</span>
           </div>
 
-          <div id="approve-publish-article" *ngIf="isAdmin()"
-               fxLayout.gt-xs="row"
-               fxLayout="column"
-               fxLayoutAlign="start start"
-               fxLayoutGap="16px">
-            <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-              <mat-slide-toggle
-                [disabled]="!article.approved"
-                [(ngModel)]="article.published"
-                [labelPosition]="'before'"
-                (change)="onPublishArticleChanged($event.checked)"
-              >Publish article</mat-slide-toggle>
-              <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
+          <div fxLayout fxLayoutAlign="start center" fxLayoutGap="16px">
+            <div id="approve-publish-article" *ngIf="isAdmin()"
+                 fxLayout.gt-xs="row"
+                 fxLayout="column"
+                 fxLayoutAlign="start start"
+                 fxLayoutAlign.gt-xs="start center"
+                 fxLayoutGap="16px">
+              <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+                <mat-slide-toggle
+                  [disabled]="!article.approved"
+                  [(ngModel)]="article.published"
+                  [labelPosition]="'before'"
+                  (change)="onPublishArticleChanged($event.checked)"
+                >Publish article</mat-slide-toggle>
+                <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
+              </div>
+
+              <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+                <mat-slide-toggle
+                  [(ngModel)]="article.approved"
+                  [labelPosition]="'before'"
+                  (change)="onApproveArticleChanged($event.checked)"
+                >Approve article</mat-slide-toggle>
+              </div>
             </div>
 
-            <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-              <mat-slide-toggle
-                [(ngModel)]="article.approved"
-                [labelPosition]="'before'"
-                (change)="onApproveArticleChanged($event.checked)"
-              >Approve article</mat-slide-toggle>
-            </div>
+            <button
+              *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
+              mat-mini-fab
+              color="primary"
+              matTooltip="Edit article"
+              (click)="onArticleEditClicked()"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+
+
           </div>
 
           <h2>{{selectedTranslation.title}}</h2>

@@ -31,7 +31,7 @@
             <span *ngIf="!article.published">Not published</span>
           </div>
 
-          <div id="approve-publish-article" *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
+          <div id="approve-publish-article"
                fxLayout
                fxLayoutAlign="start center"
                fxLayoutGap="16px"
@@ -62,7 +62,7 @@
             </div>
 
             <button
-              *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
+              *ngIf="isAdmin() || article.authorId == user?.id"
               mat-mini-fab
               color="primary"
               matTooltip="Edit article"
@@ -194,7 +194,7 @@
           fxLayoutGap="16px"
         >
           <button
-            *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
+            *ngIf="isAdmin() || selectedTranslation.authorId == user?.id || selectedTranslationVersion.authorId == user?.id"
             mat-mini-fab
             color="primary"
             matTooltip="Edit version"

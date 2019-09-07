@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, of} from 'rxjs';
 import {GpUser} from '../model/auth/GpUser';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {GpAccountInteractor} from '../service/auth/GpAccountInteractor';
 import {Language} from '../model/data/Language';
-import {finalize} from 'rxjs/operators';
+import {catchError, delay, finalize} from 'rxjs/operators';
 import {DialogService} from '../service/ui/DialogService';
 import {Router} from '@angular/router';
 import {NotificationService} from '../service/ui/NotificationService';
@@ -18,6 +18,8 @@ import {NotificationService} from '../service/ui/NotificationService';
 export class AccountComponent implements OnInit {
 
   dataIsLoading = new BehaviorSubject<boolean>(false);
+  progressInAction = new BehaviorSubject<boolean>(false);
+
   userFromApi: GpUser;
 
   name: string;
@@ -104,12 +106,22 @@ export class AccountComponent implements OnInit {
 
   onAccountEditClicked() {
     console.log('onAccountEditClicked: %s, %s', this.name, this.userLanguage.langCode);
-    // todo progress
+    this.progressInAction.next(true);
     this.accountInteractor
       .editAccount(this.name, this.userLanguage.langCode)
+      .pipe(
+        // fixme test
+        catchError(err => of(null)),
+        delay(3000),
+        finalize(() => this.progressInAction.next(false))
+      )
       .subscribe(
-        // todo
-        user => this.notificationService.showMessage('Successfully updated!'),
+        // todo clear form and check its validation
+        user => {
+          this.userFromApi = user;
+          this.accountEditFormGroup.markAsPristine();
+          this.notificationService.showMessage('Successfully updated!');
+        },
         error => this.notificationService.showError(error)
       );
   }

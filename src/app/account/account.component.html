@@ -163,6 +163,16 @@
 
       </div>
 
+      <div id="data-sending-indication" *ngIf="progressInAction|async"
+           class="background-half-transparent-white cover test"
+           (click)="$event.stopPropagation()"
+      >
+        <mat-spinner
+          class="center-inside-both-axis"
+          [diameter]="24"
+        ></mat-spinner>
+      </div>
+
     </mat-card-content>
 
     <mat-divider *ngIf="userFromApi != null"></mat-divider>

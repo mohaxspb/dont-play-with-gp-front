@@ -164,41 +164,58 @@ export class ArticleCreateComponent implements OnInit {
   private initForm() {
     const isEditArticleMode = this.actionType !== null && this.actionType === ActionType.EDIT_ARTICLE;
     const isEditTranslationMode = this.actionType !== null && this.actionType === ActionType.EDIT_TRANSLATION;
+    const isAddTranslationMode = this.actionType !== null && this.actionType === ActionType.ADD_TRANSLATION;
+    const isEditVersionMode = this.actionType !== null && this.actionType === ActionType.EDIT_VERSION;
+    const isAddVersionMode = this.actionType !== null && this.actionType === ActionType.ADD_VERSION;
+    console.log('isEditArticleMode || isEditTranslationMode: %s', isEditArticleMode || isEditTranslationMode);
     const articlePrimaryLang = this.article !== null
       ? GpLanguageService.getLanguageById(this.languagesListFromApi, this.article.originalLangId)
       : null;
     this.articleCreateFormGroup = this.fBuilder.group({
       // todo correctly fill inputs from this.article
       articleIsFromAnotherSite: new FormControl(
-        {value: this.article !== null ? this.article.sourceUrl !== null : true, disabled: isEditArticleMode},
+        {
+          value: this.article !== null ? this.article.sourceUrl !== null : true,
+          disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode
+        },
         []
       ),
       sourceTitle: new FormControl(
-        {value: this.article !== null ? this.article.sourceTitle : null, disabled: isEditArticleMode},
+        {
+          value: this.article !== null ? this.article.sourceTitle : null,
+          disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode
+        },
         [Validators.required]
       ),
       sourceAuthorName: new FormControl(
-        {value: this.article !== null ? this.article.sourceAuthorName : null, disabled: isEditArticleMode},
+        {
+          value: this.article !== null ? this.article.sourceAuthorName : null,
+          disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode
+        },
         []
       ),
       sourceUrl: new FormControl(
-        {value: this.article !== null ? this.article.sourceUrl : null, disabled: isEditArticleMode},
+        {
+          value: this.article !== null ? this.article.sourceUrl : null,
+          disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode
+        },
         [Validators.required, Validators.pattern(URL_PATTERN)]
       ),
       primaryLanguageSelect: new FormControl(
-        {value: articlePrimaryLang, disabled: isEditArticleMode},
+        {value: articlePrimaryLang, disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode},
         [Validators.required]
       ),
       title: new FormControl(
-        {value: null, disabled: false},
+        {value: null, disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode},
         [Validators.required]
       ),
       shortDescription: new FormControl(
-        {value: null, disabled: false},
+        {value: null, disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode},
         []
       ),
       markdownText: new FormControl(
-        {value: null, disabled: isEditArticleMode},
+        // disable not working here
+        {value: null, disabled: isEditArticleMode || isEditTranslationMode},
         [Validators.required]
       )
     });
@@ -243,7 +260,10 @@ export class ArticleCreateComponent implements OnInit {
                   break;
               }
               this.entityId = Number(entityId);
-              console.log('articleId, actionType, entityId: %s/%s/%s: ', this.articleId, this.actionType, this.entityId);
+              console.log(
+                'articleId, actionType, entityId, actionTitle: %s/%s/%s: ',
+                this.articleId, this.actionType, this.entityId, this.actionTitle
+              );
               return this.articleService.getArticleById(this.articleId);
             } else {
               return of(null);
@@ -273,5 +293,5 @@ export enum ActionType {
   ADD_TRANSLATION = 'ADD_TRANSLATION',
   EDIT_TRANSLATION = 'ADD_VERSION',
   ADD_VERSION = 'ADD_VERSION',
-  EDIT_VERSION = 'ADD_VERSION'
+  EDIT_VERSION = 'EDIT_VERSION'
 }

@@ -104,7 +104,14 @@ export class AccountComponent implements OnInit {
 
   onAccountEditClicked() {
     console.log('onAccountEditClicked: %s, %s', this.name, this.userLanguage.langCode);
-    // todo
+    // todo progress
+    this.accountInteractor
+      .editAccount(this.name, this.userLanguage.langCode)
+      .subscribe(
+        // todo
+        user => this.notificationService.showMessage('Successfully updated!'),
+        error => this.notificationService.showError(error)
+      );
   }
 
   onAvatarEditClicked() {

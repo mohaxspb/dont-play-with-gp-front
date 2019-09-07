@@ -214,7 +214,7 @@ export class ArticleCreateComponent implements OnInit {
         []
       ),
       markdownText: new FormControl(
-        // disable not working here
+        // fixme disable not working here
         {value: null, disabled: isEditArticleMode || isEditTranslationMode},
         [Validators.required]
       )

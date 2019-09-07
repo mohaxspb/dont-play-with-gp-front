@@ -1,4 +1,5 @@
 import {ArticleTranslationVersion} from './ArticleTranslationVersion';
+import {GpUser} from '../auth/GpUser';
 
 export class ArticleTranslation {
   id: number;
@@ -14,14 +15,17 @@ export class ArticleTranslation {
 
   approved: boolean;
   approverId: number | null;
-  approvedDate: string | null;
+  approvedDate: Date | null;
 
   published: boolean;
   publisherId: number | null;
-  publishedDate: string | null;
+  publishedDate: Date | null;
 
-  created: string;
-  updated: string;
+  created: Date;
+  updated: Date;
 
   versions: [ArticleTranslationVersion];
+  author: GpUser | null;
+  approver: GpUser | null;
+  publisher: GpUser | null;
 }

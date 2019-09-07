@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {GpApiService} from '../GpApiService';
 import {Observable} from 'rxjs';
 import {Article} from '../../model/data/Article';
+import {ArticleTranslation} from '../../model/data/ArticleTranslation';
+import {ArticleTranslationVersion} from '../../model/data/ArticleTranslationVersion';
 
 @Injectable()
 export class GpArticleService {
@@ -11,6 +13,10 @@ export class GpArticleService {
 
   getArticleById(id: number): Observable<Article> {
     return this.apiService.getArticleById(id);
+  }
+
+  getFullArticleById(id: number): Observable<Article> {
+    return this.apiService.getFullArticleById(id);
   }
 
   createArticle(
@@ -33,5 +39,29 @@ export class GpArticleService {
         shortDescription,
         text
       );
+  }
+
+  approveArticle(id: number, approve: boolean): Observable<Article> {
+    return this.apiService.approveArticle(id, approve);
+  }
+
+  publishArticle(id: number, publish: boolean): Observable<Article> {
+    return this.apiService.publishArticle(id, publish);
+  }
+
+  approveArticleTranslation(id: number, approve: boolean): Observable<ArticleTranslation> {
+    return this.apiService.approveArticleTranslation(id, approve);
+  }
+
+  publishArticleTranslation(id: number, publish: boolean): Observable<ArticleTranslation> {
+    return this.apiService.publishArticleTranslation(id, publish);
+  }
+
+  approveArticleTranslationVersion(id: number, approve: boolean): Observable<ArticleTranslationVersion> {
+    return this.apiService.approveArticleTranslationVersion(id, approve);
+  }
+
+  publishArticleTranslationVersion(id: number, publish: boolean): Observable<ArticleTranslationVersion> {
+    return this.apiService.publishArticleTranslationVersion(id, publish);
   }
 }

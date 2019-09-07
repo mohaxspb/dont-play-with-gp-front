@@ -6,6 +6,8 @@ import {Api} from './Api';
 import {environment} from '../../environments/environment';
 import {Language} from '../model/data/Language';
 import {Article} from '../model/data/Article';
+import {ArticleTranslation} from '../model/data/ArticleTranslation';
+import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
 
 
 @Injectable()
@@ -87,7 +89,21 @@ export class GpApiService {
   }
 
   getArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(Api.URL + Api.ArticleEndpoint.URL + id);
+    return this.http.get<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + id,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  getFullArticleById(id: number): Observable<Article> {
+    return this.http.get<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.FULL + id,
+      {
+        withCredentials: true
+      }
+    );
   }
 
   createArticle(
@@ -125,5 +141,83 @@ export class GpApiService {
           withCredentials: true
         }
       );
+  }
+
+  approveArticle(id: number, approve: boolean): Observable<Article> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('approve', String(approve));
+    return this.http.post<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.APPROVE,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  publishArticle(id: number, publish: boolean): Observable<Article> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('publish', String(publish));
+    return this.http.post<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.PUBLISH,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  approveArticleTranslation(id: number, approve: boolean): Observable<ArticleTranslation> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('approve', String(approve));
+    return this.http.post<ArticleTranslation>(
+      Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.APPROVE,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  publishArticleTranslation(id: number, publish: boolean): Observable<ArticleTranslation> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('publish', String(publish));
+    return this.http.post<ArticleTranslation>(
+      Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.PUBLISH,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  approveArticleTranslationVersion(id: number, approve: boolean): Observable<ArticleTranslationVersion> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('approve', String(approve));
+    return this.http.post<ArticleTranslationVersion>(
+      Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.APPROVE,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
+  publishArticleTranslationVersion(id: number, publish: boolean): Observable<ArticleTranslationVersion> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('publish', String(publish));
+    return this.http.post<ArticleTranslationVersion>(
+      Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.PUBLISH,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
   }
 }

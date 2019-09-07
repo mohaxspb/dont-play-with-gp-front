@@ -18,6 +18,11 @@ body {
   font-family: Roboto, sans-serif;
 }
 
+.mat-button-toggle-checked {
+  background-color: mat-color($accent);
+  color: mat-color($accent, default-contrast);
+}
+
 .color-primary {
   color: mat-color($primary);
 }
@@ -28,6 +33,10 @@ body {
 
 .background-color-accent {
   background: mat-color($accent);
+}
+
+.background-color-primary {
+  background: mat-color($primary);
 }
 
 /**
@@ -69,13 +78,13 @@ body {
 }
 
 .cover {
-   position: absolute;
-   left: 0;
-   top: 0;
-   width: 100%;
-   height: 100%;
- }
-
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
 
 .full-width-field {
   width: 100%;
@@ -93,4 +102,12 @@ body {
 
 .background-half-transparent-white {
   background: rgba(255, 255, 255, 0.5)
+}
+
+.max-width-200 {
+  max-width: 100px;
+}
+
+.show-line-breaks {
+  white-space: pre-line;
 }

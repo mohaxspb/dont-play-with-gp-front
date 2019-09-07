@@ -8,7 +8,7 @@ import {Language} from '../model/data/Language';
 import {finalize} from 'rxjs/operators';
 import {DialogService} from '../service/ui/DialogService';
 import {Router} from '@angular/router';
-import {NotificationService} from '../service/NotificationService';
+import {NotificationService} from '../service/ui/NotificationService';
 
 @Component({
   selector: 'app-account',
@@ -130,7 +130,7 @@ export class AccountComponent implements OnInit {
     this.showConfirmAccountDeleteDialog(this.userFromApi.id);
   }
 
-  showConfirmAccountDeleteDialog(id: number) {
+  private showConfirmAccountDeleteDialog(id: number) {
     this.dialogsService
     // todo translation
       .confirm('Delete account', 'Are you sure you want to delete account? This can\'t be undone!', 'Delete account')

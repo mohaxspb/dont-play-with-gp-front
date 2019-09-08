@@ -5,10 +5,14 @@ import {MatBottomSheet} from '@angular/material';
 import {LoginComponent} from '../login/login.component';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {BehaviorSubject} from 'rxjs';
-import {finalize} from 'rxjs/operators';
+import {delay, finalize} from 'rxjs/operators';
 import {NotificationService} from '../service/ui/NotificationService';
 import {Article} from '../model/data/Article';
 import {GpConstants} from '../GpConstants';
+import {Language} from '../model/data/Language';
+import {GpLanguageService} from '../service/data/GpLanguageService';
+import {UserProvider} from '../service/auth/UserProvider';
+import {GpUser} from '../model/auth/GpUser';
 
 @Component({
   selector: 'app-feed',
@@ -19,19 +23,34 @@ export class FeedComponent implements OnInit {
 
   progressInAction = new BehaviorSubject<boolean>(false);
 
+  languages: Language[] | null = null;
+  user: GpUser | null = null;
+  preferredLanguage: Language;
   articles: Article[] = [];
 
   constructor(
     private router: Router,
+    private userProvider: UserProvider,
     private authService: AuthService,
     private articleService: GpArticleService,
+    private languageService: GpLanguageService,
     private notificationService: NotificationService,
     private bottomSheet: MatBottomSheet
   ) {
   }
 
   ngOnInit() {
-    this.loadArticles();
+    this.loadInitialData();
+
+    // handle user changed
+    this.userProvider
+      .getUser()
+      .subscribe(value => {
+        console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
+        if ((this.user === null && value !== null) || (this.user !== null && value === null)) {
+          this.user = value;
+        }
+      });
   }
 
   onCreateArticleClicked() {
@@ -43,15 +62,36 @@ export class FeedComponent implements OnInit {
     }
   }
 
+  indexOfCorrectArticleTranslation(article: Article): number {
+    const correctLang = GpArticleService.getCorrectLanguageForArticle(article, this.preferredLanguage, this.languages);
+    return article.translations.findIndex(value => value.langId === correctLang.id);
+  }
+
+  private loadInitialData() {
+    this.progressInAction.next(true);
+
+    this.languageService.getLanguages()
+      .pipe(
+        delay(2000),
+        finalize(() => this.loadArticles())
+      )
+      .subscribe(
+        value => this.languages = value,
+        error => this.notificationService.showError(error)
+      );
+  }
+
   private loadArticles(offset: number = 0) {
     this.progressInAction.next(true);
 
     this.articleService.getPublishedArticles(GpConstants.DEFAULT_LIMIT, this.articles.length)
       .pipe(
+        delay(2000),
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
         articles => {
+          this.preferredLanguage = this.languageService.getPreferredLanguageForUser(this.user, this.languages);
           this.articles = articles;
         },
         error => this.notificationService.showError(error)

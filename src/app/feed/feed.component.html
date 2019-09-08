@@ -1,15 +1,18 @@
 <div>
 
-  <div id="articles-container" *ngIf="articles.length!=0" >
+  <div id="articles-container" *ngIf="articles.length!=0">
     <!--    todo-->
     <mat-card *ngFor="let article of articles">
       <mat-card-header>
-        <mat-card-title>{{article.translations[0].title}}</mat-card-title>
+        <mat-card-title>{{article.translations[indexOfCorrectArticleTranslation(article)].title}}</mat-card-title>
       </mat-card-header>
+      <mat-card-content>
+        {{article.translations[indexOfCorrectArticleTranslation(article)].shortDescription}}
+      </mat-card-content>
     </mat-card>
   </div>
 
-  <div id="data-sending-indication" *ngIf="progressInAction|async"
+  <div id="data-loading-indication" *ngIf="progressInAction|async"
        class="background-half-transparent-white cover"
        (click)="$event.stopPropagation()"
   >

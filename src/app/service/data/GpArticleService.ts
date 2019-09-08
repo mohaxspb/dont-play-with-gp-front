@@ -4,11 +4,27 @@ import {Observable} from 'rxjs';
 import {Article} from '../../model/data/Article';
 import {ArticleTranslation} from '../../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../../model/data/ArticleTranslationVersion';
+import {Language} from '../../model/data/Language';
+import {GpLanguageService} from './GpLanguageService';
 
 @Injectable()
 export class GpArticleService {
 
   constructor(private apiService: GpApiService) {
+  }
+
+  static getCorrectLanguageForArticle(article: Article, preferredLanguage: Language, languages: Language[]): Language {
+    const preferredTranslation = article.translations.find(value => value.langId === preferredLanguage.id);
+    if (preferredTranslation != null) {
+      return preferredLanguage;
+    } else {
+      const english = GpLanguageService.getEnglish(languages);
+      if (article.translations.find(value => value.langId === english.id) != null) {
+        return english;
+      } else {
+        return GpLanguageService.getLanguageById(languages, article.originalLangId);
+      }
+    }
   }
 
   getArticleById(id: number): Observable<Article> {

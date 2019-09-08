@@ -170,6 +170,7 @@ export class ArticleComponent implements OnInit {
     console.log('onArticleEditClicked');
     // only author or admin could see it, so no need to login
 
+    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate(
       ['create-article'],
       {
@@ -188,6 +189,7 @@ export class ArticleComponent implements OnInit {
     if (this.user == null) {
       this.bottomSheet.open(LoginComponent, {data: {title: 'To add translation you should'}});
     } else {
+      // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(
         ['create-article'],
         {
@@ -206,6 +208,7 @@ export class ArticleComponent implements OnInit {
     if (this.user == null) {
       this.bottomSheet.open(LoginComponent, {data: {title: 'To add version you should'}});
     } else {
+      // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(
         ['create-article'],
         {
@@ -223,6 +226,7 @@ export class ArticleComponent implements OnInit {
     console.log('onVersionEditClicked');
     // only author or admin could see it, so no need to login
 
+    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate(
       ['create-article'],
       {
@@ -239,9 +243,7 @@ export class ArticleComponent implements OnInit {
     console.log('onTranslationEditClicked');
     // only author or admin could see it, so no need to login
 
-    // navigate to translation create component.
-    // mostly same as article create, except of source and image and origLang
-    // maybe we should use same component with blocked fields
+    // noinspection JSIgnoredPromiseFromCall
     this.router.navigate(
       ['create-article'],
       {
@@ -313,13 +315,13 @@ export class ArticleComponent implements OnInit {
           this.article = article;
 
           // preferred lang calculation
-          this.preferredLanguage = this.calculatePreferredLanguage(this.user, this.languages);
+          this.preferredLanguage = this.languageService.getPreferredLanguageForUser(this.user, this.languages);
 
           // selected lang calculation
           // this can be passed from outside (click on concrete translation). If not - calculate it
           console.log('this.selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
           if (this.selectedLanguage == null) {
-            this.selectedLanguage = this.calculateSelectedLanguage(this.article, this.preferredLanguage, this.languages);
+            this.selectedLanguage = GpArticleService.getCorrectLanguageForArticle(this.article, this.preferredLanguage, this.languages);
           }
           console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
           console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
@@ -332,42 +334,6 @@ export class ArticleComponent implements OnInit {
         },
         error => this.notificationService.showError(error)
       );
-  }
-
-  private calculatePreferredLanguage(user: GpUser | null, languages: [Language]): Language {
-    let language: Language;
-    if (user != null) {
-      language = GpLanguageService.getLanguageById(languages, user.primaryLanguageId);
-    } else {
-      // lang from localStorage. May be null, as it uses browser locale.
-      const langFromDefaultLangCode = GpLanguageService.getLanguageByLangCode(
-        languages,
-        this.languageService.getDefaultLangCode()
-      );
-      if (langFromDefaultLangCode == null) {
-        language = GpLanguageService.getEnglish(languages);
-      } else {
-        language = langFromDefaultLangCode;
-      }
-    }
-    return language;
-  }
-
-  /**
-   * or we can calculate it based on available translations and preferred language
-   */
-  private calculateSelectedLanguage(article: Article, preferredLanguage: Language, languages: [Language]): Language {
-    const preferredTranslation = article.translations.find(value => value.langId === preferredLanguage.id);
-    if (preferredTranslation != null) {
-      return preferredLanguage;
-    } else {
-      const english = GpLanguageService.getEnglish(languages);
-      if (article.translations.find(value => value.langId === english.id) != null) {
-        return english;
-      } else {
-        return GpLanguageService.getLanguageById(languages, article.originalLangId);
-      }
-    }
   }
 
   private calculateSelectedTranslation(): ArticleTranslation {

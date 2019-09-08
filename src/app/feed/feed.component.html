@@ -1,6 +1,7 @@
 <div>
 
   <div>
+<!--    todo-->
     <p>feed works!</p>
     <p>feed works!</p>
     <p>feed works!</p>
@@ -15,6 +16,16 @@
     <p>feed works!</p>
     <p>feed works!</p>
     <p>feed works!</p>
+  </div>
+
+  <div id="data-sending-indication" *ngIf="progressInAction|async"
+       class="background-half-transparent-white cover"
+       (click)="$event.stopPropagation()"
+  >
+    <mat-spinner
+      class="center-inside-both-axis"
+      [diameter]="24"
+    ></mat-spinner>
   </div>
 
 </div>

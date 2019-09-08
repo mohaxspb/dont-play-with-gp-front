@@ -7,6 +7,8 @@ import {GpArticleService} from '../service/data/GpArticleService';
 import {BehaviorSubject} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {NotificationService} from '../service/ui/NotificationService';
+import {Article} from '../model/data/Article';
+import {GpConstants} from '../GpConstants';
 
 @Component({
   selector: 'app-feed',
@@ -16,6 +18,8 @@ import {NotificationService} from '../service/ui/NotificationService';
 export class FeedComponent implements OnInit {
 
   progressInAction = new BehaviorSubject<boolean>(false);
+
+  articles: Article[] = [];
 
   constructor(
     private router: Router,
@@ -39,16 +43,16 @@ export class FeedComponent implements OnInit {
     }
   }
 
-  private loadArticles() {
+  private loadArticles(offset: number = 0) {
     this.progressInAction.next(true);
 
-    this.articleService.getPublishedArticles()
+    this.articleService.getPublishedArticles(GpConstants.DEFAULT_LIMIT, this.articles.length)
       .pipe(
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
         articles => {
-
+          this.articles = articles;
         },
         error => this.notificationService.showError(error)
       );

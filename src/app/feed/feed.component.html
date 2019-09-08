@@ -1,21 +1,12 @@
 <div>
 
-  <div>
-<!--    todo-->
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
-    <p>feed works!</p>
+  <div id="articles-container" *ngIf="articles.length!=0" >
+    <!--    todo-->
+    <mat-card *ngFor="let article of articles">
+      <mat-card-header>
+        <mat-card-title>{{article.translations[0].title}}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
   </div>
 
   <div id="data-sending-indication" *ngIf="progressInAction|async"

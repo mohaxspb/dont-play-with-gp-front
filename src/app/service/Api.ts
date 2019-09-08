@@ -60,6 +60,7 @@ export class Api {
     static Method = class {
       static FULL = 'full/';
       static ALL_BY_AUTHOR_ID = 'allByAuthorId';
+      static ALL = 'all';
       static CREATE = 'create';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';

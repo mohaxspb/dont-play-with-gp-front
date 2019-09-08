@@ -64,4 +64,8 @@ export class GpArticleService {
   publishArticleTranslationVersion(id: number, publish: boolean): Observable<ArticleTranslationVersion> {
     return this.apiService.publishArticleTranslationVersion(id, publish);
   }
+
+  getPublishedArticles(limit: number, offset: number): Observable<Article[]> {
+    return this.apiService.getArticles(limit, offset);
+  }
 }

@@ -221,8 +221,9 @@ export class GpApiService {
     );
   }
 
-  updateAccount(name: string, langCode: string): Observable<GpUser> {
+  updateAccount(userId: number, name: string, langCode: string): Observable<GpUser> {
     const formData = new FormData();
+    formData.append('userId', userId.toString());
     formData.append('name', name);
     formData.append('langCode', langCode);
     return this.http.post<GpUser>(

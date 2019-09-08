@@ -30,9 +30,9 @@ export class GpAccountInteractor {
       .pipe(switchMapTo(this.authService.logout()));
   }
 
-  editAccount(name: string, langCode: string): Observable<GpUser> {
+  editAccount(userId: number, name: string, langCode: string): Observable<GpUser> {
     return this.userService
-      .updateAccount(name, langCode)
+      .updateAccount(userId, name, langCode)
       .pipe(tap(user => this.authService.onUserReceived(user)));
   }
 }

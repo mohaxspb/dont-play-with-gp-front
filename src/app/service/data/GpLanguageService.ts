@@ -15,7 +15,7 @@ export class GpLanguageService {
   ) {
   }
 
-  static getLanguageById(languages: [Language], id: number): Language {
+  static getLanguageById(languages: Language[], id: number): Language {
     return languages.find(value => value.id === id);
   }
 

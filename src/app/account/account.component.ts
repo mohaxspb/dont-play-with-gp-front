@@ -9,6 +9,7 @@ import {finalize} from 'rxjs/operators';
 import {DialogService} from '../service/ui/DialogService';
 import {Router} from '@angular/router';
 import {NotificationService} from '../service/ui/NotificationService';
+import {GpLanguageService} from '../service/data/GpLanguageService';
 
 @Component({
   selector: 'app-account',
@@ -18,6 +19,8 @@ import {NotificationService} from '../service/ui/NotificationService';
 export class AccountComponent implements OnInit {
 
   dataIsLoading = new BehaviorSubject<boolean>(false);
+  progressInAction = new BehaviorSubject<boolean>(false);
+
   userFromApi: GpUser;
 
   name: string;
@@ -28,6 +31,8 @@ export class AccountComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   languagesListFromApi: Language[];
+
+  initialFormValues: { name: string, primaryLanguageSelect: Language };
 
   constructor(
     private router: Router,
@@ -57,7 +62,7 @@ export class AccountComponent implements OnInit {
           this.name = this.userFromApi.fullName;
           this.languagesListFromApi = userAndLanguages[1];
 
-          this.userLanguage = this.languagesListFromApi.find(value => value.id === this.userFromApi.primaryLanguageId);
+          this.userLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.userFromApi.primaryLanguageId);
 
           this.initForm(this.userFromApi, this.userLanguage);
         }
@@ -80,11 +85,11 @@ export class AccountComponent implements OnInit {
       )
     });
 
-    const initialValues = {name: user.fullName, primaryLanguageSelect: userLanguage};
+    this.setInitialFormValues(user.fullName, userLanguage);
     this.accountEditFormGroup.valueChanges.subscribe((changes) => {
       for (const prop in changes) {
         if (changes.hasOwnProperty(prop)) {
-          if (changes[prop] === initialValues[prop]) {
+          if (changes[prop] === this.initialFormValues[prop]) {
             this.accountEditFormGroup.get(prop).markAsPristine();
           }
         }
@@ -104,7 +109,24 @@ export class AccountComponent implements OnInit {
 
   onAccountEditClicked() {
     console.log('onAccountEditClicked: %s, %s', this.name, this.userLanguage.langCode);
-    // todo
+    this.progressInAction.next(true);
+    this.accountInteractor
+      .editAccount(this.userFromApi.id, this.name, this.userLanguage.langCode)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
+      .subscribe(
+        user => {
+          this.userFromApi = user;
+          this.setInitialFormValues(
+            this.userFromApi.fullName,
+            GpLanguageService.getLanguageById(this.languagesListFromApi, this.userFromApi.primaryLanguageId)
+          );
+          this.accountEditFormGroup.reset(this.accountEditFormGroup.value);
+          this.notificationService.showMessage('Successfully updated!');
+        },
+        error => this.notificationService.showError(error)
+      );
   }
 
   onAvatarEditClicked() {
@@ -130,6 +152,14 @@ export class AccountComponent implements OnInit {
     this.showConfirmAccountDeleteDialog(this.userFromApi.id);
   }
 
+  isNullOrEmptyOrUndefined(value) {
+    return !value;
+  }
+
+  private setInitialFormValues(name: string, language: Language) {
+    this.initialFormValues = {name, primaryLanguageSelect: language};
+  }
+
   private showConfirmAccountDeleteDialog(id: number) {
     this.dialogsService
     // todo translation
@@ -141,10 +171,6 @@ export class AccountComponent implements OnInit {
           console.log('do not delete!');
         }
       });
-  }
-
-  isNullOrEmptyOrUndefined(value) {
-    return !value;
   }
 
   private deleteAccount(id: number) {

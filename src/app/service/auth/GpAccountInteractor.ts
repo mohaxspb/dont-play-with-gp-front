@@ -5,7 +5,7 @@ import {GpLanguageService} from '../data/GpLanguageService';
 import {GpUserService} from './GpUserService';
 import {GpUser} from '../../model/auth/GpUser';
 import {AuthService} from './auth.service';
-import {switchMapTo} from 'rxjs/operators';
+import {switchMapTo, tap} from 'rxjs/operators';
 
 @Injectable()
 export class GpAccountInteractor {
@@ -28,5 +28,11 @@ export class GpAccountInteractor {
     return this.userService
       .delete(id)
       .pipe(switchMapTo(this.authService.logout()));
+  }
+
+  editAccount(userId: number, name: string, langCode: string): Observable<GpUser> {
+    return this.userService
+      .updateAccount(userId, name, langCode)
+      .pipe(tap(user => this.authService.onUserReceived(user)));
   }
 }

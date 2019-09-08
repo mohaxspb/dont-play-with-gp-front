@@ -59,18 +59,18 @@ export class AuthService {
       );
   }
 
-  private onUserReceived(user: GpUser | null) {
-    // console.log('user: ' + JSON.stringify(user));
-    this.authenticated = user != null;
-    this.authProvider.authenticated.next(this.authenticated);
-    this.userProvider.call(user);
-  }
-
   register(email: string, password: string, name: string, primaryLanguage: string) {
     return this.apiService
       .register(email, password, name, primaryLanguage)
       .pipe(
         tap(value => this.onUserReceived(value))
       );
+  }
+
+  onUserReceived(user: GpUser | null) {
+    // console.log('user: ' + JSON.stringify(user));
+    this.authenticated = user != null;
+    this.authProvider.authenticated.next(this.authenticated);
+    this.userProvider.call(user);
   }
 }

@@ -220,4 +220,18 @@ export class GpApiService {
       }
     );
   }
+
+  updateAccount(userId: number, name: string, langCode: string): Observable<GpUser> {
+    const formData = new FormData();
+    formData.append('userId', userId.toString());
+    formData.append('name', name);
+    formData.append('langCode', langCode);
+    return this.http.post<GpUser>(
+      Api.URL + Api.UsersEndpoint.URL + Api.UsersEndpoint.Method.UPDATE,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
 }

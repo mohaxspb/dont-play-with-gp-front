@@ -18,4 +18,8 @@ export class GpUserService {
   delete(id: number): Observable<boolean> {
     return this.apiService.delete(id);
   }
+
+  updateAccount(userId: number, name: string, langCode: string): Observable<GpUser> {
+    return this.apiService.updateAccount(userId, name, langCode);
+  }
 }

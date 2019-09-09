@@ -6,15 +6,19 @@
       <mat-card *ngVar="article.translations[indexOfCorrectArticleTranslation(article)] as translation">
         <mat-card-header (click)="onArticleClicked(article, translation)">
           <mat-card-title>{{translation.title}}</mat-card-title>
-          <mat-card-subtitle>Author: {{article.sourceAuthorName != null ? article.sourceAuthorName : article.author.fullName}}</mat-card-subtitle>
-          <mat-card-subtitle><span>{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
+          <mat-card-subtitle>
+            <span>{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
           </mat-card-subtitle>
+          <mat-card-subtitle
+            *ngIf="article.sourceAuthorName != null || (article.author.fullName!=null && article.author.fullName.length>0)"
+          >Author: {{article.sourceAuthorName != null ? article.sourceAuthorName : article.author.fullName}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content (click)="onArticleClicked(article, translation)">
           {{translation.shortDescription}}
         </mat-card-content>
         <mat-card-footer>
           <mat-button-toggle-group
+            class="default-margin-bottom default-margin-left"
             [value]="correctArticleLanguage(article)"
             (change)="translation = getTranslationForLanguageFromArticle($event.value, article)">
             <mat-button-toggle

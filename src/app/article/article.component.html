@@ -81,8 +81,8 @@
 
           <div id="sourceData" *ngIf="article.sourceTitle!=null">
             <a href="{{article.sourceUrl}}">{{article.sourceTitle}}</a>
-            <span *ngIf="article.sourceAuthorName!=null"
-                  class="default-margin-left">By {{article.sourceAuthorName}}</span>
+            <br/>
+            <span *ngIf="article.sourceAuthorName!=null">By {{article.sourceAuthorName}}</span>
           </div>
 
           <div *ngIf="article.sourceTitle==null">Author: {{article.author?.fullName}}</div>

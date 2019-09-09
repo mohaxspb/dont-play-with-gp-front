@@ -33,7 +33,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
     this.authProvider
       .authenticated
       .subscribe((authenticated: boolean) => this.authenticated = authenticated);

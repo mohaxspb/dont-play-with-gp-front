@@ -4,8 +4,8 @@ import {AuthService} from '../service/auth/auth.service';
 import {MatBottomSheet} from '@angular/material';
 import {LoginComponent} from '../login/login.component';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {BehaviorSubject} from 'rxjs';
-import {finalize} from 'rxjs/operators';
+import {BehaviorSubject, of} from 'rxjs';
+import {delay, finalize, flatMap} from 'rxjs/operators';
 import {NotificationService} from '../service/ui/NotificationService';
 import {Article} from '../model/data/Article';
 import {GpConstants} from '../GpConstants';
@@ -24,6 +24,8 @@ import {NavigationUtils} from '../utils/NavigationUtils';
 export class FeedComponent implements OnInit {
 
   progressInAction = new BehaviorSubject<boolean>(false);
+  bottomProgressInAction = new BehaviorSubject<boolean>(false);
+  bottomProgressErrorOccurred = new BehaviorSubject<boolean>(false);
 
   languages: Language[] | null = null;
   user: GpUser | null = null;
@@ -48,7 +50,7 @@ export class FeedComponent implements OnInit {
     this.userProvider
       .getUser()
       .subscribe(value => {
-        console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
+        // console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
         if ((this.user === null && value !== null) || (this.user !== null && value === null)) {
           this.user = value;
         }
@@ -90,6 +92,12 @@ export class FeedComponent implements OnInit {
     return article.translations.find(value => value.langId === language.id);
   }
 
+  onScroll() {
+    console.log('onScroll: %s', this.articles.length);
+
+    this.loadArticles(this.articles.length);
+  }
+
   private loadInitialData() {
     this.progressInAction.next(true);
 
@@ -105,19 +113,46 @@ export class FeedComponent implements OnInit {
   }
 
   private loadArticles(offset: number = 0) {
-    this.progressInAction.next(true);
+    if (offset === 0) {
+      this.progressInAction.next(true);
+    } else {
+      this.bottomProgressInAction.next(true);
+    }
 
-    this.articleService.getPublishedArticles(GpConstants.DEFAULT_LIMIT, offset)
+    this.articleService
+      .getPublishedArticles(GpConstants.DEFAULT_LIMIT, offset)
       .pipe(
-        // delay(1000),
-        finalize(() => this.progressInAction.next(false))
+        delay(1000),
+        // to test error
+        // flatMap(value => {
+        //   if (offset === 4) {
+        //     throw Error('test');
+        //   } else {
+        //     return of(value);
+        //   }
+        // }),
+        finalize(() => {
+          if (offset === 0) {
+            this.progressInAction.next(false);
+          } else {
+            this.bottomProgressInAction.next(false);
+          }
+        })
       )
       .subscribe(
         articles => {
           this.preferredLanguage = this.languageService.getPreferredLanguageForUser(this.user, this.languages);
-          this.articles = articles;
+          if (offset === 0) {
+            this.articles = articles;
+          } else {
+            this.bottomProgressErrorOccurred.next(false);
+            this.articles = this.articles.concat(articles);
+          }
         },
-        error => this.notificationService.showError(error)
+        error => {
+          this.notificationService.showError(error);
+          this.bottomProgressErrorOccurred.next(true);
+        }
       );
   }
 }

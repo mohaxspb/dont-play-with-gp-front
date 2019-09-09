@@ -55,6 +55,7 @@ import {ArticleCreateComponent} from './article-create/article-create.component'
 import {AngularMarkdownEditorModule} from 'angular-markdown-editor';
 import {MarkdownModule} from 'ngx-markdown';
 import {VarDirective} from './utils/VarDirective';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -92,6 +93,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {useHash: true}),
     MarkdownModule.forRoot(),
     AngularMarkdownEditorModule.forRoot({iconlibrary: 'fa'}),
+    InfiniteScrollModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,

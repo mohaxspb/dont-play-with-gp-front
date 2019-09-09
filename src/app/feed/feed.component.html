@@ -1,7 +1,13 @@
 <div>
 
-  <div id="articles-container" *ngIf="articles.length!=0">
-    <!--    todo-->
+  <div id="articles-container"
+       *ngIf="articles.length!=0"
+       infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollThrottle]="300"
+       [infiniteScrollDisabled]="(bottomProgressInAction | async) || (bottomProgressErrorOccurred | async)"
+       (scrolled)="onScroll()"
+  >
     <div *ngFor="let article of articles" class="default-margin-bottom">
       <mat-card *ngVar="article.translations[indexOfCorrectArticleTranslation(article)] as translation">
         <mat-card-header (click)="onArticleClicked(article, translation)">
@@ -29,6 +35,20 @@
         </mat-card-footer>
       </mat-card>
 
+    </div>
+
+    <div id="bottom-loading-indication"  fxLayout fxLayoutAlign="center center">
+      <mat-spinner
+        *ngIf="bottomProgressInAction|async"
+        class="center-inside-both-axis"
+        [diameter]="24"
+      ></mat-spinner>
+
+      <button
+        *ngIf="(bottomProgressErrorOccurred|async) && !(bottomProgressInAction|async)"
+        mat-flat-button
+        (click)="loadArticles(articles.length)"
+      >Try again</button>
     </div>
   </div>
 

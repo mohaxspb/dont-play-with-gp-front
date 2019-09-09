@@ -14,6 +14,7 @@ import {GpLanguageService} from '../service/data/GpLanguageService';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpUser} from '../model/auth/GpUser';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
+import {NavigationUtils} from '../utils/NavigationUtils';
 
 @Component({
   selector: 'app-feed',
@@ -62,6 +63,14 @@ export class FeedComponent implements OnInit {
     } else {
       this.bottomSheet.open(LoginComponent, {data: {title: 'To create article you should'}});
     }
+  }
+
+  onArticleClicked(article: Article, translation: ArticleTranslation) {
+    console.log('onArticleClicked: %s/%s', article.id, translation.id);
+
+    this.router
+      .navigate(['article/' + article.id], {queryParams: {langId: translation.langId}})
+      .then(() => NavigationUtils.scrollToTop());
   }
 
   correctArticleLanguage(article: Article): Language {

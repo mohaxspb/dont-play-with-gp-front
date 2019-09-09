@@ -2,7 +2,7 @@
 
   <div id="articles-container" *ngIf="articles.length!=0">
     <!--    todo-->
-    <div *ngFor="let article of articles">
+    <div *ngFor="let article of articles" class="default-margin-bottom">
       <mat-card *ngVar="article.translations[indexOfCorrectArticleTranslation(article)] as translation">
         <mat-card-header>
           <mat-card-title>{{translation.title}}</mat-card-title>

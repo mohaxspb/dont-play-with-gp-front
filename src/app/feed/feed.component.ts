@@ -5,7 +5,7 @@ import {MatBottomSheet} from '@angular/material';
 import {LoginComponent} from '../login/login.component';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {BehaviorSubject} from 'rxjs';
-import {delay, finalize} from 'rxjs/operators';
+import {finalize} from 'rxjs/operators';
 import {NotificationService} from '../service/ui/NotificationService';
 import {Article} from '../model/data/Article';
 import {GpConstants} from '../GpConstants';
@@ -13,6 +13,7 @@ import {Language} from '../model/data/Language';
 import {GpLanguageService} from '../service/data/GpLanguageService';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpUser} from '../model/auth/GpUser';
+import {ArticleTranslation} from '../model/data/ArticleTranslation';
 
 @Component({
   selector: 'app-feed',
@@ -56,15 +57,28 @@ export class FeedComponent implements OnInit {
   onCreateArticleClicked() {
     console.log('onCreateArticleClicked');
     if (this.authService.authenticated) {
+      // noinspection JSIgnoredPromiseFromCall
       this.router.navigateByUrl('create-article');
     } else {
       this.bottomSheet.open(LoginComponent, {data: {title: 'To create article you should'}});
     }
   }
 
+  correctArticleLanguage(article: Article): Language {
+    return GpArticleService.getCorrectLanguageForArticle(article, this.preferredLanguage, this.languages);
+  }
+
   indexOfCorrectArticleTranslation(article: Article): number {
-    const correctLang = GpArticleService.getCorrectLanguageForArticle(article, this.preferredLanguage, this.languages);
+    const correctLang = this.correctArticleLanguage(article);
     return article.translations.findIndex(value => value.langId === correctLang.id);
+  }
+
+  getAvailableArticleLanguages(article: Article): Language[] {
+    return GpArticleService.getLanguagesFromArticle(article, this.languages);
+  }
+
+  getTranslationForLanguageFromArticle(language: Language, article: Article): ArticleTranslation {
+    return article.translations.find(value => value.langId === language.id);
   }
 
   private loadInitialData() {
@@ -72,7 +86,7 @@ export class FeedComponent implements OnInit {
 
     this.languageService.getLanguages()
       .pipe(
-        delay(2000),
+        // delay(1000),
         finalize(() => this.loadArticles())
       )
       .subscribe(
@@ -84,9 +98,9 @@ export class FeedComponent implements OnInit {
   private loadArticles(offset: number = 0) {
     this.progressInAction.next(true);
 
-    this.articleService.getPublishedArticles(GpConstants.DEFAULT_LIMIT, this.articles.length)
+    this.articleService.getPublishedArticles(GpConstants.DEFAULT_LIMIT, offset)
       .pipe(
-        delay(2000),
+        // delay(1000),
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(

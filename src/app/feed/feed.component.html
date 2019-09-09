@@ -2,14 +2,30 @@
 
   <div id="articles-container" *ngIf="articles.length!=0">
     <!--    todo-->
-    <mat-card *ngFor="let article of articles">
-      <mat-card-header>
-        <mat-card-title>{{article.translations[indexOfCorrectArticleTranslation(article)].title}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        {{article.translations[indexOfCorrectArticleTranslation(article)].shortDescription}}
-      </mat-card-content>
-    </mat-card>
+    <div *ngFor="let article of articles">
+      <mat-card *ngVar="article.translations[indexOfCorrectArticleTranslation(article)] as translation">
+        <mat-card-header>
+          <mat-card-title>{{translation.title}}</mat-card-title>
+          <mat-card-subtitle>Author: {{article.sourceAuthorName != null ? article.sourceAuthorName : article.author.fullName}}</mat-card-subtitle>
+          <mat-card-subtitle><span>{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          {{translation.shortDescription}}
+        </mat-card-content>
+        <mat-card-footer>
+          <mat-button-toggle-group
+            [value]="correctArticleLanguage(article)"
+            (change)="translation = getTranslationForLanguageFromArticle($event.value, article)">
+            <mat-button-toggle
+              *ngFor="let lang of getAvailableArticleLanguages(article)"
+              [value]="lang"
+            >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
+          </mat-button-toggle-group>
+        </mat-card-footer>
+      </mat-card>
+
+    </div>
   </div>
 
   <div id="data-loading-indication" *ngIf="progressInAction|async"

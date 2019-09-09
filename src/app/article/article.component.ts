@@ -326,7 +326,7 @@ export class ArticleComponent implements OnInit {
           console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
           console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
 
-          this.availableArticleLanguages = this.calculateAvailableArticleLanguages();
+          this.availableArticleLanguages = GpArticleService.getLanguagesFromArticle(this.article, this.languages);
           console.log(this.availableArticleLanguages);
 
           this.selectedTranslation = this.calculateSelectedTranslation();

@@ -150,13 +150,42 @@
 
           <div id="createdArticles">
 
-            <h3>Published articles</h3>
-            <div class="background-color-accent rect-height-200"><p>Coming soon!</p></div>
+            <h3>Created articles</h3>
+            <div class="rect-height-200 position-relative">
+              <div class="articles-list">
+                <div
+                  *ngIf="articlesCreated?.length!==0"
+                  fxLayout="row"
+                  fxLayoutGap="16px"
+                >
+                  <!--                todo-->
+                  <mat-card *ngFor="let article of articlesCreated" class="account-article-card">
+                    <mat-card-content>
+                      <p class="account-article-card-content">
+                        {{article.translations[0].title}}
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
+
+              <div id="articles-loading-indication" *ngIf="articlesAreLoading|async"
+                   class="background-half-transparent-white cover"
+                   (click)="$event.stopPropagation()"
+              >
+                <mat-spinner
+                  class="center-inside-both-axis"
+                  [diameter]="24"
+                ></mat-spinner>
+              </div>
+            </div>
           </div>
 
           <div id="createdComments">
             <h3>Published comments</h3>
-            <div class="background-color-accent rect-height-200"><p>Coming soon!</p></div>
+            <div class="rect-height-200">
+              <p class="center-inside-both-axis">Coming soon!</p>
+            </div>
           </div>
 
         </div>

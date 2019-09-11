@@ -32,3 +32,34 @@
 .rect-height-200 {
   height: 200px;
 }
+
+.account-article-card {
+  max-height: 180px;
+  max-width: 300px;
+}
+
+.account-article-card-content {
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.articles-list {
+  /*this works*/
+  width: 500px;
+  display: block;
+  overflow-x: auto;
+  /*this works END*/
+
+  /*test*/
+  /*width: 100%;*/
+  /*display: block;*/
+
+  /**/
+  /*width: inherit;*/
+  /*display: block;*/
+
+  /**/
+  /*overflow-x: scroll;*/
+}

@@ -88,4 +88,8 @@ export class GpArticleService {
   getPublishedArticles(limit: number, offset: number): Observable<Article[]> {
     return this.apiService.getArticles(limit, offset);
   }
+
+  getArticlesByAuthor(authorId: number): Observable<Article[]> {
+    return this.apiService.getArticlesByAuthor(authorId);
+  }
 }

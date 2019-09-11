@@ -28,7 +28,8 @@
 
           <mat-card-subtitle>
             <div id="published-date" class="default-margin-bottom">
-              <span *ngIf="article.published">{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
+              <span *ngIf="article.published"
+              >{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
               <span *ngIf="!article.published">Not published</span>
             </div>
           </mat-card-subtitle>

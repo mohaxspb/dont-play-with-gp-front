@@ -5,7 +5,9 @@
        infiniteScroll
        [infiniteScrollDistance]="2"
        [infiniteScrollThrottle]="300"
-       [infiniteScrollDisabled]="(bottomProgressInAction | async) || (bottomProgressErrorOccurred | async)"
+       [infiniteScrollDisabled]="(bottomProgressInAction | async)
+       || (bottomProgressErrorOccurred | async)
+       || articlesListEndReached()"
        (scrolled)="onScroll()"
   >
     <div *ngFor="let article of articles" class="default-margin-bottom">
@@ -37,7 +39,7 @@
 
     </div>
 
-    <div id="bottom-loading-indication"  fxLayout fxLayoutAlign="center center">
+    <div id="bottom-loading-indication" fxLayout fxLayoutAlign="center center">
       <mat-spinner
         *ngIf="bottomProgressInAction|async"
         class="center-inside-both-axis"
@@ -49,6 +51,10 @@
         mat-flat-button
         (click)="loadArticles(articles.length)"
       >Try again</button>
+
+      <div *ngIf="articlesListEndReached()">
+        <p>This is the end of articles list</p>
+      </div>
     </div>
   </div>
 

@@ -4,8 +4,8 @@ import {AuthService} from '../service/auth/auth.service';
 import {MatBottomSheet} from '@angular/material';
 import {LoginComponent} from '../login/login.component';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {BehaviorSubject, of} from 'rxjs';
-import {delay, finalize, flatMap} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
+import {delay, finalize} from 'rxjs/operators';
 import {NotificationService} from '../service/ui/NotificationService';
 import {Article} from '../model/data/Article';
 import {GpConstants} from '../GpConstants';
@@ -96,6 +96,10 @@ export class FeedComponent implements OnInit {
     console.log('onScroll: %s', this.articles.length);
 
     this.loadArticles(this.articles.length);
+  }
+
+  articlesListEndReached(): boolean {
+    return this.articles.length % GpConstants.DEFAULT_LIMIT !== 0;
   }
 
   private loadInitialData() {

@@ -3,6 +3,7 @@ import {Observable, of} from 'rxjs';
 import {GpApiService} from '../GpApiService';
 import {GpLocalStorageService} from '../GpLocalStorageService';
 import {Language} from '../../model/data/Language';
+import {GpUser} from '../../model/auth/GpUser';
 
 @Injectable()
 export class GpLanguageService {
@@ -19,12 +20,31 @@ export class GpLanguageService {
     return languages.find(value => value.id === id);
   }
 
-  static getLanguageByLangCode(languages: [Language], langCode: string): Language | null {
+  static getLanguageByLangCode(languages: Language[], langCode: string): Language | null {
     return languages.find(value => value.langCode === langCode);
   }
 
-  static getEnglish(languages: [Language]): Language {
+  static getEnglish(languages: Language[]): Language {
     return this.getLanguageByLangCode(languages, GpLanguageService.DEFAULT_LANG_CODE);
+  }
+
+  getPreferredLanguageForUser(user: GpUser | null, languages: Language[]): Language {
+    let language: Language;
+    if (user != null) {
+      language = GpLanguageService.getLanguageById(languages, user.primaryLanguageId);
+    } else {
+      // lang from localStorage. May be null, as it uses browser locale.
+      const langFromDefaultLangCode = GpLanguageService.getLanguageByLangCode(
+        languages,
+        this.getDefaultLangCode()
+      );
+      if (langFromDefaultLangCode == null) {
+        language = GpLanguageService.getEnglish(languages);
+      } else {
+        language = langFromDefaultLangCode;
+      }
+    }
+    return language;
   }
 
   updateLanguages() {

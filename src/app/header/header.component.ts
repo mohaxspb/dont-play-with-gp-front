@@ -14,7 +14,7 @@ import {LoginComponent} from '../login/login.component';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  title = 'dont-play-with-gp-web';
+  title = 'Don\'t play with Google Play';
 
   authenticated: boolean | null;
   user: GpUser | null;
@@ -33,7 +33,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
     this.authProvider
       .authenticated
       .subscribe((authenticated: boolean) => this.authenticated = authenticated);

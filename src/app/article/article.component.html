@@ -23,24 +23,29 @@
 
     <header class="default-margin-bottom">
       <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{selectedTranslation.title}}</mat-card-title>
+
+          <mat-card-subtitle id="published-date">
+              <span *ngIf="article.published"
+              >{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
+            <span *ngIf="!article.published">Not published</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+
         <mat-card-content>
           <!--    todo image-->
 
-          <div id="published-date" class="default-margin-bottom">
-            <span *ngIf="article.published">{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
-            <span *ngIf="!article.published">Not published</span>
-          </div>
-
-          <div id="approve-publish-article"
+          <div id="approve-publish-article" *ngIf="isAdmin() || article.authorId == user?.id"
+               class="default-margin-bottom"
                fxLayout
                fxLayoutAlign="start center"
                fxLayoutGap="16px"
           >
             <div *ngIf="isAdmin()"
-                 fxLayout.gt-xs="row"
                  fxLayout="column"
+                 fxLayout.gt-xs="row"
                  fxLayoutAlign="start start"
-                 fxLayoutAlign.gt-xs="start center"
                  fxLayoutGap="16px">
               <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
                 <mat-slide-toggle
@@ -63,22 +68,16 @@
 
             <button
               *ngIf="isAdmin() || article.authorId == user?.id"
-              mat-mini-fab
-              color="primary"
-              matTooltip="Edit article"
+              mat-stroked-button
               (click)="onArticleEditClicked()"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
+            >Edit article</button>
 
           </div>
 
-          <h2>{{selectedTranslation.title}}</h2>
-
           <div id="sourceData" *ngIf="article.sourceTitle!=null">
             <a href="{{article.sourceUrl}}">{{article.sourceTitle}}</a>
-            <span *ngIf="article.sourceAuthorName!=null"
-                  class="default-margin-left">By {{article.sourceAuthorName}}</span>
+            <br/>
+            <span *ngIf="article.sourceAuthorName!=null">By {{article.sourceAuthorName}}</span>
           </div>
 
           <div *ngIf="article.sourceTitle==null">Author: {{article.author?.fullName}}</div>
@@ -100,50 +99,57 @@
           >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
         </mat-button-toggle-group>
 
-        <button
-          *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
-          mat-mini-fab
-          color="primary"
-          matTooltip="Edit translation"
-          (click)="onTranslationEditClicked()"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-
-        <button
-          mat-mini-fab
-          color="primary"
-          matTooltip="Add translation"
-          (click)="onTranslationAddClicked()"
-        >
-          <mat-icon>add</mat-icon>
-        </button>
-
       </div>
 
-      <div id="approve-publish-translation"
-           *ngIf="isAdmin()"
-           fxLayout.gt-xs="row"
-           fxLayout="column"
-           fxLayoutAlign="start start"
-           fxLayoutGap="16px"
+      <div
+        fxLayout
+        fxLayoutAlign="start center"
+        fxLayoutGap="16px"
       >
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-          <mat-slide-toggle
-            [disabled]="!selectedTranslation.approved"
-            [(ngModel)]="selectedTranslation.published"
-            [labelPosition]="'before'"
-            (change)="onPublishTranslationChanged($event.checked)"
-          >Publish translation</mat-slide-toggle>
-          <mat-error *ngIf="!selectedTranslation.approved">Translation is not approved!</mat-error>
+        <div id="approve-publish-translation"
+             *ngIf="isAdmin()"
+             fxLayout.gt-xs="row"
+             fxLayout="column"
+             fxLayoutAlign="start start"
+             fxLayoutGap="16px"
+        >
+          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+            <mat-slide-toggle
+              [disabled]="!selectedTranslation.approved"
+              [(ngModel)]="selectedTranslation.published"
+              [labelPosition]="'before'"
+              (change)="onPublishTranslationChanged($event.checked)"
+            >Publish translation</mat-slide-toggle>
+            <mat-error *ngIf="!selectedTranslation.approved">Translation is not approved!</mat-error>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+            <mat-slide-toggle
+              [(ngModel)]="selectedTranslation.approved"
+              [labelPosition]="'before'"
+              (change)="onApproveTranslationChanged($event.checked)"
+            >Approve translation</mat-slide-toggle>
+          </div>
         </div>
 
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-          <mat-slide-toggle
-            [(ngModel)]="selectedTranslation.approved"
-            [labelPosition]="'before'"
-            (change)="onApproveTranslationChanged($event.checked)"
-          >Approve translation</mat-slide-toggle>
+        <div id="add-edit-translation"
+             fxLayout.gt-xs="row"
+             fxLayout="column"
+             fxLayoutAlign="start start"
+             fxLayoutGap="16px"
+        >
+          <button
+            *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
+            mat-stroked-button
+            (click)="onTranslationEditClicked()"
+          >Edit translation</button>
+
+          <button
+            mat-stroked-button
+            matTooltip="Add translation"
+            (click)="onTranslationAddClicked()"
+          >Add translation</button>
+
         </div>
       </div>
 
@@ -153,7 +159,9 @@
 
       <markdown [data]="selectedTranslationVersion.text"></markdown>
 
-      <div id="authors" class="default-margin-bottom">
+      <mat-divider></mat-divider>
+
+      <div id="authors" class="default-margin-bottom default-margin-top">
         <span *ngIf="selectedTranslation.langId!=article.originalLangId"
         >Translated by {{selectedTranslation.author.fullName}}</span>
         <span *ngIf="selectedTranslationVersion.authorId!=selectedTranslation.authorId"
@@ -163,12 +171,13 @@
       <div fxLayout fxLayoutAlign="start center" fxLayoutGap="16px">
 
         <div id="approve-publish-version"
+             *ngIf="isAdmin()"
              fxLayout.gt-xs="row"
              fxLayout="column"
              fxLayoutAlign="start start"
              fxLayoutGap="16px"
         >
-          <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
             <mat-slide-toggle
               [disabled]="!selectedTranslationVersion.approved"
               [(ngModel)]="selectedTranslationVersion.published"
@@ -178,7 +187,7 @@
             <mat-error *ngIf="!selectedTranslationVersion.approved">Version is not approved!</mat-error>
           </div>
 
-          <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
             <mat-slide-toggle
               [(ngModel)]="selectedTranslationVersion.approved"
               [labelPosition]="'before'"
@@ -187,33 +196,23 @@
           </div>
         </div>
 
-        <div
-          fxLayout.gt-xs="row"
-          fxLayout="column"
-          fxLayoutAlign="start start"
-          fxLayoutGap="16px"
+        <div id="add-edit-version"
+             fxLayout.gt-xs="row"
+             fxLayout="column"
+             fxLayoutAlign="start start"
+             fxLayoutGap="16px"
         >
           <button
             *ngIf="isAdmin() || selectedTranslation.authorId == user?.id || selectedTranslationVersion.authorId == user?.id"
-            mat-mini-fab
-            color="primary"
-            matTooltip="Edit version"
+            mat-stroked-button
             (click)="onVersionEditClicked()"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
+          >Edit text version</button>
 
           <button
-            mat-mini-fab
-            color="primary"
-            matTooltip="Add version of text"
+            mat-stroked-button
             (click)="onVersionAddClicked()"
-          >
-            <!-- we use edit icon as it seems to be more ... better -->
-            <mat-icon>add</mat-icon>
-          </button>
+          >Add text version</button>
         </div>
-
 
       </div>
 

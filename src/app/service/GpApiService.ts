@@ -42,7 +42,7 @@ export class GpApiService {
 
   logout(): Observable<string> {
     const params = new HttpParams();
-    params.append(Api.TARGET_URL_PARAMETER, Api.URL);
+    params.set(Api.TARGET_URL_PARAMETER, Api.URL);
     return this.http.get(
       Api.URL + Api.Method.LOGOUT,
       {
@@ -231,6 +231,19 @@ export class GpApiService {
       formData,
       {
         withCredentials: true
+      }
+    );
+  }
+
+  getArticles(limit: number, offset: number): Observable<Article[]> {
+    const params = new HttpParams()
+      .append('limit', limit.toString())
+      .append('offset', offset.toString());
+    return this.http.get<Article[]>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.ALL,
+      {
+        withCredentials: true,
+        params
       }
     );
   }

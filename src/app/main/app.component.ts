@@ -17,9 +17,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
-
-    console.log('localStorageService.getTargetUrl(): %s', this.localStorageService.getTargetUrl());
+    // console.log('localStorageService.getTargetUrl(): %s', this.localStorageService.getTargetUrl());
     if (this.localStorageService.getTargetUrl() != null) {
       this.router.navigateByUrl(this.localStorageService.getTargetUrl())
         .then(() => this.localStorageService.removeTargetUrl());

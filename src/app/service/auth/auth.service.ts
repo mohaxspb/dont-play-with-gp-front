@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   authenticate() {
-    console.log('authenticate');
+    // console.log('authenticate');
     this.apiService
       .getUser()
       .pipe(

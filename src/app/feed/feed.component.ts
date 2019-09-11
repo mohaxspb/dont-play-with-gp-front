@@ -5,7 +5,7 @@ import {MatBottomSheet} from '@angular/material';
 import {LoginComponent} from '../login/login.component';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {BehaviorSubject} from 'rxjs';
-import {delay, finalize} from 'rxjs/operators';
+import {finalize} from 'rxjs/operators';
 import {NotificationService} from '../service/ui/NotificationService';
 import {Article} from '../model/data/Article';
 import {GpConstants} from '../GpConstants';
@@ -126,7 +126,8 @@ export class FeedComponent implements OnInit {
     this.articleService
       .getPublishedArticles(GpConstants.DEFAULT_LIMIT, offset)
       .pipe(
-        delay(1000),
+        // to test loading indicator
+        // delay(1000),
         // to test error
         // flatMap(value => {
         //   if (offset === 4) {

@@ -29,9 +29,8 @@
       <div
         *ngIf="userFromApi != null"
         fxLayout="row"
-        fxLayoutGap="16px"
         fxLayout.lt-sm="column"
-        fxLayoutGap.lt-sm="16px"
+        fxLayoutGap="16px"
       >
         <div id="profile-panel">
           <div id="avatar" fxLayoutAlign.lt-sm="space-around">
@@ -146,18 +145,39 @@
 
         </div>
 
-        <div id="createdContent" fxLayout="column" fxLayoutAlign="space-between" class="overflow-x" fxFlex>
+        <div id="createdContent"
+             fxLayout="column"
+             fxLayoutAlign="space-between"
+             [ngClass]="['overflow-x']"
+             ngClass.lt-sm="{'overflow-x':false}"
+             fxFlex
+        >
 
           <div id="createdArticles">
 
             <h3>Created articles</h3>
             <div class="rect-height-200 position-relative">
-              <div *ngIf="articlesCreated?.length!==0" fxLayout fxLayoutGap="16px" class="overflow-x default-padding-around">
-                <mat-card *ngFor="let article of articlesCreated" class="account-article-card">
-                  <mat-card-content>
-                    <p class="account-article-card-content">{{article.translations[0].title}}</p>
-                  </mat-card-content>
-                </mat-card>
+              <div *ngIf="articlesCreated?.length!==0"
+                   fxLayout
+                   fxLayoutGap="16px"
+                   class="overflow-x default-padding-around"
+              >
+                <div *ngFor="let article of articlesCreated">
+                  <mat-card
+                    *ngVar="article.translations[0] as translation"
+                    class="account-article-card"
+                    fxFlex="noshrink"
+                    fxLayout="column">
+                    <mat-card-content
+                      fxFlex="80%"
+                      class="account-article-card-content"
+                    >{{translation.title}}</mat-card-content>
+                    <mat-card-footer fxFlex="10%">
+                      <p class="default-margin-left">{{article.publishedDate | date:'shortDate':'UTC': userLanguage.langCode}}</p>
+                    </mat-card-footer>
+                  </mat-card>
+                </div>
+
               </div>
 
               <div id="articles-loading-indication"

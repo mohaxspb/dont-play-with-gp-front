@@ -39,5 +39,6 @@
 }
 
 .account-article-card-content {
-  /*overflow-y: hidden;*/
+  overflow-y: hidden;
+  overflow-x: hidden;
 }

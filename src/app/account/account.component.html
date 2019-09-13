@@ -167,7 +167,9 @@
                     *ngVar="article.translations[0] as translation"
                     class="account-article-card"
                     fxFlex="noshrink"
-                    fxLayout="column">
+                    fxLayout="column"
+                    (click)="onArticleClicked(article.id)"
+                  >
                     <mat-card-content
                       fxFlex="80%"
                       class="account-article-card-content"

@@ -5,7 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {GpAccountInteractor} from '../service/auth/GpAccountInteractor';
 import {Language} from '../model/data/Language';
-import {delay, finalize} from 'rxjs/operators';
+import {finalize} from 'rxjs/operators';
 import {DialogService} from '../service/ui/DialogService';
 import {Router} from '@angular/router';
 import {NotificationService} from '../service/ui/NotificationService';
@@ -83,8 +83,6 @@ export class AccountComponent implements OnInit {
     this.articleService
       .getArticlesByAuthor(this.userFromApi.id)
       .pipe(
-        //fixme test
-        delay(1000),
         finalize(() => this.articlesAreLoading.next(false))
       )
       .subscribe(
@@ -177,6 +175,11 @@ export class AccountComponent implements OnInit {
     console.log('onDeleteAccountClicked');
 
     this.showConfirmAccountDeleteDialog(this.userFromApi.id);
+  }
+
+  onArticleClicked(id: number) {
+    // noinspection JSIgnoredPromiseFromCall
+    this.router.navigateByUrl('article/' + id.toString());
   }
 
   isNullOrEmptyOrUndefined(value) {

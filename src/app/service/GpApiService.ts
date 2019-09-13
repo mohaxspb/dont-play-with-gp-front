@@ -247,4 +247,15 @@ export class GpApiService {
       }
     );
   }
+
+  getArticlesByAuthor(authorId: number): Observable<Article[]> {
+    const params = new HttpParams().append('authorId', authorId.toString());
+    return this.http.get<Article[]>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.ALL_BY_AUTHOR_ID,
+      {
+        withCredentials: true,
+        params
+      }
+    );
+  }
 }

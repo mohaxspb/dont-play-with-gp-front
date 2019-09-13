@@ -10,6 +10,8 @@ import {DialogService} from '../service/ui/DialogService';
 import {Router} from '@angular/router';
 import {NotificationService} from '../service/ui/NotificationService';
 import {GpLanguageService} from '../service/data/GpLanguageService';
+import {Article} from '../model/data/Article';
+import {GpArticleService} from '../service/data/GpArticleService';
 
 @Component({
   selector: 'app-account',
@@ -20,6 +22,7 @@ export class AccountComponent implements OnInit {
 
   dataIsLoading = new BehaviorSubject<boolean>(false);
   progressInAction = new BehaviorSubject<boolean>(false);
+  articlesAreLoading = new BehaviorSubject<boolean>(false);
 
   userFromApi: GpUser;
 
@@ -34,9 +37,13 @@ export class AccountComponent implements OnInit {
 
   initialFormValues: { name: string, primaryLanguageSelect: Language };
 
+  // content
+  articlesCreated: Article[] = [];
+
   constructor(
     private router: Router,
     private accountInteractor: GpAccountInteractor,
+    private articleService: GpArticleService,
     private fBuilder: FormBuilder,
     private notificationService: NotificationService,
     private dialogsService: DialogService
@@ -65,7 +72,25 @@ export class AccountComponent implements OnInit {
           this.userLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.userFromApi.primaryLanguageId);
 
           this.initForm(this.userFromApi, this.userLanguage);
+          this.loadCreatedArticles();
         }
+      );
+  }
+
+  private loadCreatedArticles() {
+    this.articlesAreLoading.next(true);
+
+    this.articleService
+      .getArticlesByAuthor(this.userFromApi.id)
+      .pipe(
+        finalize(() => this.articlesAreLoading.next(false))
+      )
+      .subscribe(
+        articles => {
+          // todo
+          this.articlesCreated = articles;
+        },
+        error => this.notificationService.showError(error)
       );
   }
 
@@ -150,6 +175,11 @@ export class AccountComponent implements OnInit {
     console.log('onDeleteAccountClicked');
 
     this.showConfirmAccountDeleteDialog(this.userFromApi.id);
+  }
+
+  onArticleClicked(id: number) {
+    // noinspection JSIgnoredPromiseFromCall
+    this.router.navigateByUrl('article/' + id.toString());
   }
 
   isNullOrEmptyOrUndefined(value) {

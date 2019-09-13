@@ -29,11 +29,10 @@
       <div
         *ngIf="userFromApi != null"
         fxLayout="row"
-        fxLayoutGap="16px"
         fxLayout.lt-sm="column"
-        fxLayoutGap.lt-sm="16px"
+        fxLayoutGap="16px"
       >
-        <div>
+        <div id="profile-panel">
           <div id="avatar" fxLayoutAlign.lt-sm="space-around">
 
             <div id="image-avatar" *ngIf="!isNullOrEmptyOrUndefined(userFromApi.avatar)">
@@ -81,7 +80,7 @@
 
             <div id="email" class="mat-input-element">
               <mat-form-field class="full-width-field">
-                <label>
+                <label class="full-width-field">
                   <input
                     matInput
                     formControlName="email"
@@ -96,7 +95,7 @@
 
             <div id="name" class="mat-input-element">
               <mat-form-field class="full-width-field">
-                <label>
+                <label class="full-width-field">
                   <input
                     matInput
                     formControlName="name"
@@ -146,31 +145,75 @@
 
         </div>
 
-        <div id="createdContent" fxLayout="column" fxLayoutAlign="space-between" fxFlex>
+        <div id="createdContent"
+             fxLayout="column"
+             fxLayoutAlign="space-between"
+             [ngClass]="['overflow-x']"
+             ngClass.lt-sm="{'overflow-x':false}"
+             fxFlex
+        >
 
           <div id="createdArticles">
 
-            <h3>Published articles</h3>
-            <div class="background-color-accent rect-height-200"><p>Coming soon!</p></div>
+            <h3>Created articles</h3>
+            <div class="rect-height-200 position-relative">
+              <div *ngIf="articlesCreated?.length!==0"
+                   fxLayout
+                   fxLayoutGap="16px"
+                   class="overflow-x default-padding-around"
+              >
+                <div *ngFor="let article of articlesCreated">
+                  <mat-card
+                    *ngVar="article.translations[0] as translation"
+                    class="account-article-card"
+                    fxFlex="noshrink"
+                    fxLayout="column"
+                    (click)="onArticleClicked(article.id)"
+                  >
+                    <mat-card-content
+                      fxFlex="80%"
+                      class="account-article-card-content"
+                    >{{translation.title}}</mat-card-content>
+                    <mat-card-footer fxFlex="10%">
+                      <p class="default-margin-left">{{article.publishedDate | date:'shortDate':'UTC': userLanguage.langCode}}</p>
+                    </mat-card-footer>
+                  </mat-card>
+                </div>
+
+              </div>
+
+              <div id="articles-loading-indication"
+                   *ngIf="articlesAreLoading|async"
+                   class="background-half-transparent-white cover"
+                   (click)="$event.stopPropagation()"
+              >
+                <mat-spinner
+                  class="center-inside-both-axis"
+                  [diameter]="24"
+                ></mat-spinner>
+              </div>
+            </div>
           </div>
 
           <div id="createdComments">
             <h3>Published comments</h3>
-            <div class="background-color-accent rect-height-200"><p>Coming soon!</p></div>
+            <div class="rect-height-200 position-relative">
+              <p class="center-inside-both-axis">Coming soon!</p>
+            </div>
           </div>
 
         </div>
 
-      </div>
+        <div id="data-sending-indication" *ngIf="progressInAction|async"
+             class="background-half-transparent-white cover"
+             (click)="$event.stopPropagation()"
+        >
+          <mat-spinner
+            class="center-inside-both-axis"
+            [diameter]="24"
+          ></mat-spinner>
+        </div>
 
-      <div id="data-sending-indication" *ngIf="progressInAction|async"
-           class="background-half-transparent-white cover"
-           (click)="$event.stopPropagation()"
-      >
-        <mat-spinner
-          class="center-inside-both-axis"
-          [diameter]="24"
-        ></mat-spinner>
       </div>
 
     </mat-card-content>

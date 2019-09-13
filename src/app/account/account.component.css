@@ -32,3 +32,13 @@
 .rect-height-200 {
   height: 200px;
 }
+
+.account-article-card {
+  height: 166px;
+  width: 180px;
+}
+
+.account-article-card-content {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}

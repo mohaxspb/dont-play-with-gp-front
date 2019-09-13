@@ -90,8 +90,16 @@ body {
   position: relative;
 }
 
+.overflow-x {
+  overflow-x: auto;
+}
+
 .full-screen-height {
   height: 100vh;
+}
+
+.min-full-screen-height {
+  min-height: 100vh;
 }
 
 .full-width-field {
@@ -118,4 +126,14 @@ body {
 
 .show-line-breaks {
   white-space: pre-line;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }

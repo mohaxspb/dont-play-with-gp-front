@@ -83,6 +83,7 @@ export class AccountComponent implements OnInit {
     this.articleService
       .getArticlesByAuthor(this.userFromApi.id)
       .pipe(
+        //fixme test
         delay(1000),
         finalize(() => this.articlesAreLoading.next(false))
       )

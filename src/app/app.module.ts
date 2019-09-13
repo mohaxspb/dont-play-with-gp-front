@@ -18,7 +18,8 @@ import {
   MatMenuModule,
   MatProgressSpinnerModule,
   MatRippleModule,
-  MatSelectModule, MatSlideToggleModule,
+  MatSelectModule,
+  MatSlideToggleModule,
   MatSnackBarModule,
   MatTabsModule,
   MatToolbarModule,
@@ -59,6 +60,7 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
+// noinspection JSUnusedLocalSymbols
 declare let $: any;
 
 registerLocaleData(localeEn);

@@ -75,7 +75,7 @@ export class GpApiService {
     return this.http.get<[Language]>(Api.URL + Api.LanguageEndpoint.URL + Api.LanguageEndpoint.Method.ALL);
   }
 
-  delete(id: number): Observable<boolean> {
+  deleteUser(id: number): Observable<boolean> {
     const params = new HttpParams();
     params.set('id', id.toString());
     return this.http
@@ -263,6 +263,19 @@ export class GpApiService {
         params
       }
     );
+  }
+
+  deleteArticle(id: number): Observable<boolean> {
+    const params = new HttpParams();
+    params.set('id', id.toString());
+    return this.http
+      .delete<boolean>(
+        Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.DELETE + '/' + id,
+        {
+          params,
+          withCredentials: true
+        },
+      );
   }
 
   deleteImageByUserIdAndImageName(userId: number, imageName: string): Observable<boolean> {

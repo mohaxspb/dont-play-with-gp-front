@@ -183,6 +183,12 @@ export class ArticleComponent implements OnInit {
     );
   }
 
+  onArticleDeleteClicked() {
+    console.log('onArticleDeleteClicked');
+    // only author or admin could see it, so no need to login
+    this.showConfirmArticleDeleteDialog(this.article.id);
+  }
+
   onTranslationAddClicked() {
     console.log('onTranslationAddClicked');
     // show login or translation create component
@@ -258,6 +264,19 @@ export class ArticleComponent implements OnInit {
 
   isAdmin(): boolean {
     return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
+  }
+
+  private showConfirmArticleDeleteDialog(id: number) {
+    this.dialogsService
+    // todo translation
+      .confirm('Delete article', 'Are you sure you want to delete article? This can\'t be undone!', 'Delete article')
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.deleteArticle(id);
+        } else {
+          console.log('Do not delete!');
+        }
+      });
   }
 
   private loadInitialData() {
@@ -462,6 +481,23 @@ export class ArticleComponent implements OnInit {
           this.selectedTranslationVersion.published = !publish;
           this.notificationService.showError(error);
         }
+      );
+  }
+
+  private deleteArticle(id: number) {
+    console.log('deleteArticle: %d', id);
+
+    this.progressInAction.next(true);
+
+    this.articleService
+      .deleteArticle(id)
+      .pipe(finalize(() => this.progressInAction.next(false)))
+      .subscribe(
+        () => {
+          // noinspection JSIgnoredPromiseFromCall
+          this.router.navigateByUrl('feed');
+        },
+        error => this.notificationService.showError(error)
       );
   }
 

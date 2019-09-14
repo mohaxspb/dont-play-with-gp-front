@@ -64,6 +64,7 @@ export class Api {
       static CREATE = 'create';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
+      static DELETE = 'delete';
     };
   };
 

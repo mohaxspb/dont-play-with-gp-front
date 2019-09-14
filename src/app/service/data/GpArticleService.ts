@@ -95,4 +95,8 @@ export class GpArticleService {
   getArticlesByAuthor(authorId: number): Observable<Article[]> {
     return this.apiService.getArticlesByAuthor(authorId);
   }
+
+  deleteArticle(id: number): Observable<boolean> {
+    return this.apiService.deleteArticle(id);
+  }
 }

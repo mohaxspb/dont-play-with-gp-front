@@ -51,13 +51,13 @@
         <mat-card-content>
           <!--    todo image-->
 
-          <div id="approve-publish-article" *ngIf="isAdmin() || article.authorId == user?.id"
+          <div *ngIf="isAdmin() || article.authorId == user?.id"
                class="default-margin-bottom"
                fxLayout
                fxLayoutAlign="start center"
                fxLayoutGap="16px"
           >
-            <div *ngIf="isAdmin()"
+            <div id="approve-publish-article" *ngIf="isAdmin()"
                  fxLayout="column"
                  fxLayout.gt-xs="row"
                  fxLayoutAlign="start start"
@@ -81,11 +81,25 @@
               </div>
             </div>
 
-            <button
-              *ngIf="isAdmin() || article.authorId == user?.id"
-              mat-stroked-button
-              (click)="onArticleEditClicked()"
-            >Edit article</button>
+            <div id="edit-delete-article"
+                 fxLayout.gt-xs="row"
+                 fxLayout="column"
+                 fxLayoutAlign="start start"
+                 fxLayoutGap="16px"
+            >
+              <button
+                *ngIf="isAdmin() || article.authorId == user?.id"
+                mat-stroked-button
+                (click)="onArticleEditClicked()"
+              >Edit article</button>
+
+              <button
+                *ngIf="isAdmin() || article.authorId == user?.id"
+                mat-stroked-button
+                color="warn"
+                (click)="onArticleDeleteClicked()"
+              >Delete article</button>
+            </div>
 
           </div>
 

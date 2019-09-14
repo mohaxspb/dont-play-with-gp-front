@@ -23,15 +23,30 @@
 
     <header class="default-margin-bottom">
       <mat-card>
-        <mat-card-header>
-          <mat-card-title>{{selectedTranslation.title}}</mat-card-title>
+        <div id="header-container" fxLayout.gt-xs="row" fxLayout="column" fxLayoutAlign="start start">
 
-          <mat-card-subtitle id="published-date">
+          <mat-card-header fxFlexOrder="2" fxFlexOrder.gt-xs="1" fxFlex>
+            <mat-card-title>{{selectedTranslation.title}}</mat-card-title>
+
+            <mat-card-subtitle id="published-date">
               <span *ngIf="article.published"
               >{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
-            <span *ngIf="!article.published">Not published</span>
-          </mat-card-subtitle>
-        </mat-card-header>
+              <span *ngIf="!article.published">Not published</span>
+            </mat-card-subtitle>
+          </mat-card-header>
+
+          <img
+            src="{{selectedTranslation.imageUrl}}"
+            alt="Article image"
+            fxShow="{{selectedTranslation.imageUrl!=null}}"
+            fxFlexOrder="1"
+            fxFlexOrder.gt-xs="2"
+            [ngClass]="{'article-image':true, 'default-margin-bottom':true, 'article-image-desktop':false}"
+            [ngClass.gt-xs]="{'article-image':false, 'article-image-desktop':true}"
+            onerror="if (this.src !== 'assets/baseline-image-24px.svg') this.src = 'assets/baseline-image-24px.svg';"
+          >
+
+        </div>
 
         <mat-card-content>
           <!--    todo image-->

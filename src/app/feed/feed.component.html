@@ -11,12 +11,21 @@
        (scrolled)="onScroll()"
   >
     <div *ngIf="articles.length!=0">
-      <div *ngFor="let article of articles" class="default-margin-bottom">
+      <div *ngFor="let article of articles"
+           class="default-margin-bottom"
+           [ngClass.gt-xs]=""
+           [ngClass]="['default-margin-left', 'default-margin-right']">
         <mat-card *ngVar="article.translations[indexOfCorrectArticleTranslation(article)] as translation">
 
-          <div id="header-container" fxLayout="row" fxLayoutAlign="start center">
+          <div id="header-container" fxLayout.gt-xs="row" fxLayout="column" fxLayoutAlign="start start">
 
-            <mat-card-header (click)="onArticleClicked(article, translation)" fxFlex>
+            <mat-card-header
+              (click)="onArticleClicked(article, translation)"
+              fxFlex
+              fxFlexOrder="2"
+              fxFlex.gt-xs
+              fxFlexOrder.gt-xs="1"
+            >
               <mat-card-title>{{translation.title}}</mat-card-title>
               <mat-card-subtitle>
                 <span>{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
@@ -26,17 +35,24 @@
               >Author: {{article.sourceAuthorName != null ? article.sourceAuthorName : article.author.fullName}}</mat-card-subtitle>
             </mat-card-header>
 
-            <img *ngIf="translation.imageUrl!=null"
+            <img
                  src="{{translation.imageUrl}}"
                  alt="Article image"
-                 height="96px"
-                 width="auto">
+                 fxShow="{{translation.imageUrl!=null}}"
+                 fxFlexOrder="1"
+                 fxFlexOrder.gt-xs="2"
+                 (click)="onArticleClicked(article, translation)"
+                 [ngClass]="{'article-image':true, 'default-margin-bottom':true, 'article-image-desktop':false}"
+                 [ngClass.gt-xs]="{'article-image':false, 'article-image-desktop':true}"
+                 onerror="if (this.src !== 'assets/baseline-image-24px.svg') this.src = 'assets/baseline-image-24px.svg';"
+            >
           </div>
 
-          <mat-card-content (click)="onArticleClicked(article, translation)">
-            {{translation.shortDescription}}
-          </mat-card-content>
-          <mat-card-footer>
+          <mat-card-content
+            class="default-margin-left"
+            (click)="onArticleClicked(article, translation)"
+          >{{translation.shortDescription}}</mat-card-content>
+          <mat-card-actions>
             <mat-button-toggle-group
               class="default-margin-bottom default-margin-left"
               [value]="correctArticleLanguage(article)"
@@ -46,7 +62,7 @@
                 [value]="lang"
               >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
             </mat-button-toggle-group>
-          </mat-card-footer>
+          </mat-card-actions>
         </mat-card>
 
       </div>

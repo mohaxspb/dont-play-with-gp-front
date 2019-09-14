@@ -57,6 +57,7 @@ import {AngularMarkdownEditorModule} from 'angular-markdown-editor';
 import {MarkdownModule} from 'ngx-markdown';
 import {VarDirective} from './utils/VarDirective';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {MaterialFileInputModule} from 'ngx-material-file-input';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -120,7 +121,8 @@ const routes: Routes = [
     MatTabsModule,
     MatButtonToggleModule,
     MatSlideToggleModule,
-    FormsModule
+    FormsModule,
+    MaterialFileInputModule
   ],
   providers: [
     GpLocalStorageService,

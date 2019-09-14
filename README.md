@@ -48,4 +48,6 @@ See [Angular-Markdown-Editor](https://github.com/ghiscoding/angular-markdown-edi
 
 And [ngx-markdown](https://github.com/jfcere/ngx-markdown)
 
-In case of problems, try this one: https://github.com/lon-yang/ngx-markdown-editor#readme
+## Material file input lib
+
+See [material-file-input](https://github.com/merlosy/ngx-material-file-input)

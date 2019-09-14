@@ -89,6 +89,14 @@ export class Api {
     };
   };
 
+  static ImageEndpoint = class {
+    static URL = 'image/';
+
+    static Method = class {
+      static ADD = 'add';
+    };
+  };
+
   private static currentPort(): string {
     let port = this.TOMCAT_PORT;
     if (window.location.protocol === this.SECURE_SCHEME) {

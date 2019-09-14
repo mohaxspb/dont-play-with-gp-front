@@ -1,7 +1,7 @@
 <div>
 
   <div id="articles-container"
-      class="position-relative min-full-screen-height"
+       class="position-relative min-full-screen-height"
        infiniteScroll
        [infiniteScrollDistance]="2"
        [infiniteScrollThrottle]="300"
@@ -13,15 +13,26 @@
     <div *ngIf="articles.length!=0">
       <div *ngFor="let article of articles" class="default-margin-bottom">
         <mat-card *ngVar="article.translations[indexOfCorrectArticleTranslation(article)] as translation">
-          <mat-card-header (click)="onArticleClicked(article, translation)">
-            <mat-card-title>{{translation.title}}</mat-card-title>
-            <mat-card-subtitle>
-              <span>{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
-            </mat-card-subtitle>
-            <mat-card-subtitle
-              *ngIf="article.sourceAuthorName != null || (article.author.fullName!=null && article.author.fullName.length>0)"
-            >Author: {{article.sourceAuthorName != null ? article.sourceAuthorName : article.author.fullName}}</mat-card-subtitle>
-          </mat-card-header>
+
+          <div id="header-container" fxLayout="row" fxLayoutAlign="start center">
+
+            <mat-card-header (click)="onArticleClicked(article, translation)" fxFlex>
+              <mat-card-title>{{translation.title}}</mat-card-title>
+              <mat-card-subtitle>
+                <span>{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
+              </mat-card-subtitle>
+              <mat-card-subtitle
+                *ngIf="article.sourceAuthorName != null || (article.author.fullName!=null && article.author.fullName.length>0)"
+              >Author: {{article.sourceAuthorName != null ? article.sourceAuthorName : article.author.fullName}}</mat-card-subtitle>
+            </mat-card-header>
+
+            <img *ngIf="translation.imageUrl!=null"
+                 src="{{translation.imageUrl}}"
+                 alt="Article image"
+                 height="96px"
+                 width="auto">
+          </div>
+
           <mat-card-content (click)="onArticleClicked(article, translation)">
             {{translation.shortDescription}}
           </mat-card-content>

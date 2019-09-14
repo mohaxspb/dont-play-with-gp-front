@@ -32,8 +32,9 @@ export class Article {
   created: Date;
   updated: Date;
 
-  translations: [ArticleTranslation];
   author: GpUser | null;
   approver: GpUser | null;
   publisher: GpUser | null;
+
+  translations: [ArticleTranslation];
 }

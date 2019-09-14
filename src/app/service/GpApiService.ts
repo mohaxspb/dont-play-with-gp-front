@@ -113,8 +113,9 @@ export class GpApiService {
     sourceUrl: string | null,
     title: string,
     shortDescription: string | null,
-    text: string
-    // todo image Url
+    text: string,
+    image: File | null,
+    imageName: string | null
   ): Observable<Article> {
     const formData = new FormData();
     if (sourceTitle != null) {
@@ -132,7 +133,12 @@ export class GpApiService {
       formData.append('shortDescription', shortDescription);
     }
     formData.append('text', text);
-    // todo image Url
+    if (image != null) {
+      formData.append('image', image);
+    }
+    if (imageName != null) {
+      formData.append('imageName', imageName);
+    }
     return this.http
       .post<Article>(
         Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.CREATE,

@@ -173,6 +173,7 @@ export class ArticleCreateComponent implements OnInit {
 
   onArticleCreateClicked() {
     console.log('onArticleCreateClicked');
+    console.log('image, imageName: %s/%s', this.imageFile, this.imageFileName);
 
     // test
     // this.router.navigate(['article/' + 43], {queryParams: {langId: 1}})
@@ -189,8 +190,9 @@ export class ArticleCreateComponent implements OnInit {
         this.sourceUrl,
         this.title,
         this.shortDescription,
-        this.text
-        // todo image Url
+        this.text,
+        this.imageFile,
+        this.imageFileName
       )
       .pipe(
         finalize(() => this.progressInAction.next(false))

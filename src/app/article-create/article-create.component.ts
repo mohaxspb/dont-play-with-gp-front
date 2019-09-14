@@ -149,9 +149,6 @@ export class ArticleCreateComponent implements OnInit {
       this.imageFile = files[0];
       this.imageFileName = this.imageFile.name;
 
-      //fixme test
-      console.log('new ByteFormatPipe(null).transform(this.imageFile.size): %s', new ByteFormatPipe(null).transform(this.imageFile.size));
-
       const reader = new FileReader();
 
       reader.readAsDataURL(this.imageFile); // read file as data logoImageUrl
@@ -205,6 +202,16 @@ export class ArticleCreateComponent implements OnInit {
           .then(() => NavigationUtils.scrollToTop()),
         error => this.notificationService.showError(error)
       );
+  }
+
+  get maxSizeText(): string {
+    const maxSize = this.articleCreateFormGroup.controls.imageFile.getError('maxContentSize').maxSize;
+    return new ByteFormatPipe(null).transform(maxSize);
+  }
+
+  get actualSizeText(): string {
+    const actualSize = this.articleCreateFormGroup.controls.imageFile.getError('maxContentSize').actualSize;
+    return new ByteFormatPipe(null).transform(actualSize);
   }
 
   private initForm() {

@@ -71,10 +71,8 @@
                 >
                   <mat-icon>clear</mat-icon>
                 </button>
-                <!--                todo fixme move calc to component to inline text-->
                 <mat-error *ngIf="articleCreateFormGroup.get('imageFile').hasError('maxContentSize')"
-                >The total size must not exceed {{articleCreateFormGroup.get('imageFile')?.getError('maxContentSize').maxSize | byteFormat}}
-                 ({{articleCreateFormGroup.get('imageFile')?.getError('maxContentSize').actualSize | byteFormat}}).</mat-error>
+                >The total size must not exceed {{maxSizeText}} ({{actualSizeText}}).</mat-error>
               </mat-form-field>
               <div id="input-image-file-name" class="mat-input-element">
                 <mat-form-field class="full-width-field">

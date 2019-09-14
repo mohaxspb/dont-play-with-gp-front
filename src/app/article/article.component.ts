@@ -381,10 +381,6 @@ export class ArticleComponent implements OnInit {
     return versions.sort((a, b) => b.updated.getTime() - a.updated.getTime())[0];
   }
 
-  private calculateAvailableArticleLanguages(): Array<Language> {
-    return this.article.translations.map(translation => this.languages.find(lang => translation.langId === lang.id));
-  }
-
   // todo translation
   private showPublishConfirmDialog(dataType: DataType, id: number, publish: boolean) {
     let action: string;

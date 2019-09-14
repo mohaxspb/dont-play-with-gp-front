@@ -75,7 +75,7 @@ export class GpApiService {
     return this.http.get<[Language]>(Api.URL + Api.LanguageEndpoint.URL + Api.LanguageEndpoint.Method.ALL);
   }
 
-  delete(id: number): Observable<boolean> {
+  deleteUser(id: number): Observable<boolean> {
     const params = new HttpParams();
     params.set('id', id.toString());
     return this.http
@@ -113,8 +113,9 @@ export class GpApiService {
     sourceUrl: string | null,
     title: string,
     shortDescription: string | null,
-    text: string
-    // todo image Url
+    text: string,
+    image: File | null,
+    imageName: string | null
   ): Observable<Article> {
     const formData = new FormData();
     if (sourceTitle != null) {
@@ -132,7 +133,12 @@ export class GpApiService {
       formData.append('shortDescription', shortDescription);
     }
     formData.append('text', text);
-    // todo image Url
+    if (image != null) {
+      formData.append('image', image);
+    }
+    if (imageName != null) {
+      formData.append('imageName', imageName);
+    }
     return this.http
       .post<Article>(
         Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.CREATE,
@@ -255,6 +261,39 @@ export class GpApiService {
       {
         withCredentials: true,
         params
+      }
+    );
+  }
+
+  deleteArticle(id: number): Observable<boolean> {
+    const params = new HttpParams();
+    params.set('id', id.toString());
+    return this.http
+      .delete<boolean>(
+        Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.DELETE + '/' + id,
+        {
+          params,
+          withCredentials: true
+        },
+      );
+  }
+
+  deleteImageByUserIdAndImageName(userId: number, imageName: string): Observable<boolean> {
+    return this.http.delete<boolean>(
+      Api.URL + Api.ImageEndpoint.URL + userId + '/' + imageName,
+      {withCredentials: true}
+    );
+  }
+
+  addImage(image: File, imageName: string): Observable<string> {
+    const formData = new FormData();
+    formData.append('imageName', imageName.toString());
+    formData.append('image', image);
+    return this.http.post<string>(
+      Api.URL + Api.ImageEndpoint.URL + Api.ImageEndpoint.Method.ADD,
+      formData,
+      {
+        withCredentials: true
       }
     );
   }

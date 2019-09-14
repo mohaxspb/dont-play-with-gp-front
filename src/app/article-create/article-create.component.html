@@ -32,9 +32,65 @@
 
         <form
           [formGroup]="articleCreateFormGroup"
-          name="accountEditForm"
+          name="articleCreateForm"
           (ngSubmit)="onArticleCreateClicked()"
         >
+
+          <mat-card class="default-margin-bottom">
+            <mat-card-title>Article image file</mat-card-title>
+
+            <div fxLayout fxLayoutAlign="center center" class="default-margin-bottom default-margin-top">
+              <img
+                matCardImage
+                [src]="articleImageUrl"
+                height="48px"
+                width="48px"
+                alt="logo"
+                class="input-image-preview"
+                onerror="if (this.src !== 'assets/baseline-image-24px.svg') this.src = 'assets/baseline-image-24px.svg';">
+
+            </div>
+
+            <mat-card-content>
+              <mat-form-field
+                class="full-width-field">
+                <ngx-mat-file-input
+                  class="full-width-field"
+                  #logoImageFileInput
+                  formControlName="imageFile"
+                  placeholder="Image file"
+                  valuePlaceholder="No file selected"
+                  (change)="logoImageFileChange($event.target.files)"
+                >
+                </ngx-mat-file-input>
+
+                <button
+                  mat-icon-button matSuffix
+                  *ngIf="!logoImageFileInput.empty"
+                  (click)="logoImageFileInput.clear($event);onLogoFileCleared()"
+                >
+                  <mat-icon>clear</mat-icon>
+                </button>
+                <mat-error *ngIf="articleCreateFormGroup.get('imageFile').hasError('maxContentSize')"
+                >The total size must not exceed {{maxSizeText}} ({{actualSizeText}}).</mat-error>
+              </mat-form-field>
+              <div id="input-image-file-name" class="mat-input-element">
+                <mat-form-field class="full-width-field">
+                  <label class="full-width-field">
+                    <input
+                      matInput
+                      [value]="imageFileName"
+                      formControlName="imageFileName"
+                      placeholder="Image file name"
+                      name="imageFileName"
+                      (change)="onImageFileNameChanged($event.target.value)"
+                    >
+                  </label>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+
+          </mat-card>
 
           <mat-card id="input-sourceData">
             <mat-card-header>
@@ -169,7 +225,7 @@
                 (onChange)="onTextChanged($event.target.value)"
               >
               </angular-markdown-editor>
-<!--              todo place not clickable div-->
+              <!--              todo place not clickable div-->
             </div>
 
             <div id="textPreview" class="default-margin-bottom">

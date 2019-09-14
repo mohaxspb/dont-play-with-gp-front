@@ -1,0 +1,8 @@
+.input-image-preview {
+  min-height: 48px;
+  min-width: 48px;
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  object-position: center;
+}

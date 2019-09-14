@@ -64,6 +64,7 @@ export class Api {
       static CREATE = 'create';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
+      static DELETE = 'delete';
     };
   };
 
@@ -86,6 +87,14 @@ export class Api {
       static CREATE = 'create';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
+    };
+  };
+
+  static ImageEndpoint = class {
+    static URL = 'image/';
+
+    static Method = class {
+      static ADD = 'add';
     };
   };
 

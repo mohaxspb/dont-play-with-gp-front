@@ -8,8 +8,8 @@ export class ArticleTranslation {
   articleId: number;
 
   title: string;
-  shortDescription: string;
-  imageUrl: string;
+  shortDescription: string | null;
+  imageUrl: string | null;
 
   authorId: number;
 
@@ -24,8 +24,9 @@ export class ArticleTranslation {
   created: Date;
   updated: Date;
 
-  versions: [ArticleTranslationVersion];
   author: GpUser | null;
   approver: GpUser | null;
   publisher: GpUser | null;
+
+  versions: [ArticleTranslationVersion];
 }

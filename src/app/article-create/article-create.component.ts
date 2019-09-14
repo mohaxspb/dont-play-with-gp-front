@@ -13,6 +13,7 @@ import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Article} from '../model/data/Article';
 import {NotificationService} from '../service/ui/NotificationService';
 import {NavigationUtils} from '../utils/NavigationUtils';
+import {ByteFormatPipe, FileValidator} from 'ngx-material-file-input';
 
 @Component({
   selector: 'app-article-create',
@@ -46,6 +47,16 @@ export class ArticleCreateComponent implements OnInit {
   title: string;
   shortDescription: string;
   text: string;
+
+  // image
+  imageFile: File | null = null;
+  imageFileName: string | null = null;
+  articleImageUrl: string | null = null;
+  /**
+   * max imageFile size in bytes (5 Mb in that case)
+   */
+  maxSize = 1024 * 1024 * 5;
+  // image END
 
   // add/edit data
   actionTitle = 'New article creation';
@@ -127,8 +138,39 @@ export class ArticleCreateComponent implements OnInit {
     this.loadInitialData();
   }
 
+  onImageFileNameChanged(imageFileName: string) {
+    console.log('onImageFileNameChanged: %s', imageFileName);
+    this.imageFileName = imageFileName;
+  }
+
+  logoImageFileChange(files: FileList) {
+    console.log('logoImageFileChange: ', files);
+    if (files.length > 0) {
+      this.imageFile = files[0];
+      this.imageFileName = this.imageFile.name;
+
+      const reader = new FileReader();
+
+      reader.readAsDataURL(this.imageFile); // read file as data logoImageUrl
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        const target = event.target as FileReader;
+        this.articleImageUrl = target.result.toString();
+      };
+    } else {
+      this.onLogoFileCleared();
+    }
+  }
+
+  onLogoFileCleared() {
+    this.imageFile = null;
+    this.imageFileName = null;
+    this.articleImageUrl = null;
+  }
+
   onArticleCreateClicked() {
     console.log('onArticleCreateClicked');
+    console.log('image, imageName: %s/%s', this.imageFile, this.imageFileName);
 
     // test
     // this.router.navigate(['article/' + 43], {queryParams: {langId: 1}})
@@ -145,8 +187,9 @@ export class ArticleCreateComponent implements OnInit {
         this.sourceUrl,
         this.title,
         this.shortDescription,
-        this.text
-        // todo image Url
+        this.text,
+        this.imageFile,
+        this.imageFileName
       )
       .pipe(
         finalize(() => this.progressInAction.next(false))
@@ -161,6 +204,16 @@ export class ArticleCreateComponent implements OnInit {
       );
   }
 
+  get maxSizeText(): string {
+    const maxSize = this.articleCreateFormGroup.controls.imageFile.getError('maxContentSize').maxSize;
+    return new ByteFormatPipe(null).transform(maxSize);
+  }
+
+  get actualSizeText(): string {
+    const actualSize = this.articleCreateFormGroup.controls.imageFile.getError('maxContentSize').actualSize;
+    return new ByteFormatPipe(null).transform(actualSize);
+  }
+
   private initForm() {
     const isEditArticleMode = this.actionType !== null && this.actionType === ActionType.EDIT_ARTICLE;
     const isEditTranslationMode = this.actionType !== null && this.actionType === ActionType.EDIT_TRANSLATION;
@@ -173,6 +226,14 @@ export class ArticleCreateComponent implements OnInit {
       : null;
     this.articleCreateFormGroup = this.fBuilder.group({
       // todo correctly fill inputs from this.article
+      imageFile: new FormControl(
+        null,
+        [FileValidator.maxContentSize(this.maxSize)]
+      ),
+      imageFileName: new FormControl(
+        null,
+        []
+      ),
       articleIsFromAnotherSite: new FormControl(
         {
           value: this.article !== null ? this.article.sourceUrl !== null : true,

@@ -133,11 +133,13 @@ body {
   height: auto;
   object-fit: cover;
   object-position: center;
+  border-radius: 4px;
 }
 
 .article-image-desktop {
   height: 96px;
   width: auto;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar {

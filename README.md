@@ -18,6 +18,11 @@ where `--skipTests=true` needed to prevent `spec` file generating
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
+## Staging build
+
+`ng build --configuration=production --base-href /dont-play-with-google/ --deploy-url /dont-play-with-google/`
+
+
 ## Test on device in same network
 
 Add `host` option to `scripts` in `serve` command in `angular.json`. Now site can be accessed by host IP

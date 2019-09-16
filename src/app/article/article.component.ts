@@ -17,6 +17,7 @@ import {LoginComponent} from '../login/login.component';
 import {MatBottomSheet} from '@angular/material';
 import {UserProvider} from '../service/auth/UserProvider';
 import {ActionType} from '../article-create/article-create.component';
+import {Api} from '../service/Api';
 
 @Component({
   selector: 'app-article',
@@ -264,6 +265,10 @@ export class ArticleComponent implements OnInit {
 
   isAdmin(): boolean {
     return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
+  }
+
+  getFullImagePath(relativePath: string): string {
+    return Api.URL + relativePath;
   }
 
   private showConfirmArticleDeleteDialog(id: number) {

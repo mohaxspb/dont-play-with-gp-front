@@ -15,6 +15,7 @@ import {UserProvider} from '../service/auth/UserProvider';
 import {GpUser} from '../model/auth/GpUser';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {NavigationUtils} from '../utils/NavigationUtils';
+import {Api} from '../service/Api';
 
 @Component({
   selector: 'app-feed',
@@ -100,6 +101,10 @@ export class FeedComponent implements OnInit {
 
   articlesListEndReached(): boolean {
     return this.articles.length % GpConstants.DEFAULT_LIMIT !== 0;
+  }
+
+  getFullImagePath(relativePath: string): string {
+    return Api.URL + relativePath;
   }
 
   private loadInitialData() {

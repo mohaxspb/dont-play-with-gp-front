@@ -36,7 +36,7 @@
           </mat-card-header>
 
           <img
-            src="{{selectedTranslation.imageUrl}}"
+            src="{{getFullImagePath(selectedTranslation.imageUrl)}}"
             alt="Article image"
             fxShow="{{selectedTranslation.imageUrl!=null}}"
             fxFlexOrder="1"

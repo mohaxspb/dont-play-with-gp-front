@@ -10,55 +10,56 @@
        || articlesListEndReached()"
        (scrolled)="onScroll()"
   >
-    <div *ngIf="articles.length!=0">
-      <div *ngFor="let article of articles"
+    <div *ngIf="articlesAndTranslations.length!=0">
+      <div *ngFor="let articleAndTranslation of articlesAndTranslations"
            class="default-margin-bottom"
            [ngClass.gt-xs]=""
            [ngClass]="['default-margin-left', 'default-margin-right']">
-        <mat-card *ngVar="article.translations[indexOfCorrectArticleTranslation(article)] as translation">
+        <mat-card>
 
           <div id="header-container" fxLayout.gt-xs="row" fxLayout="column" fxLayoutAlign="start start">
 
             <mat-card-header
-              (click)="onArticleClicked(article, translation)"
+              (click)="onArticleClicked(articleAndTranslation[0], articleAndTranslation[1])"
               fxFlex
               fxFlexOrder="2"
               fxFlex.gt-xs
               fxFlexOrder.gt-xs="1"
             >
-              <mat-card-title>{{translation.title}}</mat-card-title>
+              <mat-card-title>{{articleAndTranslation[1].title}}</mat-card-title>
               <mat-card-subtitle>
-                <span>{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
+                <span>{{articleAndTranslation[0].publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
               </mat-card-subtitle>
               <mat-card-subtitle
-                *ngIf="article.sourceAuthorName != null || (article.author.fullName!=null && article.author.fullName.length>0)"
-              >Author: {{article.sourceAuthorName != null ? article.sourceAuthorName : article.author.fullName}}</mat-card-subtitle>
+                *ngIf="articleAndTranslation[0].sourceAuthorName != null || (articleAndTranslation[0].author.fullName!=null && articleAndTranslation[0].author.fullName.length>0)"
+              >Author: {{articleAndTranslation[0].sourceAuthorName != null ? articleAndTranslation[0].sourceAuthorName : articleAndTranslation[0].author.fullName}}</mat-card-subtitle>
             </mat-card-header>
 
             <img
-                 src="{{getFullImagePath(translation.imageUrl)}}"
-                 alt="Article image"
-                 fxShow="{{translation.imageUrl!=null}}"
-                 fxFlexOrder="1"
-                 fxFlexOrder.gt-xs="2"
-                 (click)="onArticleClicked(article, translation)"
-                 [ngClass]="{'article-image':true, 'default-margin-bottom':true, 'article-image-desktop':false}"
-                 [ngClass.gt-xs]="{'article-image':false, 'article-image-desktop':true}"
-                 onerror="if (this.src !== 'assets/baseline-image-24px.svg') this.src = 'assets/baseline-image-24px.svg';"
+              src="{{getFullImagePath(articleAndTranslation[1].imageUrl)}}"
+              alt="Article image"
+              fxShow="{{articleAndTranslation[1].imageUrl!=null}}"
+              fxFlexOrder="1"
+              fxFlexOrder.gt-xs="2"
+              (click)="onArticleClicked(articleAndTranslation[0], articleAndTranslation[1])"
+              [ngClass]="{'article-image':true, 'default-margin-bottom':true, 'article-image-desktop':false}"
+              [ngClass.gt-xs]="{'article-image':false, 'article-image-desktop':true}"
+              onerror="if (this.src !== 'assets/baseline-image-24px.svg') this.src = 'assets/baseline-image-24px.svg';"
             >
           </div>
 
           <mat-card-content
             class="default-margin-left"
-            (click)="onArticleClicked(article, translation)"
-          >{{translation.shortDescription}}</mat-card-content>
+            (click)="onArticleClicked(articleAndTranslation[0], articleAndTranslation[1])"
+          >{{articleAndTranslation[1].shortDescription}}</mat-card-content>
           <mat-card-actions>
             <mat-button-toggle-group
               class="default-margin-bottom default-margin-left"
-              [value]="correctArticleLanguage(article)"
-              (change)="translation = getTranslationForLanguageFromArticle($event.value, article)">
+              [value]="correctArticleLanguage(articleAndTranslation[0])"
+              (change)="changeTranslationForArticleByLanguage($event.value, articleAndTranslation[0])"
+            >
               <mat-button-toggle
-                *ngFor="let lang of getAvailableArticleLanguages(article)"
+                *ngFor="let lang of getAvailableArticleLanguages(articleAndTranslation[0])"
                 [value]="lang"
               >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
             </mat-button-toggle-group>
@@ -88,7 +89,7 @@
       <button
         *ngIf="(bottomProgressErrorOccurred|async) && !(bottomProgressInAction|async)"
         mat-flat-button
-        (click)="loadArticles(articles.length)"
+        (click)="loadArticles(articlesAndTranslations.length)"
       >Try again</button>
 
       <div *ngIf="articlesListEndReached()">

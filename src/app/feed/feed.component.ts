@@ -121,7 +121,7 @@ export class FeedComponent implements OnInit {
       );
   }
 
-  private loadArticles(offset: number = 0) {
+  loadArticles(offset: number = 0) {
     if (offset === 0) {
       this.progressInAction.next(true);
     } else {
@@ -163,6 +163,20 @@ export class FeedComponent implements OnInit {
           this.notificationService.showError(error);
           this.bottomProgressErrorOccurred.next(true);
         }
+      );
+  }
+
+  private loadInitialData() {
+    this.progressInAction.next(true);
+
+    this.languageService.getLanguages()
+      .pipe(
+        // delay(1000),
+        finalize(() => this.loadArticles())
+      )
+      .subscribe(
+        value => this.languages = value,
+        error => this.notificationService.showError(error)
       );
   }
 }

@@ -164,7 +164,6 @@
               >
                 <div *ngFor="let article of articlesCreated">
                   <mat-card
-                    *ngVar="article.translations[0] as translation"
                     class="account-article-card"
                     fxFlex="noshrink"
                     fxLayout="column"
@@ -173,7 +172,7 @@
                     <mat-card-content
                       fxFlex="80%"
                       class="account-article-card-content"
-                    >{{translation.title}}</mat-card-content>
+                    >{{article.translations[0].title}}</mat-card-content>
                     <mat-card-footer fxFlex="10%">
                       <p class="default-margin-left">{{article.publishedDate | date:'shortDate':'UTC': userLanguage.langCode}}</p>
                     </mat-card-footer>

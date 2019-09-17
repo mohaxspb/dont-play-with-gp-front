@@ -55,7 +55,6 @@ import {ArticleComponent} from './article/article.component';
 import {ArticleCreateComponent} from './article-create/article-create.component';
 import {AngularMarkdownEditorModule} from 'angular-markdown-editor';
 import {MarkdownModule} from 'ngx-markdown';
-import {VarDirective} from './utils/VarDirective';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 
@@ -85,8 +84,7 @@ const routes: Routes = [
     AccountComponent,
     DialogComponent,
     ArticleComponent,
-    ArticleCreateComponent,
-    VarDirective
+    ArticleCreateComponent
   ],
   entryComponents: [
     LoginComponent,

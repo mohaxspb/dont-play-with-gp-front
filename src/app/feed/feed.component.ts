@@ -31,7 +31,8 @@ export class FeedComponent implements OnInit {
   languages: Language[] | null = null;
   user: GpUser | null = null;
   preferredLanguage: Language;
-  articles: Article[] = [];
+
+  articlesAndTranslations: [Article, ArticleTranslation][] = [];
 
   constructor(
     private router: Router,
@@ -80,48 +81,33 @@ export class FeedComponent implements OnInit {
     return GpArticleService.getCorrectLanguageForArticle(article, this.preferredLanguage, this.languages);
   }
 
-  indexOfCorrectArticleTranslation(article: Article): number {
-    const correctLang = this.correctArticleLanguage(article);
-    return article.translations.findIndex(value => value.langId === correctLang.id);
-  }
-
   getAvailableArticleLanguages(article: Article): Language[] {
     return GpArticleService.getLanguagesFromArticle(article, this.languages);
   }
 
   getTranslationForLanguageFromArticle(language: Language, article: Article): ArticleTranslation {
-    return article.translations.find(value => value.langId === language.id);
+    const translation = article.translations.find(value => value.langId === language.id);
+    return translation != null ? translation : article.translations[0];
   }
 
   onScroll() {
-    console.log('onScroll: %s', this.articles.length);
-
-    this.loadArticles(this.articles.length);
+    this.loadArticles(this.articlesAndTranslations.length);
   }
 
   articlesListEndReached(): boolean {
-    return this.articles.length % GpConstants.DEFAULT_LIMIT !== 0;
+    return this.articlesAndTranslations.length % GpConstants.DEFAULT_LIMIT !== 0;
+  }
+
+  changeTranslationForArticleByLanguage(language: Language, article: Article) {
+    const index = this.articlesAndTranslations.findIndex(value => value[0].id === article.id);
+    this.articlesAndTranslations[index][1] = this.getTranslationForLanguageFromArticle(language, article);
   }
 
   getFullImagePath(relativePath: string): string {
     return Api.URL + relativePath;
   }
 
-  private loadInitialData() {
-    this.progressInAction.next(true);
-
-    this.languageService.getLanguages()
-      .pipe(
-        // delay(1000),
-        finalize(() => this.loadArticles())
-      )
-      .subscribe(
-        value => this.languages = value,
-        error => this.notificationService.showError(error)
-      );
-  }
-
-  private loadArticles(offset: number = 0) {
+  loadArticles(offset: number = 0) {
     if (offset === 0) {
       this.progressInAction.next(true);
     } else {
@@ -153,16 +139,35 @@ export class FeedComponent implements OnInit {
         articles => {
           this.preferredLanguage = this.languageService.getPreferredLanguageForUser(this.user, this.languages);
           if (offset === 0) {
-            this.articles = articles;
+            this.articlesAndTranslations = this.mapArticlesToArticlesAndTranslation(articles);
           } else {
             this.bottomProgressErrorOccurred.next(false);
-            this.articles = this.articles.concat(articles);
+            this.articlesAndTranslations = this.articlesAndTranslations.concat(this.mapArticlesToArticlesAndTranslation(articles));
           }
         },
         error => {
           this.notificationService.showError(error);
           this.bottomProgressErrorOccurred.next(true);
         }
+      );
+  }
+
+  private mapArticlesToArticlesAndTranslation(articles: Article[]): [Article, ArticleTranslation][] {
+    return articles
+      .map(article => [article, this.getTranslationForLanguageFromArticle(this.preferredLanguage, article)]);
+  }
+
+  private loadInitialData() {
+    this.progressInAction.next(true);
+
+    this.languageService.getLanguages()
+      .pipe(
+        // delay(1000),
+        finalize(() => this.loadArticles())
+      )
+      .subscribe(
+        value => this.languages = value,
+        error => this.notificationService.showError(error)
       );
   }
 }

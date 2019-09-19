@@ -178,7 +178,8 @@ export class ArticleComponent implements OnInit {
         queryParams: {
           articleId: this.article.id,
           actionType: ActionType.EDIT_ARTICLE,
-          entityId: this.article.id
+          translationId: this.selectedTranslation.id,
+          versionId: this.selectedTranslationVersion.id
         }
       }
     );
@@ -203,7 +204,8 @@ export class ArticleComponent implements OnInit {
           queryParams: {
             articleId: this.article.id,
             actionType: ActionType.ADD_TRANSLATION,
-            entityId: this.article.id
+            translationId: this.selectedTranslation.id,
+            versionId: this.selectedTranslationVersion.id
           }
         }
       );
@@ -222,7 +224,8 @@ export class ArticleComponent implements OnInit {
           queryParams: {
             articleId: this.article.id,
             actionType: ActionType.ADD_VERSION,
-            entityId: this.selectedTranslationVersion.id
+            translationId: this.selectedTranslation.id,
+            versionId: this.selectedTranslationVersion.id
           }
         }
       );
@@ -240,7 +243,8 @@ export class ArticleComponent implements OnInit {
         queryParams: {
           articleId: this.article.id,
           actionType: ActionType.EDIT_VERSION,
-          entityId: this.selectedTranslationVersion.id
+          translationId: this.selectedTranslation.id,
+          versionId: this.selectedTranslationVersion.id
         }
       }
     );
@@ -257,7 +261,8 @@ export class ArticleComponent implements OnInit {
         queryParams: {
           articleId: this.article.id,
           actionType: ActionType.EDIT_TRANSLATION,
-          entityId: this.selectedTranslation.id
+          translationId: this.selectedTranslation.id,
+          versionId: this.selectedTranslationVersion.id
         }
       }
     );

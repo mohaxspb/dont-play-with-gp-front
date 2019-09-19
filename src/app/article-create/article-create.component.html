@@ -41,13 +41,22 @@
 
             <div fxLayout fxLayoutAlign="center center" class="default-margin-bottom default-margin-top">
               <img
+                *ngIf="articleImageUrl!=null"
                 matCardImage
-                [src]="articleImageUrl"
+                [src]="getFullImagePath(articleImageUrl)"
                 height="48px"
                 width="48px"
-                alt="logo"
+                alt="Article image"
                 class="input-image-preview"
-                onerror="if (this.src !== 'assets/baseline-image-24px.svg') this.src = 'assets/baseline-image-24px.svg';">
+                onerror="if (this.src !== './assets/baseline-image-24px.svg') this.src = './assets/baseline-image-24px.svg';">
+
+              <img
+                *ngIf="articleImageUrl==null"
+                height="48px"
+                width="48px"
+                alt="No image in article"
+                src="./assets/baseline-image-24px.svg"
+              >
 
             </div>
 

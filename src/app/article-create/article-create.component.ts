@@ -14,6 +14,9 @@ import {Article} from '../model/data/Article';
 import {NotificationService} from '../service/ui/NotificationService';
 import {NavigationUtils} from '../utils/NavigationUtils';
 import {ByteFormatPipe, FileValidator} from 'ngx-material-file-input';
+import {ArticleTranslation} from '../model/data/ArticleTranslation';
+import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
+import {Api} from '../service/Api';
 
 @Component({
   selector: 'app-article-create',
@@ -60,10 +63,13 @@ export class ArticleCreateComponent implements OnInit {
   actionTitle = 'New article creation';
 
   article: Article | null = null;
+  translation: ArticleTranslation | null = null;
+  version: ArticleTranslationVersion | null = null;
 
   articleId: number | null = null;
   actionType: ActionType | null = null;
-  entityId: number | null = null;
+  translationId: number | null = null;
+  versionId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -202,6 +208,10 @@ export class ArticleCreateComponent implements OnInit {
       );
   }
 
+  getFullImagePath(relativePath: string): string {
+    return Api.URL + relativePath;
+  }
+
   get maxSizeText(): string {
     const maxSize = this.articleCreateFormGroup.controls.imageFile.getError('maxContentSize').maxSize;
     return new ByteFormatPipe(null).transform(maxSize);
@@ -222,14 +232,31 @@ export class ArticleCreateComponent implements OnInit {
     const articlePrimaryLang = this.article !== null
       ? GpLanguageService.getLanguageById(this.languagesListFromApi, this.article.originalLangId)
       : null;
+
+    if (this.actionType != null) {
+      this.translation = this.article.translations.find(value => value.id === this.translationId);
+      this.version = this.translation.versions.find(value => value.id === this.versionId);
+    }
+
+    this.articleImageUrl = this.translation !== null ? this.translation.imageUrl : null;
+    this.imageFileName = this.articleImageUrl != null
+      ? this.articleImageUrl.substring(this.articleImageUrl.lastIndexOf('/') + 1, this.articleImageUrl.lastIndexOf('.'))
+      : null;
+
     this.articleCreateFormGroup = this.fBuilder.group({
       // todo correctly fill inputs from this.article
       imageFile: new FormControl(
-        null,
+        {
+          value: this.articleImageUrl,
+          disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode
+        },
         [FileValidator.maxContentSize(this.maxSize)]
       ),
       imageFileName: new FormControl(
-        null,
+        {
+          value: this.imageFileName,
+          disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode
+        },
         []
       ),
       articleIsFromAnotherSite: new FormControl(
@@ -269,7 +296,10 @@ export class ArticleCreateComponent implements OnInit {
         [Validators.required]
       ),
       shortDescription: new FormControl(
-        {value: null, disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode},
+        {
+          value: null,
+          disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode
+        },
         []
       ),
       markdownText: new FormControl(
@@ -294,12 +324,11 @@ export class ArticleCreateComponent implements OnInit {
       this.route.queryParamMap
         .pipe(
           flatMap((queryParams: ParamMap) => {
-            const articleId = queryParams.get('articleId');
             const actionType = queryParams.get('actionType');
-            const entityId = queryParams.get('entityId');
-            console.log('articleId, actionType, entityId: %s/%s/%s: ', articleId, actionType, entityId);
-            if (articleId !== null) {
-              this.articleId = Number(articleId);
+            const articleId = queryParams.get('articleId');
+            const translationId = queryParams.get('translationId');
+            const versionId = queryParams.get('versionId');
+            if (actionType !== null) {
               this.actionType = ActionType[actionType];
               switch (actionType) {
                 case ActionType.EDIT_ARTICLE:
@@ -318,12 +347,14 @@ export class ArticleCreateComponent implements OnInit {
                   this.actionTitle = 'Edit version';
                   break;
               }
-              this.entityId = Number(entityId);
+              this.articleId = Number(articleId);
+              this.translationId = Number(translationId);
+              this.versionId = Number(versionId);
               console.log(
-                'articleId, actionType, entityId, actionTitle: %s/%s/%s: ',
-                this.articleId, this.actionType, this.entityId, this.actionTitle
+                'actionType, articleId, translationId, versionId, actionTitle: %s/%s/%s/%s/%s: ',
+                this.articleId, this.actionType, this.translationId, this.versionId, this.actionTitle
               );
-              return this.articleService.getArticleById(this.articleId);
+              return this.articleService.getFullArticleById(this.articleId);
             } else {
               return of(null);
             }

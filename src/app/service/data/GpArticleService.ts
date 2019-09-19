@@ -31,10 +31,6 @@ export class GpArticleService {
     return article.translations.map(translation => languages.find(lang => translation.langId === lang.id));
   }
 
-  getArticleById(id: number): Observable<Article> {
-    return this.apiService.getArticleById(id);
-  }
-
   getFullArticleById(id: number): Observable<Article> {
     return this.apiService.getFullArticleById(id);
   }

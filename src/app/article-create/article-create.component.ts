@@ -38,8 +38,6 @@ export class ArticleCreateComponent implements OnInit {
   // article data
   articleLanguage: Language;
 
-  // todo image Url
-
   sourceTitle: string | null = null;
   sourceUrl: string | null = null;
   sourceAuthorName: string | null = null;

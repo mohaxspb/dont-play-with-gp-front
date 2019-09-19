@@ -36,6 +36,7 @@
             </mat-card-header>
 
             <img
+              *ngIf="articleAndTranslation[1].imageUrl!=null"
               src="{{getFullImagePath(articleAndTranslation[1].imageUrl)}}"
               alt="Article image"
               fxShow="{{articleAndTranslation[1].imageUrl!=null}}"

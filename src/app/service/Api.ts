@@ -31,6 +31,7 @@ export class Api {
   static SocialAuthEndpoint = class {
     static URL = 'oauth2/authorize/';
 
+    // noinspection JSUnusedGlobalSymbols
     /**
      * use [SocialProvider] values in lower case
      */

@@ -9,6 +9,8 @@
 
     <mat-card-content>
 
+      <!--      todo add instruction-->
+
       <div id="data-loading-indication">
 
         <mat-spinner
@@ -30,7 +32,9 @@
 
       <div id="articleFormContainer" *ngIf="user!=null && languagesListFromApi!=null">
 
+        <!--        && (article!=null || actionType==null)-->
         <form
+          *ngIf="(dataIsLoading|async) == false"
           [formGroup]="articleCreateFormGroup"
           name="articleCreateForm"
           (ngSubmit)="onArticleCreateClicked()"
@@ -164,8 +168,6 @@
             </mat-card-content>
           </mat-card>
 
-          <!--          todo image input, do it as in scp-reader-web-->
-
           <div id="input-primaryLanguage">
             <mat-form-field class="full-width-field default-margin-top">
               <mat-label>Primary language</mat-label>
@@ -188,6 +190,8 @@
             </mat-form-field>
 
           </div>
+
+          <!--          todo add language select for adding translation-->
 
           <div id="input-title" class="mat-input-element">
             <mat-form-field class="full-width-field">
@@ -224,18 +228,27 @@
           </div>
 
           <div id="article-text">
-            <div class="full-width-field default-margin-bottom">
-              <label>Article text</label>
-              <!--suppress AngularUndefinedBinding -->
-              <angular-markdown-editor
-                textareaId="editor1"
-                rows="12"
-                formControlName="markdownText"
-                (onChange)="onTextChanged($event.target.value)"
-              >
-              </angular-markdown-editor>
-              <!--              todo place not clickable div-->
+            <div class="position-relative">
+              <div class="full-width-field default-margin-bottom">
+                <label>Article text</label>
+                <!--suppress AngularUndefinedBinding -->
+                <angular-markdown-editor
+                  textareaId="editor1"
+                  rows="12"
+                  formControlName="markdownText"
+                  (onChange)="onTextChanged($event.target.value)"
+                >
+                </angular-markdown-editor>
+              </div>
+
+              <div
+                *ngIf="isEditArticleMode || isEditTranslationMode"
+                class="background-half-transparent-white cover"
+              ></div>
+
             </div>
+
+            <!--            todo add published text version for adding new one-->
 
             <div id="textPreview" class="default-margin-bottom">
               <label>Preview</label>

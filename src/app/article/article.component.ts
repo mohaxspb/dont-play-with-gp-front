@@ -204,8 +204,8 @@ export class ArticleComponent implements OnInit {
           queryParams: {
             articleId: this.article.id,
             actionType: ActionType.ADD_TRANSLATION,
-            translationId: this.selectedTranslation.id,
-            versionId: this.selectedTranslationVersion.id
+            translationId: null,
+            versionId: null
           }
         }
       );
@@ -225,7 +225,7 @@ export class ArticleComponent implements OnInit {
             articleId: this.article.id,
             actionType: ActionType.ADD_VERSION,
             translationId: this.selectedTranslation.id,
-            versionId: this.selectedTranslationVersion.id
+            versionId: null
           }
         }
       );

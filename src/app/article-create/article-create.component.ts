@@ -222,20 +222,44 @@ export class ArticleCreateComponent implements OnInit {
     return new ByteFormatPipe(null).transform(actualSize);
   }
 
+  get isEditArticleMode(): boolean {
+    return this.actionType !== null && this.actionType === ActionType.EDIT_ARTICLE;
+  }
+
+  get isEditTranslationMode(): boolean {
+    return this.actionType !== null && this.actionType === ActionType.EDIT_TRANSLATION;
+  }
+
+  get isAddTranslationMode(): boolean {
+    return this.actionType !== null && this.actionType === ActionType.ADD_TRANSLATION;
+  }
+
+  get isEditVersionMode(): boolean {
+    return this.actionType !== null && this.actionType === ActionType.EDIT_VERSION;
+  }
+
+  get isAddVersionMode(): boolean {
+    return this.actionType !== null && this.actionType === ActionType.ADD_VERSION;
+  }
+
   private initForm() {
-    const isEditArticleMode = this.actionType !== null && this.actionType === ActionType.EDIT_ARTICLE;
-    const isEditTranslationMode = this.actionType !== null && this.actionType === ActionType.EDIT_TRANSLATION;
-    const isAddTranslationMode = this.actionType !== null && this.actionType === ActionType.ADD_TRANSLATION;
-    const isEditVersionMode = this.actionType !== null && this.actionType === ActionType.EDIT_VERSION;
-    const isAddVersionMode = this.actionType !== null && this.actionType === ActionType.ADD_VERSION;
-    console.log('isEditArticleMode || isEditTranslationMode: %s', isEditArticleMode || isEditTranslationMode);
+    console.log('isEditArticleMode: %s', this.isEditArticleMode);
+    console.log('isAddTranslationMode: %s', this.isAddTranslationMode);
+    console.log('isEditTranslationMode: %s', this.isEditTranslationMode);
+    console.log('isAddVersionMode: %s', this.isAddVersionMode);
+    console.log('isEditVersionMode: %s', this.isEditVersionMode);
+
     const articlePrimaryLang = this.article !== null
       ? GpLanguageService.getLanguageById(this.languagesListFromApi, this.article.originalLangId)
       : null;
 
     if (this.actionType != null) {
-      this.translation = this.article.translations.find(value => value.id === this.translationId);
-      this.version = this.translation.versions.find(value => value.id === this.versionId);
+      const translation = this.article.translations.find(value => value.id === this.translationId);
+      this.translation = translation ? translation : null;
+      if (translation != null) {
+        const version = this.translation.versions.find(value => value.id === this.versionId);
+        this.version = version ? version : null;
+      }
     }
 
     this.articleImageUrl = this.translation !== null ? this.translation.imageUrl : null;
@@ -248,63 +272,76 @@ export class ArticleCreateComponent implements OnInit {
       imageFile: new FormControl(
         {
           value: this.articleImageUrl,
-          disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode
+          disabled: this.isEditArticleMode || this.isEditVersionMode || this.isAddVersionMode
         },
         [FileValidator.maxContentSize(this.maxSize)]
       ),
       imageFileName: new FormControl(
         {
           value: this.imageFileName,
-          disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode
+          disabled: this.isEditArticleMode || this.isEditVersionMode || this.isAddVersionMode
         },
         []
       ),
       articleIsFromAnotherSite: new FormControl(
         {
           value: this.article !== null ? this.article.sourceUrl !== null : true,
-          disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode
+          disabled: this.isEditTranslationMode || this.isAddTranslationMode || this.isAddVersionMode || this.isEditVersionMode
         },
         []
       ),
       sourceTitle: new FormControl(
         {
           value: this.article !== null ? this.article.sourceTitle : null,
-          disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode
+          disabled: this.isEditTranslationMode || this.isAddTranslationMode || this.isAddVersionMode || this.isEditVersionMode
         },
         [Validators.required]
       ),
       sourceAuthorName: new FormControl(
         {
           value: this.article !== null ? this.article.sourceAuthorName : null,
-          disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode
+          disabled: this.isEditTranslationMode || this.isAddTranslationMode || this.isAddVersionMode || this.isEditVersionMode
         },
         []
       ),
       sourceUrl: new FormControl(
         {
           value: this.article !== null ? this.article.sourceUrl : null,
-          disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode
+          disabled: this.isEditTranslationMode || this.isAddTranslationMode || this.isAddVersionMode || this.isEditVersionMode
         },
         [Validators.required, Validators.pattern(URL_PATTERN)]
       ),
       primaryLanguageSelect: new FormControl(
-        {value: articlePrimaryLang, disabled: isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode},
+        {
+          // todo value
+          value: articlePrimaryLang,
+          disabled: this.isEditTranslationMode || this.isAddTranslationMode || this.isAddVersionMode || this.isEditVersionMode
+        },
         [Validators.required]
       ),
       title: new FormControl(
-        {value: null, disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode},
+        {
+          // todo value
+          value: null,
+          disabled: this.isEditArticleMode || this.isEditVersionMode || this.isAddVersionMode
+        },
         [Validators.required]
       ),
       shortDescription: new FormControl(
         {
+          // todo value
           value: null,
-          disabled: isEditArticleMode || isEditVersionMode || isAddVersionMode
+          disabled: this.isEditArticleMode || this.isEditVersionMode || this.isAddVersionMode
         },
         []
       ),
       markdownText: new FormControl(
-        // fixme disable not working here
-        {value: null, disabled: isEditArticleMode || isEditTranslationMode},
+        // Warning!!! Disable not working here, so we hide it in template
+        {
+          // todo value
+          value: null,
+          disabled: this.isEditArticleMode || this.isEditTranslationMode
+        },
         [Validators.required]
       )
     });
@@ -348,8 +385,8 @@ export class ArticleCreateComponent implements OnInit {
                   break;
               }
               this.articleId = Number(articleId);
-              this.translationId = Number(translationId);
-              this.versionId = Number(versionId);
+              this.translationId = translationId != null ? Number(translationId) : null;
+              this.versionId = versionId != null ? Number(versionId) : null;
               console.log(
                 'actionType, articleId, translationId, versionId, actionTitle: %s/%s/%s/%s/%s: ',
                 this.articleId, this.actionType, this.translationId, this.versionId, this.actionTitle
@@ -381,7 +418,7 @@ export class ArticleCreateComponent implements OnInit {
 export enum ActionType {
   EDIT_ARTICLE = 'EDIT_ARTICLE',
   ADD_TRANSLATION = 'ADD_TRANSLATION',
-  EDIT_TRANSLATION = 'ADD_VERSION',
+  EDIT_TRANSLATION = 'EDIT_TRANSLATION',
   ADD_VERSION = 'ADD_VERSION',
   EDIT_VERSION = 'EDIT_VERSION'
 }

@@ -3,7 +3,6 @@
   <mat-card>
 
     <mat-card-header>
-      <mat-icon mat-card-avatar color="accent">edit</mat-icon>
       <mat-card-title>{{actionTitle}}</mat-card-title>
     </mat-card-header>
 
@@ -39,83 +38,19 @@
           (ngSubmit)="onArticleCreateClicked()"
         >
 
-          <mat-card class="default-margin-bottom">
-            <mat-card-title>Article image file</mat-card-title>
-
-            <div fxLayout fxLayoutAlign="center center" class="default-margin-bottom default-margin-top">
-              <img
-                *ngIf="articleImageUrl!=null"
-                [src]="getImagePath(articleImageUrl)"
-                matCardImage
-                height="48px"
-                width="48px"
-                alt="Article image"
-                class="input-image-preview"
-                (error)="onImageLoadError($event)"
-              >
-
-              <img
-                *ngIf="articleImageUrl==null"
-                height="48px"
-                width="48px"
-                alt="No image in article"
-                src="./assets/baseline-image-24px.svg"
-              >
-
-            </div>
-
-            <mat-card-content>
-              <mat-form-field
-                class="full-width-field">
-                <ngx-mat-file-input
-                  class="full-width-field"
-                  #logoImageFileInput
-                  formControlName="imageFile"
-                  placeholder="Image file"
-                  valuePlaceholder="No file selected"
-                  (change)="articleImageFileChange($event.target.files)"
-                >
-                </ngx-mat-file-input>
-
-                <button
-                  mat-icon-button matSuffix
-                  *ngIf="!logoImageFileInput.empty"
-                  (click)="logoImageFileInput.clear($event);onLogoFileCleared()"
-                >
-                  <mat-icon>clear</mat-icon>
-                </button>
-                <mat-error *ngIf="articleCreateFormGroup.get('imageFile').hasError('maxContentSize')"
-                >The total size must not exceed {{maxSizeText}} ({{actualSizeText}}).</mat-error>
-              </mat-form-field>
-              <div id="input-image-file-name" class="mat-input-element">
-                <mat-form-field class="full-width-field">
-                  <label class="full-width-field">
-                    <input
-                      matInput
-                      [value]="imageFileName"
-                      formControlName="imageFileName"
-                      placeholder="Image file name"
-                      name="imageFileName"
-                      (change)="onImageFileNameChanged($event.target.value)"
-                    >
-                  </label>
-                </mat-form-field>
-              </div>
-            </mat-card-content>
-
-          </mat-card>
+          <!--Article section-->
+          <mat-divider inset></mat-divider>
+          <h3>Article data</h3>
 
           <mat-card id="input-sourceData">
-            <mat-card-header>
-              <div class="mat-input-element">
-                <mat-checkbox
-                  formControlName="articleIsFromAnotherSite"
-                  name="articleIsFromAnotherSite"
-                  color="primary"
-                  (change)="onArticleIsFromAnotherSiteClicked($event.checked)"
-                >Article is from another site</mat-checkbox>
-              </div>
-            </mat-card-header>
+            <div class="mat-input-element">
+              <mat-checkbox
+                formControlName="articleIsFromAnotherSite"
+                name="articleIsFromAnotherSite"
+                color="primary"
+                (change)="onArticleIsFromAnotherSiteClicked($event.checked)"
+              >Article is from another site</mat-checkbox>
+            </div>
             <mat-card-content *ngIf="articleIsFromAnotherSite">
 
               <div id="input-source-title" class="mat-input-element">
@@ -191,7 +126,114 @@
 
           </div>
 
-          <!--          todo add language select for adding translation-->
+          <!--Translation section-->
+          <mat-divider inset></mat-divider>
+          <h3>Translation data</h3>
+
+          <mat-card id="input-articleImage" class="default-margin-bottom">
+            <mat-card-title>Article image file</mat-card-title>
+
+            <div id="articleImageContainer"
+                 fxLayout
+                 fxLayoutAlign="center center"
+                 class="default-margin-bottom default-margin-top">
+              <img
+                *ngIf="articleImageUrl!=null"
+                [src]="getImagePath(articleImageUrl)"
+                matCardImage
+                height="48px"
+                width="48px"
+                alt="Article image"
+                class="input-image-preview"
+                (error)="onImageLoadError($event)"
+              >
+
+              <img
+                *ngIf="articleImageUrl==null"
+                height="48px"
+                width="48px"
+                alt="No image in article"
+                src="./assets/baseline-image-24px.svg"
+              >
+
+            </div>
+
+            <mat-card-content>
+              <div
+                *ngIf="isAddTranslationMode"
+                class="mat-input-element"
+              >
+                <mat-checkbox
+                  formControlName="useExistingImage"
+                  name="useExistingImage"
+                  color="primary"
+                  (change)="onUseExistingImageClicked($event.checked)"
+                >Use existing image</mat-checkbox>
+              </div>
+
+              <mat-form-field
+                class="full-width-field">
+                <ngx-mat-file-input
+                  class="full-width-field"
+                  #articleImageFileInput
+                  formControlName="imageFile"
+                  placeholder="Image file"
+                  valuePlaceholder="No file selected"
+                  (change)="articleImageFileChange($event.target.files)"
+                >
+                </ngx-mat-file-input>
+
+                <button
+                  mat-icon-button matSuffix
+                  *ngIf="!articleImageFileInput.empty"
+                  (click)="articleImageFileInput.clear($event);onLogoFileCleared()"
+                >
+                  <mat-icon>clear</mat-icon>
+                </button>
+                <mat-error *ngIf="articleCreateFormGroup.get('imageFile').hasError('maxContentSize')"
+                >The total size must not exceed {{maxSizeText}} ({{actualSizeText}}).</mat-error>
+              </mat-form-field>
+              <div id="input-image-file-name" class="mat-input-element">
+                <mat-form-field class="full-width-field">
+                  <label class="full-width-field">
+                    <input
+                      matInput
+                      [value]="imageFileName"
+                      formControlName="imageFileName"
+                      placeholder="Image file name"
+                      name="imageFileName"
+                      (change)="onImageFileNameChanged($event.target.value)"
+                    >
+                  </label>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+
+          </mat-card>
+
+          <!--          todo-->
+          <div id="input-translationLanguage">
+            <mat-form-field class="full-width-field default-margin-top">
+              <mat-label>Translation language</mat-label>
+
+              <mat-select
+                formControlName="translationLanguageSelect"
+                [errorStateMatcher]="matcher"
+                required
+                (selectionChange)="onTranslationLanguageChanged($event.value)"
+              >
+                <mat-option
+                  *ngFor="let language of languagesListFromApi"
+                  [value]="language">{{language.langCode.toUpperCase()}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="articleCreateFormGroup.controls.translationLanguageSelect.errors?.required"
+              >You must make a selection</mat-error>
+
+            </mat-form-field>
+
+          </div>
 
           <div id="input-title" class="mat-input-element">
             <mat-form-field class="full-width-field">
@@ -226,6 +268,10 @@
               ></textarea>
             </mat-form-field>
           </div>
+
+          <!--Version section-->
+          <mat-divider inset></mat-divider>
+          <h3>Text version data</h3>
 
           <div id="article-text">
             <div class="position-relative">

@@ -40,6 +40,7 @@ export class ArticleCreateComponent implements OnInit {
 
   // article data
   articleLanguage: Language;
+  translationLanguage: Language;
 
   sourceTitle: string | null = null;
   sourceUrl: string | null = null;
@@ -105,6 +106,11 @@ export class ArticleCreateComponent implements OnInit {
   onPrimaryLanguageChanged(language: Language) {
     console.log('onPrimaryLanguageChanged: %s', JSON.stringify(language));
     this.articleLanguage = language;
+  }
+
+  onTranslationLanguageChanged(language: Language) {
+    console.log('onTranslationLanguageChanged: %s', JSON.stringify(language));
+    this.translationLanguage = language;
   }
 
   onSourceTitleChanged(sourceTitle: string) {
@@ -217,6 +223,24 @@ export class ArticleCreateComponent implements OnInit {
     event.target.src = './assets/baseline-image-24px.svg';
   }
 
+  onUseExistingImageClicked(checked: boolean) {
+    console.log('onUseExistingImageClicked: %s', checked);
+    // todo
+
+    // disable img inputs, set image url
+    if (checked) {
+      this.articleImageUrl = this.article.translations[0].imageUrl;
+      this.imageFileName = this.getImageFileNameFromUrl(this.articleImageUrl);
+      this.articleCreateFormGroup.controls.imageFile.disable();
+      this.articleCreateFormGroup.controls.imageFileName.disable();
+    } else {
+      this.articleImageUrl = null;
+      this.imageFileName = null;
+      this.articleCreateFormGroup.controls.imageFile.enable();
+      this.articleCreateFormGroup.controls.imageFileName.enable();
+    }
+  }
+
   getFullImagePath(relativePath: string): string {
     return Api.URL + relativePath;
   }
@@ -258,31 +282,36 @@ export class ArticleCreateComponent implements OnInit {
     console.log('isAddVersionMode: %s', this.isAddVersionMode);
     console.log('isEditVersionMode: %s', this.isEditVersionMode);
 
-    const articlePrimaryLang = this.article !== null
-      ? GpLanguageService.getLanguageById(this.languagesListFromApi, this.article.originalLangId)
-      : null;
-
     if (this.actionType != null) {
+      this.articleIsFromAnotherSite = this.article.sourceUrl != null;
+
+      this.articleLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.article.originalLangId);
+
       const translation = this.article.translations.find(value => value.id === this.translationId);
       this.translation = translation ? translation : null;
       if (translation != null) {
+        this.translationLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.translation.langId);
+
         const version = this.translation.versions.find(value => value.id === this.versionId);
         this.version = version ? version : null;
       }
-
-      this.articleIsFromAnotherSite = this.article.sourceUrl != null;
     }
 
     this.articleImageUrl = this.translation !== null ? this.translation.imageUrl : null;
-    this.imageFileName = this.articleImageUrl != null
-      ? this.articleImageUrl.substring(this.articleImageUrl.lastIndexOf('/') + 1, this.articleImageUrl.lastIndexOf('.'))
-      : null;
+    this.imageFileName = this.getImageFileNameFromUrl(this.articleImageUrl);
 
     console.log('this.articleImageUrl: %s', this.articleImageUrl);
     console.log('this.imageFileName: %s', this.imageFileName);
 
     this.articleCreateFormGroup = this.fBuilder.group({
       // todo correctly fill inputs from this.article
+      useExistingImage: new FormControl(
+        {
+          value: false,
+          disabled: this.isEditArticleMode || this.isEditTranslationMode || this.isAddVersionMode || this.isEditVersionMode
+        },
+        []
+      ),
       imageFile: new FormControl(
         {
           value: null,
@@ -327,10 +356,17 @@ export class ArticleCreateComponent implements OnInit {
       ),
       primaryLanguageSelect: new FormControl(
         {
-          // todo value
-          value: articlePrimaryLang,
+          value: this.articleLanguage,
           disabled: this.isEditTranslationMode || this.isAddTranslationMode || this.isAddVersionMode || this.isEditVersionMode
         },
+        [Validators.required]
+      ),
+      translationLanguageSelect: new FormControl(
+        {
+          value: this.translationLanguage,
+          disabled: this.isEditArticleMode || this.isAddVersionMode || this.isEditVersionMode
+        },
+        // todo check it
         [Validators.required]
       ),
       title: new FormControl(
@@ -363,6 +399,12 @@ export class ArticleCreateComponent implements OnInit {
     this.articleCreateFormGroup.valueChanges.subscribe((changes) => {
       console.log('valueChanges: %s', JSON.stringify(changes));
     });
+  }
+
+  private getImageFileNameFromUrl(articleImageUrl: string) {
+    return articleImageUrl != null
+      ? articleImageUrl.substring(articleImageUrl.lastIndexOf('/') + 1, articleImageUrl.lastIndexOf('.'))
+      : null;
   }
 
   private loadInitialData() {

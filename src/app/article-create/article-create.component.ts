@@ -92,16 +92,7 @@ export class ArticleCreateComponent implements OnInit {
     console.log('onArticleIsFromAnotherSiteClicked: %s', checked);
     this.articleIsFromAnotherSite = checked;
 
-    // author name is optional
-    if (this.articleIsFromAnotherSite) {
-      this.articleCreateFormGroup.controls.sourceTitle.setValidators([Validators.required]);
-      this.articleCreateFormGroup.controls.sourceUrl.setValidators([Validators.required, Validators.pattern(URL_PATTERN)]);
-    } else {
-      this.articleCreateFormGroup.controls.sourceTitle.clearValidators();
-      this.articleCreateFormGroup.controls.sourceUrl.clearValidators();
-    }
-    this.articleCreateFormGroup.controls.sourceTitle.updateValueAndValidity();
-    this.articleCreateFormGroup.controls.sourceUrl.updateValueAndValidity();
+    this.updateSourceDataControls();
   }
 
   onPrimaryLanguageChanged(language: Language) {
@@ -416,9 +407,11 @@ export class ArticleCreateComponent implements OnInit {
       )
     });
 
-    this.articleCreateFormGroup.valueChanges.subscribe((changes) => {
-      console.log('valueChanges: %s', JSON.stringify(changes));
-    });
+    this.updateSourceDataControls();
+
+    // this.articleCreateFormGroup.valueChanges.subscribe((changes) => {
+    //   console.log('valueChanges: %s', JSON.stringify(changes));
+    // });
   }
 
   private getImageFileNameFromUrl() {
@@ -499,6 +492,19 @@ export class ArticleCreateComponent implements OnInit {
       languages = this.languagesListFromApi.filter(language => !languages.find(value => value.id === language.id));
     }
     return languages;
+  }
+
+  private updateSourceDataControls() {
+    // author name is optional
+    if (this.articleIsFromAnotherSite) {
+      this.articleCreateFormGroup.controls.sourceTitle.setValidators([Validators.required]);
+      this.articleCreateFormGroup.controls.sourceUrl.setValidators([Validators.required, Validators.pattern(URL_PATTERN)]);
+    } else {
+      this.articleCreateFormGroup.controls.sourceTitle.clearValidators();
+      this.articleCreateFormGroup.controls.sourceUrl.clearValidators();
+    }
+    this.articleCreateFormGroup.controls.sourceTitle.updateValueAndValidity();
+    this.articleCreateFormGroup.controls.sourceUrl.updateValueAndValidity();
   }
 }
 

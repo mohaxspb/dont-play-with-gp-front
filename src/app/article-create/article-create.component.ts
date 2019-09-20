@@ -46,9 +46,9 @@ export class ArticleCreateComponent implements OnInit {
   sourceUrl: string | null = null;
   sourceAuthorName: string | null = null;
 
-  title: string;
-  shortDescription: string;
-  text: string;
+  title: string = null;
+  shortDescription: string = null;
+  text: string = null;
 
   // image
   imageFile: File | null = null;
@@ -193,6 +193,9 @@ export class ArticleCreateComponent implements OnInit {
     // return;
 
     this.progressInAction.next(true);
+
+    // todo action base on actionType
+
     this.articleService
       .createArticle(
         this.articleLanguage.id,
@@ -225,12 +228,11 @@ export class ArticleCreateComponent implements OnInit {
 
   onUseExistingImageClicked(checked: boolean) {
     console.log('onUseExistingImageClicked: %s', checked);
-    // todo
 
     // disable img inputs, set image url
     if (checked) {
       this.articleImageUrl = this.article.translations[0].imageUrl;
-      this.imageFileName = this.getImageFileNameFromUrl(this.articleImageUrl);
+      this.imageFileName = this.getImageFileNameFromUrl();
       this.articleCreateFormGroup.controls.imageFile.disable();
       this.articleCreateFormGroup.controls.imageFileName.disable();
     } else {
@@ -289,22 +291,25 @@ export class ArticleCreateComponent implements OnInit {
 
       const translation = this.article.translations.find(value => value.id === this.translationId);
       this.translation = translation ? translation : null;
-      if (translation != null) {
+      if (this.translation != null) {
         this.translationLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.translation.langId);
+
+        this.title = this.translation.title;
+        this.shortDescription = this.translation.shortDescription;
 
         const version = this.translation.versions.find(value => value.id === this.versionId);
         this.version = version ? version : null;
+
+        if (this.version != null) {
+          this.text = this.version.text;
+        }
       }
     }
 
     this.articleImageUrl = this.translation !== null ? this.translation.imageUrl : null;
-    this.imageFileName = this.getImageFileNameFromUrl(this.articleImageUrl);
-
-    console.log('this.articleImageUrl: %s', this.articleImageUrl);
-    console.log('this.imageFileName: %s', this.imageFileName);
+    this.imageFileName = this.getImageFileNameFromUrl();
 
     this.articleCreateFormGroup = this.fBuilder.group({
-      // todo correctly fill inputs from this.article
       useExistingImage: new FormControl(
         {
           value: false,
@@ -366,30 +371,26 @@ export class ArticleCreateComponent implements OnInit {
           value: this.translationLanguage,
           disabled: this.isEditArticleMode || this.isAddVersionMode || this.isEditVersionMode
         },
-        // todo check it
         [Validators.required]
       ),
       title: new FormControl(
         {
-          // todo value
-          value: null,
+          value: this.title,
           disabled: this.isEditArticleMode || this.isEditVersionMode || this.isAddVersionMode
         },
         [Validators.required]
       ),
       shortDescription: new FormControl(
         {
-          // todo value
-          value: null,
+          value: this.shortDescription,
           disabled: this.isEditArticleMode || this.isEditVersionMode || this.isAddVersionMode
         },
         []
       ),
       markdownText: new FormControl(
-        // Warning!!! Disable not working here, so we hide it in template
         {
-          // todo value
-          value: null,
+          value: this.text,
+          // Warning!!! Disable not working here, so we hide it in template
           disabled: this.isEditArticleMode || this.isEditTranslationMode
         },
         [Validators.required]
@@ -401,9 +402,9 @@ export class ArticleCreateComponent implements OnInit {
     });
   }
 
-  private getImageFileNameFromUrl(articleImageUrl: string) {
-    return articleImageUrl != null
-      ? articleImageUrl.substring(articleImageUrl.lastIndexOf('/') + 1, articleImageUrl.lastIndexOf('.'))
+  private getImageFileNameFromUrl() {
+    return this.articleImageUrl != null
+      ? this.articleImageUrl.substring(this.articleImageUrl.lastIndexOf('/') + 1, this.articleImageUrl.lastIndexOf('.'))
       : null;
   }
 
@@ -471,14 +472,13 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   getTranslationLanguages(): Language[] {
-    const articleLanguages: Language[] = this.article.translations.map(translation => {
+    let languages: Language[] = this.article.translations.map(translation => {
       return this.languagesListFromApi.find(language => language.id === translation.langId);
     });
-    const availableTranslations = this.languagesListFromApi.filter(language => !articleLanguages.find(value => value.id === language.id));
-    if (this.actionType != null && this.actionType === ActionType.EDIT_TRANSLATION) {
-      availableTranslations.push(this.languagesListFromApi.find(language => language.id === this.translation.langId));
+    if (this.isAddTranslationMode) {
+      languages = this.languagesListFromApi.filter(language => !languages.find(value => value.id === language.id));
     }
-    return availableTranslations;
+    return languages;
   }
 }
 

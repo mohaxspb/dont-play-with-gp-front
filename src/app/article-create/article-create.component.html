@@ -46,13 +46,14 @@
             <div fxLayout fxLayoutAlign="center center" class="default-margin-bottom default-margin-top">
               <img
                 *ngIf="articleImageUrl!=null"
+                [src]="getImagePath(articleImageUrl)"
                 matCardImage
-                [src]="getFullImagePath(articleImageUrl)"
                 height="48px"
                 width="48px"
                 alt="Article image"
                 class="input-image-preview"
-                onerror="if (this.src !== './assets/baseline-image-24px.svg') this.src = './assets/baseline-image-24px.svg';">
+                (error)="onImageLoadError($event)"
+              >
 
               <img
                 *ngIf="articleImageUrl==null"
@@ -73,7 +74,7 @@
                   formControlName="imageFile"
                   placeholder="Image file"
                   valuePlaceholder="No file selected"
-                  (change)="logoImageFileChange($event.target.files)"
+                  (change)="articleImageFileChange($event.target.files)"
                 >
                 </ngx-mat-file-input>
 

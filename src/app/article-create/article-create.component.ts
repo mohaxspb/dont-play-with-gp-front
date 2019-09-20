@@ -142,13 +142,17 @@ export class ArticleCreateComponent implements OnInit {
     this.loadInitialData();
   }
 
+  getImagePath(imageUrl: string): string {
+    return imageUrl.startsWith('data') ? imageUrl : this.getFullImagePath(imageUrl);
+  }
+
   onImageFileNameChanged(imageFileName: string) {
     console.log('onImageFileNameChanged: %s', imageFileName);
     this.imageFileName = imageFileName;
   }
 
-  logoImageFileChange(files: FileList) {
-    console.log('logoImageFileChange: ', files);
+  articleImageFileChange(files: FileList) {
+    console.log('articleImageFileChange: ', files);
     if (files.length > 0) {
       this.imageFile = files[0];
       this.imageFileName = this.imageFile.name;
@@ -206,6 +210,11 @@ export class ArticleCreateComponent implements OnInit {
           .then(() => NavigationUtils.scrollToTop()),
         error => this.notificationService.showError(error)
       );
+  }
+
+  onImageLoadError(event) {
+    console.log('onImageLoadError');
+    event.target.src = './assets/baseline-image-24px.svg';
   }
 
   getFullImagePath(relativePath: string): string {
@@ -267,11 +276,14 @@ export class ArticleCreateComponent implements OnInit {
       ? this.articleImageUrl.substring(this.articleImageUrl.lastIndexOf('/') + 1, this.articleImageUrl.lastIndexOf('.'))
       : null;
 
+    console.log('this.articleImageUrl: %s', this.articleImageUrl);
+    console.log('this.imageFileName: %s', this.imageFileName);
+
     this.articleCreateFormGroup = this.fBuilder.group({
       // todo correctly fill inputs from this.article
       imageFile: new FormControl(
         {
-          value: this.articleImageUrl,
+          value: null,
           disabled: this.isEditArticleMode || this.isEditVersionMode || this.isAddVersionMode
         },
         [FileValidator.maxContentSize(this.maxSize)]

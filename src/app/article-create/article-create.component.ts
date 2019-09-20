@@ -194,31 +194,49 @@ export class ArticleCreateComponent implements OnInit {
 
     this.progressInAction.next(true);
 
-    // todo action base on actionType
-
-    this.articleService
-      .createArticle(
-        this.articleLanguage.id,
-        this.sourceTitle,
-        this.sourceAuthorName,
-        this.sourceUrl,
-        this.title,
-        this.shortDescription,
-        this.text,
-        this.imageFile,
-        this.imageFileName
-      )
-      .pipe(
-        finalize(() => this.progressInAction.next(false))
-      )
-      .subscribe(
-        (article: Article) => this.router.navigate(
-          ['article/' + article.id],
-          {queryParams: {langId: article.originalLangId}}
+    if (this.actionType == null) {
+      this.articleService
+        .createArticle(
+          this.articleLanguage.id,
+          this.sourceTitle,
+          this.sourceAuthorName,
+          this.sourceUrl,
+          this.title,
+          this.shortDescription,
+          this.text,
+          this.imageFile,
+          this.imageFileName
         )
-          .then(() => NavigationUtils.scrollToTop()),
-        error => this.notificationService.showError(error)
-      );
+        .pipe(
+          finalize(() => this.progressInAction.next(false))
+        )
+        .subscribe(
+          (article: Article) => this.router.navigate(
+            ['article/' + article.id],
+            {queryParams: {langId: article.originalLangId}}
+          )
+            .then(() => NavigationUtils.scrollToTop()),
+          error => this.notificationService.showError(error)
+        );
+    } else {
+      switch (this.actionType) {
+        case ActionType.EDIT_ARTICLE:
+          // todo
+          break;
+        case ActionType.ADD_TRANSLATION:
+          // todo
+          break;
+        case ActionType.EDIT_TRANSLATION:
+          // todo
+          break;
+        case ActionType.ADD_VERSION:
+          // todo
+          break;
+        case ActionType.EDIT_VERSION:
+          // todo
+          break;
+      }
+    }
   }
 
   onImageLoadError(event) {

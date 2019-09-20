@@ -62,6 +62,7 @@ export class ArticleCreateComponent implements OnInit {
 
   // add/edit data
   actionTitle = 'New article creation';
+  submitTitle = 'Save';
 
   article: Article | null = null;
   translation: ArticleTranslation | null = null;
@@ -459,6 +460,7 @@ export class ArticleCreateComponent implements OnInit {
                   this.actionTitle = 'Edit version';
                   break;
               }
+              this.submitTitle = this.actionTitle;
               this.articleId = Number(articleId);
               this.translationId = translationId != null ? Number(translationId) : null;
               this.versionId = versionId != null ? Number(versionId) : null;

@@ -469,6 +469,13 @@ export class ArticleCreateComponent implements OnInit {
         error => this.notificationService.showError(error)
       );
   }
+
+  notUsedTranslations(): Language[] {
+    const articleLanguages: Language[] = this.article.translations.map(translation => {
+      return this.languagesListFromApi.find(language => language.id === translation.langId);
+    });
+    return this.languagesListFromApi.filter(language => !articleLanguages.find(value => value.id === language.id));
+  }
 }
 
 export enum ActionType {

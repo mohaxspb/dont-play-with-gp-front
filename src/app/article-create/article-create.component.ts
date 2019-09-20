@@ -470,11 +470,15 @@ export class ArticleCreateComponent implements OnInit {
       );
   }
 
-  notUsedTranslations(): Language[] {
+  getTranslationLanguages(): Language[] {
     const articleLanguages: Language[] = this.article.translations.map(translation => {
       return this.languagesListFromApi.find(language => language.id === translation.langId);
     });
-    return this.languagesListFromApi.filter(language => !articleLanguages.find(value => value.id === language.id));
+    const availableTranslations = this.languagesListFromApi.filter(language => !articleLanguages.find(value => value.id === language.id));
+    if (this.actionType != null && this.actionType === ActionType.EDIT_TRANSLATION) {
+      availableTranslations.push(this.languagesListFromApi.find(language => language.id === this.translation.langId));
+    }
+    return availableTranslations;
   }
 }
 

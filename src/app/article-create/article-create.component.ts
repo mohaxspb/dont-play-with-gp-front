@@ -269,6 +269,8 @@ export class ArticleCreateComponent implements OnInit {
         const version = this.translation.versions.find(value => value.id === this.versionId);
         this.version = version ? version : null;
       }
+
+      this.articleIsFromAnotherSite = this.article.sourceUrl != null;
     }
 
     this.articleImageUrl = this.translation !== null ? this.translation.imageUrl : null;

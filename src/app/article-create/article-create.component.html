@@ -32,7 +32,6 @@
 
       <div id="articleFormContainer" *ngIf="user!=null && languagesListFromApi!=null">
 
-        <!--        && (article!=null || actionType==null)-->
         <form
           *ngIf="(dataIsLoading|async) == false"
           [formGroup]="articleCreateFormGroup"

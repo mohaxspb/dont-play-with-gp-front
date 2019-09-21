@@ -16,6 +16,7 @@ import {GpUser} from '../model/auth/GpUser';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {NavigationUtils} from '../utils/NavigationUtils';
 import {Api} from '../service/Api';
+import {ActionType} from '../article-create/article-create.component';
 
 @Component({
   selector: 'app-feed',
@@ -63,7 +64,7 @@ export class FeedComponent implements OnInit {
     console.log('onCreateArticleClicked');
     if (this.authService.authenticated) {
       // noinspection JSIgnoredPromiseFromCall
-      this.router.navigateByUrl('create-article');
+      this.router.navigate(['create-article'], {queryParams: {actionType: ActionType.CREATE_ARTICLE}});
     } else {
       this.bottomSheet.open(LoginComponent, {data: {title: 'To create article you should'}});
     }

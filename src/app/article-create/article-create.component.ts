@@ -69,7 +69,7 @@ export class ArticleCreateComponent implements OnInit {
   version: ArticleTranslationVersion | null = null;
 
   articleId: number | null = null;
-  actionType: ActionType | null = null;
+  actionType: ActionType = ActionType.CREATE_ARTICLE;
   translationId: number | null = null;
   versionId: number | null = null;
 
@@ -186,48 +186,47 @@ export class ArticleCreateComponent implements OnInit {
 
     this.progressInAction.next(true);
 
-    if (this.actionType == null) {
-      this.articleService
-        .createArticle(
-          this.articleLanguage.id,
-          this.sourceTitle,
-          this.sourceAuthorName,
-          this.sourceUrl,
-          this.title,
-          this.shortDescription,
-          this.text,
-          this.imageFile,
-          this.imageFileName
-        )
-        .pipe(
-          finalize(() => this.progressInAction.next(false))
-        )
-        .subscribe(
-          (article: Article) => this.router.navigate(
-            ['article/' + article.id],
-            {queryParams: {langId: article.originalLangId}}
+    switch (this.actionType) {
+      case ActionType.CREATE_ARTICLE:
+        this.articleService
+          .createArticle(
+            this.articleLanguage.id,
+            this.sourceTitle,
+            this.sourceAuthorName,
+            this.sourceUrl,
+            this.title,
+            this.shortDescription,
+            this.text,
+            this.imageFile,
+            this.imageFileName
           )
-            .then(() => NavigationUtils.scrollToTop()),
-          error => this.notificationService.showError(error)
-        );
-    } else {
-      switch (this.actionType) {
-        case ActionType.EDIT_ARTICLE:
-          // todo
-          break;
-        case ActionType.ADD_TRANSLATION:
-          // todo
-          break;
-        case ActionType.EDIT_TRANSLATION:
-          // todo
-          break;
-        case ActionType.ADD_VERSION:
-          // todo
-          break;
-        case ActionType.EDIT_VERSION:
-          // todo
-          break;
-      }
+          .pipe(
+            finalize(() => this.progressInAction.next(false))
+          )
+          .subscribe(
+            (article: Article) => this.router.navigate(
+              ['article/' + article.id],
+              {queryParams: {langId: article.originalLangId}}
+            )
+              .then(() => NavigationUtils.scrollToTop()),
+            error => this.notificationService.showError(error)
+          );
+        break;
+      case ActionType.EDIT_ARTICLE:
+        // todo
+        break;
+      case ActionType.ADD_TRANSLATION:
+        // todo
+        break;
+      case ActionType.EDIT_TRANSLATION:
+        // todo
+        break;
+      case ActionType.ADD_VERSION:
+        // todo
+        break;
+      case ActionType.EDIT_VERSION:
+        // todo
+        break;
     }
   }
 
@@ -267,24 +266,28 @@ export class ArticleCreateComponent implements OnInit {
     return new ByteFormatPipe(null).transform(actualSize);
   }
 
+  get isCreateArticleMode(): boolean {
+    return this.actionType === ActionType.CREATE_ARTICLE;
+  }
+
   get isEditArticleMode(): boolean {
-    return this.actionType !== null && this.actionType === ActionType.EDIT_ARTICLE;
+    return this.actionType === ActionType.EDIT_ARTICLE;
   }
 
   get isEditTranslationMode(): boolean {
-    return this.actionType !== null && this.actionType === ActionType.EDIT_TRANSLATION;
+    return this.actionType === ActionType.EDIT_TRANSLATION;
   }
 
   get isAddTranslationMode(): boolean {
-    return this.actionType !== null && this.actionType === ActionType.ADD_TRANSLATION;
+    return this.actionType === ActionType.ADD_TRANSLATION;
   }
 
   get isEditVersionMode(): boolean {
-    return this.actionType !== null && this.actionType === ActionType.EDIT_VERSION;
+    return this.actionType === ActionType.EDIT_VERSION;
   }
 
   get isAddVersionMode(): boolean {
-    return this.actionType !== null && this.actionType === ActionType.ADD_VERSION;
+    return this.actionType === ActionType.ADD_VERSION;
   }
 
   private initForm() {
@@ -294,7 +297,7 @@ export class ArticleCreateComponent implements OnInit {
     console.log('isAddVersionMode: %s', this.isAddVersionMode);
     console.log('isEditVersionMode: %s', this.isEditVersionMode);
 
-    if (this.actionType != null) {
+    if (this.actionType !== ActionType.CREATE_ARTICLE) {
       this.articleIsFromAnotherSite = this.article.sourceUrl != null;
 
       this.articleLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.article.originalLangId);
@@ -374,12 +377,12 @@ export class ArticleCreateComponent implements OnInit {
           value: this.articleLanguage,
           disabled: this.isEditTranslationMode || this.isAddTranslationMode || this.isAddVersionMode || this.isEditVersionMode
         },
-        [Validators.required]
+        this.actionType === ActionType.CREATE_ARTICLE ? [] : [Validators.required]
       ),
       translationLanguageSelect: new FormControl(
         {
           value: this.translationLanguage,
-          disabled: this.isEditArticleMode || this.isAddVersionMode || this.isEditVersionMode
+          disabled: this.isCreateArticleMode || this.isEditArticleMode || this.isAddVersionMode || this.isEditVersionMode
         },
         [Validators.required]
       ),
@@ -434,37 +437,35 @@ export class ArticleCreateComponent implements OnInit {
             const articleId = queryParams.get('articleId');
             const translationId = queryParams.get('translationId');
             const versionId = queryParams.get('versionId');
-            if (actionType !== null) {
-              this.actionType = ActionType[actionType];
-              switch (actionType) {
-                case ActionType.EDIT_ARTICLE:
-                  this.actionTitle = 'Edit article';
-                  break;
-                case ActionType.ADD_TRANSLATION:
-                  this.actionTitle = 'Add translation';
-                  break;
-                case ActionType.EDIT_TRANSLATION:
-                  this.actionTitle = 'Edit translation';
-                  break;
-                case ActionType.ADD_VERSION:
-                  this.actionTitle = 'Add version';
-                  break;
-                case ActionType.EDIT_VERSION:
-                  this.actionTitle = 'Edit version';
-                  break;
-              }
-              this.submitTitle = this.actionTitle;
-              this.articleId = Number(articleId);
-              this.translationId = translationId != null ? Number(translationId) : null;
-              this.versionId = versionId != null ? Number(versionId) : null;
-              console.log(
-                'actionType, articleId, translationId, versionId, actionTitle: %s/%s/%s/%s/%s: ',
-                this.articleId, this.actionType, this.translationId, this.versionId, this.actionTitle
-              );
-              return this.articleService.getFullArticleById(this.articleId);
-            } else {
-              return of(null);
+            this.actionType = ActionType[actionType];
+            switch (actionType) {
+              case ActionType.CREATE_ARTICLE:
+                return of(null);
+              case ActionType.EDIT_ARTICLE:
+                this.actionTitle = 'Edit article';
+                break;
+              case ActionType.ADD_TRANSLATION:
+                this.actionTitle = 'Add translation';
+                break;
+              case ActionType.EDIT_TRANSLATION:
+                this.actionTitle = 'Edit translation';
+                break;
+              case ActionType.ADD_VERSION:
+                this.actionTitle = 'Add version';
+                break;
+              case ActionType.EDIT_VERSION:
+                this.actionTitle = 'Edit version';
+                break;
             }
+            this.submitTitle = this.actionTitle;
+            this.articleId = Number(articleId);
+            this.translationId = translationId != null ? Number(translationId) : null;
+            this.versionId = versionId != null ? Number(versionId) : null;
+            console.log(
+              'actionType, articleId, translationId, versionId, actionTitle: %s/%s/%s/%s/%s: ',
+              this.articleId, this.actionType, this.translationId, this.versionId, this.actionTitle
+            );
+            return this.articleService.getFullArticleById(this.articleId);
           })
         )
     )
@@ -509,6 +510,7 @@ export class ArticleCreateComponent implements OnInit {
 }
 
 export enum ActionType {
+  CREATE_ARTICLE = 'CREATE_ARTICLE',
   EDIT_ARTICLE = 'EDIT_ARTICLE',
   ADD_TRANSLATION = 'ADD_TRANSLATION',
   EDIT_TRANSLATION = 'EDIT_TRANSLATION',

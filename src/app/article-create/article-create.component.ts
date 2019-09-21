@@ -175,19 +175,11 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onArticleCreateClicked() {
-    console.log('onArticleCreateClicked');
-    console.log('image, imageName: %s/%s', this.imageFile, this.imageFileName);
-
-    // test
-    // this.router.navigate(['article/' + 43], {queryParams: {langId: 1}})
-    //   .then(() => NavigationUtils.scrollToTop());
-    //
-    // return;
-
     this.progressInAction.next(true);
 
     switch (this.actionType) {
       case ActionType.CREATE_ARTICLE:
+        console.log('CREATE_ARTICLE');
         this.articleService
           .createArticle(
             this.articleLanguage.id,
@@ -213,18 +205,53 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.EDIT_ARTICLE:
+        console.log('EDIT_ARTICLE: %s/%s/%s/%s/%s',
+          this.articleId,
+          this.articleLanguage,
+          this.sourceUrl,
+          this.sourceAuthorName,
+          this.sourceTitle
+        );
         // todo
         break;
       case ActionType.ADD_TRANSLATION:
+        console.log('ADD_TRANSLATION: %s/%s/%s/%s/%s/%s/%s',
+          this.articleId,
+          this.translationLanguage,
+          this.imageFile,
+          this.imageFileName,
+          this.title,
+          this.shortDescription,
+          this.text
+        );
         // todo
         break;
       case ActionType.EDIT_TRANSLATION:
+        console.log('EDIT_TRANSLATION: %s/%s/%s/%s/%s/%s',
+          this.articleId,
+          this.translationId,
+          this.imageFile,
+          this.imageFileName,
+          this.title,
+          this.shortDescription,
+        );
         // todo
         break;
       case ActionType.ADD_VERSION:
+        console.log('ADD_VERSION: %s/%s/%s',
+          this.articleId,
+          this.translationId,
+          this.text
+        );
         // todo
         break;
       case ActionType.EDIT_VERSION:
+        console.log('EDIT_VERSION: %s/%s/%s/%s',
+          this.articleId,
+          this.translationId,
+          this.versionId,
+          this.text
+        );
         // todo
         break;
     }

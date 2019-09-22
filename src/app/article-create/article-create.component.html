@@ -40,7 +40,12 @@
 
           <!--Article section-->
           <mat-divider inset></mat-divider>
-          <h3>Article data</h3>
+          <!--          fixme test-->
+          <pre>{{articleCreateFormGroup.value | json}}</pre>
+
+          <pre>{{articleCreateFormGroup.valid}}</pre>
+          <!--          fixme test-->
+          <h3 (click)="findInvalidControls()">Article data</h3>
 
           <mat-card id="input-sourceData">
             <div class="mat-input-element">
@@ -271,8 +276,6 @@
           <!--Version section-->
           <mat-divider inset></mat-divider>
           <h3>Text version data</h3>
-
-          <!--          todo versions select-->
 
           <div id="article-text">
             <div class="position-relative">

@@ -6,6 +6,7 @@ import {ArticleTranslation} from '../../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../../model/data/ArticleTranslationVersion';
 import {Language} from '../../model/data/Language';
 import {GpLanguageService} from './GpLanguageService';
+import {PublishVersionResult} from '../../model/data/PublishVersionResult';
 
 @Injectable()
 export class GpArticleService {
@@ -80,7 +81,7 @@ export class GpArticleService {
     return this.apiService.approveArticleTranslationVersion(id, approve);
   }
 
-  publishArticleTranslationVersion(id: number, publish: boolean): Observable<ArticleTranslationVersion> {
+  publishArticleTranslationVersion(id: number, publish: boolean): Observable<PublishVersionResult> {
     return this.apiService.publishArticleTranslationVersion(id, publish);
   }
 

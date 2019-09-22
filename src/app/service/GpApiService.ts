@@ -8,6 +8,7 @@ import {Language} from '../model/data/Language';
 import {Article} from '../model/data/Article';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
+import {PublishVersionResult} from '../model/data/PublishVersionResult';
 
 
 @Injectable()
@@ -214,11 +215,11 @@ export class GpApiService {
     );
   }
 
-  publishArticleTranslationVersion(id: number, publish: boolean): Observable<ArticleTranslationVersion> {
+  publishArticleTranslationVersion(id: number, publish: boolean): Observable<PublishVersionResult> {
     const formData = new FormData();
     formData.append('id', id.toString());
     formData.append('publish', String(publish));
-    return this.http.post<ArticleTranslationVersion>(
+    return this.http.post<PublishVersionResult>(
       Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.PUBLISH,
       formData,
       {

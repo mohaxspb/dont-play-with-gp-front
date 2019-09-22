@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {BehaviorSubject, zip} from 'rxjs';
+import {BehaviorSubject, Observable, zip} from 'rxjs';
 import {NotificationService} from '../service/ui/NotificationService';
 import {finalize} from 'rxjs/operators';
 import {Article} from '../model/data/Article';
@@ -268,6 +268,11 @@ export class ArticleComponent implements OnInit {
     );
   }
 
+  onSelectedVersionChanged(version: ArticleTranslationVersion) {
+    console.log('onSelectedVersionChanged: %s', version.id);
+    this.selectedTranslationVersion = version;
+  }
+
   isAdmin(): boolean {
     return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
   }
@@ -431,7 +436,6 @@ export class ArticleComponent implements OnInit {
             case DataType.VERSION:
               this.selectedTranslationVersion.published = !this.selectedTranslationVersion.published;
               break;
-
           }
         }
       });
@@ -480,9 +484,21 @@ export class ArticleComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        value => this.article
-          .translations[this.getSelectedTranslationIndexInArticle()]
-          .versions[this.getSelectedVersionIndexInSelectedTranslation()] = value,
+        value => {
+          this.article
+            .translations[this.getSelectedTranslationIndexInArticle()]
+            .versions[this.getSelectedVersionIndexInSelectedTranslation()] = value.updatedVersion;
+          if (value.unpublishedVersion != null) {
+            this.notificationService.showMessage(`Version published. Version with ID ${value.unpublishedVersion.id} is unpublished!`);
+            const unpublishedVersion = this.article
+              .translations[this.getSelectedTranslationIndexInArticle()]
+              .versions
+              .find(value1 => value1.id === value.unpublishedVersion.id);
+            unpublishedVersion.published = false;
+          }
+
+          console.log('selectedTranslationVersion: %s', this.selectedTranslationVersion.id);
+        },
         error => {
           this.selectedTranslationVersion.published = !publish;
           this.notificationService.showError(error);

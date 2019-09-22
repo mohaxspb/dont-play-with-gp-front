@@ -197,7 +197,30 @@
         > and edited by {{selectedTranslationVersion.author.fullName}}</span>
       </div>
 
-      <div fxLayout fxLayoutAlign="start center" fxLayoutGap="16px">
+      <div id="version-select"
+           *ngIf="isAdmin() || selectedTranslation.authorId == user?.id || selectedTranslationVersion.authorId == user?.id"
+           fxLayout.gt-xs="row"
+           fxLayout="column"
+           fxLayoutGap="8px"
+           fxLayoutGap.gt-xs="0px"
+           fxLayoutAlign.gt-xs="start center"
+           fxLayoutAlign="start start"
+           class="default-margin-bottom"
+      >
+        <div>Selected version:</div>
+        <mat-select
+          #versionsSelect
+          [(value)]="selectedTranslationVersion"
+          (selectionChange)="onSelectedVersionChanged($event.value)"
+        >
+          <mat-option
+            *ngFor="let textVersion of selectedTranslation.versions"
+            [value]="textVersion"
+          >ID: {{textVersion.id}}. Updated: {{textVersion.updated | date:'short':'UTC': preferredLanguage.langCode}} by {{textVersion.author.fullName}}</mat-option>
+        </mat-select>
+      </div>
+
+      <div id="admin-version" fxLayout fxLayoutAlign="start center" fxLayoutGap="16px">
 
         <div id="approve-publish-version"
              *ngIf="isAdmin()"

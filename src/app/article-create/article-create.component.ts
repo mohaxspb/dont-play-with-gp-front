@@ -36,6 +36,9 @@ export class ArticleCreateComponent implements OnInit {
 
   // local data
   user: GpUser;
+  preferredLanguage: Language;
+
+  // misc
   articleIsFromAnotherSite = true;
 
   // article data
@@ -249,7 +252,7 @@ export class ArticleCreateComponent implements OnInit {
         console.log('EDIT_VERSION: %s/%s/%s/%s',
           this.articleId,
           this.translationId,
-          this.versionId,
+          this.version.id,
           this.text
         );
         // todo
@@ -500,14 +503,13 @@ export class ArticleCreateComponent implements OnInit {
         tap((userLanguagesAndArticle: [GpUser, [Language], Article | null]) => {
           this.user = userLanguagesAndArticle[0];
           this.languagesListFromApi = userLanguagesAndArticle[1];
+          this.preferredLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.user.primaryLanguageId);
           this.article = userLanguagesAndArticle[2];
         }),
         finalize(() => this.dataIsLoading.next(false))
       )
       .subscribe(
-        () => {
-          this.initForm();
-        },
+        () => this.initForm(),
         error => this.notificationService.showError(error)
       );
   }
@@ -533,6 +535,18 @@ export class ArticleCreateComponent implements OnInit {
     }
     this.articleCreateFormGroup.controls.sourceTitle.updateValueAndValidity();
     this.articleCreateFormGroup.controls.sourceUrl.updateValueAndValidity();
+  }
+
+  // fixme test
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.articleCreateFormGroup.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    console.log(invalid);
   }
 }
 

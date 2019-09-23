@@ -35,9 +35,7 @@ export class GpApiService {
       .post<GpUser>(
         Api.URL + Api.Method.LOGIN,
         formData,
-        {
-          withCredentials: true
-        }
+        {withCredentials: true}
       );
   }
 
@@ -66,9 +64,7 @@ export class GpApiService {
       .post<GpUser>(
         Api.URL + Api.EmailAuthEndpoint.URL + Api.EmailAuthEndpoint.Method.REGISTER,
         formData,
-        {
-          withCredentials: true
-        }
+        {withCredentials: true}
       );
   }
 
@@ -89,21 +85,10 @@ export class GpApiService {
       );
   }
 
-  getArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(
-      Api.URL + Api.ArticleEndpoint.URL + id,
-      {
-        withCredentials: true
-      }
-    );
-  }
-
   getFullArticleById(id: number): Observable<Article> {
     return this.http.get<Article>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.FULL + id,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -144,9 +129,7 @@ export class GpApiService {
       .post<Article>(
         Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.CREATE,
         formData,
-        {
-          withCredentials: true
-        }
+        {withCredentials: true}
       );
   }
 
@@ -157,9 +140,7 @@ export class GpApiService {
     return this.http.post<Article>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.APPROVE,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -170,9 +151,7 @@ export class GpApiService {
     return this.http.post<Article>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.PUBLISH,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -183,9 +162,7 @@ export class GpApiService {
     return this.http.post<ArticleTranslation>(
       Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.APPROVE,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -196,9 +173,7 @@ export class GpApiService {
     return this.http.post<ArticleTranslation>(
       Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.PUBLISH,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -209,9 +184,7 @@ export class GpApiService {
     return this.http.post<ArticleTranslationVersion>(
       Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.APPROVE,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -222,9 +195,7 @@ export class GpApiService {
     return this.http.post<PublishVersionResult>(
       Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.PUBLISH,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -236,9 +207,7 @@ export class GpApiService {
     return this.http.post<GpUser>(
       Api.URL + Api.UsersEndpoint.URL + Api.UsersEndpoint.Method.UPDATE,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -293,9 +262,7 @@ export class GpApiService {
     return this.http.post<string>(
       Api.URL + Api.ImageEndpoint.URL + Api.ImageEndpoint.Method.ADD,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -306,9 +273,18 @@ export class GpApiService {
     return this.http.post<ArticleTranslationVersion>(
       Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.CREATE,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
+    );
+  }
+
+  editVersion(versionId: number, text: string): Observable<ArticleTranslationVersion> {
+    const formData = new FormData();
+    formData.append('versionId', versionId.toString());
+    formData.append('text', text);
+    return this.http.post<ArticleTranslationVersion>(
+      Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.EDIT,
+      formData,
+      {withCredentials: true}
     );
   }
 }

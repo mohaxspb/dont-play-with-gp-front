@@ -100,4 +100,8 @@ export class GpArticleService {
   createVersion(translationId: number, text: string): Observable<ArticleTranslationVersion> {
     return this.apiService.createVersion(translationId, text);
   }
+
+  editVersion(versionId: number, text: string): Observable<ArticleTranslationVersion> {
+    return this.apiService.editVersion(versionId, text);
+  }
 }

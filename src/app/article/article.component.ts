@@ -274,9 +274,11 @@ export class ArticleComponent implements OnInit {
   }
 
   get versionsSelectIsVisible() {
-    return this.isAdmin()
+    return this.user !== null && (
+      this.isAdmin()
       || this.selectedTranslation.authorId === this.user.id
-      || this.selectedTranslation.versions.find(value => value.authorId === this.user.id);
+      || this.selectedTranslation.versions.find(value => value.authorId === this.user.id)
+    );
   }
 
   isAdmin(): boolean {

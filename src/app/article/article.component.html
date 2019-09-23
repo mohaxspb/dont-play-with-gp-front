@@ -190,6 +190,10 @@
 
       <mat-divider></mat-divider>
 
+      <div *ngIf="!selectedTranslationVersion.published">
+        <div class="color-primary default-margin-top">Version is not published! So only author or admin can see it.</div>
+      </div>
+
       <div id="authors" class="default-margin-bottom default-margin-top">
         <div *ngIf="selectedTranslation.langId!=article.originalLangId else originalTranslation">
           <span>Translated by {{selectedTranslation.author.fullName}}</span>
@@ -214,7 +218,7 @@
            fxLayoutAlign="start start"
            class="default-margin-bottom"
       >
-        <div>Selected version:</div>
+        <div class="color-primary">Selected version:</div>
         <mat-select
           [(value)]="selectedTranslationVersion"
           (selectionChange)="onSelectedVersionChanged($event.value)"

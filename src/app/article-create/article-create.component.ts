@@ -92,39 +92,39 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onArticleIsFromAnotherSiteClicked(checked: boolean) {
-    console.log('onArticleIsFromAnotherSiteClicked: %s', checked);
+    // console.log('onArticleIsFromAnotherSiteClicked: %s', checked);
     this.articleIsFromAnotherSite = checked;
 
     this.updateSourceDataControls();
   }
 
   onPrimaryLanguageChanged(language: Language) {
-    console.log('onPrimaryLanguageChanged: %s', JSON.stringify(language));
+    // console.log('onPrimaryLanguageChanged: %s', JSON.stringify(language));
     this.articleLanguage = language;
   }
 
   onTranslationLanguageChanged(language: Language) {
-    console.log('onTranslationLanguageChanged: %s', JSON.stringify(language));
+    // console.log('onTranslationLanguageChanged: %s', JSON.stringify(language));
     this.translationLanguage = language;
   }
 
   onSourceTitleChanged(sourceTitle: string) {
-    console.log('onSourceTitleChanged: %s', sourceTitle);
+    // console.log('onSourceTitleChanged: %s', sourceTitle);
     this.sourceTitle = sourceTitle;
   }
 
   onSourceUrlChanged(sourceUrl: string) {
-    console.log('onSourceUrlChanged: %s', sourceUrl);
+    // console.log('onSourceUrlChanged: %s', sourceUrl);
     this.sourceUrl = sourceUrl;
   }
 
   onSourceAuthorNameChanged(sourceAuthorName: string) {
-    console.log('onSourceAuthorNameChanged: %s', sourceAuthorName);
+    // console.log('onSourceAuthorNameChanged: %s', sourceAuthorName);
     this.sourceAuthorName = sourceAuthorName;
   }
 
   onTitleChanged(title: string) {
-    console.log('onTitleChanged: %s', title);
+    // console.log('onTitleChanged: %s', title);
     this.title = title;
   }
 
@@ -134,12 +134,12 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onTextChanged(text: string) {
-    console.log('onTextChanged: %s', text);
+    // console.log('onTextChanged: %s', text);
     this.text = text;
   }
 
   onDataRefreshClicked() {
-    console.log('onDataRefreshClicked');
+    // console.log('onDataRefreshClicked');
     this.loadInitialData();
   }
 
@@ -148,12 +148,12 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onImageFileNameChanged(imageFileName: string) {
-    console.log('onImageFileNameChanged: %s', imageFileName);
+    // console.log('onImageFileNameChanged: %s', imageFileName);
     this.imageFileName = imageFileName;
   }
 
   articleImageFileChange(files: FileList) {
-    console.log('articleImageFileChange: ', files);
+    // console.log('articleImageFileChange: ', files);
     if (files.length > 0) {
       this.imageFile = files[0];
       this.imageFileName = this.imageFile.name;
@@ -251,7 +251,7 @@ export class ArticleCreateComponent implements OnInit {
             finalize(() => this.progressInAction.next(false))
           )
           .subscribe(
-            (versionCreated: ArticleTranslationVersion) => this.router
+            () => this.router
               .navigate(
                 ['article/' + this.articleId],
                 {queryParams: {langId: this.translationLanguage.id}}
@@ -261,13 +261,24 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.EDIT_VERSION:
-        console.log('EDIT_VERSION: %s/%s/%s/%s',
-          this.articleId,
-          this.translationId,
-          this.version.id,
+        console.log('EDIT_VERSION: %s/%s',
+          this.versionId,
           this.text
         );
-        // todo
+        this.articleService
+          .editVersion(this.versionId, this.text)
+          .pipe(
+            finalize(() => this.progressInAction.next(false))
+          )
+          .subscribe(
+            () => this.router
+              .navigate(
+                ['article/' + this.articleId],
+                {queryParams: {langId: this.translationLanguage.id}}
+              )
+              .then(() => NavigationUtils.scrollToTop()),
+            error => this.notificationService.showError(error)
+          );
         break;
     }
   }

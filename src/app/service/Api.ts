@@ -63,6 +63,7 @@ export class Api {
       static ALL_BY_AUTHOR_ID = 'allByAuthorId';
       static ALL = 'all';
       static CREATE = 'create';
+      static EDIT = 'edit';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
       static DELETE = 'delete';

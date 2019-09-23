@@ -347,4 +347,30 @@ export class GpApiService {
       {withCredentials: true}
     );
   }
+
+  editArticle(
+    articleId: number,
+    langId: number,
+    sourceUrl: string | null,
+    sourceAuthorName: string | null,
+    sourceTitle: string | null
+  ): Observable<Article> {
+    const formData = new FormData();
+    formData.append('articleId', articleId.toString());
+    formData.append('langId', langId.toString());
+    if (sourceUrl != null) {
+      formData.append('sourceUrl', sourceUrl);
+    }
+    if (sourceAuthorName != null) {
+      formData.append('sourceAuthorName', sourceAuthorName);
+    }
+    if (sourceTitle != null) {
+      formData.append('sourceTitle', sourceTitle);
+    }
+    return this.http.post<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.EDIT,
+      formData,
+      {withCredentials: true}
+    );
+  }
 }

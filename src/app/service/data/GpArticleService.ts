@@ -135,4 +135,20 @@ export class GpArticleService {
       text
     );
   }
+
+  editArticle(
+    articleId: number,
+    langId: number,
+    sourceUrl: string | null,
+    sourceAuthorName: string | null,
+    sourceTitle: string | null
+  ): Observable<Article> {
+    return this.apiService.editArticle(
+      articleId,
+      langId,
+      sourceUrl,
+      sourceAuthorName,
+      sourceTitle
+    );
+  }
 }

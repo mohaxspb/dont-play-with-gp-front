@@ -215,7 +215,26 @@ export class ArticleCreateComponent implements OnInit {
           this.sourceAuthorName,
           this.sourceTitle
         );
-        // todo
+        this.articleService
+          .editArticle(
+            this.articleId,
+            this.articleLanguage.id,
+            this.sourceUrl,
+            this.sourceAuthorName,
+            this.sourceTitle
+          )
+          .pipe(
+            finalize(() => this.progressInAction.next(false))
+          )
+          .subscribe(
+            () => this.router
+              .navigate(
+                ['article/' + this.articleId],
+                {queryParams: {langId: this.translationLanguage.id}}
+              )
+              .then(() => NavigationUtils.scrollToTop()),
+            error => this.notificationService.showError(error)
+          );
         break;
       case ActionType.ADD_TRANSLATION:
         console.log('ADD_TRANSLATION: %s/%s/%s/%s/%s/%s/%s',

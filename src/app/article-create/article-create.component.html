@@ -119,7 +119,7 @@
                 (selectionChange)="onPrimaryLanguageChanged($event.value)"
               >
                 <mat-option
-                  *ngFor="let language of languagesListFromApi"
+                  *ngFor="let language of getArticleLanguages()"
                   [value]="language">{{language.langCode.toUpperCase()}}
                 </mat-option>
               </mat-select>

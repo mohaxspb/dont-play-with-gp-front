@@ -365,6 +365,31 @@ export class ArticleCreateComponent implements OnInit {
     }
   }
 
+  getArticleLanguages(): Language[] {
+    if (this.isEditArticleMode) {
+      return this.getLanguagesFromArticleTranslations();
+    } else {
+      return this.languagesListFromApi;
+    }
+  }
+
+  getTranslationLanguages(): Language[] {
+    const articleTranslationsLanguages = this.getLanguagesFromArticleTranslations();
+    const allExceptOfAlreadyUsedInArticle = this.languagesListFromApi
+      .filter(language => !articleTranslationsLanguages.find(value => value.id === language.id));
+
+    if (this.isAddTranslationMode) {
+      // all except of already used in article
+      return allExceptOfAlreadyUsedInArticle;
+    } else if (this.isEditTranslationMode) {
+      // all of already used in article and current one
+      allExceptOfAlreadyUsedInArticle.push(GpLanguageService.getLanguageById(this.languagesListFromApi, this.translation.langId));
+      return allExceptOfAlreadyUsedInArticle;
+    } else {
+      return this.languagesListFromApi;
+    }
+  }
+
   getFullImagePath(relativePath: string): string {
     return Api.URL + relativePath;
   }
@@ -597,25 +622,6 @@ export class ArticleCreateComponent implements OnInit {
       );
   }
 
-  getTranslationLanguages(): Language[] {
-    const articleTranslationsLanguages = this.article.translations.map(translation => this.languagesListFromApi
-      .find(language => language.id === translation.langId)
-    );
-    const allExceptOfAlreadyUsedInArticle = this.languagesListFromApi
-      .filter(language => !articleTranslationsLanguages.find(value => value.id === language.id));
-
-    if (this.isAddTranslationMode) {
-      // all except of already used in article
-      return allExceptOfAlreadyUsedInArticle;
-    } else if (this.isEditTranslationMode) {
-      // all of already used in article and current one
-      allExceptOfAlreadyUsedInArticle.push(GpLanguageService.getLanguageById(this.languagesListFromApi, this.translation.langId));
-      return allExceptOfAlreadyUsedInArticle;
-    } else {
-      return this.languagesListFromApi;
-    }
-  }
-
   private updateSourceDataControls() {
     // author name is optional
     if (this.articleIsFromAnotherSite) {
@@ -639,6 +645,12 @@ export class ArticleCreateComponent implements OnInit {
       }
     }
     console.log(invalid);
+  }
+
+  private getLanguagesFromArticleTranslations() {
+    return this.article.translations.map(translation => this.languagesListFromApi
+      .find(language => language.id === translation.langId)
+    );
   }
 }
 

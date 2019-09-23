@@ -369,7 +369,7 @@ export class ArticleComponent implements OnInit {
           // console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
 
           this.availableArticleLanguages = GpArticleService.getLanguagesFromArticle(this.article, this.languages);
-          console.log(this.availableArticleLanguages);
+          // console.log(this.availableArticleLanguages);
 
           this.selectedTranslation = this.calculateSelectedTranslation();
           this.selectedTranslationVersion = this.calculateVersion();

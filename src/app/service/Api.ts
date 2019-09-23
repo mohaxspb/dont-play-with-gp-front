@@ -73,7 +73,6 @@ export class Api {
     static URL = 'article/translation/';
 
     static Method = class {
-      static FULL = 'full/';
       static CREATE = 'create';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
@@ -84,7 +83,6 @@ export class Api {
     static URL = 'article/translation/version/';
 
     static Method = class {
-      static FULL = 'full/';
       static CREATE = 'create';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';

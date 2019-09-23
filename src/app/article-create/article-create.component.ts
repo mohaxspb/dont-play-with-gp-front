@@ -241,12 +241,24 @@ export class ArticleCreateComponent implements OnInit {
         // todo
         break;
       case ActionType.ADD_VERSION:
-        console.log('ADD_VERSION: %s/%s/%s',
-          this.articleId,
+        console.log('ADD_VERSION: %s/%s',
           this.translationId,
           this.text
         );
-        // todo
+        this.articleService
+          .createVersion(this.translationId, this.text)
+          .pipe(
+            finalize(() => this.progressInAction.next(false))
+          )
+          .subscribe(
+            (versionCreated: ArticleTranslationVersion) => this.router
+              .navigate(
+                ['article/' + this.articleId],
+                {queryParams: {langId: this.translationLanguage.id}}
+              )
+              .then(() => NavigationUtils.scrollToTop()),
+            error => this.notificationService.showError(error)
+          );
         break;
       case ActionType.EDIT_VERSION:
         console.log('EDIT_VERSION: %s/%s/%s/%s',

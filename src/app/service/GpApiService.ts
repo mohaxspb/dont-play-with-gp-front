@@ -298,4 +298,17 @@ export class GpApiService {
       }
     );
   }
+
+  createVersion(translationId: number, text: string): Observable<ArticleTranslationVersion> {
+    const formData = new FormData();
+    formData.append('articleTranslationId', translationId.toString());
+    formData.append('text', text);
+    return this.http.post<ArticleTranslationVersion>(
+      Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.CREATE,
+      formData,
+      {
+        withCredentials: true
+      }
+    );
+  }
 }

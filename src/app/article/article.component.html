@@ -191,14 +191,21 @@
       <mat-divider></mat-divider>
 
       <div id="authors" class="default-margin-bottom default-margin-top">
-        <span *ngIf="selectedTranslation.langId!=article.originalLangId"
-        >Translated by {{selectedTranslation.author.fullName}}</span>
-        <span *ngIf="selectedTranslationVersion.authorId!=selectedTranslation.authorId"
-        > and edited by {{selectedTranslationVersion.author.fullName}}</span>
+        <div *ngIf="selectedTranslation.langId!=article.originalLangId else originalTranslation">
+          <span>Translated by {{selectedTranslation.author.fullName}}</span>
+          <span *ngIf="selectedTranslationVersion.authorId!=selectedTranslation.authorId"
+          > and edited by {{selectedTranslationVersion.author.fullName}}</span>
+        </div>
+
+        <ng-template #originalTranslation>
+          <div *ngIf="selectedTranslationVersion.authorId!=selectedTranslation.authorId">
+            <span>Edited by {{selectedTranslationVersion.author.fullName}}</span>
+          </div>
+        </ng-template>
       </div>
 
       <div id="version-select"
-           *ngIf="isAdmin() || selectedTranslation.authorId == user?.id || selectedTranslationVersion.authorId == user?.id"
+           *ngIf="versionsSelectIsVisible"
            fxLayout.gt-xs="row"
            fxLayout="column"
            fxLayoutGap="8px"
@@ -209,7 +216,6 @@
       >
         <div>Selected version:</div>
         <mat-select
-          #versionsSelect
           [(value)]="selectedTranslationVersion"
           (selectionChange)="onSelectedVersionChanged($event.value)"
         >

@@ -487,17 +487,15 @@ export class ArticleComponent implements OnInit {
         value => {
           this.article
             .translations[this.getSelectedTranslationIndexInArticle()]
-            .versions[this.getSelectedVersionIndexInSelectedTranslation()] = value.updatedVersion;
+            .versions[this.getSelectedVersionIndexInSelectedTranslation()].published = value.updatedVersion.published;
           if (value.unpublishedVersion != null) {
             this.notificationService.showMessage(`Version published. Version with ID ${value.unpublishedVersion.id} is unpublished!`);
-            const unpublishedVersion = this.article
+            this.article
               .translations[this.getSelectedTranslationIndexInArticle()]
               .versions
-              .find(value1 => value1.id === value.unpublishedVersion.id);
-            unpublishedVersion.published = false;
+              .find(value1 => value1.id === value.unpublishedVersion.id)
+              .published = false;
           }
-
-          console.log('selectedTranslationVersion: %s', this.selectedTranslationVersion.id);
         },
         error => {
           this.selectedTranslationVersion.published = !publish;

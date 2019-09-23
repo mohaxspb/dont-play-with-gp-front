@@ -230,15 +230,23 @@ export class ArticleCreateComponent implements OnInit {
         // todo
         break;
       case ActionType.EDIT_TRANSLATION:
-        console.log('EDIT_TRANSLATION: %s/%s/%s/%s/%s',
+        console.log('EDIT_TRANSLATION: %s/%s/%s/%s/%s/%s',
           this.translationId,
+          this.translationLanguage.id,
           this.imageFile,
           this.imageFileName,
           this.title,
           this.shortDescription,
         );
         this.articleService
-          .editTranslation(this.translationId, this.imageFile, this.imageFileName, this.title, this.shortDescription)
+          .editTranslation(
+            this.translationId,
+            this.translationLanguage.id,
+            this.imageFile,
+            this.imageFileName,
+            this.title,
+            this.shortDescription
+          )
           .pipe(
             finalize(() => this.progressInAction.next(false))
           )

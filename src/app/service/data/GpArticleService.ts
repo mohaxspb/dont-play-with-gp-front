@@ -107,11 +107,12 @@ export class GpArticleService {
 
   editTranslation(
     translationId: number,
+    langId: number,
     imageFile: File | null,
     imageFileName: string | null,
     title: string,
     shortDescription: string | null
   ): Observable<ArticleTranslation> {
-    return this.apiService.editTranslation(translationId, imageFile, imageFileName, title, shortDescription);
+    return this.apiService.editTranslation(translationId, langId, imageFile, imageFileName, title, shortDescription);
   }
 }

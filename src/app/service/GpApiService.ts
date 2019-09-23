@@ -290,6 +290,7 @@ export class GpApiService {
 
   editTranslation(
     translationId: number,
+    langId: number,
     imageFile: File | null,
     imageFileName: string | null,
     title: string,
@@ -297,6 +298,7 @@ export class GpApiService {
   ): Observable<ArticleTranslation> {
     const formData = new FormData();
     formData.append('translationId', translationId.toString());
+    formData.append('langId', langId.toString());
     if (imageFile != null) {
       formData.append('imageFile', imageFile);
     }

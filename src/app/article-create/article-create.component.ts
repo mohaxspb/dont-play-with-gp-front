@@ -558,13 +558,22 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   getTranslationLanguages(): Language[] {
-    let languages: Language[] = this.article.translations.map(translation => {
-      return this.languagesListFromApi.find(language => language.id === translation.langId);
-    });
+    const articleTranslationsLanguages = this.article.translations.map(translation => this.languagesListFromApi
+      .find(language => language.id === translation.langId)
+    );
+    const allExceptOfAlreadyUsedInArticle = this.languagesListFromApi
+      .filter(language => !articleTranslationsLanguages.find(value => value.id === language.id));
+
     if (this.isAddTranslationMode) {
-      languages = this.languagesListFromApi.filter(language => !languages.find(value => value.id === language.id));
+      // all except of already used in article
+      return allExceptOfAlreadyUsedInArticle;
+    } else if (this.isEditTranslationMode) {
+      // all of already used in article and current one
+      allExceptOfAlreadyUsedInArticle.push(GpLanguageService.getLanguageById(this.languagesListFromApi, this.translation.langId));
+      return allExceptOfAlreadyUsedInArticle;
+    } else {
+      return this.languagesListFromApi;
     }
-    return languages;
   }
 
   private updateSourceDataControls() {

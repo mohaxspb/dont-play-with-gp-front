@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {BehaviorSubject, Observable, zip} from 'rxjs';
+import {BehaviorSubject, zip} from 'rxjs';
 import {NotificationService} from '../service/ui/NotificationService';
 import {finalize} from 'rxjs/operators';
 import {Article} from '../model/data/Article';
@@ -63,7 +63,7 @@ export class ArticleComponent implements OnInit {
     this.userProvider
       .getUser()
       .subscribe(value => {
-        console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
+        // console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
         if ((this.user === null && value !== null) || (this.user !== null && value === null)) {
           this.user = value;
           // update article if user changed (i.e. login with admin authority)
@@ -145,17 +145,17 @@ export class ArticleComponent implements OnInit {
   }
 
   onPublishArticleChanged(checked: boolean) {
-    console.log('onPublishArticleChanged: %s', checked);
+    // console.log('onPublishArticleChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.ARTICLE, this.article.id, checked);
   }
 
   onPublishTranslationChanged(checked: boolean) {
-    console.log('onPublishTranslationChanged: %s', checked);
+    // console.log('onPublishTranslationChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.TRANSLATION, this.selectedTranslation.id, checked);
   }
 
   onPublishVersionChanged(checked: boolean) {
-    console.log('onPublishVersionChanged: %s', checked);
+    // console.log('onPublishVersionChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.VERSION, this.selectedTranslationVersion.id, checked);
   }
 
@@ -316,8 +316,8 @@ export class ArticleComponent implements OnInit {
           const pathParams = paramsAndLanguages[0];
           const queryParams = paramsAndLanguages[1];
 
-          console.log('pathParams', pathParams);
-          console.log('queryParams', queryParams);
+          // console.log('pathParams', pathParams);
+          // console.log('queryParams', queryParams);
 
           this.articleId = parseInt(pathParams.get('articleId'), 0);
 
@@ -353,12 +353,12 @@ export class ArticleComponent implements OnInit {
 
           // selected lang calculation
           // this can be passed from outside (click on concrete translation). If not - calculate it
-          console.log('this.selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
+          // console.log('this.selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
           if (this.selectedLanguage == null) {
             this.selectedLanguage = GpArticleService.getCorrectLanguageForArticle(this.article, this.preferredLanguage, this.languages);
           }
-          console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
-          console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
+          // console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
+          // console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
 
           this.availableArticleLanguages = GpArticleService.getLanguagesFromArticle(this.article, this.languages);
           console.log(this.availableArticleLanguages);

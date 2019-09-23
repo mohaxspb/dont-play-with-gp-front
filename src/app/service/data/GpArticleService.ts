@@ -115,4 +115,24 @@ export class GpArticleService {
   ): Observable<ArticleTranslation> {
     return this.apiService.editTranslation(translationId, langId, imageFile, imageFileName, title, shortDescription);
   }
+
+  addTranslation(
+    articleId: number,
+    languageId: number,
+    imageFile: File | null,
+    imageFileName: string | null,
+    title: string,
+    shortDescription: string | null,
+    text: string
+  ): Observable<ArticleTranslation> {
+    return this.apiService.addTranslation(
+      articleId,
+      languageId,
+      imageFile,
+      imageFileName,
+      title,
+      shortDescription,
+      text
+    );
+  }
 }

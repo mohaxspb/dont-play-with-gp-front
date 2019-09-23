@@ -288,6 +288,7 @@ export class GpApiService {
     );
   }
 
+  // noinspection DuplicatedCode
   editTranslation(
     translationId: number,
     langId: number,
@@ -311,6 +312,37 @@ export class GpApiService {
     }
     return this.http.post<ArticleTranslation>(
       Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.EDIT,
+      formData,
+      {withCredentials: true}
+    );
+  }
+
+  // noinspection DuplicatedCode
+  addTranslation(
+    articleId: number,
+    languageId: number,
+    imageFile: File,
+    imageFileName: string,
+    title: string,
+    shortDescription: string,
+    text: string
+  ): Observable<ArticleTranslation> {
+    const formData = new FormData();
+    formData.append('articleId', articleId.toString());
+    formData.append('langId', languageId.toString());
+    if (imageFile != null) {
+      formData.append('imageFile', imageFile);
+    }
+    if (imageFileName != null) {
+      formData.append('imageFileName', imageFileName);
+    }
+    formData.append('title', title);
+    if (shortDescription != null) {
+      formData.append('shortDescription', shortDescription);
+    }
+    formData.append('text', text);
+    return this.http.post<ArticleTranslation>(
+      Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.CREATE,
       formData,
       {withCredentials: true}
     );

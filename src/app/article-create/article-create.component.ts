@@ -220,14 +220,35 @@ export class ArticleCreateComponent implements OnInit {
       case ActionType.ADD_TRANSLATION:
         console.log('ADD_TRANSLATION: %s/%s/%s/%s/%s/%s/%s',
           this.articleId,
-          this.translationLanguage,
+          this.translationLanguage.id,
           this.imageFile,
           this.imageFileName,
           this.title,
           this.shortDescription,
           this.text
         );
-        // todo
+        this.articleService
+          .addTranslation(
+            this.articleId,
+            this.translationLanguage.id,
+            this.imageFile,
+            this.imageFileName,
+            this.title,
+            this.shortDescription,
+            this.text
+          )
+          .pipe(
+            finalize(() => this.progressInAction.next(false))
+          )
+          .subscribe(
+            () => this.router
+              .navigate(
+                ['article/' + this.articleId],
+                {queryParams: {langId: this.translationLanguage.id}}
+              )
+              .then(() => NavigationUtils.scrollToTop()),
+            error => this.notificationService.showError(error)
+          );
         break;
       case ActionType.EDIT_TRANSLATION:
         console.log('EDIT_TRANSLATION: %s/%s/%s/%s/%s/%s',

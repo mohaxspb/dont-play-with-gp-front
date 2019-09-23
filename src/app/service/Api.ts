@@ -31,6 +31,7 @@ export class Api {
   static SocialAuthEndpoint = class {
     static URL = 'oauth2/authorize/';
 
+    // noinspection JSUnusedGlobalSymbols
     /**
      * use [SocialProvider] values in lower case
      */
@@ -62,6 +63,7 @@ export class Api {
       static ALL_BY_AUTHOR_ID = 'allByAuthorId';
       static ALL = 'all';
       static CREATE = 'create';
+      static EDIT = 'edit';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
       static DELETE = 'delete';
@@ -72,8 +74,8 @@ export class Api {
     static URL = 'article/translation/';
 
     static Method = class {
-      static FULL = 'full/';
       static CREATE = 'create';
+      static EDIT = 'edit';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
     };
@@ -83,8 +85,8 @@ export class Api {
     static URL = 'article/translation/version/';
 
     static Method = class {
-      static FULL = 'full/';
       static CREATE = 'create';
+      static EDIT = 'edit';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
     };

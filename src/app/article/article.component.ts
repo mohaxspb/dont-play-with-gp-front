@@ -63,7 +63,7 @@ export class ArticleComponent implements OnInit {
     this.userProvider
       .getUser()
       .subscribe(value => {
-        console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
+        // console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
         if ((this.user === null && value !== null) || (this.user !== null && value === null)) {
           this.user = value;
           // update article if user changed (i.e. login with admin authority)
@@ -145,17 +145,17 @@ export class ArticleComponent implements OnInit {
   }
 
   onPublishArticleChanged(checked: boolean) {
-    console.log('onPublishArticleChanged: %s', checked);
+    // console.log('onPublishArticleChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.ARTICLE, this.article.id, checked);
   }
 
   onPublishTranslationChanged(checked: boolean) {
-    console.log('onPublishTranslationChanged: %s', checked);
+    // console.log('onPublishTranslationChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.TRANSLATION, this.selectedTranslation.id, checked);
   }
 
   onPublishVersionChanged(checked: boolean) {
-    console.log('onPublishVersionChanged: %s', checked);
+    // console.log('onPublishVersionChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.VERSION, this.selectedTranslationVersion.id, checked);
   }
 
@@ -178,7 +178,8 @@ export class ArticleComponent implements OnInit {
         queryParams: {
           articleId: this.article.id,
           actionType: ActionType.EDIT_ARTICLE,
-          entityId: this.article.id
+          translationId: this.selectedTranslation.id,
+          versionId: this.selectedTranslationVersion.id
         }
       }
     );
@@ -203,7 +204,8 @@ export class ArticleComponent implements OnInit {
           queryParams: {
             articleId: this.article.id,
             actionType: ActionType.ADD_TRANSLATION,
-            entityId: this.article.id
+            translationId: null,
+            versionId: null
           }
         }
       );
@@ -222,7 +224,8 @@ export class ArticleComponent implements OnInit {
           queryParams: {
             articleId: this.article.id,
             actionType: ActionType.ADD_VERSION,
-            entityId: this.selectedTranslationVersion.id
+            translationId: this.selectedTranslation.id,
+            versionId: null
           }
         }
       );
@@ -240,7 +243,8 @@ export class ArticleComponent implements OnInit {
         queryParams: {
           articleId: this.article.id,
           actionType: ActionType.EDIT_VERSION,
-          entityId: this.selectedTranslationVersion.id
+          translationId: this.selectedTranslation.id,
+          versionId: this.selectedTranslationVersion.id
         }
       }
     );
@@ -257,9 +261,23 @@ export class ArticleComponent implements OnInit {
         queryParams: {
           articleId: this.article.id,
           actionType: ActionType.EDIT_TRANSLATION,
-          entityId: this.selectedTranslation.id
+          translationId: this.selectedTranslation.id,
+          versionId: this.selectedTranslationVersion.id
         }
       }
+    );
+  }
+
+  onSelectedVersionChanged(version: ArticleTranslationVersion) {
+    console.log('onSelectedVersionChanged: %s', version.id);
+    this.selectedTranslationVersion = version;
+  }
+
+  get versionsSelectIsVisible() {
+    return this.user !== null && (
+      this.isAdmin()
+      || this.selectedTranslation.authorId === this.user.id
+      || this.selectedTranslation.versions.find(value => value.authorId === this.user.id)
     );
   }
 
@@ -306,8 +324,8 @@ export class ArticleComponent implements OnInit {
           const pathParams = paramsAndLanguages[0];
           const queryParams = paramsAndLanguages[1];
 
-          console.log('pathParams', pathParams);
-          console.log('queryParams', queryParams);
+          // console.log('pathParams', pathParams);
+          // console.log('queryParams', queryParams);
 
           this.articleId = parseInt(pathParams.get('articleId'), 0);
 
@@ -343,15 +361,15 @@ export class ArticleComponent implements OnInit {
 
           // selected lang calculation
           // this can be passed from outside (click on concrete translation). If not - calculate it
-          console.log('this.selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
+          // console.log('this.selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
           if (this.selectedLanguage == null) {
             this.selectedLanguage = GpArticleService.getCorrectLanguageForArticle(this.article, this.preferredLanguage, this.languages);
           }
-          console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
-          console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
+          // console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
+          // console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
 
           this.availableArticleLanguages = GpArticleService.getLanguagesFromArticle(this.article, this.languages);
-          console.log(this.availableArticleLanguages);
+          // console.log(this.availableArticleLanguages);
 
           this.selectedTranslation = this.calculateSelectedTranslation();
           this.selectedTranslationVersion = this.calculateVersion();
@@ -426,7 +444,6 @@ export class ArticleComponent implements OnInit {
             case DataType.VERSION:
               this.selectedTranslationVersion.published = !this.selectedTranslationVersion.published;
               break;
-
           }
         }
       });
@@ -475,9 +492,19 @@ export class ArticleComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        value => this.article
-          .translations[this.getSelectedTranslationIndexInArticle()]
-          .versions[this.getSelectedVersionIndexInSelectedTranslation()] = value,
+        value => {
+          this.article
+            .translations[this.getSelectedTranslationIndexInArticle()]
+            .versions[this.getSelectedVersionIndexInSelectedTranslation()].published = value.updatedVersion.published;
+          if (value.unpublishedVersion != null) {
+            this.notificationService.showMessage(`Version published. Version with ID ${value.unpublishedVersion.id} is unpublished!`);
+            this.article
+              .translations[this.getSelectedTranslationIndexInArticle()]
+              .versions
+              .find(value1 => value1.id === value.unpublishedVersion.id)
+              .published = false;
+          }
+        },
         error => {
           this.selectedTranslationVersion.published = !publish;
           this.notificationService.showError(error);

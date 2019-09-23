@@ -16,12 +16,14 @@ export class GpLanguageService {
   ) {
   }
 
-  static getLanguageById(languages: Language[], id: number): Language {
-    return languages.find(value => value.id === id);
+  static getLanguageById(languages: Language[], id: number): Language | null {
+    const language = languages.find(value => value.id === id);
+    return language ? language : null;
   }
 
   static getLanguageByLangCode(languages: Language[], langCode: string): Language | null {
-    return languages.find(value => value.langCode === langCode);
+    const language = languages.find(value => value.langCode === langCode);
+    return language ? language : null;
   }
 
   static getEnglish(languages: Language[]): Language {

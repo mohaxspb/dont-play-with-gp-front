@@ -6,6 +6,7 @@ import {ArticleTranslation} from '../../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../../model/data/ArticleTranslationVersion';
 import {Language} from '../../model/data/Language';
 import {GpLanguageService} from './GpLanguageService';
+import {PublishVersionResult} from '../../model/data/PublishVersionResult';
 
 @Injectable()
 export class GpArticleService {
@@ -29,10 +30,6 @@ export class GpArticleService {
 
   static getLanguagesFromArticle(article: Article, languages: Language[]): Language[] {
     return article.translations.map(translation => languages.find(lang => translation.langId === lang.id));
-  }
-
-  getArticleById(id: number): Observable<Article> {
-    return this.apiService.getArticleById(id);
   }
 
   getFullArticleById(id: number): Observable<Article> {
@@ -84,7 +81,7 @@ export class GpArticleService {
     return this.apiService.approveArticleTranslationVersion(id, approve);
   }
 
-  publishArticleTranslationVersion(id: number, publish: boolean): Observable<ArticleTranslationVersion> {
+  publishArticleTranslationVersion(id: number, publish: boolean): Observable<PublishVersionResult> {
     return this.apiService.publishArticleTranslationVersion(id, publish);
   }
 
@@ -98,5 +95,60 @@ export class GpArticleService {
 
   deleteArticle(id: number): Observable<boolean> {
     return this.apiService.deleteArticle(id);
+  }
+
+  createVersion(translationId: number, text: string): Observable<ArticleTranslationVersion> {
+    return this.apiService.createVersion(translationId, text);
+  }
+
+  editVersion(versionId: number, text: string): Observable<ArticleTranslationVersion> {
+    return this.apiService.editVersion(versionId, text);
+  }
+
+  editTranslation(
+    translationId: number,
+    langId: number,
+    imageFile: File | null,
+    imageFileName: string | null,
+    title: string,
+    shortDescription: string | null
+  ): Observable<ArticleTranslation> {
+    return this.apiService.editTranslation(translationId, langId, imageFile, imageFileName, title, shortDescription);
+  }
+
+  addTranslation(
+    articleId: number,
+    languageId: number,
+    imageFile: File | null,
+    imageFileName: string | null,
+    title: string,
+    shortDescription: string | null,
+    text: string
+  ): Observable<ArticleTranslation> {
+    return this.apiService.addTranslation(
+      articleId,
+      languageId,
+      imageFile,
+      imageFileName,
+      title,
+      shortDescription,
+      text
+    );
+  }
+
+  editArticle(
+    articleId: number,
+    langId: number,
+    sourceUrl: string | null,
+    sourceAuthorName: string | null,
+    sourceTitle: string | null
+  ): Observable<Article> {
+    return this.apiService.editArticle(
+      articleId,
+      langId,
+      sourceUrl,
+      sourceAuthorName,
+      sourceTitle
+    );
   }
 }

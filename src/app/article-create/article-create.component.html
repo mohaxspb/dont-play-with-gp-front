@@ -3,11 +3,12 @@
   <mat-card>
 
     <mat-card-header>
-      <mat-icon mat-card-avatar color="accent">edit</mat-icon>
       <mat-card-title>{{actionTitle}}</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
+
+      <!--      todo add instruction-->
 
       <div id="data-loading-indication">
 
@@ -31,78 +32,30 @@
       <div id="articleFormContainer" *ngIf="user!=null && languagesListFromApi!=null">
 
         <form
+          *ngIf="(dataIsLoading|async) == false"
           [formGroup]="articleCreateFormGroup"
           name="articleCreateForm"
           (ngSubmit)="onArticleCreateClicked()"
         >
 
-          <mat-card class="default-margin-bottom">
-            <mat-card-title>Article image file</mat-card-title>
+          <!--Article section-->
+          <mat-divider inset></mat-divider>
+          <!--          fixme test-->
+          <pre>{{articleCreateFormGroup.value | json}}</pre>
 
-            <div fxLayout fxLayoutAlign="center center" class="default-margin-bottom default-margin-top">
-              <img
-                matCardImage
-                [src]="articleImageUrl"
-                height="48px"
-                width="48px"
-                alt="logo"
-                class="input-image-preview"
-                onerror="if (this.src !== 'assets/baseline-image-24px.svg') this.src = 'assets/baseline-image-24px.svg';">
-
-            </div>
-
-            <mat-card-content>
-              <mat-form-field
-                class="full-width-field">
-                <ngx-mat-file-input
-                  class="full-width-field"
-                  #logoImageFileInput
-                  formControlName="imageFile"
-                  placeholder="Image file"
-                  valuePlaceholder="No file selected"
-                  (change)="logoImageFileChange($event.target.files)"
-                >
-                </ngx-mat-file-input>
-
-                <button
-                  mat-icon-button matSuffix
-                  *ngIf="!logoImageFileInput.empty"
-                  (click)="logoImageFileInput.clear($event);onLogoFileCleared()"
-                >
-                  <mat-icon>clear</mat-icon>
-                </button>
-                <mat-error *ngIf="articleCreateFormGroup.get('imageFile').hasError('maxContentSize')"
-                >The total size must not exceed {{maxSizeText}} ({{actualSizeText}}).</mat-error>
-              </mat-form-field>
-              <div id="input-image-file-name" class="mat-input-element">
-                <mat-form-field class="full-width-field">
-                  <label class="full-width-field">
-                    <input
-                      matInput
-                      [value]="imageFileName"
-                      formControlName="imageFileName"
-                      placeholder="Image file name"
-                      name="imageFileName"
-                      (change)="onImageFileNameChanged($event.target.value)"
-                    >
-                  </label>
-                </mat-form-field>
-              </div>
-            </mat-card-content>
-
-          </mat-card>
+          <pre>{{articleCreateFormGroup.valid}}</pre>
+          <!--          fixme test-->
+          <h3 (click)="findInvalidControls()">Article data</h3>
 
           <mat-card id="input-sourceData">
-            <mat-card-header>
-              <div class="mat-input-element">
-                <mat-checkbox
-                  formControlName="articleIsFromAnotherSite"
-                  name="articleIsFromAnotherSite"
-                  color="primary"
-                  (change)="onArticleIsFromAnotherSiteClicked($event.checked)"
-                >Article is from another site</mat-checkbox>
-              </div>
-            </mat-card-header>
+            <div class="mat-input-element">
+              <mat-checkbox
+                formControlName="articleIsFromAnotherSite"
+                name="articleIsFromAnotherSite"
+                color="primary"
+                (change)="onArticleIsFromAnotherSiteClicked($event.checked)"
+              >Article is from another site</mat-checkbox>
+            </div>
             <mat-card-content *ngIf="articleIsFromAnotherSite">
 
               <div id="input-source-title" class="mat-input-element">
@@ -155,8 +108,6 @@
             </mat-card-content>
           </mat-card>
 
-          <!--          todo image input, do it as in scp-reader-web-->
-
           <div id="input-primaryLanguage">
             <mat-form-field class="full-width-field default-margin-top">
               <mat-label>Primary language</mat-label>
@@ -168,12 +119,120 @@
                 (selectionChange)="onPrimaryLanguageChanged($event.value)"
               >
                 <mat-option
-                  *ngFor="let language of languagesListFromApi"
+                  *ngFor="let language of getArticleLanguages()"
                   [value]="language">{{language.langCode.toUpperCase()}}
                 </mat-option>
               </mat-select>
 
               <mat-error *ngIf="articleCreateFormGroup.controls.primaryLanguageSelect.errors?.required"
+              >You must make a selection</mat-error>
+
+            </mat-form-field>
+
+          </div>
+
+          <!--Translation section-->
+          <mat-divider inset></mat-divider>
+          <h3>Translation data</h3>
+
+          <mat-card id="input-articleImage" class="default-margin-bottom">
+            <mat-card-title>Article image file</mat-card-title>
+
+            <div id="articleImageContainer"
+                 fxLayout
+                 fxLayoutAlign="center center"
+                 class="default-margin-bottom default-margin-top">
+              <img
+                *ngIf="articleImageUrl!=null"
+                [src]="getImagePath(articleImageUrl)"
+                matCardImage
+                height="48px"
+                width="48px"
+                alt="Article image"
+                class="input-image-preview"
+                (error)="onImageLoadError($event)"
+              >
+
+              <img
+                *ngIf="articleImageUrl==null"
+                height="48px"
+                width="48px"
+                alt="No image in article"
+                src="./assets/baseline-image-24px.svg"
+              >
+
+            </div>
+
+            <mat-card-content>
+              <div
+                *ngIf="isAddTranslationMode"
+                class="mat-input-element"
+              >
+                <mat-checkbox
+                  formControlName="useExistingImage"
+                  name="useExistingImage"
+                  color="primary"
+                  (change)="onUseExistingImageClicked($event.checked)"
+                >Use existing image</mat-checkbox>
+              </div>
+
+              <mat-form-field
+                class="full-width-field">
+                <ngx-mat-file-input
+                  class="full-width-field"
+                  #articleImageFileInput
+                  formControlName="imageFile"
+                  placeholder="Image file"
+                  valuePlaceholder="No file selected"
+                  (change)="articleImageFileChange($event.target.files)"
+                >
+                </ngx-mat-file-input>
+
+                <button
+                  mat-icon-button matSuffix
+                  *ngIf="!articleImageFileInput.empty"
+                  (click)="articleImageFileInput.clear($event);onLogoFileCleared()"
+                >
+                  <mat-icon>clear</mat-icon>
+                </button>
+                <mat-error *ngIf="articleCreateFormGroup.get('imageFile').hasError('maxContentSize')"
+                >The total size must not exceed {{maxSizeText}} ({{actualSizeText}}).</mat-error>
+              </mat-form-field>
+              <div id="input-image-file-name" class="mat-input-element">
+                <mat-form-field class="full-width-field">
+                  <label class="full-width-field">
+                    <input
+                      matInput
+                      [value]="imageFileName"
+                      formControlName="imageFileName"
+                      placeholder="Image file name"
+                      name="imageFileName"
+                      (change)="onImageFileNameChanged($event.target.value)"
+                    >
+                  </label>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+
+          </mat-card>
+
+          <div id="input-translationLanguage" *ngIf="!isCreateArticleMode">
+            <mat-form-field class="full-width-field default-margin-top">
+              <mat-label>Translation language</mat-label>
+
+              <mat-select
+                formControlName="translationLanguageSelect"
+                [errorStateMatcher]="matcher"
+                required
+                (selectionChange)="onTranslationLanguageChanged($event.value)"
+              >
+                <mat-option
+                  *ngFor="let language of getTranslationLanguages()"
+                  [value]="language">{{language.langCode.toUpperCase()}}
+                </mat-option>
+              </mat-select>
+
+              <mat-error *ngIf="articleCreateFormGroup.controls.translationLanguageSelect.errors?.required"
               >You must make a selection</mat-error>
 
             </mat-form-field>
@@ -214,18 +273,29 @@
             </mat-form-field>
           </div>
 
+          <!--Version section-->
+          <mat-divider inset></mat-divider>
+          <h3>Text version data</h3>
+
           <div id="article-text">
-            <div class="full-width-field default-margin-bottom">
-              <label>Article text</label>
-              <!--suppress AngularUndefinedBinding -->
-              <angular-markdown-editor
-                textareaId="editor1"
-                rows="12"
-                formControlName="markdownText"
-                (onChange)="onTextChanged($event.target.value)"
-              >
-              </angular-markdown-editor>
-              <!--              todo place not clickable div-->
+            <div class="position-relative">
+              <div class="full-width-field default-margin-bottom">
+                <label>Article text</label>
+                <!--suppress AngularUndefinedBinding -->
+                <angular-markdown-editor
+                  textareaId="editor1"
+                  rows="12"
+                  formControlName="markdownText"
+                  (onChange)="onTextChanged($event.target.value)"
+                >
+                </angular-markdown-editor>
+              </div>
+
+              <div
+                *ngIf="isEditArticleMode || isEditTranslationMode"
+                class="background-half-transparent-white cover"
+              ></div>
+
             </div>
 
             <div id="textPreview" class="default-margin-bottom">
@@ -244,7 +314,7 @@
               color="accent"
               type="submit"
               [disabled]="!articleCreateFormGroup.valid"
-            >Save</button>
+            >{{submitTitle}}</button>
           </p>
 
         </form>

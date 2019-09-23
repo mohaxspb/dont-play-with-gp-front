@@ -8,6 +8,7 @@ import {Language} from '../model/data/Language';
 import {Article} from '../model/data/Article';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
+import {PublishVersionResult} from '../model/data/PublishVersionResult';
 
 
 @Injectable()
@@ -34,9 +35,7 @@ export class GpApiService {
       .post<GpUser>(
         Api.URL + Api.Method.LOGIN,
         formData,
-        {
-          withCredentials: true
-        }
+        {withCredentials: true}
       );
   }
 
@@ -65,9 +64,7 @@ export class GpApiService {
       .post<GpUser>(
         Api.URL + Api.EmailAuthEndpoint.URL + Api.EmailAuthEndpoint.Method.REGISTER,
         formData,
-        {
-          withCredentials: true
-        }
+        {withCredentials: true}
       );
   }
 
@@ -88,21 +85,10 @@ export class GpApiService {
       );
   }
 
-  getArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(
-      Api.URL + Api.ArticleEndpoint.URL + id,
-      {
-        withCredentials: true
-      }
-    );
-  }
-
   getFullArticleById(id: number): Observable<Article> {
     return this.http.get<Article>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.FULL + id,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -143,9 +129,7 @@ export class GpApiService {
       .post<Article>(
         Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.CREATE,
         formData,
-        {
-          withCredentials: true
-        }
+        {withCredentials: true}
       );
   }
 
@@ -156,9 +140,7 @@ export class GpApiService {
     return this.http.post<Article>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.APPROVE,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -169,9 +151,7 @@ export class GpApiService {
     return this.http.post<Article>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.PUBLISH,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -182,9 +162,7 @@ export class GpApiService {
     return this.http.post<ArticleTranslation>(
       Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.APPROVE,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -195,9 +173,7 @@ export class GpApiService {
     return this.http.post<ArticleTranslation>(
       Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.PUBLISH,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -208,22 +184,18 @@ export class GpApiService {
     return this.http.post<ArticleTranslationVersion>(
       Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.APPROVE,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
-  publishArticleTranslationVersion(id: number, publish: boolean): Observable<ArticleTranslationVersion> {
+  publishArticleTranslationVersion(id: number, publish: boolean): Observable<PublishVersionResult> {
     const formData = new FormData();
     formData.append('id', id.toString());
     formData.append('publish', String(publish));
-    return this.http.post<ArticleTranslationVersion>(
+    return this.http.post<PublishVersionResult>(
       Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.PUBLISH,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -235,9 +207,7 @@ export class GpApiService {
     return this.http.post<GpUser>(
       Api.URL + Api.UsersEndpoint.URL + Api.UsersEndpoint.Method.UPDATE,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
     );
   }
 
@@ -292,9 +262,115 @@ export class GpApiService {
     return this.http.post<string>(
       Api.URL + Api.ImageEndpoint.URL + Api.ImageEndpoint.Method.ADD,
       formData,
-      {
-        withCredentials: true
-      }
+      {withCredentials: true}
+    );
+  }
+
+  createVersion(translationId: number, text: string): Observable<ArticleTranslationVersion> {
+    const formData = new FormData();
+    formData.append('articleTranslationId', translationId.toString());
+    formData.append('text', text);
+    return this.http.post<ArticleTranslationVersion>(
+      Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.CREATE,
+      formData,
+      {withCredentials: true}
+    );
+  }
+
+  editVersion(versionId: number, text: string): Observable<ArticleTranslationVersion> {
+    const formData = new FormData();
+    formData.append('versionId', versionId.toString());
+    formData.append('text', text);
+    return this.http.post<ArticleTranslationVersion>(
+      Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.EDIT,
+      formData,
+      {withCredentials: true}
+    );
+  }
+
+  // noinspection DuplicatedCode
+  editTranslation(
+    translationId: number,
+    langId: number,
+    imageFile: File | null,
+    imageFileName: string | null,
+    title: string,
+    shortDescription: string | null
+  ): Observable<ArticleTranslation> {
+    const formData = new FormData();
+    formData.append('translationId', translationId.toString());
+    formData.append('langId', langId.toString());
+    if (imageFile != null) {
+      formData.append('imageFile', imageFile);
+    }
+    if (imageFileName != null) {
+      formData.append('imageFileName', imageFileName);
+    }
+    formData.append('title', title);
+    if (shortDescription != null) {
+      formData.append('shortDescription', shortDescription);
+    }
+    return this.http.post<ArticleTranslation>(
+      Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.EDIT,
+      formData,
+      {withCredentials: true}
+    );
+  }
+
+  // noinspection DuplicatedCode
+  addTranslation(
+    articleId: number,
+    languageId: number,
+    imageFile: File,
+    imageFileName: string,
+    title: string,
+    shortDescription: string,
+    text: string
+  ): Observable<ArticleTranslation> {
+    const formData = new FormData();
+    formData.append('articleId', articleId.toString());
+    formData.append('langId', languageId.toString());
+    if (imageFile != null) {
+      formData.append('imageFile', imageFile);
+    }
+    if (imageFileName != null) {
+      formData.append('imageFileName', imageFileName);
+    }
+    formData.append('title', title);
+    if (shortDescription != null) {
+      formData.append('shortDescription', shortDescription);
+    }
+    formData.append('text', text);
+    return this.http.post<ArticleTranslation>(
+      Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.CREATE,
+      formData,
+      {withCredentials: true}
+    );
+  }
+
+  editArticle(
+    articleId: number,
+    langId: number,
+    sourceUrl: string | null,
+    sourceAuthorName: string | null,
+    sourceTitle: string | null
+  ): Observable<Article> {
+    const formData = new FormData();
+    formData.append('articleId', articleId.toString());
+    formData.append('langId', langId.toString());
+    if (sourceUrl != null) {
+      formData.append('sourceUrl', sourceUrl);
+    }
+    if (sourceAuthorName != null) {
+      formData.append('sourceAuthorName', sourceAuthorName);
+    }
+    if (sourceTitle != null) {
+      formData.append('sourceTitle', sourceTitle);
+    }
+    return this.http.post<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.EDIT,
+      formData,
+      {withCredentials: true}
     );
   }
 }

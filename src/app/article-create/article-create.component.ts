@@ -210,7 +210,7 @@ export class ArticleCreateComponent implements OnInit {
       case ActionType.EDIT_ARTICLE:
         console.log('EDIT_ARTICLE: %s/%s/%s/%s/%s',
           this.articleId,
-          this.articleLanguage,
+          this.articleLanguage.id,
           this.sourceUrl,
           this.sourceAuthorName,
           this.sourceTitle
@@ -230,15 +230,27 @@ export class ArticleCreateComponent implements OnInit {
         // todo
         break;
       case ActionType.EDIT_TRANSLATION:
-        console.log('EDIT_TRANSLATION: %s/%s/%s/%s/%s/%s',
-          this.articleId,
+        console.log('EDIT_TRANSLATION: %s/%s/%s/%s/%s',
           this.translationId,
           this.imageFile,
           this.imageFileName,
           this.title,
           this.shortDescription,
         );
-        // todo
+        this.articleService
+          .editTranslation(this.translationId, this.imageFile, this.imageFileName, this.title, this.shortDescription)
+          .pipe(
+            finalize(() => this.progressInAction.next(false))
+          )
+          .subscribe(
+            () => this.router
+              .navigate(
+                ['article/' + this.articleId],
+                {queryParams: {langId: this.translationLanguage.id}}
+              )
+              .then(() => NavigationUtils.scrollToTop()),
+            error => this.notificationService.showError(error)
+          );
         break;
       case ActionType.ADD_VERSION:
         console.log('ADD_VERSION: %s/%s',

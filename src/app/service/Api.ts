@@ -74,6 +74,7 @@ export class Api {
 
     static Method = class {
       static CREATE = 'create';
+      static EDIT = 'edit';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
     };

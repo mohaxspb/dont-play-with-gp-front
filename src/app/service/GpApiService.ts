@@ -287,4 +287,30 @@ export class GpApiService {
       {withCredentials: true}
     );
   }
+
+  editTranslation(
+    translationId: number,
+    imageFile: File | null,
+    imageFileName: string | null,
+    title: string,
+    shortDescription: string | null
+  ): Observable<ArticleTranslation> {
+    const formData = new FormData();
+    formData.append('translationId', translationId.toString());
+    if (imageFile != null) {
+      formData.append('imageFile', imageFile);
+    }
+    if (imageFileName != null) {
+      formData.append('imageFileName', imageFileName);
+    }
+    formData.append('title', title);
+    if (shortDescription != null) {
+      formData.append('shortDescription', shortDescription);
+    }
+    return this.http.post<ArticleTranslation>(
+      Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.EDIT,
+      formData,
+      {withCredentials: true}
+    );
+  }
 }

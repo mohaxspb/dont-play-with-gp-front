@@ -104,4 +104,14 @@ export class GpArticleService {
   editVersion(versionId: number, text: string): Observable<ArticleTranslationVersion> {
     return this.apiService.editVersion(versionId, text);
   }
+
+  editTranslation(
+    translationId: number,
+    imageFile: File | null,
+    imageFileName: string | null,
+    title: string,
+    shortDescription: string | null
+  ): Observable<ArticleTranslation> {
+    return this.apiService.editTranslation(translationId, imageFile, imageFileName, title, shortDescription);
+  }
 }

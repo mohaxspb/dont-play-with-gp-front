@@ -97,6 +97,14 @@ export class GpArticleService {
     return this.apiService.deleteArticle(id);
   }
 
+  deleteTranslation(id: number): Observable<boolean> {
+    return this.apiService.deleteTranslation(id);
+  }
+
+  deleteVersion(id: number): Observable<boolean> {
+    return this.apiService.deleteVersion(id);
+  }
+
   createVersion(translationId: number, text: string): Observable<ArticleTranslationVersion> {
     return this.apiService.createVersion(translationId, text);
   }

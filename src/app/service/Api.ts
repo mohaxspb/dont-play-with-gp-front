@@ -78,6 +78,7 @@ export class Api {
       static EDIT = 'edit';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
+      static DELETE = 'delete';
     };
   };
 
@@ -89,6 +90,7 @@ export class Api {
       static EDIT = 'edit';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
+      static DELETE = 'delete';
     };
   };
 

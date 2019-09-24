@@ -191,6 +191,18 @@ export class ArticleComponent implements OnInit {
     this.showConfirmArticleDeleteDialog(this.article.id);
   }
 
+  onTranslationDeleteClicked() {
+    console.log('onTranslationDeleteClicked');
+    // only author or admin could see it, so no need to login
+    this.showConfirmTranslationDeleteDialog(this.selectedTranslation.id);
+  }
+
+  onVersionDeleteClicked() {
+    console.log('onVersionDeleteClicked');
+    // only author or admin could see it, so no need to login
+    this.showConfirmVersionDeleteDialog(this.selectedTranslationVersion.id);
+  }
+
   onTranslationAddClicked() {
     console.log('onTranslationAddClicked');
     // show login or translation create component
@@ -296,6 +308,32 @@ export class ArticleComponent implements OnInit {
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteArticle(id);
+        } else {
+          console.log('Do not delete!');
+        }
+      });
+  }
+
+  private showConfirmTranslationDeleteDialog(id: number) {
+    this.dialogsService
+    // todo translation
+      .confirm('Delete translation', 'Are you sure you want to delete translation? This can\'t be undone!', 'Delete translation')
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.deleteTranslation(id);
+        } else {
+          console.log('Do not delete!');
+        }
+      });
+  }
+
+  private showConfirmVersionDeleteDialog(id: number) {
+    this.dialogsService
+    // todo translation
+      .confirm('Delete text version', 'Are you sure you want to delete text version? This can\'t be undone!', 'Delete version')
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.deleteVersion(id);
         } else {
           console.log('Do not delete!');
         }
@@ -525,6 +563,34 @@ export class ArticleComponent implements OnInit {
           // noinspection JSIgnoredPromiseFromCall
           this.router.navigateByUrl('feed');
         },
+        error => this.notificationService.showError(error)
+      );
+  }
+
+  private deleteTranslation(id: number) {
+    console.log('deleteTranslation: %d', id);
+
+    this.progressInAction.next(true);
+
+    this.articleService
+      .deleteTranslation(id)
+      .pipe(finalize(() => this.progressInAction.next(false)))
+      .subscribe(
+        () => this.loadArticle(),
+        error => this.notificationService.showError(error)
+      );
+  }
+
+  private deleteVersion(id: number) {
+    console.log('deleteVersion: %d', id);
+
+    this.progressInAction.next(true);
+
+    this.articleService
+      .deleteVersion(id)
+      .pipe(finalize(() => this.progressInAction.next(false)))
+      .subscribe(
+        () => () => this.loadArticle(),
         error => this.notificationService.showError(error)
       );
   }

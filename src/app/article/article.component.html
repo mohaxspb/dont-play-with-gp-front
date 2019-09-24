@@ -43,7 +43,7 @@
             fxFlexOrder="1"
             fxFlexOrder.gt-xs="2"
             [ngClass]="{'article-image':true, 'default-margin-bottom':true, 'article-image-desktop':false}"
-            [ngClass.gt-xs]="{'article-image':false, 'article-image-desktop':true}"
+            [ngClass.gt-xs]="{'article-image':false, 'default-margin-bottom':true, 'article-image-desktop':true}"
             onerror="if (this.src !== './assets/baseline-image-24px.svg') this.src = './assets/baseline-image-24px.svg';"
           >
 
@@ -51,48 +51,38 @@
 
         <mat-card-content>
 
-          <div *ngIf="isAdmin() || article.authorId == user?.id"
+          <div id="admin-action-article"
+               fxLayout="row wrap"
+               fxLayoutAlign="center center"
+               fxLayoutGap="16px grid"
                class="default-margin-bottom"
-               fxLayout
-               fxLayoutAlign="start center"
-               fxLayoutGap="16px"
           >
-            <div id="approve-publish-article" *ngIf="isAdmin()"
-                 fxLayout="column"
-                 fxLayout.gt-xs="row"
-                 fxLayoutAlign="start start"
-                 fxLayoutGap="16px">
-              <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-                <mat-slide-toggle
-                  [disabled]="!article.approved"
-                  [(ngModel)]="article.published"
-                  [labelPosition]="'before'"
-                  (change)="onPublishArticleChanged($event.checked)"
-                >Publish article</mat-slide-toggle>
-                <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
-              </div>
-
-              <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-                <mat-slide-toggle
-                  [(ngModel)]="article.approved"
-                  [labelPosition]="'before'"
-                  (change)="onApproveArticleChanged($event.checked)"
-                >Approve article</mat-slide-toggle>
-              </div>
+            <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+              <mat-slide-toggle
+                [disabled]="!article.approved"
+                [(ngModel)]="article.published"
+                [labelPosition]="'before'"
+                (change)="onPublishArticleChanged($event.checked)"
+              >Publish article</mat-slide-toggle>
+              <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
             </div>
 
-            <div id="edit-delete-article"
-                 fxLayout.gt-xs="row"
-                 fxLayout="column"
-                 fxLayoutAlign="start start"
-                 fxLayoutGap="16px"
-            >
+            <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+              <mat-slide-toggle
+                [(ngModel)]="article.approved"
+                [labelPosition]="'before'"
+                (change)="onApproveArticleChanged($event.checked)"
+              >Approve article</mat-slide-toggle>
+            </div>
+
+            <div>
               <button
                 *ngIf="isAdmin() || article.authorId == user?.id"
                 mat-stroked-button
                 (click)="onArticleEditClicked()"
               >Edit article</button>
-
+            </div>
+            <div>
               <button
                 *ngIf="isAdmin() || article.authorId == user?.id"
                 mat-stroked-button
@@ -100,85 +90,77 @@
                 (click)="onArticleDeleteClicked()"
               >Delete article</button>
             </div>
-
           </div>
 
-          <div id="sourceData" *ngIf="article.sourceTitle!=null">
+          <div id="sourceData" *ngIf="article.sourceTitle!=null" class="default-margin-top">
             <a href="{{article.sourceUrl}}">{{article.sourceTitle}}</a>
             <br/>
             <span *ngIf="article.sourceAuthorName!=null">By {{article.sourceAuthorName}}</span>
           </div>
 
-          <div *ngIf="article.sourceTitle==null">Author: {{article.author?.fullName}}</div>
+          <div *ngIf="article.sourceTitle==null" class="default-margin-top">Author: {{article.author?.fullName}}</div>
 
         </mat-card-content>
       </mat-card>
 
     </header>
 
-    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
+    <div id="translations">
+      <mat-button-toggle-group
+        [value]="selectedLanguage"
+        (change)="onLanguageSelected($event.value)">
+        <mat-button-toggle
+          *ngFor="let lang of availableArticleLanguages"
+          [value]="lang"
+        >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
+      </mat-button-toggle-group>
 
-      <div id="translations" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-        <mat-button-toggle-group
-          [value]="selectedLanguage"
-          (change)="onLanguageSelected($event.value)">
-          <mat-button-toggle
-            *ngFor="let lang of availableArticleLanguages"
-            [value]="lang"
-          >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
-        </mat-button-toggle-group>
+    </div>
 
-      </div>
-
+    <div id="admin-actions-translation" fxLayout class="default-margin-top">
       <div
-        fxLayout
-        fxLayoutAlign="start center"
-        fxLayoutGap="16px"
+        fxLayout="row wrap"
+        fxLayoutAlign="center center"
+        fxLayoutGap="16px grid"
+        class="default-margin-top"
       >
-        <div id="approve-publish-translation"
-             *ngIf="isAdmin()"
-             fxLayout.gt-xs="row"
-             fxLayout="column"
-             fxLayoutAlign="start start"
-             fxLayoutGap="16px"
-        >
-          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-            <mat-slide-toggle
-              [disabled]="!selectedTranslation.approved"
-              [(ngModel)]="selectedTranslation.published"
-              [labelPosition]="'before'"
-              (change)="onPublishTranslationChanged($event.checked)"
-            >Publish translation</mat-slide-toggle>
-            <mat-error *ngIf="!selectedTranslation.approved">Translation is not approved!</mat-error>
-          </div>
-
-          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-            <mat-slide-toggle
-              [(ngModel)]="selectedTranslation.approved"
-              [labelPosition]="'before'"
-              (change)="onApproveTranslationChanged($event.checked)"
-            >Approve translation</mat-slide-toggle>
-          </div>
+        <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-slide-toggle
+            [disabled]="!selectedTranslation.approved"
+            [(ngModel)]="selectedTranslation.published"
+            [labelPosition]="'before'"
+            (change)="onPublishTranslationChanged($event.checked)"
+          >Publish translation</mat-slide-toggle>
+          <mat-error *ngIf="!selectedTranslation.approved">Translation is not approved!</mat-error>
         </div>
 
-        <div id="add-edit-translation"
-             fxLayout.gt-xs="row"
-             fxLayout="column"
-             fxLayoutAlign="start start"
-             fxLayoutGap="16px"
-        >
+        <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-slide-toggle
+            [(ngModel)]="selectedTranslation.approved"
+            [labelPosition]="'before'"
+            (change)="onApproveTranslationChanged($event.checked)"
+          >Approve translation</mat-slide-toggle>
+        </div>
+
+        <div *ngIf="isAdmin() || selectedTranslation.authorId == user?.id">
           <button
-            *ngIf="isAdmin() || selectedTranslation.authorId == user?.id"
             mat-stroked-button
             (click)="onTranslationEditClicked()"
           >Edit translation</button>
-
+        </div>
+        <div>
           <button
             mat-stroked-button
             matTooltip="Add translation"
             (click)="onTranslationAddClicked()"
           >Add translation</button>
-
+        </div>
+        <div *ngIf="isAdmin() || selectedTranslation.authorId == user?.id">
+          <button
+            mat-stroked-button
+            color="warn"
+            (click)="onTranslationDeleteClicked()"
+          >Delete translation</button>
         </div>
       </div>
 
@@ -230,16 +212,13 @@
         </mat-select>
       </div>
 
-      <div id="admin-version" fxLayout fxLayoutAlign="start center" fxLayoutGap="16px">
-
-        <div id="approve-publish-version"
-             *ngIf="isAdmin()"
-             fxLayout.gt-xs="row"
-             fxLayout="column"
-             fxLayoutAlign="start start"
-             fxLayoutGap="16px"
+      <div id="admin-actions-version" fxLayout>
+        <div
+          fxLayout="row wrap"
+          fxLayoutAlign="center center"
+          fxLayoutGap="16px grid"
         >
-          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
             <mat-slide-toggle
               [disabled]="!selectedTranslationVersion.approved"
               [(ngModel)]="selectedTranslationVersion.published"
@@ -249,33 +228,34 @@
             <mat-error *ngIf="!selectedTranslationVersion.approved">Version is not approved!</mat-error>
           </div>
 
-          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
             <mat-slide-toggle
               [(ngModel)]="selectedTranslationVersion.approved"
               [labelPosition]="'before'"
               (change)="onApproveVersionChanged($event.checked)"
             >Approve version</mat-slide-toggle>
           </div>
+
+          <div *ngIf="isAdmin() || selectedTranslation.authorId == user?.id || selectedTranslationVersion.authorId == user?.id">
+            <button
+              mat-stroked-button
+              (click)="onVersionEditClicked()"
+            >Edit text version</button>
+          </div>
+          <div>
+            <button
+              mat-stroked-button
+              (click)="onVersionAddClicked()"
+            >Add text version</button>
+          </div>
+          <div *ngIf="isAdmin() || selectedTranslationVersion.authorId == user?.id">
+            <button
+              mat-stroked-button
+              color="warn"
+              (click)="onVersionDeleteClicked()"
+            >Delete text version</button>
+          </div>
         </div>
-
-        <div id="add-edit-version"
-             fxLayout.gt-xs="row"
-             fxLayout="column"
-             fxLayoutAlign="start start"
-             fxLayoutGap="16px"
-        >
-          <button
-            *ngIf="isAdmin() || selectedTranslation.authorId == user?.id || selectedTranslationVersion.authorId == user?.id"
-            mat-stroked-button
-            (click)="onVersionEditClicked()"
-          >Edit text version</button>
-
-          <button
-            mat-stroked-button
-            (click)="onVersionAddClicked()"
-          >Add text version</button>
-        </div>
-
       </div>
 
     </article>

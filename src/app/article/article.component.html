@@ -51,47 +51,48 @@
 
         <mat-card-content>
 
-          <div id="admin-action-article"
-               fxLayout="row wrap"
-               fxLayoutAlign="center center"
-               fxLayoutGap="16px grid"
-               class="default-margin-bottom"
-          >
-            <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-              <mat-slide-toggle
-                [disabled]="!article.approved"
-                [(ngModel)]="article.published"
-                [labelPosition]="'before'"
-                (change)="onPublishArticleChanged($event.checked)"
-              >Publish article</mat-slide-toggle>
-              <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
-            </div>
+          <div id="admin-action-article" fxLayout>
+            <div
+              fxLayout="row wrap"
+              fxLayoutAlign="center center"
+              fxLayoutGap="16px grid"
+              class="default-margin-bottom"
+            >
+              <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+                <mat-slide-toggle
+                  [disabled]="!article.approved"
+                  [(ngModel)]="article.published"
+                  [labelPosition]="'before'"
+                  (change)="onPublishArticleChanged($event.checked)"
+                >Publish article</mat-slide-toggle>
+                <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
+              </div>
 
-            <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-              <mat-slide-toggle
-                [(ngModel)]="article.approved"
-                [labelPosition]="'before'"
-                (change)="onApproveArticleChanged($event.checked)"
-              >Approve article</mat-slide-toggle>
-            </div>
+              <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+                <mat-slide-toggle
+                  [(ngModel)]="article.approved"
+                  [labelPosition]="'before'"
+                  (change)="onApproveArticleChanged($event.checked)"
+                >Approve article</mat-slide-toggle>
+              </div>
 
-            <div>
-              <button
-                *ngIf="isAdmin() || article.authorId == user?.id"
-                mat-stroked-button
-                (click)="onArticleEditClicked()"
-              >Edit article</button>
-            </div>
-            <div>
-              <button
-                *ngIf="isAdmin() || article.authorId == user?.id"
-                mat-stroked-button
-                color="warn"
-                (click)="onArticleDeleteClicked()"
-              >Delete article</button>
+              <div>
+                <button
+                  *ngIf="isAdmin() || article.authorId == user?.id"
+                  mat-stroked-button
+                  (click)="onArticleEditClicked()"
+                >Edit article</button>
+              </div>
+              <div>
+                <button
+                  *ngIf="isAdmin() || article.authorId == user?.id"
+                  mat-stroked-button
+                  color="warn"
+                  (click)="onArticleDeleteClicked()"
+                >Delete article</button>
+              </div>
             </div>
           </div>
-
           <div id="sourceData" *ngIf="article.sourceTitle!=null" class="default-margin-top">
             <a href="{{article.sourceUrl}}">{{article.sourceTitle}}</a>
             <br/>
@@ -104,6 +105,10 @@
       </mat-card>
 
     </header>
+
+    <div *ngIf="!selectedTranslation.published">
+      <p class="color-primary default-margin-top">Translation is not published! So only author or admin can see it.</p>
+    </div>
 
     <div id="translations">
       <mat-button-toggle-group
@@ -142,7 +147,7 @@
           >Approve translation</mat-slide-toggle>
         </div>
 
-        <div *ngIf="isAdmin() || selectedTranslation.authorId == user?.id">
+        <div *ngIf="isAdmin() || article.authorId == user?.id || selectedTranslation.authorId == user?.id">
           <button
             mat-stroked-button
             (click)="onTranslationEditClicked()"
@@ -155,7 +160,7 @@
             (click)="onTranslationAddClicked()"
           >Add translation</button>
         </div>
-        <div *ngIf="isAdmin() || selectedTranslation.authorId == user?.id">
+        <div *ngIf="isAdmin() || article.authorId == user?.id || selectedTranslation.authorId == user?.id">
           <button
             mat-stroked-button
             color="warn"
@@ -173,7 +178,7 @@
       <mat-divider></mat-divider>
 
       <div *ngIf="!selectedTranslationVersion.published">
-        <div class="color-primary default-margin-top">Version is not published! So only author or admin can see it.</div>
+        <p class="color-primary default-margin-top">Version is not published! So only author or admin can see it.</p>
       </div>
 
       <div id="authors" class="default-margin-bottom default-margin-top">
@@ -236,7 +241,7 @@
             >Approve version</mat-slide-toggle>
           </div>
 
-          <div *ngIf="isAdmin() || selectedTranslation.authorId == user?.id || selectedTranslationVersion.authorId == user?.id">
+          <div *ngIf="isAdmin() || article.authorId == user?.id || selectedTranslation.authorId == user?.id || selectedTranslationVersion.authorId == user?.id">
             <button
               mat-stroked-button
               (click)="onVersionEditClicked()"
@@ -248,7 +253,7 @@
               (click)="onVersionAddClicked()"
             >Add text version</button>
           </div>
-          <div *ngIf="isAdmin() || selectedTranslationVersion.authorId == user?.id">
+          <div *ngIf="isAdmin() || article.authorId == user?.id || selectedTranslation.authorId == user?.id || selectedTranslationVersion.authorId == user?.id">
             <button
               mat-stroked-button
               color="warn"

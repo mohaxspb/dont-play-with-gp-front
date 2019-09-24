@@ -417,7 +417,12 @@ export class ArticleComponent implements OnInit {
   }
 
   private calculateSelectedTranslation(): ArticleTranslation {
-    return this.article.translations.find(value => value.langId === this.selectedLanguage.id);
+    const foundTranslation = this.article.translations.find(value => value.langId === this.selectedLanguage.id);
+    if (foundTranslation) {
+      return foundTranslation;
+    } else {
+      return this.article.translations[0];
+    }
   }
 
   /**
@@ -590,7 +595,7 @@ export class ArticleComponent implements OnInit {
       .deleteVersion(id)
       .pipe(finalize(() => this.progressInAction.next(false)))
       .subscribe(
-        () => () => this.loadArticle(),
+        () => this.loadArticle(),
         error => this.notificationService.showError(error)
       );
   }

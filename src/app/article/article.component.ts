@@ -288,8 +288,8 @@ export class ArticleComponent implements OnInit {
   get versionsSelectIsVisible() {
     return this.user !== null && (
       this.isAdmin()
+      || this.article.authorId === this.user.id
       || this.selectedTranslation.authorId === this.user.id
-      || this.selectedTranslation.versions.find(value => value.authorId === this.user.id)
     );
   }
 
@@ -399,15 +399,11 @@ export class ArticleComponent implements OnInit {
 
           // selected lang calculation
           // this can be passed from outside (click on concrete translation). If not - calculate it
-          // console.log('this.selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
           if (this.selectedLanguage == null) {
             this.selectedLanguage = GpArticleService.getCorrectLanguageForArticle(this.article, this.preferredLanguage, this.languages);
           }
-          // console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
-          // console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
 
           this.availableArticleLanguages = GpArticleService.getLanguagesFromArticle(this.article, this.languages);
-          // console.log(this.availableArticleLanguages);
 
           this.selectedTranslation = this.calculateSelectedTranslation();
           this.selectedTranslationVersion = this.calculateVersion();
@@ -430,21 +426,22 @@ export class ArticleComponent implements OnInit {
    */
   private calculateVersion(): ArticleTranslationVersion {
     const versions = this.selectedTranslation.versions;
+
     const mostRecentPublished = versions
       .filter(value => value.published)
-      .sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime());
+      .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
     if (mostRecentPublished.length !== 0) {
       return mostRecentPublished[0];
     }
 
     const mostRecentApproved = versions
       .filter(value => value.approved)
-      .sort((a, b) => b.approvedDate.getTime() - a.approvedDate.getTime());
+      .sort((a, b) => new Date(b.approvedDate).getTime() - new Date(a.approvedDate).getTime());
     if (mostRecentApproved.length !== 0) {
       return mostRecentApproved[0];
     }
 
-    return versions.sort((a, b) => b.updated.getTime() - a.updated.getTime())[0];
+    return versions.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime())[0];
   }
 
   // todo translation

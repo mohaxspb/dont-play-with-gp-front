@@ -58,7 +58,10 @@
               fxLayoutGap="16px grid"
               class="default-margin-bottom"
             >
-              <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+              <div id="publish-article" *ngIf="isAdmin() || article.authorId == user?.id"
+                   fxLayout="column"
+                   fxLayoutAlign="start start"
+                   fxLayoutGap="8px">
                 <mat-slide-toggle
                   [disabled]="!article.approved"
                   [(ngModel)]="article.published"
@@ -68,7 +71,11 @@
                 <mat-error *ngIf="!article.approved">Article is not approved!</mat-error>
               </div>
 
-              <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+              <div id="approve-article" *ngIf="isAdmin() || article.authorId == user?.id"
+                   fxLayout="column"
+                   fxLayoutAlign="start start"
+                   fxLayoutGap="8px"
+              >
                 <mat-slide-toggle
                   [(ngModel)]="article.approved"
                   [labelPosition]="'before'"
@@ -129,7 +136,12 @@
         fxLayoutGap="16px grid"
         class="default-margin-top"
       >
-        <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+        <div id="publish-translation"
+             *ngIf="isAdmin() || article.authorId == user?.id || selectedTranslation.authorId == user?.id"
+             fxLayout="column"
+             fxLayoutAlign="start start"
+             fxLayoutGap="8px"
+        >
           <mat-slide-toggle
             [disabled]="!selectedTranslation.approved"
             [(ngModel)]="selectedTranslation.published"
@@ -139,7 +151,12 @@
           <mat-error *ngIf="!selectedTranslation.approved">Translation is not approved!</mat-error>
         </div>
 
-        <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+        <div id="approve-translation"
+             *ngIf="isAdmin() || article.authorId == user?.id || selectedTranslation.authorId == user?.id"
+             fxLayout="column"
+             fxLayoutAlign="start start"
+             fxLayoutGap="8px"
+        >
           <mat-slide-toggle
             [(ngModel)]="selectedTranslation.approved"
             [labelPosition]="'before'"
@@ -223,7 +240,12 @@
           fxLayoutAlign="center center"
           fxLayoutGap="16px grid"
         >
-          <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <div id="publish-version"
+               *ngIf="isAdmin() || article.authorId == user?.id || selectedTranslation.authorId == user?.id"
+               fxLayout="column"
+               fxLayoutAlign="start start"
+               fxLayoutGap="8px"
+          >
             <mat-slide-toggle
               [disabled]="!selectedTranslationVersion.approved"
               [(ngModel)]="selectedTranslationVersion.published"
@@ -233,7 +255,12 @@
             <mat-error *ngIf="!selectedTranslationVersion.approved">Version is not approved!</mat-error>
           </div>
 
-          <div *ngIf="isAdmin()" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <div id="approve-version"
+               *ngIf="isAdmin() || article.authorId == user?.id || selectedTranslation.authorId == user?.id"
+               fxLayout="column"
+               fxLayoutAlign="start start"
+               fxLayoutGap="8px"
+          >
             <mat-slide-toggle
               [(ngModel)]="selectedTranslationVersion.approved"
               [labelPosition]="'before'"

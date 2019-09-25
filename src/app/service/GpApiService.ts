@@ -248,6 +248,32 @@ export class GpApiService {
       );
   }
 
+  deleteTranslation(id: number): Observable<boolean> {
+    const params = new HttpParams();
+    params.set('id', id.toString());
+    return this.http
+      .delete<boolean>(
+        Api.URL + Api.ArticleTranslationEndpoint.URL + Api.ArticleTranslationEndpoint.Method.DELETE + '/' + id,
+        {
+          params,
+          withCredentials: true
+        },
+      );
+  }
+
+  deleteVersion(id: number): Observable<boolean> {
+    const params = new HttpParams();
+    params.set('id', id.toString());
+    return this.http
+      .delete<boolean>(
+        Api.URL + Api.ArticleTranslationVersionEndpoint.URL + Api.ArticleTranslationVersionEndpoint.Method.DELETE + '/' + id,
+        {
+          params,
+          withCredentials: true
+        },
+      );
+  }
+
   deleteImageByUserIdAndImageName(userId: number, imageName: string): Observable<boolean> {
     return this.http.delete<boolean>(
       Api.URL + Api.ImageEndpoint.URL + userId + '/' + imageName,

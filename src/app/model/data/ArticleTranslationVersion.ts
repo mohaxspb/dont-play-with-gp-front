@@ -10,14 +10,14 @@ export class ArticleTranslationVersion {
 
   approved: boolean;
   approverId: number | null;
-  approvedDate: Date | null;
+  approvedDate: string | null;
 
   published: boolean;
   publisherId: number | null;
-  publishedDate: Date | null;
+  publishedDate: string | null;
 
-  created: Date;
-  updated: Date;
+  created: string;
+  updated: string;
 
   author: GpUser | null;
   approver: GpUser | null;

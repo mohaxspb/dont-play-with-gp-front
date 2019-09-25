@@ -191,6 +191,18 @@ export class ArticleComponent implements OnInit {
     this.showConfirmArticleDeleteDialog(this.article.id);
   }
 
+  onTranslationDeleteClicked() {
+    console.log('onTranslationDeleteClicked');
+    // only author or admin could see it, so no need to login
+    this.showConfirmTranslationDeleteDialog(this.selectedTranslation.id);
+  }
+
+  onVersionDeleteClicked() {
+    console.log('onVersionDeleteClicked');
+    // only author or admin could see it, so no need to login
+    this.showConfirmVersionDeleteDialog(this.selectedTranslationVersion.id);
+  }
+
   onTranslationAddClicked() {
     console.log('onTranslationAddClicked');
     // show login or translation create component
@@ -276,8 +288,8 @@ export class ArticleComponent implements OnInit {
   get versionsSelectIsVisible() {
     return this.user !== null && (
       this.isAdmin()
+      || this.article.authorId === this.user.id
       || this.selectedTranslation.authorId === this.user.id
-      || this.selectedTranslation.versions.find(value => value.authorId === this.user.id)
     );
   }
 
@@ -296,6 +308,32 @@ export class ArticleComponent implements OnInit {
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteArticle(id);
+        } else {
+          console.log('Do not delete!');
+        }
+      });
+  }
+
+  private showConfirmTranslationDeleteDialog(id: number) {
+    this.dialogsService
+    // todo translation
+      .confirm('Delete translation', 'Are you sure you want to delete translation? This can\'t be undone!', 'Delete translation')
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.deleteTranslation(id);
+        } else {
+          console.log('Do not delete!');
+        }
+      });
+  }
+
+  private showConfirmVersionDeleteDialog(id: number) {
+    this.dialogsService
+    // todo translation
+      .confirm('Delete text version', 'Are you sure you want to delete text version? This can\'t be undone!', 'Delete version')
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.deleteVersion(id);
         } else {
           console.log('Do not delete!');
         }
@@ -361,15 +399,11 @@ export class ArticleComponent implements OnInit {
 
           // selected lang calculation
           // this can be passed from outside (click on concrete translation). If not - calculate it
-          // console.log('this.selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
           if (this.selectedLanguage == null) {
             this.selectedLanguage = GpArticleService.getCorrectLanguageForArticle(this.article, this.preferredLanguage, this.languages);
           }
-          // console.log('preferredLanguage: %s', JSON.stringify(this.preferredLanguage));
-          // console.log('selectedLanguage: %s', JSON.stringify(this.selectedLanguage));
 
           this.availableArticleLanguages = GpArticleService.getLanguagesFromArticle(this.article, this.languages);
-          // console.log(this.availableArticleLanguages);
 
           this.selectedTranslation = this.calculateSelectedTranslation();
           this.selectedTranslationVersion = this.calculateVersion();
@@ -379,7 +413,12 @@ export class ArticleComponent implements OnInit {
   }
 
   private calculateSelectedTranslation(): ArticleTranslation {
-    return this.article.translations.find(value => value.langId === this.selectedLanguage.id);
+    const foundTranslation = this.article.translations.find(value => value.langId === this.selectedLanguage.id);
+    if (foundTranslation) {
+      return foundTranslation;
+    } else {
+      return this.article.translations[0];
+    }
   }
 
   /**
@@ -387,21 +426,22 @@ export class ArticleComponent implements OnInit {
    */
   private calculateVersion(): ArticleTranslationVersion {
     const versions = this.selectedTranslation.versions;
+
     const mostRecentPublished = versions
       .filter(value => value.published)
-      .sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime());
+      .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
     if (mostRecentPublished.length !== 0) {
       return mostRecentPublished[0];
     }
 
     const mostRecentApproved = versions
       .filter(value => value.approved)
-      .sort((a, b) => b.approvedDate.getTime() - a.approvedDate.getTime());
+      .sort((a, b) => new Date(b.approvedDate).getTime() - new Date(a.approvedDate).getTime());
     if (mostRecentApproved.length !== 0) {
       return mostRecentApproved[0];
     }
 
-    return versions.sort((a, b) => b.updated.getTime() - a.updated.getTime())[0];
+    return versions.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime())[0];
   }
 
   // todo translation
@@ -525,6 +565,34 @@ export class ArticleComponent implements OnInit {
           // noinspection JSIgnoredPromiseFromCall
           this.router.navigateByUrl('feed');
         },
+        error => this.notificationService.showError(error)
+      );
+  }
+
+  private deleteTranslation(id: number) {
+    console.log('deleteTranslation: %d', id);
+
+    this.progressInAction.next(true);
+
+    this.articleService
+      .deleteTranslation(id)
+      .pipe(finalize(() => this.progressInAction.next(false)))
+      .subscribe(
+        () => this.loadArticle(),
+        error => this.notificationService.showError(error)
+      );
+  }
+
+  private deleteVersion(id: number) {
+    console.log('deleteVersion: %d', id);
+
+    this.progressInAction.next(true);
+
+    this.articleService
+      .deleteVersion(id)
+      .pipe(finalize(() => this.progressInAction.next(false)))
+      .subscribe(
+        () => this.loadArticle(),
         error => this.notificationService.showError(error)
       );
   }

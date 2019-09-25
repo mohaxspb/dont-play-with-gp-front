@@ -8,7 +8,7 @@ import {UserProvider} from '../service/auth/UserProvider';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {finalize, flatMap, tap} from 'rxjs/operators';
 import {BehaviorSubject, of, zip} from 'rxjs';
-import {URL_PATTERN} from '../GpConstants';
+import {ARTICLE_OBJECT_EXAMPLE_FOR_INSTRUCTION, URL_PATTERN} from '../GpConstants';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Article} from '../model/data/Article';
 import {NotificationService} from '../service/ui/NotificationService';
@@ -75,6 +75,9 @@ export class ArticleCreateComponent implements OnInit {
   actionType: ActionType = ActionType.CREATE_ARTICLE;
   translationId: number | null = null;
   versionId: number | null = null;
+
+  // instruction
+  exampleArticleObject = JSON.parse(ARTICLE_OBJECT_EXAMPLE_FOR_INSTRUCTION);
 
   constructor(
     private route: ActivatedRoute,
@@ -633,18 +636,6 @@ export class ArticleCreateComponent implements OnInit {
     }
     this.articleCreateFormGroup.controls.sourceTitle.updateValueAndValidity();
     this.articleCreateFormGroup.controls.sourceUrl.updateValueAndValidity();
-  }
-
-  // fixme test
-  public findInvalidControls() {
-    const invalid = [];
-    const controls = this.articleCreateFormGroup.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-    console.log(invalid);
   }
 
   private getLanguagesFromArticleTranslations() {

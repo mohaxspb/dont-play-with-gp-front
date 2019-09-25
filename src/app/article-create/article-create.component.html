@@ -8,7 +8,37 @@
 
     <mat-card-content>
 
-      <!--      todo add instruction-->
+      <div id="instruction">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Instruction</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div>
+              <p>Article consists of</p>
+
+              <ul>
+                <li>Article object with primary language and optional source title, url and author name.</li>
+                <li>Translations array with title, language and optional short description and image url.</li>
+                <li>Text versions array with article text.</li>
+              </ul>
+              <p>So, Article object can looks like this:</p>
+
+              <pre>{{exampleArticleObject | json}}</pre>
+
+              <p>Everyone can create new article, translation or text version.</p>
+
+              <p>Article can be approved or published only by admins.</p>
+              <p>To become published, translation or text version must be approved by admin or author of parent object.</p>
+              <p>Also, author of parent object can approve, publish, edit and delete translations and text version.</p>
+              <p>You can edit only single object at once. I.e. article or translation or text version.</p>
+              <p>You can select which translation or text version edit on article page.</p>
+              <p>You can't delete the only text version of translation or the only translation in article.</p>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
 
       <div id="data-loading-indication">
 
@@ -40,12 +70,8 @@
 
           <!--Article section-->
           <mat-divider inset></mat-divider>
-          <!--          fixme test-->
-          <pre>{{articleCreateFormGroup.value | json}}</pre>
 
-          <pre>{{articleCreateFormGroup.valid}}</pre>
-          <!--          fixme test-->
-          <h3 (click)="findInvalidControls()">Article data</h3>
+          <h3>Article data</h3>
 
           <mat-card id="input-sourceData">
             <div class="mat-input-element">

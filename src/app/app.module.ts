@@ -11,6 +11,7 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatDialogModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -120,7 +121,8 @@ const routes: Routes = [
     MatButtonToggleModule,
     MatSlideToggleModule,
     FormsModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    MatExpansionModule
   ],
   providers: [
     GpLocalStorageService,

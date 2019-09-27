@@ -6,8 +6,8 @@ import {GpLanguageService} from '../service/data/GpLanguageService';
 import {GpUser} from '../model/auth/GpUser';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {finalize, flatMap, map, startWith, tap} from 'rxjs/operators';
-import {BehaviorSubject, Observable, of, zip} from 'rxjs';
+import {finalize, flatMap, map, tap} from 'rxjs/operators';
+import {BehaviorSubject, of, zip} from 'rxjs';
 import {ARTICLE_OBJECT_EXAMPLE_FOR_INSTRUCTION, URL_PATTERN} from '../GpConstants';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Article} from '../model/data/Article';
@@ -41,7 +41,7 @@ export class ArticleCreateComponent implements OnInit {
   tagsCtrl: FormControl;
 
   tagsFromApi: Tag[];
-  filteredTags: Observable<Tag[]>;
+  filteredTags: BehaviorSubject<Tag[] | null>;
   selectedTags: Tag[] = [];
   // tags END
 
@@ -415,7 +415,7 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    // Add fruit only when MatAutocomplete is not open
+    // Add only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
@@ -440,8 +440,6 @@ export class ArticleCreateComponent implements OnInit {
       }
 
       this.tagsCtrl.setValue(null);
-
-      //todo also remove duplicates from autocomplete
     }
   }
 
@@ -450,12 +448,17 @@ export class ArticleCreateComponent implements OnInit {
 
     if (index >= 0) {
       this.selectedTags.splice(index, 1);
+
+      const tags = this.tagsFromApi.filter(value => !this.selectedTags.includes(value));
+      this.filteredTags.next(tags);
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     const selectedTag = this.tagsFromApi.find(value => value.title === event.option.viewValue);
-    this.selectedTags.push(selectedTag);
+    if (!this.selectedTags.find(tag => tag.title.toLowerCase() === selectedTag.title.toLowerCase())) {
+      this.selectedTags.push(selectedTag);
+    }
     this.tagsInput.nativeElement.value = '';
     this.tagsCtrl.setValue(null);
   }
@@ -538,11 +541,15 @@ export class ArticleCreateComponent implements OnInit {
       []
     );
 
-    this.filteredTags = this.tagsCtrl.valueChanges
+    this.tagsCtrl
+      .valueChanges
       .pipe(
-        startWith(null),
-        map((tag: Tag | null) => tag ? this._filter(tag) : this.tagsFromApi.slice())
-      );
+        map((tag: Tag | null) => tag ? this._filter(tag) : this.tagsFromApi.filter(value => !this.selectedTags.includes(value))),
+        tap(value => this.filteredTags.next(value))
+      )
+      .subscribe();
+
+    this.filteredTags = new BehaviorSubject<Tag[]>(this.tagsFromApi);
 
     this.articleCreateFormGroup = this.fBuilder.group({
       useExistingImage: new FormControl(
@@ -729,20 +736,16 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   private _filter(value: Tag | string): Tag[] {
-    console.log('_filter: %s', JSON.stringify(value));
     if (value instanceof Tag) {
       const filterValue = value.title.toLowerCase();
       return this.tagsFromApi
         .filter(tag => tag.title.toLowerCase().indexOf(filterValue) === 0)
-        //todo fixme
-        .filter((item, index, self) => self.indexOf(item) === index);
+        .filter(tag => !this.selectedTags.includes(tag));
     } else if (typeof value === 'string') {
-      console.log('value: %s', value);
       const filterValue = value.toLowerCase();
       return this.tagsFromApi
         .filter(tag => tag.title.toLowerCase().indexOf(filterValue) === 0)
-        //todo fixme
-        .filter((item, index, self) => self.indexOf(item) === index);
+        .filter(tag => !this.selectedTags.includes(tag));
     }
   }
 }

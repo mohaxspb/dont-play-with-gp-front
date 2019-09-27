@@ -9,6 +9,7 @@ import {Article} from '../model/data/Article';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
 import {PublishVersionResult} from '../model/data/PublishVersionResult';
+import {Tag} from '../model/data/Tag';
 
 
 @Injectable()
@@ -398,5 +399,9 @@ export class GpApiService {
       formData,
       {withCredentials: true}
     );
+  }
+
+  getTags(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(Api.URL + Api.TagEndpoint.URL + Api.TagEndpoint.Method.ALL);
   }
 }

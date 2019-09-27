@@ -213,6 +213,7 @@ export class ArticleCreateComponent implements OnInit {
             this.sourceTitle,
             this.sourceAuthorName,
             this.sourceUrl,
+            this.selectedTags.map(value => value.title),
             this.title,
             this.shortDescription,
             this.text,
@@ -245,7 +246,8 @@ export class ArticleCreateComponent implements OnInit {
             this.articleLanguage.id,
             this.sourceUrl,
             this.sourceAuthorName,
-            this.sourceTitle
+            this.sourceTitle,
+            this.selectedTags.map(value => value.title)
           )
           .pipe(
             finalize(() => this.progressInAction.next(false))

@@ -9,6 +9,7 @@ import {Article} from '../model/data/Article';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
 import {PublishVersionResult} from '../model/data/PublishVersionResult';
+import {Tag} from '../model/data/Tag';
 
 
 @Injectable()
@@ -97,6 +98,7 @@ export class GpApiService {
     sourceTitle: string | null,
     sourceAuthorName: string | null,
     sourceUrl: string | null,
+    tags: string[],
     title: string,
     shortDescription: string | null,
     text: string,
@@ -114,6 +116,7 @@ export class GpApiService {
       formData.append('sourceUrl', sourceUrl);
     }
     formData.append('articleLanguageId', languageId.toString());
+    formData.append('tags', tags.toString());
     formData.append('title', title);
     if (shortDescription != null) {
       formData.append('shortDescription', shortDescription);
@@ -379,7 +382,8 @@ export class GpApiService {
     langId: number,
     sourceUrl: string | null,
     sourceAuthorName: string | null,
-    sourceTitle: string | null
+    sourceTitle: string | null,
+    tags: string[]
   ): Observable<Article> {
     const formData = new FormData();
     formData.append('articleId', articleId.toString());
@@ -393,10 +397,15 @@ export class GpApiService {
     if (sourceTitle != null) {
       formData.append('sourceTitle', sourceTitle);
     }
+    formData.append('tags', tags.toString());
     return this.http.post<Article>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.EDIT,
       formData,
       {withCredentials: true}
     );
+  }
+
+  getTags(): Observable<Tag[]> {
+    return this.http.get<Tag[]>(Api.URL + Api.TagEndpoint.URL + Api.TagEndpoint.Method.ALL);
   }
 }

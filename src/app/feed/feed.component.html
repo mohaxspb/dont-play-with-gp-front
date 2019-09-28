@@ -53,6 +53,15 @@
             class="default-margin-left"
             (click)="onArticleClicked(articleAndTranslation[0], articleAndTranslation[1])"
           >{{articleAndTranslation[1].shortDescription}}</mat-card-content>
+
+          <div *ngIf="articleAndTranslation[0].tags.length>0" class="small-margin-left">
+            <span>Tags: </span>
+            <span
+              *ngFor="let tag of articleAndTranslation[0].tags; let isLast=last"
+              class="mat-caption"
+            >{{tag.title}}{{isLast ? '' : ', '}}</span>
+          </div>
+
           <mat-card-actions>
             <mat-button-toggle-group
               class="default-margin-bottom default-margin-left"

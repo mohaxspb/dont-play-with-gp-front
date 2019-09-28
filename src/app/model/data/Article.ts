@@ -1,5 +1,6 @@
 import {ArticleTranslation} from './ArticleTranslation';
 import {GpUser} from '../auth/GpUser';
+import {Tag} from './Tag';
 
 export class Article {
   id: number;
@@ -37,4 +38,6 @@ export class Article {
   publisher: GpUser | null;
 
   translations: [ArticleTranslation];
+
+  tags: [Tag];
 }

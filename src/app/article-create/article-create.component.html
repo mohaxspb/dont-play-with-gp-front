@@ -157,6 +157,39 @@
 
           </div>
 
+          <div id="input-tags" class="position-relative">
+            <mat-form-field class="full-width-field">
+              <mat-chip-list #chipList aria-label="Tags selection">
+                <mat-chip
+                  *ngFor="let tag of selectedTags"
+                  [selectable]="isCreateArticleMode || isEditArticleMode"
+                  [removable]="isCreateArticleMode || isEditArticleMode"
+                  (removed)="remove(tag)"
+                >{{tag.title}}<mat-icon matChipRemove>cancel</mat-icon></mat-chip>
+                <label>
+                  <input
+                    placeholder="Article tags"
+                    #tagsInput
+                    [formControl]="tagsCtrl"
+                    [disabled]="isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode"
+                    [matChipInputAddOnBlur]="true"
+                    [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+                </label>
+              </mat-chip-list>
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">{{tag.title}}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <div
+              *ngIf="isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode"
+              class="background-half-transparent-white cover"
+            ></div>
+          </div>
+
           <!--Translation section-->
           <mat-divider inset></mat-divider>
           <h3>Translation data</h3>

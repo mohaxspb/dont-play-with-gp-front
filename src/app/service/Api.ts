@@ -55,6 +55,14 @@ export class Api {
     };
   };
 
+  static TagEndpoint = class {
+    static URL = 'tag/';
+
+    static Method = class {
+      static ALL = 'all';
+    };
+  };
+
   static ArticleEndpoint = class {
     static URL = 'article/';
 

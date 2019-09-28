@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
 import {Language} from '../model/data/Language';
@@ -6,7 +6,7 @@ import {GpLanguageService} from '../service/data/GpLanguageService';
 import {GpUser} from '../model/auth/GpUser';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {finalize, flatMap, tap} from 'rxjs/operators';
+import {finalize, flatMap, map, tap} from 'rxjs/operators';
 import {BehaviorSubject, of, zip} from 'rxjs';
 import {ARTICLE_OBJECT_EXAMPLE_FOR_INSTRUCTION, URL_PATTERN} from '../GpConstants';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
@@ -17,6 +17,10 @@ import {ByteFormatPipe, FileValidator} from 'ngx-material-file-input';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
 import {Api} from '../service/Api';
+import {TagService} from '../service/data/TagService';
+import {Tag} from '../model/data/Tag';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
 
 @Component({
   selector: 'app-article-create',
@@ -24,6 +28,22 @@ import {Api} from '../service/Api';
   styleUrls: ['./article-create.component.css']
 })
 export class ArticleCreateComponent implements OnInit {
+
+  // tags
+  /**
+   * used for chips input
+   */
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  @ViewChild('tagsInput', {static: false}) tagsInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
+
+  tagsCtrl: FormControl;
+
+  tagsFromApi: Tag[];
+  filteredTags: BehaviorSubject<Tag[] | null>;
+  selectedTags: Tag[] = [];
+  // tags END
 
   articleCreateFormGroup: FormGroup;
 
@@ -84,6 +104,7 @@ export class ArticleCreateComponent implements OnInit {
     private router: Router,
     private fBuilder: FormBuilder,
     private languageService: GpLanguageService,
+    private tagService: TagService,
     private userProvider: UserProvider,
     private articleService: GpArticleService,
     private notificationService: NotificationService
@@ -192,6 +213,7 @@ export class ArticleCreateComponent implements OnInit {
             this.sourceTitle,
             this.sourceAuthorName,
             this.sourceUrl,
+            this.selectedTags.map(value => value.title),
             this.title,
             this.shortDescription,
             this.text,
@@ -224,7 +246,8 @@ export class ArticleCreateComponent implements OnInit {
             this.articleLanguage.id,
             this.sourceUrl,
             this.sourceAuthorName,
-            this.sourceTitle
+            this.sourceTitle,
+            this.selectedTags.map(value => value.title)
           )
           .pipe(
             finalize(() => this.progressInAction.next(false))
@@ -393,6 +416,55 @@ export class ArticleCreateComponent implements OnInit {
     }
   }
 
+  add(event: MatChipInputEvent): void {
+    // Add only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
+
+      if ((value || '').trim()) {
+        const selectedTag = this.tagsFromApi.find(tag => tag.title.toLowerCase() === value.trim().toLowerCase());
+        if (selectedTag) {
+          this.selectedTags.push(selectedTag);
+        } else {
+          if (!this.selectedTags.find(tag => tag.title.toLowerCase() === value.trim().toLowerCase())) {
+            const newTag = new Tag();
+            newTag.title = value.trim().toLowerCase();
+            this.selectedTags.push(newTag);
+          }
+        }
+      }
+
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
+
+      this.tagsCtrl.setValue(null);
+    }
+  }
+
+  remove(tag: Tag): void {
+    const index = this.selectedTags.indexOf(tag);
+
+    if (index >= 0) {
+      this.selectedTags.splice(index, 1);
+
+      const tags = this.tagsFromApi.filter(value => !this.selectedTags.includes(value));
+      this.filteredTags.next(tags);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    const selectedTag = this.tagsFromApi.find(value => value.title === event.option.viewValue);
+    if (!this.selectedTags.find(tag => tag.title.toLowerCase() === selectedTag.title.toLowerCase())) {
+      this.selectedTags.push(selectedTag);
+    }
+    this.tagsInput.nativeElement.value = '';
+    this.tagsCtrl.setValue(null);
+  }
+
   getFullImagePath(relativePath: string): string {
     return Api.URL + relativePath;
   }
@@ -443,6 +515,8 @@ export class ArticleCreateComponent implements OnInit {
 
       this.articleLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.article.originalLangId);
 
+      this.selectedTags = this.article.tags;
+
       const translation = this.article.translations.find(value => value.id === this.translationId);
       this.translation = translation ? translation : null;
       if (this.translation != null) {
@@ -462,6 +536,24 @@ export class ArticleCreateComponent implements OnInit {
 
     this.articleImageUrl = this.translation !== null ? this.translation.imageUrl : null;
     this.imageFileName = this.getImageFileNameFromUrl();
+
+    this.tagsCtrl = new FormControl(
+      {
+        value: this.selectedTags,
+        disabled: this.isEditTranslationMode || this.isAddTranslationMode || this.isAddVersionMode || this.isEditVersionMode
+      },
+      []
+    );
+
+    this.tagsCtrl
+      .valueChanges
+      .pipe(
+        map((tag: Tag | null) => tag ? this._filter(tag) : this.tagsFromApi.filter(value => !this.selectedTags.includes(value))),
+        tap(value => this.filteredTags.next(value))
+      )
+      .subscribe();
+
+    this.filteredTags = new BehaviorSubject<Tag[]>(this.tagsFromApi);
 
     this.articleCreateFormGroup = this.fBuilder.group({
       useExistingImage: new FormControl(
@@ -520,6 +612,7 @@ export class ArticleCreateComponent implements OnInit {
         },
         this.actionType === ActionType.CREATE_ARTICLE ? [] : [Validators.required]
       ),
+      tagsCtrl: this.tagsCtrl,
       translationLanguageSelect: new FormControl(
         {
           value: this.translationLanguage,
@@ -567,9 +660,10 @@ export class ArticleCreateComponent implements OnInit {
   private loadInitialData() {
     this.dataIsLoading.next(true);
 
-    zip<[GpUser, Language[], Article | null]>(
+    zip<[GpUser, Language[], Tag[], Article | null]>(
       this.userProvider.getNonNullUser(),
       this.languageService.getLanguages(),
+      this.tagService.getTags(),
       // check type and load article if need;
       this.route.queryParamMap
         .pipe(
@@ -611,11 +705,12 @@ export class ArticleCreateComponent implements OnInit {
         )
     )
       .pipe(
-        tap((userLanguagesAndArticle: [GpUser, [Language], Article | null]) => {
-          this.user = userLanguagesAndArticle[0];
-          this.languagesListFromApi = userLanguagesAndArticle[1];
+        tap((data: [GpUser, [Language], Tag[], Article | null]) => {
+          this.user = data[0];
+          this.languagesListFromApi = data[1];
           this.preferredLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.user.primaryLanguageId);
-          this.article = userLanguagesAndArticle[2];
+          this.tagsFromApi = data[2];
+          this.article = data[3];
         }),
         finalize(() => this.dataIsLoading.next(false))
       )
@@ -642,6 +737,20 @@ export class ArticleCreateComponent implements OnInit {
     return this.article.translations.map(translation => this.languagesListFromApi
       .find(language => language.id === translation.langId)
     );
+  }
+
+  private _filter(value: Tag | string): Tag[] {
+    if (value instanceof Tag) {
+      const filterValue = value.title.toLowerCase();
+      return this.tagsFromApi
+        .filter(tag => tag.title.toLowerCase().indexOf(filterValue) === 0)
+        .filter(tag => !this.selectedTags.includes(tag));
+    } else if (typeof value === 'string') {
+      const filterValue = value.toLowerCase();
+      return this.tagsFromApi
+        .filter(tag => tag.title.toLowerCase().indexOf(filterValue) === 0)
+        .filter(tag => !this.selectedTags.includes(tag));
+    }
   }
 }
 

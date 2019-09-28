@@ -41,6 +41,7 @@ export class GpArticleService {
     sourceTitle: string | null,
     sourceAuthorName: string | null,
     sourceUrl: string | null,
+    tags: string[],
     title: string,
     shortDescription: string | null,
     text: string,
@@ -53,6 +54,7 @@ export class GpArticleService {
         sourceTitle,
         sourceAuthorName,
         sourceUrl,
+        tags,
         title,
         shortDescription,
         text,
@@ -149,14 +151,16 @@ export class GpArticleService {
     langId: number,
     sourceUrl: string | null,
     sourceAuthorName: string | null,
-    sourceTitle: string | null
+    sourceTitle: string | null,
+    tags: string[]
   ): Observable<Article> {
     return this.apiService.editArticle(
       articleId,
       langId,
       sourceUrl,
       sourceAuthorName,
-      sourceTitle
+      sourceTitle,
+      tags
     );
   }
 }

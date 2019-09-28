@@ -111,6 +111,18 @@
         </mat-card-content>
       </mat-card>
 
+      <div *ngIf="article.tags.length>0" class="default-margin-top">
+
+        <mat-chip-list aria-label="Article tags">
+          <mat-chip
+            *ngFor="let tag of article.tags"
+            [selectable]="false"
+            color="primary"
+            selected
+          >{{tag.title}}</mat-chip>
+        </mat-chip-list>
+      </div>
+
     </header>
 
     <div *ngIf="!selectedTranslation.published">

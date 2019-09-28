@@ -5,11 +5,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatAutocompleteModule,
   MatBottomSheetModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
   MatCheckboxModule,
+  MatChipsModule,
   MatDialogModule,
   MatExpansionModule,
   MatFormFieldModule,
@@ -58,6 +60,7 @@ import {AngularMarkdownEditorModule} from 'angular-markdown-editor';
 import {MarkdownModule} from 'ngx-markdown';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
+import {TagService} from './service/data/TagService';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -122,7 +125,9 @@ const routes: Routes = [
     MatSlideToggleModule,
     FormsModule,
     MaterialFileInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   providers: [
     GpLocalStorageService,
@@ -134,6 +139,7 @@ const routes: Routes = [
     UserProvider,
     GpArticleService,
     GpLanguageService,
+    TagService,
     DialogService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ],

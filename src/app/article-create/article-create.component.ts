@@ -515,6 +515,8 @@ export class ArticleCreateComponent implements OnInit {
 
       this.articleLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.article.originalLangId);
 
+      this.selectedTags = this.article.tags;
+
       const translation = this.article.translations.find(value => value.id === this.translationId);
       this.translation = translation ? translation : null;
       if (this.translation != null) {
@@ -537,7 +539,7 @@ export class ArticleCreateComponent implements OnInit {
 
     this.tagsCtrl = new FormControl(
       {
-        value: null,
+        value: this.selectedTags,
         disabled: this.isEditTranslationMode || this.isAddTranslationMode || this.isAddVersionMode || this.isEditVersionMode
       },
       []

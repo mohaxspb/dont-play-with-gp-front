@@ -294,6 +294,7 @@ export class ArticleComponent implements OnInit {
       this.isAdmin()
       || this.article.authorId === this.user.id
       || this.selectedTranslation.authorId === this.user.id
+      || this.selectedTranslation.versions.find(value => value.authorId === this.user.id)
     );
   }
 

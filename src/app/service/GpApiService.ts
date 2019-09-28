@@ -214,9 +214,10 @@ export class GpApiService {
     );
   }
 
-  getArticles(limit: number, offset: number): Observable<Article[]> {
+  getArticles(limit: number, offset: number, onlyForCurrentDate: boolean): Observable<Article[]> {
     const params = new HttpParams()
       .append('limit', limit.toString())
+      .append('onlyForCurrentDate', onlyForCurrentDate.toString())
       .append('offset', offset.toString());
     return this.http.get<Article[]>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.ALL,
@@ -407,5 +408,16 @@ export class GpApiService {
 
   getTags(): Observable<Tag[]> {
     return this.http.get<Tag[]>(Api.URL + Api.TagEndpoint.URL + Api.TagEndpoint.Method.ALL);
+  }
+
+  publishArticleWithDate(id: number, publishDate: string): Observable<Article> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('publishDate', publishDate);
+    return this.http.post<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.PUBLISH_WITH_DATE,
+      formData,
+      {withCredentials: true}
+    );
   }
 }

@@ -74,6 +74,7 @@ export class Api {
       static EDIT = 'edit';
       static APPROVE = 'approve';
       static PUBLISH = 'publish';
+      static PUBLISH_WITH_DATE = 'publishWithDate';
       static DELETE = 'delete';
     };
   };

@@ -28,7 +28,8 @@
           <mat-card-header fxFlexOrder="2" fxFlexOrder.gt-xs="1" fxFlex>
             <mat-card-title>{{selectedTranslation.title}}</mat-card-title>
 
-            <mat-card-subtitle id="published-date">
+            <mat-card-subtitle id="published-date" fxLayoutAlign="start center" fxLayoutGap="16px">
+              <mat-icon *ngIf="article.fromFuture">alarm</mat-icon>
               <span *ngIf="article.published"
               >{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
               <span *ngIf="!article.published">Not published</span>
@@ -50,6 +51,36 @@
         </div>
 
         <mat-card-content>
+
+          <div id="publishing-date-form"
+               *ngIf="isAdmin()"
+               class="mat-app-background default-padding-around default-margin-bottom">
+            <p>You can publish article with any date here:</p>
+            <p>Article will be published immediately with given date and time. If date is in future, article will arrive on `feed` page only after this date.</p>
+            <div fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="start center">
+              <mat-form-field>
+                <label>
+                  <input
+                      #dateInput
+                      matInput
+                      type="datetime-local"
+                      placeholder="publishing date"
+                      (change)="onPublishDateChanged($event.target.value)"
+                  >
+                </label>
+              </mat-form-field>
+
+              <div>
+                <button
+                  mat-raised-button
+                  color="accent"
+                  [disabled]="publishDate==null"
+                  (click)="publishArticleForDate()"
+                  class="default-margin-left"
+                >Publish article</button>
+              </div>
+            </div>
+          </div>
 
           <div id="admin-action-article" fxLayout>
             <div

@@ -87,8 +87,8 @@ export class GpArticleService {
     return this.apiService.publishArticleTranslationVersion(id, publish);
   }
 
-  getPublishedArticles(limit: number, offset: number): Observable<Article[]> {
-    return this.apiService.getArticles(limit, offset);
+  getPublishedArticles(limit: number, offset: number, onlyForCurrentDate: boolean): Observable<Article[]> {
+    return this.apiService.getArticles(limit, offset, onlyForCurrentDate);
   }
 
   getArticlesByAuthor(authorId: number): Observable<Article[]> {
@@ -161,6 +161,13 @@ export class GpArticleService {
       sourceAuthorName,
       sourceTitle,
       tags
+    );
+  }
+
+  publishArticleWithDate(id: number, publishDate: string): Observable<Article> {
+    return this.apiService.publishArticleWithDate(
+      id,
+      publishDate
     );
   }
 }

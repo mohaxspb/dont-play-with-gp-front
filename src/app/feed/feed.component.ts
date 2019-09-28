@@ -4,8 +4,8 @@ import {AuthService} from '../service/auth/auth.service';
 import {MatBottomSheet} from '@angular/material';
 import {LoginComponent} from '../login/login.component';
 import {GpArticleService} from '../service/data/GpArticleService';
-import {BehaviorSubject} from 'rxjs';
-import {finalize} from 'rxjs/operators';
+import {BehaviorSubject, of, zip} from 'rxjs';
+import {catchError, finalize} from 'rxjs/operators';
 import {NotificationService} from '../service/ui/NotificationService';
 import {Article} from '../model/data/Article';
 import {GpConstants} from '../GpConstants';
@@ -17,6 +17,8 @@ import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {NavigationUtils} from '../utils/NavigationUtils';
 import {Api} from '../service/Api';
 import {ActionType} from '../article-create/article-create.component';
+import {AuthorityType} from '../model/auth/Authority';
+import {GpUserService} from '../service/auth/GpUserService';
 
 @Component({
   selector: 'app-feed',
@@ -37,6 +39,7 @@ export class FeedComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private userService: GpUserService,
     private userProvider: UserProvider,
     private authService: AuthService,
     private articleService: GpArticleService,
@@ -116,7 +119,7 @@ export class FeedComponent implements OnInit {
     }
 
     this.articleService
-      .getPublishedArticles(GpConstants.DEFAULT_LIMIT, offset)
+      .getPublishedArticles(GpConstants.DEFAULT_LIMIT, offset, !this.isAdmin())
       .pipe(
         // to test loading indicator
         // delay(1000),
@@ -153,6 +156,10 @@ export class FeedComponent implements OnInit {
       );
   }
 
+  isAdmin(): boolean {
+    return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
+  }
+
   private mapArticlesToArticlesAndTranslation(articles: Article[]): [Article, ArticleTranslation][] {
     return articles
       .map(article => [article, this.getTranslationForLanguageFromArticle(this.preferredLanguage, article)]);
@@ -161,13 +168,19 @@ export class FeedComponent implements OnInit {
   private loadInitialData() {
     this.progressInAction.next(true);
 
-    this.languageService.getLanguages()
+    zip(
+      this.languageService.getLanguages(),
+      this.userService.getUser().pipe(catchError(() => of(null)))
+    )
       .pipe(
         // delay(1000),
         finalize(() => this.loadArticles())
       )
       .subscribe(
-        value => this.languages = value,
+        value => {
+          this.languages = value[0];
+          this.user = value[1];
+        },
         error => this.notificationService.showError(error)
       );
   }

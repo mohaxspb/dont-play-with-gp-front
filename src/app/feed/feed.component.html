@@ -27,7 +27,8 @@
               fxFlexOrder.gt-xs="1"
             >
               <mat-card-title>{{articleAndTranslation[1].title}}</mat-card-title>
-              <mat-card-subtitle>
+              <mat-card-subtitle fxLayoutAlign="start center" fxLayoutGap="16px">
+                <mat-icon *ngIf="articleAndTranslation[0].fromFuture">alarm</mat-icon>
                 <span>{{articleAndTranslation[0].publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
               </mat-card-subtitle>
               <mat-card-subtitle

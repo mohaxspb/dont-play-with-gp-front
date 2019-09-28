@@ -28,7 +28,8 @@
           <mat-card-header fxFlexOrder="2" fxFlexOrder.gt-xs="1" fxFlex>
             <mat-card-title>{{selectedTranslation.title}}</mat-card-title>
 
-            <mat-card-subtitle id="published-date">
+            <mat-card-subtitle id="published-date" fxLayoutAlign="start center" fxLayoutGap="16px">
+              <mat-icon *ngIf="article.fromFuture">alarm</mat-icon>
               <span *ngIf="article.published"
               >{{article.publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
               <span *ngIf="!article.published">Not published</span>

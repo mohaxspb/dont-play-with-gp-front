@@ -40,4 +40,5 @@ export class Article {
   translations: [ArticleTranslation];
 
   tags: [Tag];
+  fromFuture = false;
 }

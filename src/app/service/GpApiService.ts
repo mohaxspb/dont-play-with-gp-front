@@ -214,9 +214,10 @@ export class GpApiService {
     );
   }
 
-  getArticles(limit: number, offset: number): Observable<Article[]> {
+  getArticles(limit: number, offset: number, onlyForCurrentDate: boolean): Observable<Article[]> {
     const params = new HttpParams()
       .append('limit', limit.toString())
+      .append('onlyForCurrentDate', onlyForCurrentDate.toString())
       .append('offset', offset.toString());
     return this.http.get<Article[]>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.ALL,

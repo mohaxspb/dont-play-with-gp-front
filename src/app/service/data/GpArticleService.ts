@@ -163,4 +163,11 @@ export class GpArticleService {
       tags
     );
   }
+
+  publishArticleWithDate(id: number, publishDate: string): Observable<Article> {
+    return this.apiService.publishArticleWithDate(
+      id,
+      publishDate
+    );
+  }
 }

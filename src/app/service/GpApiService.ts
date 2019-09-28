@@ -408,4 +408,15 @@ export class GpApiService {
   getTags(): Observable<Tag[]> {
     return this.http.get<Tag[]>(Api.URL + Api.TagEndpoint.URL + Api.TagEndpoint.Method.ALL);
   }
+
+  publishArticleWithDate(id: number, publishDate: string): Observable<Article> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('publishDate', publishDate);
+    return this.http.post<Article>(
+      Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.PUBLISH_WITH_DATE,
+      formData,
+      {withCredentials: true}
+    );
+  }
 }

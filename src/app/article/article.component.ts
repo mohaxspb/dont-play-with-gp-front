@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {BehaviorSubject, zip} from 'rxjs';
@@ -25,6 +25,10 @@ import {Api} from '../service/Api';
   styleUrls: ['./article.component.css']
 })
 export class ArticleComponent implements OnInit {
+
+  @ViewChild('dateInput', {static: false}) dateInput: ElementRef<HTMLInputElement>;
+
+  publishDate: string | null;
 
   dataIsLoading = new BehaviorSubject<boolean>(false);
   progressInAction = new BehaviorSubject<boolean>(false);
@@ -604,6 +608,26 @@ export class ArticleComponent implements OnInit {
   private getSelectedVersionIndexInSelectedTranslation(): number {
     return this.article.translations[this.getSelectedTranslationIndexInArticle()]
       .versions.findIndex(version => version.id === this.selectedTranslationVersion.id);
+  }
+
+  publishArticleForDate() {
+    this.progressInAction.next(true);
+
+    this.articleService
+      .publishArticleWithDate(this.article.id, this.publishDate)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
+      .subscribe(
+        value => this.article = value,
+        error => {
+          this.notificationService.showError(error);
+        }
+      );
+  }
+
+  onPublishDateChanged(value: string) {
+    this.publishDate = value ? new Date(Date.parse(value)).toISOString() : null;
   }
 }
 

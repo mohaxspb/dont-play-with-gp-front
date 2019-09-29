@@ -123,4 +123,8 @@ export class CommentsComponent implements OnInit {
         }
       );
   }
+
+  onAvatarLoadError(event) {
+    event.target.src = './assets/person-24px.svg';
+  }
 }

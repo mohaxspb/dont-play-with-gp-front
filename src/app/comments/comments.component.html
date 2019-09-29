@@ -1,6 +1,6 @@
 <h3>Comments {{article.commentsCount}}: </h3>
 <div id="comments-container"
-     class="position-relative default-padding-around"
+     class="position-relative"
      infiniteScroll
      [infiniteScrollDistance]="2"
      [infiniteScrollThrottle]="300"
@@ -11,7 +11,13 @@
 >
   <div *ngIf="comments.length!=0 else emptyComments">
     <div *ngFor="let comment of comments">
-      <p>{{comment.text}}</p>
+      <div fxLayout fxLayoutAlign="start center" class="default-margin-bottom default-margin-top">
+        <img class="avatar" src="{{comment.author.avatar}}" alt="avatar" (error)="onAvatarLoadError($event)">
+        <span class="default-margin-left default-margin-right color-primary">{{comment.author.fullName}}</span>
+        <span>{{comment.created|date: 'dd.mm.yyyy hh:mm'}}</span>
+      </div>
+      <markdown [data]="comment.text"></markdown>
+      <mat-divider></mat-divider>
     </div>
   </div>
   <ng-template #emptyComments>

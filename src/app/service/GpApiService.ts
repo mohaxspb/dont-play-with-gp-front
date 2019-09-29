@@ -10,6 +10,7 @@ import {ArticleTranslation} from '../model/data/ArticleTranslation';
 import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion';
 import {PublishVersionResult} from '../model/data/PublishVersionResult';
 import {Tag} from '../model/data/Tag';
+import {GpComment} from '../model/data/GpComment';
 
 
 @Injectable()
@@ -416,6 +417,56 @@ export class GpApiService {
     formData.append('publishDate', publishDate);
     return this.http.post<Article>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.PUBLISH_WITH_DATE,
+      formData,
+      {withCredentials: true}
+    );
+  }
+
+  getCommentsForArticle(limit: number, offset: number, articleId: number): Observable<GpComment[]> {
+    const params = new HttpParams()
+      .append('limit', limit.toString())
+      .append('offset', offset.toString())
+      .append('articleId', articleId.toString());
+    return this.http.get<GpComment[]>(
+      Api.URL + Api.CommentEndpoint.URL + Api.CommentEndpoint.Method.ALL,
+      {
+        withCredentials: true,
+        params
+      }
+    );
+  }
+
+  getCommentsByUser(userId: number): Observable<GpComment[]> {
+    const params = new HttpParams()
+      .append('userId', userId.toString());
+    return this.http.get<GpComment[]>(
+      Api.URL + Api.CommentEndpoint.URL + Api.CommentEndpoint.Method.ALL_BY_AUTHOR_ID,
+      {
+        withCredentials: true,
+        params
+      }
+    );
+  }
+
+  deleteComment(id: number): Observable<boolean> {
+    const params = new HttpParams();
+    params.set('id', id.toString());
+    return this.http
+      .delete<boolean>(
+        Api.URL + Api.CommentEndpoint.URL + Api.CommentEndpoint.Method.DELETE + '/' + id,
+        {
+          params,
+          withCredentials: true
+        },
+      );
+  }
+
+  createComment(articleId: number, text: string): Observable<Comment> {
+    const formData = new FormData();
+    formData.append('articleId', articleId.toString());
+    formData.append('text', text);
+    return this.http.post<Comment>(
+      Api.URL + Api.CommentEndpoint.URL + Api.CommentEndpoint.Method.ADD,
       formData,
       {withCredentials: true}
     );

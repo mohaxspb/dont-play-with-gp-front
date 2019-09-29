@@ -62,6 +62,7 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {TagService} from './service/data/TagService';
 import {CommentService} from './service/data/CommentService';
+import { CommentsComponent } from './comments/comments.component';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -89,7 +90,8 @@ const routes: Routes = [
     AccountComponent,
     DialogComponent,
     ArticleComponent,
-    ArticleCreateComponent
+    ArticleCreateComponent,
+    CommentsComponent
   ],
   entryComponents: [
     LoginComponent,

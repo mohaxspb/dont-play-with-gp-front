@@ -67,6 +67,7 @@ export class Api {
     static URL = 'comment/';
 
     static Method = class {
+      static COUNT_FOR_ARTICLE = 'countForArticle';
       static ALL = 'all';
       static ALL_BY_AUTHOR_ID = 'allByAuthorId';
       static ADD = 'add';

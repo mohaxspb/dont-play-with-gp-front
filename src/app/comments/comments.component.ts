@@ -38,6 +38,7 @@ export class CommentsComponent implements OnInit {
   // comment create
   commentCreateFormGroup: FormGroup;
   commentText: string | null = null;
+  commentsCount = 0;
 
   constructor(
     private commentService: CommentService,
@@ -51,6 +52,8 @@ export class CommentsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.commentsCount = this.article.commentsCount;
+
     this.loadInitialData();
 
     // handle user changed
@@ -159,10 +162,11 @@ export class CommentsComponent implements OnInit {
         finalize(() => this.commentSendInAction.next(false))
       )
       .subscribe(
-        value => {
+        () => {
           this.commentText = null;
           this.comments = [];
           this.loadComments();
+          this.updateCommentCount();
         },
         error => this.notificationService.showError(error)
       );
@@ -170,5 +174,11 @@ export class CommentsComponent implements OnInit {
 
   onLoginClicked() {
     this.bottomSheet.open(LoginComponent, {data: {title: 'To post comment you should'}});
+  }
+
+  private updateCommentCount() {
+    this.commentService
+      .getCommentCountForArticle(this.article.id)
+      .subscribe(value => this.commentsCount = value);
   }
 }

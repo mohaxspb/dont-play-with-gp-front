@@ -471,4 +471,12 @@ export class GpApiService {
       {withCredentials: true}
     );
   }
+
+  getCommentCountForArticle(articleId: number): Observable<number> {
+    const params = new HttpParams().append('articleId', articleId.toString());
+    return this.http.get<number>(
+      Api.URL + Api.CommentEndpoint.URL + Api.CommentEndpoint.Method.COUNT_FOR_ARTICLE,
+      {params}
+    );
+  }
 }

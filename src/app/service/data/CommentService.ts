@@ -11,6 +11,10 @@ export class CommentService {
   ) {
   }
 
+  getCommentCountForArticle(articleId: number): Observable<number> {
+    return this.apiService.getCommentCountForArticle(articleId);
+  }
+
   getCommentsForArticle(articleId: number, limit: number, offset: number): Observable<GpComment[]> {
     return this.apiService.getCommentsForArticle(limit, offset, articleId);
   }

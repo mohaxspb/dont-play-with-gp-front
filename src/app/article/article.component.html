@@ -335,6 +335,8 @@
 
     </article>
 
+    <app-comments [articleId]="article.id" class="default-margin-top"></app-comments>
+
     <div id="data-sending-indication" *ngIf="progressInAction|async"
          class="background-half-transparent-white cover"
          (click)="$event.stopPropagation()"

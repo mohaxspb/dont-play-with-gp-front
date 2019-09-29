@@ -1,1 +1,48 @@
-<p>comments works!</p>
+<h3>Comments {{comments.length}}: </h3>
+<div id="comments-container"
+     class="position-relative default-padding-around"
+     infiniteScroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="300"
+     [infiniteScrollDisabled]="(bottomProgressInAction | async)
+       || (bottomProgressErrorOccurred | async)
+       || commentsListEndReached()"
+     (scrolled)="onScroll()"
+>
+  <div *ngIf="comments.length!=0 else emptyComments">
+    <div *ngFor="let comment of comments">
+      <p>{{comment.text}}</p>
+    </div>
+  </div>
+  <ng-template #emptyComments>
+    <p>No comments yet!</p>
+  </ng-template>
+
+  <div id="data-loading-indication" *ngIf="progressInAction|async"
+       class="background-half-transparent-white cover"
+       (click)="$event.stopPropagation()"
+  >
+    <mat-spinner
+      class="center-inside-both-axis"
+      [diameter]="24"
+    ></mat-spinner>
+  </div>
+
+  <div id="bottom-loading-indication" fxLayout fxLayoutAlign="center center">
+    <mat-spinner
+      *ngIf="bottomProgressInAction|async"
+      class="center-inside-both-axis"
+      [diameter]="24"
+    ></mat-spinner>
+
+    <button
+      *ngIf="(bottomProgressErrorOccurred|async) && !(bottomProgressInAction|async)"
+      mat-flat-button
+      (click)="loadComments(comments.length)"
+    >Try again</button>
+
+    <div *ngIf="commentsListEndReached() && !noCommentsForArticle">
+      <p>This is the end of comments list</p>
+    </div>
+  </div>
+</div>

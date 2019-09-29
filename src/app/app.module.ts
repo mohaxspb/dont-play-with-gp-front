@@ -61,6 +61,7 @@ import {MarkdownModule} from 'ngx-markdown';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {TagService} from './service/data/TagService';
+import {CommentService} from './service/data/CommentService';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -140,6 +141,7 @@ const routes: Routes = [
     GpArticleService,
     GpLanguageService,
     TagService,
+    CommentService,
     DialogService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ],

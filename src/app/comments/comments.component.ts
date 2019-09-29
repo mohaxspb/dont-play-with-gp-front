@@ -11,6 +11,9 @@ import {catchError, finalize} from 'rxjs/operators';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpUser} from '../model/auth/GpUser';
 import {Article} from '../model/data/Article';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {LoginComponent} from '../login/login.component';
+import {Language} from '../model/data/Language';
 
 @Component({
   selector: 'app-comments',
@@ -26,6 +29,7 @@ export class CommentsComponent implements OnInit {
   user: GpUser | null = null;
 
   @Input() article: Article;
+  @Input() preferredLanguage: Language;
 
   noCommentsForArticle = false;
   comments: GpComment[] = [];

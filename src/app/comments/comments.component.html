@@ -14,7 +14,7 @@
       <div fxLayout fxLayoutAlign="start center" class="default-margin-bottom default-margin-top">
         <img class="avatar" src="{{comment.author.avatar}}" alt="avatar" (error)="onAvatarLoadError($event)">
         <span class="default-margin-left default-margin-right color-primary">{{comment.author.fullName}}</span>
-        <span>{{comment.created|date: 'dd.mm.yyyy hh:mm'}}</span>
+        <span>{{comment.created|date: 'short': 'UTC': preferredLanguage.langCode}}</span>
       </div>
       <markdown [data]="comment.text"></markdown>
       <mat-divider></mat-divider>

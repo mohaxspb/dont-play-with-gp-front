@@ -10,6 +10,7 @@ import {GpComment} from '../model/data/GpComment';
 import {catchError, finalize} from 'rxjs/operators';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpUser} from '../model/auth/GpUser';
+import {Article} from '../model/data/Article';
 
 @Component({
   selector: 'app-comments',
@@ -24,7 +25,7 @@ export class CommentsComponent implements OnInit {
 
   user: GpUser | null = null;
 
-  @Input() articleId: number;
+  @Input() article: Article;
 
   noCommentsForArticle = false;
   comments: GpComment[] = [];
@@ -86,7 +87,7 @@ export class CommentsComponent implements OnInit {
     }
 
     this.commentService
-      .getCommentsForArticle(this.articleId, GpConstants.DEFAULT_LIMIT, offset)
+      .getCommentsForArticle(this.article.id, GpConstants.DEFAULT_LIMIT, offset)
       .pipe(
         // to test loading indicator
         // delay(1000),

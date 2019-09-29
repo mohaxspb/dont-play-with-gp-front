@@ -333,9 +333,9 @@
         </div>
       </div>
 
-    </article>
+      <app-comments [article]="article" class="default-margin-top"></app-comments>
 
-    <app-comments [articleId]="article.id" class="default-margin-top"></app-comments>
+    </article>
 
     <div id="data-sending-indication" *ngIf="progressInAction|async"
          class="background-half-transparent-white cover"

@@ -41,4 +41,5 @@ export class Article {
 
   tags: [Tag];
   fromFuture = false;
+  commentsCount: number;
 }

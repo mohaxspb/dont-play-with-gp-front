@@ -63,9 +63,9 @@
             >{{tag.title}}{{isLast ? '' : ', '}}</span>
           </div>
 
-          <mat-card-actions>
+          <mat-card-actions fxLayout fxLayoutAlign="start center">
             <mat-button-toggle-group
-              class="default-margin-bottom default-margin-left"
+              class="default-margin-left"
               [value]="correctArticleLanguage(articleAndTranslation[0])"
               (change)="changeTranslationForArticleByLanguage($event.value, articleAndTranslation[0])"
             >
@@ -74,6 +74,9 @@
                 [value]="lang"
               >{{lang.langCode.toUpperCase()}}</mat-button-toggle>
             </mat-button-toggle-group>
+            <span class="toolbar-spacer"></span>
+            <span>{{articleAndTranslation[0].commentsCount}}</span>
+            <mat-icon class="small-margin-left default-margin-right">mode_comment</mat-icon>
           </mat-card-actions>
         </mat-card>
 

@@ -630,6 +630,10 @@ export class ArticleComponent implements OnInit {
   onPublishDateChanged(value: string) {
     this.publishDate = value ? new Date(Date.parse(value)).toISOString() : null;
   }
+
+  onArticleImageLoadError(event) {
+    event.target.src = './assets/baseline-image-24px.svg';
+  }
 }
 
 export enum DataType {

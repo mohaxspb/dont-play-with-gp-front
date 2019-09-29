@@ -62,22 +62,6 @@ export class CommentsComponent implements OnInit {
     return this.comments.length % GpConstants.DEFAULT_LIMIT !== 0 || this.noCommentsForArticle;
   }
 
-  private loadInitialData() {
-    this.progressInAction.next(true);
-
-    this.userService.getUser().pipe(catchError(() => of(null)))
-      .pipe(
-        // delay(1000),
-        finalize(() => this.loadComments())
-      )
-      .subscribe(
-        value => {
-          this.user = value;
-        },
-        error => this.notificationService.showError(error)
-      );
-  }
-
   loadComments(offset: number = 0) {
     console.log('loadComments: %s', offset);
     if (offset === 0) {
@@ -126,5 +110,21 @@ export class CommentsComponent implements OnInit {
 
   onAvatarLoadError(event) {
     event.target.src = './assets/person-24px.svg';
+  }
+
+  private loadInitialData() {
+    this.progressInAction.next(true);
+
+    this.userService.getUser().pipe(catchError(() => of(null)))
+      .pipe(
+        // delay(1000),
+        finalize(() => this.loadComments())
+      )
+      .subscribe(
+        value => {
+          this.user = value;
+        },
+        error => this.notificationService.showError(error)
+      );
   }
 }

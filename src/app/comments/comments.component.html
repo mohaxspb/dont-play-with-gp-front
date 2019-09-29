@@ -1,6 +1,5 @@
 <h3>Comments {{article.commentsCount}}: </h3>
 <div id="comments-container"
-     class="position-relative"
      infiniteScroll
      [infiniteScrollDistance]="2"
      [infiniteScrollThrottle]="300"
@@ -9,46 +8,100 @@
        || commentsListEndReached()"
      (scrolled)="onScroll()"
 >
-  <div *ngIf="comments.length!=0 else emptyComments">
-    <div *ngFor="let comment of comments">
-      <div fxLayout fxLayoutAlign="start center" class="default-margin-bottom default-margin-top">
-        <img class="avatar" src="{{comment.author.avatar}}" alt="avatar" (error)="onAvatarLoadError($event)">
-        <span class="default-margin-left default-margin-right color-primary">{{comment.author.fullName}}</span>
-        <span>{{comment.created|date: 'short': 'UTC': preferredLanguage.langCode}}</span>
+  <div id="comment-create-container">
+    <div id="form-container" *ngIf="user!=null else loginToPostComment" class="position-relative">
+      <form
+        name="articleCreateForm"
+        [formGroup]="commentCreateFormGroup"
+        (ngSubmit)="onCommentCreateClicked()"
+      >
+        <div class="full-width-field default-margin-bottom">
+          <label>Add comment</label>
+          <!--suppress AngularUndefinedBinding -->
+          <angular-markdown-editor
+            textareaId="editor1"
+            rows="6"
+            formControlName="markdownText"
+            (onChange)="onTextChanged($event.target.value)"
+          >
+          </angular-markdown-editor>
+        </div>
+
+        <p id="submit">
+          <button
+            mat-raised-button
+            color="accent"
+            type="submit"
+            [disabled]="!commentCreateFormGroup.valid"
+          >Send</button>
+        </p>
+      </form>
+      <div id="comment-sending-indication" *ngIf="commentSendInAction|async"
+           class="background-half-transparent-white cover"
+           (click)="$event.stopPropagation()"
+      >
+        <mat-spinner
+          class="center-inside-both-axis"
+          [diameter]="24"
+        ></mat-spinner>
       </div>
-      <markdown [data]="comment.text"></markdown>
-      <mat-divider></mat-divider>
     </div>
+
+    <ng-template #loginToPostComment>
+      <div fxLayout fxLayoutAlign="start center" fxLayoutGap="16px">
+        <div>Only registered users can post comments!</div>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="onLoginClicked()"
+          i18n="login button@@login"
+        >Login</button>
+      </div>
+    </ng-template>
   </div>
-  <ng-template #emptyComments>
-    <p>No comments yet!</p>
-  </ng-template>
 
-  <div id="data-loading-indication" *ngIf="progressInAction|async"
-       class="background-half-transparent-white cover"
-       (click)="$event.stopPropagation()"
-  >
-    <mat-spinner
-      class="center-inside-both-axis"
-      [diameter]="24"
-    ></mat-spinner>
-  </div>
+  <div id="comments-list-container" class="position-relative">
+    <div *ngIf="comments.length!=0">
+      <div *ngFor="let comment of comments">
+        <div fxLayout fxLayoutAlign="start center" class="default-margin-bottom default-margin-top">
+          <img class="avatar" src="{{comment.author.avatar}}" alt="avatar" (error)="onAvatarLoadError($event)">
+          <span class="default-margin-left default-margin-right color-primary">{{comment.author.fullName}}</span>
+          <span>{{comment.created|date: 'short': 'UTC': preferredLanguage.langCode}}</span>
+        </div>
+        <markdown [data]="comment.text"></markdown>
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+    <div *ngIf="comments.length==0 && !(progressInAction|async)">
+      <p>No comments yet!</p>
+    </div>
 
-  <div id="bottom-loading-indication" fxLayout fxLayoutAlign="center center">
-    <mat-spinner
-      *ngIf="bottomProgressInAction|async"
-      class="center-inside-both-axis"
-      [diameter]="24"
-    ></mat-spinner>
+    <div id="data-loading-indication" *ngIf="progressInAction|async"
+         class="background-half-transparent-white cover"
+         (click)="$event.stopPropagation()"
+    >
+      <mat-spinner
+        class="center-inside-both-axis"
+        [diameter]="24"
+      ></mat-spinner>
+    </div>
 
-    <button
-      *ngIf="(bottomProgressErrorOccurred|async) && !(bottomProgressInAction|async)"
-      mat-flat-button
-      (click)="loadComments(comments.length)"
-    >Try again</button>
+    <div id="bottom-loading-indication" fxLayout fxLayoutAlign="center center">
+      <mat-spinner
+        *ngIf="bottomProgressInAction|async"
+        class="center-inside-both-axis"
+        [diameter]="24"
+      ></mat-spinner>
 
-    <div *ngIf="commentsListEndReached() && !noCommentsForArticle">
-      <p>This is the end of comments list</p>
+      <button
+        *ngIf="(bottomProgressErrorOccurred|async) && !(bottomProgressInAction|async)"
+        mat-flat-button
+        (click)="loadComments(comments.length)"
+      >Try again</button>
+
+      <div *ngIf="commentsListEndReached() && !noCommentsForArticle">
+        <p>This is the end of comments list</p>
+      </div>
     </div>
   </div>
 </div>

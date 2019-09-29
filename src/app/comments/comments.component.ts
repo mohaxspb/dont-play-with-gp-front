@@ -25,6 +25,7 @@ export class CommentsComponent implements OnInit {
   progressInAction = new BehaviorSubject<boolean>(false);
   bottomProgressInAction = new BehaviorSubject<boolean>(false);
   bottomProgressErrorOccurred = new BehaviorSubject<boolean>(false);
+  commentSendInAction = new BehaviorSubject<boolean>(false);
 
   user: GpUser | null = null;
 
@@ -34,11 +35,16 @@ export class CommentsComponent implements OnInit {
   noCommentsForArticle = false;
   comments: GpComment[] = [];
 
+  // comment create
+  commentCreateFormGroup: FormGroup;
+  commentText: string | null = null;
+
   constructor(
     private commentService: CommentService,
     private userService: GpUserService,
     private userProvider: UserProvider,
     private notificationService: NotificationService,
+    private fBuilder: FormBuilder,
     private dialogsService: DialogService,
     private bottomSheet: MatBottomSheet
   ) {
@@ -56,6 +62,8 @@ export class CommentsComponent implements OnInit {
           this.user = value;
         }
       });
+
+    this.initCommentCreateForm();
   }
 
   onScroll() {
@@ -130,5 +138,37 @@ export class CommentsComponent implements OnInit {
         },
         error => this.notificationService.showError(error)
       );
+  }
+
+  private initCommentCreateForm() {
+    this.commentCreateFormGroup = this.fBuilder.group({
+      markdownText: new FormControl(null, [Validators.required])
+    });
+  }
+
+  onTextChanged(text: string) {
+    this.commentText = text;
+  }
+
+  onCommentCreateClicked() {
+    this.commentSendInAction.next(true);
+
+    this.commentService.createComment(this.article.id, this.commentText)
+      .pipe(
+        // delay(1000),
+        finalize(() => this.commentSendInAction.next(false))
+      )
+      .subscribe(
+        value => {
+          this.commentText = null;
+          this.comments = [];
+          this.loadComments();
+        },
+        error => this.notificationService.showError(error)
+      );
+  }
+
+  onLoginClicked() {
+    this.bottomSheet.open(LoginComponent, {data: {title: 'To post comment you should'}});
   }
 }

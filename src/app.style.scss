@@ -18,6 +18,10 @@ body {
   font-family: Roboto, sans-serif;
 }
 
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
 .mat-button-toggle-checked {
   background-color: mat-color($accent);
   color: mat-color($accent, default-contrast);
@@ -70,6 +74,18 @@ body {
 
 .small-margin-left {
   margin-left: 8px;
+}
+
+.small-margin-bottom {
+  margin-bottom: 8px;
+}
+
+.small-margin-right {
+  margin-right: 8px;
+}
+
+.small-padding-bottom {
+  padding-bottom: 8px;
 }
 
 .center-inside {

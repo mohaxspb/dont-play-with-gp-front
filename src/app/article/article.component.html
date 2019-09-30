@@ -45,7 +45,7 @@
             fxFlexOrder.gt-xs="2"
             [ngClass]="{'article-image':true, 'default-margin-bottom':true, 'article-image-desktop':false}"
             [ngClass.gt-xs]="{'article-image':false, 'default-margin-bottom':true, 'article-image-desktop':true}"
-            onerror="if (this.src !== './assets/baseline-image-24px.svg') this.src = './assets/baseline-image-24px.svg';"
+            (error)="onArticleImageLoadError($event)"
           >
 
         </div>
@@ -332,6 +332,8 @@
           </div>
         </div>
       </div>
+
+      <app-comments [article]="article" [preferredLanguage]="preferredLanguage" class="default-margin-top"></app-comments>
 
     </article>
 

@@ -63,6 +63,18 @@ export class Api {
     };
   };
 
+  static CommentEndpoint = class {
+    static URL = 'comment/';
+
+    static Method = class {
+      static COUNT_FOR_ARTICLE = 'countForArticle';
+      static ALL = 'all';
+      static ALL_BY_AUTHOR_ID = 'allByAuthorId';
+      static ADD = 'add';
+      static DELETE = 'delete';
+    };
+  };
+
   static ArticleEndpoint = class {
     static URL = 'article/';
 

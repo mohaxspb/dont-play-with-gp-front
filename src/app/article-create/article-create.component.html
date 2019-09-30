@@ -137,7 +137,7 @@
 
           <div id="input-primaryLanguage">
             <mat-form-field class="full-width-field default-margin-top">
-              <mat-label>Primary language</mat-label>
+              <mat-label i18n="language select label|primary language select label@@primaryLanguageSelectLabel">Primary language</mat-label>
 
               <mat-select
                 formControlName="primaryLanguageSelect"
@@ -152,6 +152,7 @@
               </mat-select>
 
               <mat-error *ngIf="articleCreateFormGroup.controls.primaryLanguageSelect.errors?.required"
+                         i18n="language required|language required error message@@languageRequiredErrorMessage"
               >You must make a selection</mat-error>
 
             </mat-form-field>
@@ -293,6 +294,7 @@
               </mat-select>
 
               <mat-error *ngIf="articleCreateFormGroup.controls.translationLanguageSelect.errors?.required"
+                         i18n="language required|language required error message@@languageRequiredErrorMessage"
               >You must make a selection</mat-error>
 
             </mat-form-field>

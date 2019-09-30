@@ -22,6 +22,7 @@
             textareaId="editor1"
             rows="6"
             formControlName="markdownText"
+            [options]="editorOptions"
             (onChange)="onTextChanged($event.target.value)"
           >
           </angular-markdown-editor>

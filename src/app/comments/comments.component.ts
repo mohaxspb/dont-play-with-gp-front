@@ -14,6 +14,7 @@ import {Article} from '../model/data/Article';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginComponent} from '../login/login.component';
 import {Language} from '../model/data/Language';
+import {EditorInstance, EditorOption} from 'angular-markdown-editor';
 
 @Component({
   selector: 'app-comments',
@@ -21,6 +22,9 @@ import {Language} from '../model/data/Language';
   styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent implements OnInit {
+
+  bsEditorInstance: EditorInstance;
+  editorOptions: EditorOption;
 
   progressInAction = new BehaviorSubject<boolean>(false);
   bottomProgressInAction = new BehaviorSubject<boolean>(false);
@@ -52,6 +56,11 @@ export class CommentsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.editorOptions = {
+      iconlibrary: 'fa',
+      onShow: (e) => this.bsEditorInstance = e
+    };
+
     this.commentsCount = this.article.commentsCount;
 
     this.loadInitialData();
@@ -163,8 +172,11 @@ export class CommentsComponent implements OnInit {
       )
       .subscribe(
         () => {
+          this.commentCreateFormGroup.controls.markdownText.setValue(null);
           this.commentText = null;
+          this.bsEditorInstance.setContent(null);
           this.comments = [];
+
           this.loadComments();
           this.updateCommentCount();
         },

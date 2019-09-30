@@ -15,6 +15,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginComponent} from '../login/login.component';
 import {Language} from '../model/data/Language';
 import {EditorInstance, EditorOption} from 'angular-markdown-editor';
+import {AuthorityType} from '../model/auth/Authority';
 
 @Component({
   selector: 'app-comments',
@@ -186,6 +187,25 @@ export class CommentsComponent implements OnInit {
 
   onLoginClicked() {
     this.bottomSheet.open(LoginComponent, {data: {title: 'To post comment you should'}});
+  }
+
+  onCommentDeleteClicked(id: number) {
+    this.progressInAction.next(true);
+
+    this.commentService
+      .deleteComment(id)
+      .pipe(
+        // delay(1000),
+        finalize(() => this.progressInAction.next(false))
+      )
+      .subscribe(
+        () => this.loadComments(),
+        error => this.notificationService.showError(error)
+      );
+  }
+
+  isAdmin(): boolean {
+    return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
   }
 
   private updateCommentCount() {

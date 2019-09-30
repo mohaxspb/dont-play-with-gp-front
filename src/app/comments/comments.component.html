@@ -68,6 +68,15 @@
           <img class="avatar" src="{{comment.author.avatar}}" alt="avatar" (error)="onAvatarLoadError($event)">
           <span class="default-margin-left default-margin-right color-primary">{{comment.author.fullName}}</span>
           <span>{{comment.created|date: 'short': 'UTC': preferredLanguage.langCode}}</span>
+          <span class="toolbar-spacer"></span>
+          <button
+            *ngIf="isAdmin() || user?.id === comment.authorId"
+            class="default-margin-right"
+            mat-icon-button
+            (click)="onCommentDeleteClicked(comment.id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
         <markdown [data]="comment.text"></markdown>
         <mat-divider></mat-divider>
@@ -100,7 +109,7 @@
         (click)="loadComments(comments.length)"
       >Try again</button>
 
-      <div *ngIf="commentsListEndReached() && !noCommentsForArticle">
+      <div *ngIf="commentsListEndReached() && !noCommentsForArticle" class="default-margin-top">
         <p>This is the end of comments list</p>
       </div>
     </div>

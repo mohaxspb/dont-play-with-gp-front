@@ -2,8 +2,10 @@
 
   <h3 *ngIf="inputData!=null" class="color-primary">{{inputData?.title}}</h3>
 
-  <h3 *ngIf=!createNewAccountFormTypeEnabled>Login with email</h3>
-  <h3 *ngIf=createNewAccountFormTypeEnabled>Register with email</h3>
+  <h3 *ngIf="!createNewAccountFormTypeEnabled"
+      i18n="login dialog label|login with email@@loginWithEmail">Login with email</h3>
+  <h3 *ngIf="createNewAccountFormTypeEnabled"
+      i18n="login dialog label|register with email@@registerWithEmail">Register with email</h3>
 
   <mat-card class="login-register-card">
     <div class="login-register-container" fxLayout="column" fxLayoutAlign="space-around center">
@@ -25,7 +27,10 @@
                 (change)="onNameChanged($event.target.value)"
               >
             </label>
-            <mat-error *ngIf="loginRegisterFormGroup.controls.name.errors?.required">You must provide name</mat-error>
+            <mat-error
+              *ngIf="loginRegisterFormGroup.controls.name.errors?.required"
+              i18n="Name required|name required error message@@nameRequiredErrorMessage"
+            >You must provide name</mat-error>
           </mat-form-field>
         </div>
 
@@ -42,8 +47,10 @@
                 (change)="onEmailChanged($event.target.value)"
               >
             </label>
-            <mat-error *ngIf="loginRegisterFormGroup.controls.email.errors?.required">You must provide Email</mat-error>
-            <mat-error *ngIf="loginRegisterFormGroup.controls.email.errors?.email">Invalid Email</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.email.errors?.required"
+                       i18n="Email required|Email required error message@@emailRequiredErrorMessage">You must provide Email</mat-error>
+            <mat-error *ngIf="loginRegisterFormGroup.controls.email.errors?.email"
+                       i18n="Email invalid|Email invalid error message@@emailRequiredErrorMessage">Invalid Email</mat-error>
           </mat-form-field>
         </div>
 
@@ -61,10 +68,13 @@
               >
             </label>
             <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.required"
+                       i18n="password required|password required error message@@passwordRequiredErrorMessage"
             >You must provide password</mat-error>
             <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.minlength"
+                       i18n="password min length|password min length error message@@passwordMinLengthErrorMessage"
             >Minimum length is {{passwordMinLength}}</mat-error>
             <mat-error *ngIf="loginRegisterFormGroup.controls.password.errors?.maxlength"
+                       i18n="password max length|password max length error message@@passwordMaxLengthErrorMessage"
             >Maximum length is {{passwordMaxLength}}</mat-error>
           </mat-form-field>
         </div>
@@ -85,10 +95,11 @@
             </label>
             <mat-error
               *ngIf="loginRegisterFormGroup.controls.passwordConfirm.errors?.required"
-              i18n="Password is required error@@passwordError"
+              i18n="password required|password required error message@@passwordRequiredErrorMessage"
             >You must provide password</mat-error>
             <mat-error
               *ngIf="loginRegisterFormGroup.controls.passwordConfirm.errors?.pattern"
+              i18n="password does not match|password does not match error message@@passwordsDoesntMatchErrorMessage"
             >Password & Password Confirm does not match.</mat-error>
           </mat-form-field>
         </div>
@@ -96,7 +107,7 @@
         <div fxLayout="row" fxLayoutGap="16px">
 
           <mat-form-field *ngIf="createNewAccountFormTypeEnabled">
-            <mat-label>Primary language</mat-label>
+            <mat-label i18n="language select label|primary language select label@@primaryLanguageSelectLabel">Primary language</mat-label>
 
             <mat-select
               formControlName="primaryLanguageSelect"
@@ -111,8 +122,11 @@
             </mat-select>
 
             <mat-error *ngIf="loginRegisterFormGroup.controls.primaryLanguageSelect.errors?.required"
+                       i18n="language required|language required error message@@languageRequiredErrorMessage"
             >You must make a selection</mat-error>
-            <mat-error *ngIf="(languagesListFromApi | async) == null">Please, refresh languages list</mat-error>
+            <mat-error *ngIf="(languagesListFromApi | async) == null"
+                       i18n="language list is empty|language list is empty error message@@langsListEmptyErrorMessage"
+            >Please, refresh languages list</mat-error>
 
           </mat-form-field>
 
@@ -124,6 +138,7 @@
               color="warn"
               type="button"
               (click)="onLanguagesRefreshClicked()"
+              i18n="refresh button label|refresh button label@@refreshButton"
             >Refresh</button>
 
             <mat-spinner
@@ -142,6 +157,7 @@
             color="accent"
             type="submit"
             [disabled]="!loginRegisterFormGroup.valid"
+            i18n="login|login button label@@login"
           >Login</button>
           <button
             *ngIf="createNewAccountFormTypeEnabled"
@@ -149,18 +165,29 @@
             color="accent"
             type="submit"
             [disabled]="!loginRegisterFormGroup.valid"
+            i18n="register|register button label@@register"
           >Register</button>
         </p>
 
       </form>
 
       <p *ngIf="!createNewAccountFormTypeEnabled">
-        <span class="default-margin-right">Don't have account?</span>
-        <button mat-raised-button color="accent" (click)="onFormTypeClicked()">Create it!</button>
+        <span class="default-margin-right" i18n="no account?|no account?@@noAccountQuestion">Don't have account?</span>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="onFormTypeClicked()"
+          i18n="create account|create account button label@@createAccountButtonLabel"
+        >Create it!</button>
       </p>
       <p *ngIf="createNewAccountFormTypeEnabled">
         <span class="default-margin-right">Already have account?</span>
-        <button mat-raised-button color="accent" (click)="onFormTypeClicked()">Login</button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="onFormTypeClicked()"
+          i18n="login|login button label@@login"
+        >Login</button>
       </p>
     </div>
   </mat-card>

@@ -15,6 +15,7 @@
       color="warn"
       type="button"
       (click)="onDataRefreshClicked()"
+      i18n="refresh button label|refresh button label@@refreshButton"
     >Refresh</button>
 
   </div>
@@ -333,7 +334,9 @@
         </div>
       </div>
 
-      <app-comments [article]="article" [preferredLanguage]="preferredLanguage" class="default-margin-top"></app-comments>
+      <app-comments [article]="article"
+                    [preferredLanguage]="preferredLanguage"
+                    class="default-margin-top"></app-comments>
 
     </article>
 

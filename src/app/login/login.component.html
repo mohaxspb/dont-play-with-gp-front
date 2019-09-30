@@ -8,10 +8,9 @@
   <mat-card class="login-register-card">
     <div class="login-register-container" fxLayout="column" fxLayoutAlign="space-around center">
       <form
-          #loginRegisterForm="ngForm"
-          [formGroup]="loginRegisterFormGroup"
-          name="loginRegisterForm"
-          (ngSubmit)="onLoginOrRegisterClicked()"
+        [formGroup]="loginRegisterFormGroup"
+        name="loginRegisterForm"
+        (ngSubmit)="onLoginOrRegisterClicked()"
       >
 
         <div class="mat-input-element" *ngIf="createNewAccountFormTypeEnabled">
@@ -142,14 +141,14 @@
             mat-raised-button
             color="accent"
             type="submit"
-            [disabled]="!loginRegisterForm.valid"
+            [disabled]="!loginRegisterFormGroup.valid"
           >Login</button>
           <button
             *ngIf="createNewAccountFormTypeEnabled"
             mat-raised-button
             color="accent"
             type="submit"
-            [disabled]="!loginRegisterForm.valid"
+            [disabled]="!loginRegisterFormGroup.valid"
           >Register</button>
         </p>
 

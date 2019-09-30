@@ -156,6 +156,10 @@ export class FeedComponent implements OnInit {
       );
   }
 
+  onArticleImageLoadError(event) {
+    event.target.src = './assets/baseline-image-24px.svg';
+  }
+
   isAdmin(): boolean {
     return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
   }

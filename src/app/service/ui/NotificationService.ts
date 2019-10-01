@@ -23,10 +23,12 @@ export class NotificationService {
         this.showMessage(parsedServerError.message);
       } catch (e) {
         console.error(e);
+        // todo translation
         this.showMessage('Unexpected error occurred.');
       }
     } else {
-      console.log('error is instance of: %s', error.constructor.name);
+      console.error('error is instance of: %s', error.constructor.name);
+      // todo translation
       this.showMessage('Unexpected error occurred.');
     }
   }

@@ -56,7 +56,6 @@ export class FeedComponent implements OnInit {
     this.userProvider
       .getUser()
       .subscribe(value => {
-        // console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
         if ((this.user === null && value !== null) || (this.user !== null && value === null)) {
           this.user = value;
         }
@@ -64,18 +63,16 @@ export class FeedComponent implements OnInit {
   }
 
   onCreateArticleClicked() {
-    console.log('onCreateArticleClicked');
     if (this.authService.authenticated) {
       // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(['create-article'], {queryParams: {actionType: ActionType.CREATE_ARTICLE}});
     } else {
+      // todo translation
       this.bottomSheet.open(LoginComponent, {data: {title: 'To create article you should'}});
     }
   }
 
   onArticleClicked(article: Article, translation: ArticleTranslation) {
-    console.log('onArticleClicked: %s/%s', article.id, translation.id);
-
     this.router
       .navigate(['article/' + article.id], {queryParams: {langId: translation.langId}})
       .then(() => NavigationUtils.scrollToTop());

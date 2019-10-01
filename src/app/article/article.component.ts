@@ -67,7 +67,6 @@ export class ArticleComponent implements OnInit {
     this.userProvider
       .getUser()
       .subscribe(value => {
-        // console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
         if ((this.user === null && value !== null) || (this.user !== null && value === null)) {
           this.user = value;
           // update article if user changed (i.e. login with admin authority)
@@ -79,7 +78,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onDataRefreshClicked() {
-    console.log('onDataRefreshClicked');
     if (this.languages == null) {
       this.loadInitialData();
     } else {
@@ -88,8 +86,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onApproveArticleChanged(checked: boolean) {
-    console.log('onApproveArticleChanged: %s', checked);
-
     this.progressInAction.next(true);
     this.articleService
       .approveArticle(this.article.id, checked)
@@ -97,10 +93,7 @@ export class ArticleComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        value => {
-          // console.log('approveArticle: %s', JSON.stringify(value));
-          this.article = value;
-        },
+        value => this.article = value,
         error => {
           this.article.approved = !checked;
           this.notificationService.showError(error);
@@ -109,8 +102,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onApproveTranslationChanged(checked: boolean) {
-    console.log('onApproveTranslationChanged: %s', checked);
-
     this.progressInAction.next(true);
 
     this.articleService
@@ -128,8 +119,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onApproveVersionChanged(checked: boolean) {
-    console.log('onApproveVersionChanged: %s', checked);
-
     this.progressInAction.next(true);
 
     this.articleService
@@ -149,22 +138,18 @@ export class ArticleComponent implements OnInit {
   }
 
   onPublishArticleChanged(checked: boolean) {
-    // console.log('onPublishArticleChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.ARTICLE, this.article.id, checked);
   }
 
   onPublishTranslationChanged(checked: boolean) {
-    // console.log('onPublishTranslationChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.TRANSLATION, this.selectedTranslation.id, checked);
   }
 
   onPublishVersionChanged(checked: boolean) {
-    // console.log('onPublishVersionChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.VERSION, this.selectedTranslationVersion.id, checked);
   }
 
   onLanguageSelected(language: Language) {
-    // console.log('onLanguageSelected: %s', JSON.stringify(language));
     this.selectedLanguage = language;
 
     this.selectedTranslation = this.calculateSelectedTranslation();
@@ -172,7 +157,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onArticleEditClicked() {
-    console.log('onArticleEditClicked');
     // only author or admin could see it, so no need to login
 
     // noinspection JSIgnoredPromiseFromCall
@@ -190,27 +174,24 @@ export class ArticleComponent implements OnInit {
   }
 
   onArticleDeleteClicked() {
-    console.log('onArticleDeleteClicked');
     // only author or admin could see it, so no need to login
     this.showConfirmArticleDeleteDialog(this.article.id);
   }
 
   onTranslationDeleteClicked() {
-    console.log('onTranslationDeleteClicked');
     // only author or admin could see it, so no need to login
     this.showConfirmTranslationDeleteDialog(this.selectedTranslation.id);
   }
 
   onVersionDeleteClicked() {
-    console.log('onVersionDeleteClicked');
     // only author or admin could see it, so no need to login
     this.showConfirmVersionDeleteDialog(this.selectedTranslationVersion.id);
   }
 
   onTranslationAddClicked() {
-    console.log('onTranslationAddClicked');
     // show login or translation create component
     if (this.user == null) {
+      // todo translation
       this.bottomSheet.open(LoginComponent, {data: {title: 'To add translation you should'}});
     } else {
       // noinspection JSIgnoredPromiseFromCall
@@ -229,8 +210,8 @@ export class ArticleComponent implements OnInit {
   }
 
   onVersionAddClicked() {
-    console.log('onVersionAddClicked');
     if (this.user == null) {
+      // todo translation
       this.bottomSheet.open(LoginComponent, {data: {title: 'To add version you should'}});
     } else {
       // noinspection JSIgnoredPromiseFromCall
@@ -249,7 +230,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onVersionEditClicked() {
-    console.log('onVersionEditClicked');
     // only author or admin could see it, so no need to login
 
     // noinspection JSIgnoredPromiseFromCall
@@ -267,7 +247,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onTranslationEditClicked() {
-    console.log('onTranslationEditClicked');
     // only author or admin could see it, so no need to login
 
     // noinspection JSIgnoredPromiseFromCall
@@ -285,7 +264,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onSelectedVersionChanged(version: ArticleTranslationVersion) {
-    console.log('onSelectedVersionChanged: %s', version.id);
     this.selectedTranslationVersion = version;
   }
 

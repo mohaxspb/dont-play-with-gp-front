@@ -70,7 +70,6 @@ export class CommentsComponent implements OnInit {
     this.userProvider
       .getUser()
       .subscribe(value => {
-        // console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
         if ((this.user === null && value !== null) || (this.user !== null && value === null)) {
           this.user = value;
         }
@@ -88,7 +87,6 @@ export class CommentsComponent implements OnInit {
   }
 
   loadComments(offset: number = 0) {
-    console.log('loadComments: %s', offset);
     if (offset === 0) {
       this.progressInAction.next(true);
     } else {
@@ -133,34 +131,12 @@ export class CommentsComponent implements OnInit {
       );
   }
 
-  onAvatarLoadError(event) {
-    event.target.src = './assets/person-24px.svg';
-  }
-
-  private loadInitialData() {
-    this.progressInAction.next(true);
-
-    this.userService.getUser().pipe(catchError(() => of(null)))
-      .pipe(
-        // delay(1000),
-        finalize(() => this.loadComments())
-      )
-      .subscribe(
-        value => {
-          this.user = value;
-        },
-        error => this.notificationService.showError(error)
-      );
-  }
-
-  private initCommentCreateForm() {
-    this.commentCreateFormGroup = this.fBuilder.group({
-      markdownText: new FormControl(null, [Validators.required])
-    });
-  }
-
   onTextChanged(text: string) {
     this.commentText = text;
+  }
+
+  onAvatarLoadError(event) {
+    event.target.src = './assets/person-24px.svg';
   }
 
   onCommentCreateClicked() {
@@ -186,6 +162,7 @@ export class CommentsComponent implements OnInit {
   }
 
   onLoginClicked() {
+    // todo translation
     this.bottomSheet.open(LoginComponent, {data: {title: 'To post comment you should'}});
   }
 
@@ -206,6 +183,26 @@ export class CommentsComponent implements OnInit {
 
   isAdmin(): boolean {
     return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
+  }
+
+  private loadInitialData() {
+    this.progressInAction.next(true);
+
+    this.userService.getUser().pipe(catchError(() => of(null)))
+      .pipe(
+        // delay(1000),
+        finalize(() => this.loadComments())
+      )
+      .subscribe(
+        value => this.user = value,
+        error => this.notificationService.showError(error)
+      );
+  }
+
+  private initCommentCreateForm() {
+    this.commentCreateFormGroup = this.fBuilder.group({
+      markdownText: new FormControl(null, [Validators.required])
+    });
   }
 
   private updateCommentCount() {

@@ -313,8 +313,6 @@ export class ArticleComponent implements OnInit {
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteArticle(id);
-        } else {
-          console.log('Do not delete!');
         }
       });
   }
@@ -326,8 +324,6 @@ export class ArticleComponent implements OnInit {
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteTranslation(id);
-        } else {
-          console.log('Do not delete!');
         }
       });
   }
@@ -339,14 +335,11 @@ export class ArticleComponent implements OnInit {
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteVersion(id);
-        } else {
-          console.log('Do not delete!');
         }
       });
   }
 
   private loadInitialData() {
-    console.log('loadInitialData');
     this.dataIsLoading.next(true);
 
     zip(
@@ -367,9 +360,6 @@ export class ArticleComponent implements OnInit {
           const pathParams = paramsAndLanguages[0];
           const queryParams = paramsAndLanguages[1];
 
-          // console.log('pathParams', pathParams);
-          // console.log('queryParams', queryParams);
-
           this.articleId = parseInt(pathParams.get('articleId'), 0);
 
           this.languages = paramsAndLanguages[2];
@@ -384,8 +374,6 @@ export class ArticleComponent implements OnInit {
   }
 
   private loadArticle() {
-    console.log('loadArticle');
-
     this.dataIsLoading.next(true);
 
     this.articleService
@@ -449,7 +437,6 @@ export class ArticleComponent implements OnInit {
     return versions.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime())[0];
   }
 
-  // todo translation
   private showPublishConfirmDialog(dataType: DataType, id: number, publish: boolean) {
     let action: string;
     if (publish) {
@@ -458,6 +445,7 @@ export class ArticleComponent implements OnInit {
       action = 'hide';
     }
     this.dialogsService
+    // todo translation
       .confirm(
         action + ' ' + dataType,
         'Are you sure you want to ' + action + ' this ' + dataType + '?\n' +
@@ -478,7 +466,6 @@ export class ArticleComponent implements OnInit {
               break;
           }
         } else {
-          console.log('Do not publish!');
           switch (dataType) {
             case DataType.ARTICLE:
               this.article.published = !this.article.published;
@@ -558,8 +545,6 @@ export class ArticleComponent implements OnInit {
   }
 
   private deleteArticle(id: number) {
-    console.log('deleteArticle: %d', id);
-
     this.progressInAction.next(true);
 
     this.articleService
@@ -575,8 +560,6 @@ export class ArticleComponent implements OnInit {
   }
 
   private deleteTranslation(id: number) {
-    console.log('deleteTranslation: %d', id);
-
     this.progressInAction.next(true);
 
     this.articleService
@@ -589,8 +572,6 @@ export class ArticleComponent implements OnInit {
   }
 
   private deleteVersion(id: number) {
-    console.log('deleteVersion: %d', id);
-
     this.progressInAction.next(true);
 
     this.articleService

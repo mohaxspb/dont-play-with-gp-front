@@ -138,7 +138,11 @@
             <span *ngIf="article.sourceAuthorName!=null">By {{article.sourceAuthorName}}</span>
           </div>
 
-          <div *ngIf="article.sourceTitle==null" class="default-margin-top">Author: {{article.author?.fullName}}</div>
+          <div
+            *ngIf="article.sourceTitle==null"
+            class="default-margin-top"
+            i18n="author of article|author of article@@authorOfArticle"
+          >Author: {{article.author?.fullName}}</div>
 
         </mat-card-content>
       </mat-card>

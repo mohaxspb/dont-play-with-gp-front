@@ -51,8 +51,6 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
-
     this.getData();
   }
 
@@ -86,10 +84,7 @@ export class AccountComponent implements OnInit {
         finalize(() => this.articlesAreLoading.next(false))
       )
       .subscribe(
-        articles => {
-          // todo
-          this.articlesCreated = articles;
-        },
+        articles => this.articlesCreated = articles,
         error => this.notificationService.showError(error)
       );
   }
@@ -123,17 +118,18 @@ export class AccountComponent implements OnInit {
   }
 
   onNameChanged(name: string) {
-    console.log('onNameChanged: %s', name);
     this.name = name;
   }
 
   onPrimaryLanguageChanged(language: Language) {
-    console.log('onPrimaryLanguageChanged: %s', JSON.stringify(language));
     this.userLanguage = language;
   }
 
+  onDataRefreshClicked() {
+    this.getData();
+  }
+
   onAccountEditClicked() {
-    console.log('onAccountEditClicked: %s, %s', this.name, this.userLanguage.langCode);
     this.progressInAction.next(true);
     this.accountInteractor
       .editAccount(this.userFromApi.id, this.name, this.userLanguage.langCode)
@@ -148,6 +144,7 @@ export class AccountComponent implements OnInit {
             GpLanguageService.getLanguageById(this.languagesListFromApi, this.userFromApi.primaryLanguageId)
           );
           this.accountEditFormGroup.reset(this.accountEditFormGroup.value);
+          // todo translation
           this.notificationService.showMessage('Successfully updated!');
         },
         error => this.notificationService.showError(error)
@@ -156,24 +153,19 @@ export class AccountComponent implements OnInit {
 
   onAvatarEditClicked() {
     console.log('onAvatarEditClicked');
+    // todo translation
     this.notificationService.showMessage('Not implemented yet, sorry)');
     // todo
   }
 
-  onDataRefreshClicked() {
-    console.log('onDataRefreshClicked');
-    this.getData();
-  }
-
   onChangePasswordClicked() {
     console.log('onChangePasswordClicked');
+    // todo translation
     this.notificationService.showMessage('Not implemented yet, sorry)');
     // todo
   }
 
   onDeleteAccountClicked() {
-    console.log('onDeleteAccountClicked');
-
     this.showConfirmAccountDeleteDialog(this.userFromApi.id);
   }
 
@@ -197,14 +189,11 @@ export class AccountComponent implements OnInit {
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteAccount(id);
-        } else {
-          console.log('do not delete!');
         }
       });
   }
 
   private deleteAccount(id: number) {
-    console.log('deleteAccount: %d', id);
     this.accountInteractor
       .deleteAccount(id)
       .subscribe(

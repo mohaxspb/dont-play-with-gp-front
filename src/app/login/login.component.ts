@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
         .subscribe(
           () => this.bottomSheetRef.dismiss(),
           () => {
-            // todo message localization
+            // todo translation
             this.notificationService.showMessage('Error. May be wrong email and/or password.');
           }
         );

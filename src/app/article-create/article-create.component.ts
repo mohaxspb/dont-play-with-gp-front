@@ -8,7 +8,7 @@ import {UserProvider} from '../service/auth/UserProvider';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {finalize, flatMap, map, tap} from 'rxjs/operators';
 import {BehaviorSubject, of, zip} from 'rxjs';
-import {ARTICLE_OBJECT_EXAMPLE_FOR_INSTRUCTION, URL_PATTERN} from '../GpConstants';
+import {URL_PATTERN} from '../GpConstants';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Article} from '../model/data/Article';
 import {NotificationService} from '../service/ui/NotificationService';
@@ -113,54 +113,44 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onArticleIsFromAnotherSiteClicked(checked: boolean) {
-    // console.log('onArticleIsFromAnotherSiteClicked: %s', checked);
     this.articleIsFromAnotherSite = checked;
 
     this.updateSourceDataControls();
   }
 
   onPrimaryLanguageChanged(language: Language) {
-    // console.log('onPrimaryLanguageChanged: %s', JSON.stringify(language));
     this.articleLanguage = language;
   }
 
   onTranslationLanguageChanged(language: Language) {
-    // console.log('onTranslationLanguageChanged: %s', JSON.stringify(language));
     this.translationLanguage = language;
   }
 
   onSourceTitleChanged(sourceTitle: string) {
-    // console.log('onSourceTitleChanged: %s', sourceTitle);
     this.sourceTitle = sourceTitle;
   }
 
   onSourceUrlChanged(sourceUrl: string) {
-    // console.log('onSourceUrlChanged: %s', sourceUrl);
     this.sourceUrl = sourceUrl;
   }
 
   onSourceAuthorNameChanged(sourceAuthorName: string) {
-    // console.log('onSourceAuthorNameChanged: %s', sourceAuthorName);
     this.sourceAuthorName = sourceAuthorName;
   }
 
   onTitleChanged(title: string) {
-    // console.log('onTitleChanged: %s', title);
     this.title = title;
   }
 
   onShortDescriptionChanged(shortDescription: string) {
-    console.log('onShortDescriptionChanged: %s', shortDescription);
     this.shortDescription = shortDescription;
   }
 
   onTextChanged(text: string) {
-    // console.log('onTextChanged: %s', text);
     this.text = text;
   }
 
   onDataRefreshClicked() {
-    // console.log('onDataRefreshClicked');
     this.loadInitialData();
   }
 
@@ -169,12 +159,10 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onImageFileNameChanged(imageFileName: string) {
-    // console.log('onImageFileNameChanged: %s', imageFileName);
     this.imageFileName = imageFileName;
   }
 
   articleImageFileChange(files: FileList) {
-    // console.log('articleImageFileChange: ', files);
     if (files.length > 0) {
       this.imageFile = files[0];
       this.imageFileName = this.imageFile.name;
@@ -203,7 +191,6 @@ export class ArticleCreateComponent implements OnInit {
 
     switch (this.actionType) {
       case ActionType.CREATE_ARTICLE:
-        console.log('CREATE_ARTICLE');
         this.articleService
           .createArticle(
             this.articleLanguage.id,
@@ -230,13 +217,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.EDIT_ARTICLE:
-        console.log('EDIT_ARTICLE: %s/%s/%s/%s/%s',
-          this.articleId,
-          this.articleLanguage.id,
-          this.sourceUrl,
-          this.sourceAuthorName,
-          this.sourceTitle
-        );
         this.articleService
           .editArticle(
             this.articleId,
@@ -260,15 +240,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.ADD_TRANSLATION:
-        console.log('ADD_TRANSLATION: %s/%s/%s/%s/%s/%s/%s',
-          this.articleId,
-          this.translationLanguage.id,
-          this.imageFile,
-          this.imageFileName,
-          this.title,
-          this.shortDescription,
-          this.text
-        );
         this.articleService
           .addTranslation(
             this.articleId,
@@ -293,14 +264,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.EDIT_TRANSLATION:
-        console.log('EDIT_TRANSLATION: %s/%s/%s/%s/%s/%s',
-          this.translationId,
-          this.translationLanguage.id,
-          this.imageFile,
-          this.imageFileName,
-          this.title,
-          this.shortDescription,
-        );
         this.articleService
           .editTranslation(
             this.translationId,
@@ -324,10 +287,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.ADD_VERSION:
-        console.log('ADD_VERSION: %s/%s',
-          this.translationId,
-          this.text
-        );
         this.articleService
           .createVersion(this.translationId, this.text)
           .pipe(
@@ -344,10 +303,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.EDIT_VERSION:
-        console.log('EDIT_VERSION: %s/%s',
-          this.versionId,
-          this.text
-        );
         this.articleService
           .editVersion(this.versionId, this.text)
           .pipe(
@@ -367,13 +322,10 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onImageLoadError(event) {
-    console.log('onImageLoadError');
     event.target.src = './assets/baseline-image-24px.svg';
   }
 
   onUseExistingImageClicked(checked: boolean) {
-    console.log('onUseExistingImageClicked: %s', checked);
-
     // disable img inputs, set image url
     if (checked) {
       this.articleImageUrl = this.article.translations[0].imageUrl;
@@ -501,12 +453,6 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   private initForm() {
-    console.log('isEditArticleMode: %s', this.isEditArticleMode);
-    console.log('isAddTranslationMode: %s', this.isAddTranslationMode);
-    console.log('isEditTranslationMode: %s', this.isEditTranslationMode);
-    console.log('isAddVersionMode: %s', this.isAddVersionMode);
-    console.log('isEditVersionMode: %s', this.isEditVersionMode);
-
     if (this.actionType !== ActionType.CREATE_ARTICLE) {
       this.articleIsFromAnotherSite = this.article.sourceUrl != null;
 
@@ -642,10 +588,6 @@ export class ArticleCreateComponent implements OnInit {
     });
 
     this.updateSourceDataControls();
-
-    // this.articleCreateFormGroup.valueChanges.subscribe((changes) => {
-    //   console.log('valueChanges: %s', JSON.stringify(changes));
-    // });
   }
 
   private getImageFileNameFromUrl() {
@@ -674,18 +616,23 @@ export class ArticleCreateComponent implements OnInit {
               case ActionType.CREATE_ARTICLE:
                 return of(null);
               case ActionType.EDIT_ARTICLE:
+                // todo translation
                 this.actionTitle = 'Edit article';
                 break;
               case ActionType.ADD_TRANSLATION:
+                // todo translation
                 this.actionTitle = 'Add translation';
                 break;
               case ActionType.EDIT_TRANSLATION:
+                // todo translation
                 this.actionTitle = 'Edit translation';
                 break;
               case ActionType.ADD_VERSION:
+                // todo translation
                 this.actionTitle = 'Add version';
                 break;
               case ActionType.EDIT_VERSION:
+                // todo translation
                 this.actionTitle = 'Edit version';
                 break;
             }
@@ -693,10 +640,6 @@ export class ArticleCreateComponent implements OnInit {
             this.articleId = Number(articleId);
             this.translationId = translationId != null ? Number(translationId) : null;
             this.versionId = versionId != null ? Number(versionId) : null;
-            console.log(
-              'actionType, articleId, translationId, versionId, actionTitle: %s/%s/%s/%s/%s: ',
-              this.articleId, this.actionType, this.translationId, this.versionId, this.actionTitle
-            );
             return this.articleService.getFullArticleById(this.articleId);
           })
         )

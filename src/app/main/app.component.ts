@@ -8,7 +8,6 @@ import {GpLocalStorageService} from '../service/GpLocalStorageService';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'dont-play-with-gp-web';
 
   constructor(
     private router: Router,

@@ -155,14 +155,14 @@ export class AccountComponent implements OnInit {
     console.log('onAvatarEditClicked');
     // todo translation
     this.notificationService.showMessage('Not implemented yet, sorry)');
-    // todo
+    // todo avatar edit feature
   }
 
   onChangePasswordClicked() {
     console.log('onChangePasswordClicked');
     // todo translation
     this.notificationService.showMessage('Not implemented yet, sorry)');
-    // todo
+    // todo password change feature
   }
 
   onDeleteAccountClicked() {

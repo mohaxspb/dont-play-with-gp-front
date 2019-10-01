@@ -32,7 +32,9 @@
                 <span>{{articleAndTranslation[0].publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
               </mat-card-subtitle>
               <mat-card-subtitle
-                *ngIf="articleAndTranslation[0].sourceAuthorName != null || (articleAndTranslation[0].author.fullName!=null && articleAndTranslation[0].author.fullName.length>0)"
+                *ngIf="articleAndTranslation[0].sourceAuthorName != null
+                || (articleAndTranslation[0].author.fullName!=null && articleAndTranslation[0].author.fullName.length>0)"
+                i18n="author of article|author of article@@authorOfArticle"
               >Author: {{articleAndTranslation[0].sourceAuthorName != null ? articleAndTranslation[0].sourceAuthorName : articleAndTranslation[0].author.fullName}}</mat-card-subtitle>
             </mat-card-header>
 
@@ -56,7 +58,7 @@
           >{{articleAndTranslation[1].shortDescription}}</mat-card-content>
 
           <div *ngIf="articleAndTranslation[0].tags.length>0" class="small-margin-left">
-            <span>Tags: </span>
+            <span i18n="tags label|tags label@@tagsLabel">Tags: </span>
             <span
               *ngFor="let tag of articleAndTranslation[0].tags; let isLast=last"
               class="mat-caption"
@@ -104,10 +106,11 @@
         *ngIf="(bottomProgressErrorOccurred|async) && !(bottomProgressInAction|async)"
         mat-flat-button
         (click)="loadArticles(articlesAndTranslations.length)"
+        i18n="try again|try again button label@@tryAgainButtonLabel"
       >Try again</button>
 
       <div *ngIf="articlesListEndReached()">
-        <p>This is the end of articles list</p>
+        <p i18n="end of articles list|end of articles list@@endOfArticlesList">This is the end of articles list</p>
       </div>
     </div>
   </div>

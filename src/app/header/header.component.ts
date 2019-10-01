@@ -42,19 +42,17 @@ export class HeaderComponent implements OnInit {
   }
 
   onLoginClicked() {
-    console.log('login clicked!');
     this.bottomSheet.open(LoginComponent);
   }
 
   onLogoutClicked() {
-    console.log('logout clicked!');
     this.authService
       .logout()
       .subscribe();
   }
 
   onAccountClicked() {
-    console.log('onAccountClicked');
+    // noinspection JSIgnoredPromiseFromCall
     this.router.navigateByUrl('account');
   }
 
@@ -63,6 +61,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onTitleClicked() {
+    // noinspection JSIgnoredPromiseFromCall
     this.router.navigateByUrl('');
   }
 }

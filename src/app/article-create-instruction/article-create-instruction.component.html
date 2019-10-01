@@ -2,29 +2,39 @@
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title>Instruction</mat-panel-title>
+        <mat-panel-title i18n="instruction|instruction label@@instruction">Instruction</mat-panel-title>
       </mat-expansion-panel-header>
 
       <div>
-        <p>Article consists of</p>
+        <p i18n="article consists of|article consists of@@articleConsistsOf">Article consists of</p>
 
         <ul>
-          <li>Article object with primary language and optional source title, url and author name.</li>
-          <li>Translations array with title, language and optional short description and image url.</li>
-          <li>Text versions array with article text.</li>
+          <li i18n="article object|article object description@@articleObject"
+          >Article object with primary language and optional source title, url and author name.</li>
+          <li i18n="translation object|translation object description@@translationObject"
+          >Translations array with title, language and optional short description and image url.</li>
+          <li i18n="text version object|text version object description@@textVersionObject"
+          >Text versions array with article text.</li>
         </ul>
-        <p>So, Article object can looks like this:</p>
+        <p i18n="article example|article object can looks like@@articleExample">So, Article object can looks like this:</p>
 
         <pre>{{exampleArticleObject | json}}</pre>
 
-        <p>Everyone can create new article, translation or text version.</p>
+        <p i18n="everyone can create new object|everyone can create new object@@everyoneCanCreateNewObject"
+        >Everyone can create new article, translation or text version.</p>
 
-        <p>Article can be approved or published only by admins.</p>
-        <p>To become published, translation or text version must be approved by admin or author of parent object.</p>
-        <p>Also, author of parent object can approve, publish, edit and delete translations and text version.</p>
-        <p>You can edit only single object at once. I.e. article or translation or text version.</p>
-        <p>You can select which translation or text version edit on article page.</p>
-        <p>You can't delete the only text version of translation or the only translation in article.</p>
+        <p i18n="create/edit rule 1|create/edit rule 1@@createEditRule1"
+        >Article can be approved or published only by admins.</p>
+        <p i18n="create/edit rule 2|create/edit rule 2@@createEditRule2"
+        >To become published, translation or text version must be approved by admin or author of parent object.</p>
+        <p i18n="create/edit rule 3|create/edit rule 3@@createEditRule3"
+        >Also, author of parent object can approve, publish, edit and delete translations and text version.</p>
+        <p i18n="create/edit rule 4|create/edit rule 4@@createEditRule4"
+        >You can edit only single object at once. I.e. article or translation or text version.</p>
+        <p i18n="create/edit rule 5|create/edit rule 5@@createEditRule5"
+        >You can select which translation or text version edit on article page.</p>
+        <p i18n="create/edit rule 6|create/edit rule 6@@createEditRule6"
+        >You can't delete the only text version of translation or the only translation in article.</p>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

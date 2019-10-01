@@ -1,4 +1,4 @@
-<h3>Comments: {{commentsCount}}</h3>
+<h3 i18n="comments|comments label@@comments">Comments: {{commentsCount}}</h3>
 <div id="comments-container"
      infiniteScroll
      [infiniteScrollDistance]="2"
@@ -16,7 +16,7 @@
         (ngSubmit)="onCommentCreateClicked()"
       >
         <div class="full-width-field default-margin-bottom">
-          <label>Add comment</label>
+          <label i18n="add comment|add comment label@@addComment">Add comment</label>
           <!--suppress AngularUndefinedBinding -->
           <angular-markdown-editor
             textareaId="editor1"
@@ -34,6 +34,7 @@
             color="accent"
             type="submit"
             [disabled]="!commentCreateFormGroup.valid"
+            i18n="send|send button label@@send"
           >Send</button>
         </p>
       </form>
@@ -50,7 +51,7 @@
 
     <ng-template #loginToPostComment>
       <div fxLayout fxLayoutAlign="start center" fxLayoutGap="16px">
-        <div>Only registered users can post comments!</div>
+        <div i18n="only registered users can post comments|need login@@needLoginToPostComment">Only registered users can post comments!</div>
         <button
           mat-raised-button
           color="accent"
@@ -83,7 +84,7 @@
       </div>
     </div>
     <div *ngIf="comments.length==0 && !(progressInAction|async)">
-      <p>No comments yet!</p>
+      <p i18n="no comments yet|no comments yet label@@noComments">No comments yet!</p>
     </div>
 
     <div id="data-loading-indication" *ngIf="progressInAction|async"
@@ -107,10 +108,11 @@
         *ngIf="(bottomProgressErrorOccurred|async) && !(bottomProgressInAction|async)"
         mat-flat-button
         (click)="loadComments(comments.length)"
+        i18n="try again|try again button label@@tryAgainButtonLabel"
       >Try again</button>
 
       <div *ngIf="commentsListEndReached() && !noCommentsForArticle" class="default-margin-top">
-        <p>This is the end of comments list</p>
+        <p i18n="end of comments list|end of comments list@@endOfCommentsList">This is the end of comments list</p>
       </div>
     </div>
   </div>

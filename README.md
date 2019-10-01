@@ -54,6 +54,10 @@ or this article: https://angular-templates.io/tutorials/about/angular-internatio
 
 For strings in *.ts files use [i18n-polyfill](https://github.com/ngx-translate/i18n-polyfill)
 
+After extracting all strings from template run 
+
+`ngx-extractor -i src/**/*.ts -f xlf -o src/locale/messages.xlf`
+
 ## Markdown editor lib
 
 See [Angular-Markdown-Editor](https://github.com/ghiscoding/angular-markdown-editor)

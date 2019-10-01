@@ -11,6 +11,7 @@ import {Language} from '../model/data/Language';
 import {BottomSheetData} from '../model/ui/BottomSheetData';
 import {NotificationService} from '../service/ui/NotificationService';
 import {GpLocalStorageService} from '../service/GpLocalStorageService';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-login',
@@ -52,11 +53,14 @@ export class LoginComponent implements OnInit {
     private languageService: GpLanguageService,
     private fBuilder: FormBuilder,
     private notificationService: NotificationService,
+    private i18n: I18n,
     @Inject(MAT_BOTTOM_SHEET_DATA) public inputData?: BottomSheetData | null
   ) {
   }
 
   ngOnInit() {
+    console.log(this.i18n(`This is a test {{myVar}} !`, {myVar: `^_^`}));
+
     this.updateLanguages();
 
     this.initForm();
@@ -103,6 +107,7 @@ export class LoginComponent implements OnInit {
           () => this.bottomSheetRef.dismiss(),
           () => {
             // todo translation
+            console.log(this.i18n(`This is a test {{myVar}} !`, {myVar: `^_^`}));
             this.notificationService.showMessage('Error. May be wrong email and/or password.');
           }
         );

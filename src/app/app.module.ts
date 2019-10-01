@@ -152,6 +152,8 @@ declare const require; // Use the require method provided by webpack
     CommentService,
     DialogService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
+    I18n,
+    //todo try it https://blog.angulartraining.com/how-to-internationalize-i18n-your-angular-application-tutorial-dee2c6984bc1
     {provide: TRANSLATIONS_FORMAT, useValue: 'xlf'},
     {
       provide: TRANSLATIONS,
@@ -164,8 +166,7 @@ declare const require; // Use the require method provided by webpack
         }
       },
       deps: [LOCALE_ID]
-    },
-    I18n
+    }
   ],
   bootstrap: [AppComponent]
 })

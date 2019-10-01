@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT} from '@angular/core';
 //
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -62,8 +62,10 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {TagService} from './service/data/TagService';
 import {CommentService} from './service/data/CommentService';
-import { CommentsComponent } from './comments/comments.component';
-import { ArticleCreateInstructionComponent } from './article-create-instruction/article-create-instruction.component';
+import {CommentsComponent} from './comments/comments.component';
+import {ArticleCreateInstructionComponent} from './article-create-instruction/article-create-instruction.component';
+// Import the service
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -80,6 +82,8 @@ const routes: Routes = [
   {path: 'create-article', pathMatch: 'full', component: ArticleCreateComponent},
   {path: 'article/:articleId', pathMatch: 'full', component: ArticleComponent},
 ];
+
+declare const require; // Use the require method provided by webpack
 
 @NgModule({
   declarations: [
@@ -147,7 +151,21 @@ const routes: Routes = [
     TagService,
     CommentService,
     DialogService,
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
+    {provide: TRANSLATIONS_FORMAT, useValue: 'xlf'},
+    {
+      provide: TRANSLATIONS,
+      useFactory: (locale) => {
+        console.log('locale: %s', locale);
+        if (!locale || locale.includes('en')) {
+          return '';
+        } else {
+          return require(`raw-loader!../locale/messages.${locale.substring(0, 2)}.xlf`).default;
+        }
+      },
+      deps: [LOCALE_ID]
+    },
+    I18n
   ],
   bootstrap: [AppComponent]
 })

@@ -63,6 +63,7 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {TagService} from './service/data/TagService';
 import {CommentService} from './service/data/CommentService';
 import { CommentsComponent } from './comments/comments.component';
+import { ArticleCreateInstructionComponent } from './article-create-instruction/article-create-instruction.component';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -91,7 +92,8 @@ const routes: Routes = [
     DialogComponent,
     ArticleComponent,
     ArticleCreateComponent,
-    CommentsComponent
+    CommentsComponent,
+    ArticleCreateInstructionComponent
   ],
   entryComponents: [
     LoginComponent,

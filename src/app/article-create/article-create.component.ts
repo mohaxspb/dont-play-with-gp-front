@@ -96,9 +96,6 @@ export class ArticleCreateComponent implements OnInit {
   translationId: number | null = null;
   versionId: number | null = null;
 
-  // instruction
-  exampleArticleObject = JSON.parse(ARTICLE_OBJECT_EXAMPLE_FOR_INSTRUCTION);
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,

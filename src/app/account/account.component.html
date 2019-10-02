@@ -41,6 +41,7 @@
                 class="avatar default-margin-bottom"
                 src="{{userFromApi.avatar}}"
                 alt="avatar"
+                (error)="onAvatarLoadError($event)"
               />
 
               <button

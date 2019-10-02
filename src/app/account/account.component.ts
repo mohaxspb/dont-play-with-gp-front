@@ -202,4 +202,8 @@ export class AccountComponent implements OnInit {
         error => this.notificationService.showError(error)
       );
   }
+
+  onAvatarLoadError(event) {
+    event.target.src = './assets/baseline-image-24px.svg';
+  }
 }

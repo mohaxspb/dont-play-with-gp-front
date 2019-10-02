@@ -22,6 +22,7 @@
       class="avatar"
       src="{{user.avatar}}"
       alt="avatar"
+      (error)="onAvatarLoadError($event)"
     />
     <mat-icon
       *ngIf="authenticated && isNullOrEmptyOrUndefined(user.avatar)"

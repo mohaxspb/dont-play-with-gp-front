@@ -64,4 +64,8 @@ export class HeaderComponent implements OnInit {
     // noinspection JSIgnoredPromiseFromCall
     this.router.navigateByUrl('');
   }
+
+  onAvatarLoadError(event) {
+    event.target.src = './assets/baseline-image-24px.svg';
+  }
 }

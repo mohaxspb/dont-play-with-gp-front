@@ -58,6 +58,17 @@ After extracting all strings from template run
 
 `ngx-extractor -i src/**/*.ts -f xlf -o src/locale/messages.xlf`
 
+---
+
+You can create EN translation from source via FindAndReplace so
+
+find: `<source>(.*?)<\/source>`
+replace: 
+```
+<source>$1<\/source>
+        <target>$1<\/target>
+```
+
 ## Markdown editor lib
 
 See [Angular-Markdown-Editor](https://github.com/ghiscoding/angular-markdown-editor)

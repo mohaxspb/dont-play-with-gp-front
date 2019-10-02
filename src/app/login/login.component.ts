@@ -59,8 +59,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.i18n(`This is a test {{myVar}} !`, {myVar: `^_^`}));
-
     this.updateLanguages();
 
     this.initForm();
@@ -106,9 +104,14 @@ export class LoginComponent implements OnInit {
         .subscribe(
           () => this.bottomSheetRef.dismiss(),
           () => {
-            // todo translation
-            console.log(this.i18n(`This is a test {{myVar}} !`, {myVar: `^_^`}));
-            this.notificationService.showMessage('Error. May be wrong email and/or password.');
+            this.notificationService.showMessage(
+              this.i18n({
+                value: 'Error. May be wrong email and/or password.',
+                id: 'loginErrorMessage',
+                meaning: 'wrong email or password',
+                description: 'wrong email or password'
+              })
+            );
           }
         );
     }

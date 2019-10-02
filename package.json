@@ -9,7 +9,15 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-i18n-prod:fr": "ng build --output-path=dist/fr --aot --prod --base-href /fr/ --i18n-file=src/i18n/messages.fr.xlf --i18n-format=xlf --i18n-locale=fr",
+    "build-i18n-prod:ru": "ng build --output-path=dist/ru --aot --prod --base-href /ru/ --i18n-file=src/i18n/messages.ru.xlf --i18n-format=xlf --i18n-locale=ru",
+    "build-i18n-prod:en": "ng build --output-path=dist/en --aot --prod --base-href /en/ --i18n-file=src/i18n/messages.en.xlf --i18n-format=xlf --i18n-locale=en",
+    "build-i18n-prod": "npm run build-i18n-prod:en && npm run build-i18n-prod:ru && npm run build-i18n-prod:fr",
+    "build-i18n-stage:fr": "ng build --output-path=dist/fr --aot --prod --base-href /dont-play-with-google/fr/ --deploy-url /dont-play-with-google/ --i18n-file=src/i18n/messages.fr.xlf --i18n-format=xlf --i18n-locale=fr",
+    "build-i18n-stage:ru": "ng build --output-path=dist/ru --aot --prod --base-href /dont-play-with-google/ru/ --deploy-url /dont-play-with-google/ --i18n-file=src/i18n/messages.ru.xlf --i18n-format=xlf --i18n-locale=ru",
+    "build-i18n-stage:en": "ng build --output-path=dist/en --aot --prod --base-href /dont-play-with-google/en/ --deploy-url /dont-play-with-google/ --i18n-file=src/i18n/messages.en.xlf --i18n-format=xlf --i18n-locale=en",
+    "build-i18n-stage": "npm run build-i18n-stage:en && npm run build-i18n-stage:ru && npm run build-i18n-stage:fr"
   },
   "private": true,
   "dependencies": {

@@ -66,6 +66,7 @@ import {CommentsComponent} from './comments/comments.component';
 import {ArticleCreateInstructionComponent} from './article-create-instruction/article-create-instruction.component';
 // Import the service
 import {I18n} from '@ngx-translate/i18n-polyfill';
+import {LanguageUtils} from './utils/LanguageUtils';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -153,16 +154,20 @@ declare const require; // Use the require method provided by webpack
     DialogService,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
     I18n,
-    //todo try it https://blog.angulartraining.com/how-to-internationalize-i18n-your-angular-application-tutorial-dee2c6984bc1
     {provide: TRANSLATIONS_FORMAT, useValue: 'xlf'},
     {
       provide: TRANSLATIONS,
-      useFactory: (locale) => {
-        console.log('locale: %s', locale);
-        if (!locale || locale.includes('en')) {
+      useFactory: () => {
+        let defaultLangCode = localStorage.getItem(GpLocalStorageService.Keys.DEFAULT_LANG_CODE);
+        if (defaultLangCode == null) {
+          defaultLangCode = LanguageUtils.getBrowserLanguageCode();
+        }
+        console.log('defaultLangCode: %s', defaultLangCode);
+
+        if (defaultLangCode === GpLanguageService.DEFAULT_LANG_CODE) {
           return '';
         } else {
-          return require(`raw-loader!../locale/messages.${locale.substring(0, 2)}.xlf`).default;
+          return require(`raw-loader!../locale/messages.${defaultLangCode}.xlf`).default;
         }
       },
       deps: [LOCALE_ID]

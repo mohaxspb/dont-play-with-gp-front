@@ -823,7 +823,7 @@
         <note priority="1" from="meaning">create/edit rule 5</note>
       </trans-unit><trans-unit id="createEditRule6" datatype="html">
         <source>You can&apos;t delete the only text version of translation or the only translation in article.</source>
-<target>ТЕСТ!</target>
+        <target>ТЕСТ!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
           <context context-type="linenumber">37</context>
@@ -831,18 +831,16 @@
         <note priority="1" from="description">create/edit rule 6</note>
         <note priority="1" from="meaning">create/edit rule 6</note>
       </trans-unit>
-      <trans-unit id="6ecfaea6124e8f57c9d3a4db71cc384ae67b5ae2" datatype="html">
-        <source>This is a test <x id="INTERPOLATION" equiv-text="{{myVar}}"/> !</source>
-        <target>Это тест <x id="INTERPOLATION" equiv-text="{{myVar}}"/> !</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
+      <trans-unit id="loginErrorMessage" datatype="html">
+              <source>Error. May be wrong email and/or password.</source>
+              <target>Ошибка. Возможно, вы ввели неправильный email или пароль.</target>
+              <context-group purpose="location">
+                <context context-type="sourcefile">src/app/login/login.component.ts</context>
+                <context context-type="linenumber">1</context>
+              </context-group>
+              <note priority="1" from="description">wrong email or password</note>
+              <note priority="1" from="meaning">wrong email or password</note>
+            </trans-unit>
     </body>
   </file>
 </xliff>

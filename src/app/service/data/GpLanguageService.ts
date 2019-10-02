@@ -65,6 +65,10 @@ export class GpLanguageService {
     }
   }
 
+  getLanguagesFromLocalStorage(): Language[] | null {
+    return this.localStorageService.getLanguages();
+  }
+
   getDefaultLangCode(): string {
     return this.localStorageService.getDefaultLangCode();
   }

@@ -84,7 +84,8 @@
                 }
               ],
               "aot": true,
-              "outputPath": "dist/dont-play-with-gp-web/",
+              "baseHref": "/ru/",
+              "outputPath": "dist/dont-play-with-gp-web/ru/",
               "i18nFile": "src/locale/messages.ru.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "ru"
@@ -112,7 +113,8 @@
                 }
               ],
               "aot": true,
-              "outputPath": "dist/dont-play-with-gp-web/",
+              "baseHref": "/en/",
+              "outputPath": "dist/dont-play-with-gp-web/en/",
               "i18nFile": "src/locale/messages.en.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "en"
@@ -140,7 +142,8 @@
                 }
               ],
               "aot": true,
-              "outputPath": "dist/dont-play-with-gp-web/",
+              "baseHref": "/fr/",
+              "outputPath": "dist/dont-play-with-gp-web/fr/",
               "i18nFile": "src/locale/messages.fr.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "fr"

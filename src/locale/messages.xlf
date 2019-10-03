@@ -959,6 +959,59 @@ It will be available for everyone immediately!</source>
 				<note priority="1" from="description">to create article you should</note>
 				<note priority="1" from="meaning">to create article you should</note>
 			</trans-unit>
+			<trans-unit id="successfullyUpdated" datatype="html">
+				<source>Successfully updated!</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">successfully updated</note>
+				<note priority="1" from="meaning">successfully updated</note>
+			</trans-unit>
+			<trans-unit id="notImplementedErrorMessage" datatype="html">
+				<source>Not implemented yet, sorry)</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Not implemented error message)</note>
+				<note priority="1" from="meaning">not implemented yet, sorry</note>
+			</trans-unit>
+			<trans-unit id="deleteAccountDialogTitle" datatype="html">
+				<source>Delete account</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Delete account</note>
+				<note priority="1" from="meaning">Delete account</note>
+			</trans-unit>
+			<trans-unit id="deleteAccountDialogMessage" datatype="html">
+				<source>Are you sure you want to delete account? This can&apos;t be undone!</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Are you sure you want to delete account? This can&apos;t be undone!</note>
+				<note priority="1" from="meaning">Are you sure you want to delete account? This can&apos;t be undone!</note>
+			</trans-unit>
+			<trans-unit id="unexpectedErrorMessage" datatype="html">
+				<source>Unexpected error occurred.</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/service/ui/NotificationService.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/service/ui/NotificationService.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Unexpected error occurred.</note>
+				<note priority="1" from="meaning">Unexpected error occurred.</note>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

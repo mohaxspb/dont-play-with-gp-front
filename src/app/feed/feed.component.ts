@@ -19,6 +19,7 @@ import {Api} from '../service/Api';
 import {ActionType} from '../article-create/article-create.component';
 import {AuthorityType} from '../model/auth/Authority';
 import {GpUserService} from '../service/auth/GpUserService';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-feed',
@@ -45,7 +46,8 @@ export class FeedComponent implements OnInit {
     private articleService: GpArticleService,
     private languageService: GpLanguageService,
     private notificationService: NotificationService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private i18n: I18n
   ) {
   }
 
@@ -67,8 +69,13 @@ export class FeedComponent implements OnInit {
       // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(['create-article'], {queryParams: {actionType: ActionType.CREATE_ARTICLE}});
     } else {
-      // todo translation
-      this.bottomSheet.open(LoginComponent, {data: {title: 'To create article you should'}});
+      const title = this.i18n({
+        value: 'To create article you should',
+        id: 'createArticleLoginTitle',
+        meaning: 'to create article you should',
+        description: 'to create article you should'
+      });
+      this.bottomSheet.open(LoginComponent, {data: {title}});
     }
   }
 

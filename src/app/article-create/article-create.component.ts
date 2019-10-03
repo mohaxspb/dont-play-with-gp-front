@@ -616,23 +616,23 @@ export class ArticleCreateComponent implements OnInit {
               case ActionType.CREATE_ARTICLE:
                 return of(null);
               case ActionType.EDIT_ARTICLE:
-                // todo translation
+                // todo translation todo seems to be we already has it. Check messages.xlf
                 this.actionTitle = 'Edit article';
                 break;
               case ActionType.ADD_TRANSLATION:
-                // todo translation
+                // todo translation todo seems to be we already has it. Check messages.xlf
                 this.actionTitle = 'Add translation';
                 break;
               case ActionType.EDIT_TRANSLATION:
-                // todo translation
+                // todo translation todo seems to be we already has it. Check messages.xlf
                 this.actionTitle = 'Edit translation';
                 break;
               case ActionType.ADD_VERSION:
-                // todo translation
+                // todo translation todo seems to be we already has it. Check messages.xlf
                 this.actionTitle = 'Add version';
                 break;
               case ActionType.EDIT_VERSION:
-                // todo translation
+                // todo translation todo seems to be we already has it. Check messages.xlf
                 this.actionTitle = 'Edit version';
                 break;
             }

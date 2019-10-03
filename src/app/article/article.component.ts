@@ -18,6 +18,7 @@ import {MatBottomSheet} from '@angular/material';
 import {UserProvider} from '../service/auth/UserProvider';
 import {ActionType} from '../article-create/article-create.component';
 import {Api} from '../service/Api';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-article',
@@ -47,6 +48,8 @@ export class ArticleComponent implements OnInit {
   selectedTranslation: ArticleTranslation;
   selectedTranslationVersion: ArticleTranslationVersion;
 
+  publishingDatePlaceholder: string = this.i18n({value: 'Publishing date', id: 'publishingDatePlaceholder'});
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -56,7 +59,8 @@ export class ArticleComponent implements OnInit {
     private languageService: GpLanguageService,
     private notificationService: NotificationService,
     private dialogsService: DialogService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private i18n: I18n
   ) {
   }
 
@@ -67,7 +71,6 @@ export class ArticleComponent implements OnInit {
     this.userProvider
       .getUser()
       .subscribe(value => {
-        // console.log('this.user !== value: %s', (this.user === null && value !== null) || (this.user !== null && value === null));
         if ((this.user === null && value !== null) || (this.user !== null && value === null)) {
           this.user = value;
           // update article if user changed (i.e. login with admin authority)
@@ -79,7 +82,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onDataRefreshClicked() {
-    console.log('onDataRefreshClicked');
     if (this.languages == null) {
       this.loadInitialData();
     } else {
@@ -88,8 +90,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onApproveArticleChanged(checked: boolean) {
-    console.log('onApproveArticleChanged: %s', checked);
-
     this.progressInAction.next(true);
     this.articleService
       .approveArticle(this.article.id, checked)
@@ -97,10 +97,7 @@ export class ArticleComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        value => {
-          // console.log('approveArticle: %s', JSON.stringify(value));
-          this.article = value;
-        },
+        value => this.article = value,
         error => {
           this.article.approved = !checked;
           this.notificationService.showError(error);
@@ -109,8 +106,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onApproveTranslationChanged(checked: boolean) {
-    console.log('onApproveTranslationChanged: %s', checked);
-
     this.progressInAction.next(true);
 
     this.articleService
@@ -128,8 +123,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onApproveVersionChanged(checked: boolean) {
-    console.log('onApproveVersionChanged: %s', checked);
-
     this.progressInAction.next(true);
 
     this.articleService
@@ -149,22 +142,18 @@ export class ArticleComponent implements OnInit {
   }
 
   onPublishArticleChanged(checked: boolean) {
-    // console.log('onPublishArticleChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.ARTICLE, this.article.id, checked);
   }
 
   onPublishTranslationChanged(checked: boolean) {
-    // console.log('onPublishTranslationChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.TRANSLATION, this.selectedTranslation.id, checked);
   }
 
   onPublishVersionChanged(checked: boolean) {
-    // console.log('onPublishVersionChanged: %s', checked);
     this.showPublishConfirmDialog(DataType.VERSION, this.selectedTranslationVersion.id, checked);
   }
 
   onLanguageSelected(language: Language) {
-    // console.log('onLanguageSelected: %s', JSON.stringify(language));
     this.selectedLanguage = language;
 
     this.selectedTranslation = this.calculateSelectedTranslation();
@@ -172,7 +161,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onArticleEditClicked() {
-    console.log('onArticleEditClicked');
     // only author or admin could see it, so no need to login
 
     // noinspection JSIgnoredPromiseFromCall
@@ -190,28 +178,30 @@ export class ArticleComponent implements OnInit {
   }
 
   onArticleDeleteClicked() {
-    console.log('onArticleDeleteClicked');
     // only author or admin could see it, so no need to login
     this.showConfirmArticleDeleteDialog(this.article.id);
   }
 
   onTranslationDeleteClicked() {
-    console.log('onTranslationDeleteClicked');
     // only author or admin could see it, so no need to login
     this.showConfirmTranslationDeleteDialog(this.selectedTranslation.id);
   }
 
   onVersionDeleteClicked() {
-    console.log('onVersionDeleteClicked');
     // only author or admin could see it, so no need to login
     this.showConfirmVersionDeleteDialog(this.selectedTranslationVersion.id);
   }
 
   onTranslationAddClicked() {
-    console.log('onTranslationAddClicked');
     // show login or translation create component
     if (this.user == null) {
-      this.bottomSheet.open(LoginComponent, {data: {title: 'To add translation you should'}});
+      const title = this.i18n({
+        value: 'To add translation you should',
+        id: 'translationAddLoginTitle',
+        meaning: 'to add translation you should',
+        description: 'to add translation you should'
+      });
+      this.bottomSheet.open(LoginComponent, {data: {title}});
     } else {
       // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(
@@ -229,9 +219,14 @@ export class ArticleComponent implements OnInit {
   }
 
   onVersionAddClicked() {
-    console.log('onVersionAddClicked');
     if (this.user == null) {
-      this.bottomSheet.open(LoginComponent, {data: {title: 'To add version you should'}});
+      const title = this.i18n({
+        value: 'To add text version you should',
+        id: 'versionAddLoginTitle',
+        meaning: 'to add text version you should',
+        description: 'to add text version you should'
+      });
+      this.bottomSheet.open(LoginComponent, {data: {title}});
     } else {
       // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(
@@ -249,7 +244,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onVersionEditClicked() {
-    console.log('onVersionEditClicked');
     // only author or admin could see it, so no need to login
 
     // noinspection JSIgnoredPromiseFromCall
@@ -267,7 +261,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onTranslationEditClicked() {
-    console.log('onTranslationEditClicked');
     // only author or admin could see it, so no need to login
 
     // noinspection JSIgnoredPromiseFromCall
@@ -285,7 +278,6 @@ export class ArticleComponent implements OnInit {
   }
 
   onSelectedVersionChanged(version: ArticleTranslationVersion) {
-    console.log('onSelectedVersionChanged: %s', version.id);
     this.selectedTranslationVersion = version;
   }
 
@@ -307,46 +299,78 @@ export class ArticleComponent implements OnInit {
   }
 
   private showConfirmArticleDeleteDialog(id: number) {
+    const dialogTitle = this.i18n({
+      value: 'Delete article',
+      id: 'deleteArticleDialogTitle',
+      meaning: 'Delete article',
+      description: 'Delete article'
+    });
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to delete article? This can\'t be undone!',
+      id: 'deleteArticleDialogMessage',
+      meaning: 'Are you sure you want to delete article? This can\'t be undone!',
+      description: 'Are you sure you want to delete article? This can\'t be undone!'
+    });
+
     this.dialogsService
-    // todo translation
-      .confirm('Delete article', 'Are you sure you want to delete article? This can\'t be undone!', 'Delete article')
+      .confirm(dialogTitle, dialogMessage, dialogTitle)
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteArticle(id);
-        } else {
-          console.log('Do not delete!');
         }
       });
   }
 
   private showConfirmTranslationDeleteDialog(id: number) {
+    const dialogTitle = this.i18n({
+      value: 'Delete translation',
+      id: 'deleteTranslationDialogTitle',
+      meaning: 'Delete translation',
+      description: 'Delete translation'
+    });
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to delete translation? This can\'t be undone!',
+      id: 'deleteTranslationDialogMessage',
+      meaning: 'Are you sure you want to delete translation? This can\'t be undone!',
+      description: 'Are you sure you want to delete translation? This can\'t be undone!'
+    });
+
     this.dialogsService
-    // todo translation
-      .confirm('Delete translation', 'Are you sure you want to delete translation? This can\'t be undone!', 'Delete translation')
+      .confirm(dialogTitle, dialogMessage, dialogTitle)
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteTranslation(id);
-        } else {
-          console.log('Do not delete!');
         }
       });
   }
 
   private showConfirmVersionDeleteDialog(id: number) {
+    const dialogTitle = this.i18n({
+      value: 'Delete text version',
+      id: 'deleteVersionDialogTitle',
+      meaning: 'Delete text version',
+      description: 'Delete text version'
+    });
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to delete text version? This can\'t be undone!',
+      id: 'deleteVersionDialogMessage',
+      meaning: 'Are you sure you want to delete text version? This can\'t be undone!',
+      description: 'Are you sure you want to delete text version? This can\'t be undone!'
+    });
+
     this.dialogsService
-    // todo translation
-      .confirm('Delete text version', 'Are you sure you want to delete text version? This can\'t be undone!', 'Delete version')
+      .confirm(dialogTitle, dialogMessage, dialogTitle)
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteVersion(id);
-        } else {
-          console.log('Do not delete!');
         }
       });
   }
 
   private loadInitialData() {
-    console.log('loadInitialData');
     this.dataIsLoading.next(true);
 
     zip(
@@ -367,9 +391,6 @@ export class ArticleComponent implements OnInit {
           const pathParams = paramsAndLanguages[0];
           const queryParams = paramsAndLanguages[1];
 
-          // console.log('pathParams', pathParams);
-          // console.log('queryParams', queryParams);
-
           this.articleId = parseInt(pathParams.get('articleId'), 0);
 
           this.languages = paramsAndLanguages[2];
@@ -384,8 +405,6 @@ export class ArticleComponent implements OnInit {
   }
 
   private loadArticle() {
-    console.log('loadArticle');
-
     this.dataIsLoading.next(true);
 
     this.articleService
@@ -449,7 +468,6 @@ export class ArticleComponent implements OnInit {
     return versions.sort((a, b) => new Date(b.updated).getTime() - new Date(a.updated).getTime())[0];
   }
 
-  // todo translation
   private showPublishConfirmDialog(dataType: DataType, id: number, publish: boolean) {
     let action: string;
     if (publish) {
@@ -457,11 +475,18 @@ export class ArticleComponent implements OnInit {
     } else {
       action = 'hide';
     }
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to {{action}} this {{dataType}}?\nIt will be available for everyone immediately!',
+      id: 'publishDialogMessage',
+      meaning: 'Delete text version',
+      description: 'Delete text version'
+    }, {action, dataType});
+
     this.dialogsService
       .confirm(
         action + ' ' + dataType,
-        'Are you sure you want to ' + action + ' this ' + dataType + '?\n' +
-        'It will be available for everyone immediately!',
+        dialogMessage,
         action
       )
       .subscribe((res: boolean) => {
@@ -478,7 +503,6 @@ export class ArticleComponent implements OnInit {
               break;
           }
         } else {
-          console.log('Do not publish!');
           switch (dataType) {
             case DataType.ARTICLE:
               this.article.published = !this.article.published;
@@ -558,8 +582,6 @@ export class ArticleComponent implements OnInit {
   }
 
   private deleteArticle(id: number) {
-    console.log('deleteArticle: %d', id);
-
     this.progressInAction.next(true);
 
     this.articleService
@@ -575,8 +597,6 @@ export class ArticleComponent implements OnInit {
   }
 
   private deleteTranslation(id: number) {
-    console.log('deleteTranslation: %d', id);
-
     this.progressInAction.next(true);
 
     this.articleService
@@ -589,8 +609,6 @@ export class ArticleComponent implements OnInit {
   }
 
   private deleteVersion(id: number) {
-    console.log('deleteVersion: %d', id);
-
     this.progressInAction.next(true);
 
     this.articleService

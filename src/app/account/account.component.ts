@@ -12,6 +12,7 @@ import {NotificationService} from '../service/ui/NotificationService';
 import {GpLanguageService} from '../service/data/GpLanguageService';
 import {Article} from '../model/data/Article';
 import {GpArticleService} from '../service/data/GpArticleService';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-account',
@@ -40,19 +41,20 @@ export class AccountComponent implements OnInit {
   // content
   articlesCreated: Article[] = [];
 
+  namePlaceholder: string = this.i18n({value: 'Name', id: 'namePlaceholder'});
+
   constructor(
     private router: Router,
     private accountInteractor: GpAccountInteractor,
     private articleService: GpArticleService,
     private fBuilder: FormBuilder,
     private notificationService: NotificationService,
-    private dialogsService: DialogService
+    private dialogsService: DialogService,
+    private i18n: I18n
   ) {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
-
     this.getData();
   }
 
@@ -86,10 +88,7 @@ export class AccountComponent implements OnInit {
         finalize(() => this.articlesAreLoading.next(false))
       )
       .subscribe(
-        articles => {
-          // todo
-          this.articlesCreated = articles;
-        },
+        articles => this.articlesCreated = articles,
         error => this.notificationService.showError(error)
       );
   }
@@ -123,17 +122,18 @@ export class AccountComponent implements OnInit {
   }
 
   onNameChanged(name: string) {
-    console.log('onNameChanged: %s', name);
     this.name = name;
   }
 
   onPrimaryLanguageChanged(language: Language) {
-    console.log('onPrimaryLanguageChanged: %s', JSON.stringify(language));
     this.userLanguage = language;
   }
 
+  onDataRefreshClicked() {
+    this.getData();
+  }
+
   onAccountEditClicked() {
-    console.log('onAccountEditClicked: %s, %s', this.name, this.userLanguage.langCode);
     this.progressInAction.next(true);
     this.accountInteractor
       .editAccount(this.userFromApi.id, this.name, this.userLanguage.langCode)
@@ -148,32 +148,41 @@ export class AccountComponent implements OnInit {
             GpLanguageService.getLanguageById(this.languagesListFromApi, this.userFromApi.primaryLanguageId)
           );
           this.accountEditFormGroup.reset(this.accountEditFormGroup.value);
-          this.notificationService.showMessage('Successfully updated!');
+          const message = this.i18n({
+            value: 'Successfully updated!',
+            id: 'successfullyUpdated',
+            meaning: 'successfully updated',
+            description: 'successfully updated'
+          });
+          this.notificationService.showMessage(message);
         },
         error => this.notificationService.showError(error)
       );
   }
 
   onAvatarEditClicked() {
-    console.log('onAvatarEditClicked');
-    this.notificationService.showMessage('Not implemented yet, sorry)');
-    // todo
-  }
-
-  onDataRefreshClicked() {
-    console.log('onDataRefreshClicked');
-    this.getData();
+    const message = this.i18n({
+      value: 'Not implemented yet, sorry)',
+      id: 'notImplementedErrorMessage',
+      meaning: 'not implemented yet, sorry',
+      description: 'Not implemented error message)'
+    });
+    this.notificationService.showMessage(message);
+    // todo avatar edit feature
   }
 
   onChangePasswordClicked() {
-    console.log('onChangePasswordClicked');
-    this.notificationService.showMessage('Not implemented yet, sorry)');
-    // todo
+    const message = this.i18n({
+      value: 'Not implemented yet, sorry)',
+      id: 'notImplementedErrorMessage',
+      meaning: 'not implemented yet, sorry',
+      description: 'Not implemented error message)'
+    });
+    this.notificationService.showMessage(message);
+    // todo password change feature
   }
 
   onDeleteAccountClicked() {
-    console.log('onDeleteAccountClicked');
-
     this.showConfirmAccountDeleteDialog(this.userFromApi.id);
   }
 
@@ -191,20 +200,29 @@ export class AccountComponent implements OnInit {
   }
 
   private showConfirmAccountDeleteDialog(id: number) {
+    const dialogTitle = this.i18n({
+      value: 'Delete account',
+      id: 'deleteAccountDialogTitle',
+      meaning: 'Delete account',
+      description: 'Delete account'
+    });
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to delete account? This can\'t be undone!',
+      id: 'deleteAccountDialogMessage',
+      meaning: 'Are you sure you want to delete account? This can\'t be undone!',
+      description: 'Are you sure you want to delete account? This can\'t be undone!'
+    });
     this.dialogsService
-    // todo translation
-      .confirm('Delete account', 'Are you sure you want to delete account? This can\'t be undone!', 'Delete account')
+      .confirm(dialogTitle, dialogMessage, dialogTitle)
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteAccount(id);
-        } else {
-          console.log('do not delete!');
         }
       });
   }
 
   private deleteAccount(id: number) {
-    console.log('deleteAccount: %d', id);
     this.accountInteractor
       .deleteAccount(id)
       .subscribe(
@@ -212,5 +230,9 @@ export class AccountComponent implements OnInit {
         },
         error => this.notificationService.showError(error)
       );
+  }
+
+  onAvatarLoadError(event) {
+    event.target.src = './assets/baseline-image-24px.svg';
   }
 }

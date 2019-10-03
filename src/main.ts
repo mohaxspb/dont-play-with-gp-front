@@ -11,5 +11,3 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
-
-// todo internationalization see https://angular.io/guide/i18n#the-app-and-its-translation-file

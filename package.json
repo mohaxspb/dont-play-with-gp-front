@@ -3,11 +3,22 @@
   "version": "0.0.6",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --base-href /en/",
+    "start-en": "ng serve --base-href /en/ --configuration=en",
+    "start-ru": "ng serve --base-href /ru/ --configuration=ru",
+    "start-fr": "ng serve --base-href /fr/ --configuration=fr",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-i18n-prod:fr": "ng build --output-path=dist/fr --aot --prod --base-href /fr/ --i18n-file=src/locale/messages.fr.xlf --i18n-format=xlf --i18n-locale=fr",
+    "build-i18n-prod:ru": "ng build --output-path=dist/ru --aot --prod --base-href /ru/ --i18n-file=src/locale/messages.ru.xlf --i18n-format=xlf --i18n-locale=ru",
+    "build-i18n-prod:en": "ng build --output-path=dist/en --aot --prod --base-href /en/ --i18n-file=src/locale/messages.en.xlf --i18n-format=xlf --i18n-locale=en",
+    "build-i18n-prod": "npm run build-i18n-prod:en && npm run build-i18n-prod:ru && npm run build-i18n-prod:fr",
+    "build-i18n-stage:fr": "ng build --output-path=dist/fr --aot --prod --base-href /dont-play-with-google/fr/ --deploy-url /dont-play-with-google/ --i18n-file=src/locale/messages.fr.xlf --i18n-format=xlf --i18n-locale=fr",
+    "build-i18n-stage:ru": "ng build --output-path=dist/ru --aot --prod --base-href /dont-play-with-google/ru/ --deploy-url /dont-play-with-google/ --i18n-file=src/locale/messages.ru.xlf --i18n-format=xlf --i18n-locale=ru",
+    "build-i18n-stage:en": "ng build --output-path=dist/en --aot --prod --base-href /dont-play-with-google/en/ --deploy-url /dont-play-with-google/ --i18n-file=src/locale/messages.en.xlf --i18n-format=xlf --i18n-locale=en",
+    "build-i18n-stage": "npm run build-i18n-stage:en && npm run build-i18n-stage:ru && npm run build-i18n-stage:fr"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +33,7 @@
     "@angular/platform-browser": "~8.2.6",
     "@angular/platform-browser-dynamic": "~8.2.6",
     "@angular/router": "~8.2.6",
+    "@ngx-translate/i18n-polyfill": "^1.0.0",
     "angular-markdown-editor": "^2.0.2",
     "hammerjs": "^2.0.8",
     "jquery": "^3.4.1",

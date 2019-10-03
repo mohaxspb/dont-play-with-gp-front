@@ -27,7 +27,6 @@ Also try to add `--optimization=false`, as it builds, but crashes after deploy(
 ng build --configuration=production --base-href /dont-play-with-google/ --deploy-url /dont-play-with-google/ --aot=false --build-optimizer=false
 ```
 
-
 ## Test on device in same network
 
 Add `host` option to `scripts` in `serve` command in `angular.json`. Now site can be accessed by host IP
@@ -51,6 +50,57 @@ Then, copy it, rename to `messages.LOCALE_CODE_HERE_IE_ru.xlf` and translate, vi
 
 For details see documentation: https://angular.io/guide/i18n#the-app-and-its-translation-file
 or this article: https://angular-templates.io/tutorials/about/angular-internationalization-i18n-multi-language-app
+
+For strings in *.ts files use [i18n-polyfill](https://github.com/ngx-translate/i18n-polyfill)
+
+After extracting all strings from template run 
+
+`ngx-extractor -i src/**/*.ts -f xlf -o src/locale/messages.xlf`
+
+---
+
+You can create EN translation from source via FindAndReplace so
+
+find: `<source>(.*?)<\/source>`
+replace: 
+```
+<source>$1<\/source>
+        <target>$1<\/target>
+```
+
+## Deployment
+
+Build all languages versions:
+
+`npm run build-i18n-prod`
+
+Then just copy files from `PROJECT_ROOT/dist/` to `var/www/html` if using `apache2` server.
+
+Add add rules to redirect user to correct language in `etc/apache2/apache2.conf` (see https://dev.to/angular/deploying-an-i18n-angular-app-with-angular-cli-2fb9 with adding `/html` at `Directory`):
+
+```
+<VirtualHost *:80>
+    DocumentRoot "/var/www/html"
+    ServerName domain.zone
+		ServerAlias domain.zone
+		
+  <Directory "/var/www/html">
+    RewriteEngine on
+    RewriteBase /
+    RewriteRule ^../index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule (..) $1/index.html [L]
+    RewriteCond %{HTTP:Accept-Language} ^fr [NC]
+    RewriteRule ^$ /fr/ [R]
+    RewriteCond %{HTTP:Accept-Language} ^ru [NC]
+    RewriteRule ^$ /ru/ [R]
+    RewriteCond %{HTTP:Accept-Language} !^ru [NC]
+    RewriteCond %{HTTP:Accept-Language} !^fr [NC]
+    RewriteRule ^$ /en/ [R]
+  </Directory>
+</VirtualHost>
+```
 
 ## Markdown editor lib
 

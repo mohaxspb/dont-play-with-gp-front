@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT} from '@angular/core';
 //
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -62,7 +62,10 @@ import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {TagService} from './service/data/TagService';
 import {CommentService} from './service/data/CommentService';
-import { CommentsComponent } from './comments/comments.component';
+import {CommentsComponent} from './comments/comments.component';
+import {ArticleCreateInstructionComponent} from './article-create-instruction/article-create-instruction.component';
+// Import the service
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -80,6 +83,8 @@ const routes: Routes = [
   {path: 'article/:articleId', pathMatch: 'full', component: ArticleComponent},
 ];
 
+declare const require; // Use the require method provided by webpack
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,7 +96,8 @@ const routes: Routes = [
     DialogComponent,
     ArticleComponent,
     ArticleCreateComponent,
-    CommentsComponent
+    CommentsComponent,
+    ArticleCreateInstructionComponent
   ],
   entryComponents: [
     LoginComponent,
@@ -145,7 +151,23 @@ const routes: Routes = [
     TagService,
     CommentService,
     DialogService,
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
+    I18n,
+    {provide: TRANSLATIONS_FORMAT, useValue: 'xlf'},
+    {
+      provide: TRANSLATIONS,
+      useFactory: () => {
+        const currentLangCode = window.location.pathname.replace(new RegExp('/', 'g'), '');
+        console.log('currentLangCode: %s', currentLangCode);
+
+        if (currentLangCode === GpLanguageService.DEFAULT_LANG_CODE) {
+          return '';
+        } else {
+          return require(`raw-loader!../locale/messages.${currentLangCode}.xlf`).default;
+        }
+      },
+      deps: [LOCALE_ID]
+    }
   ],
   bootstrap: [AppComponent]
 })

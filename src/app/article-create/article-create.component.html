@@ -8,37 +8,7 @@
 
     <mat-card-content>
 
-      <div id="instruction">
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Instruction</mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div>
-              <p>Article consists of</p>
-
-              <ul>
-                <li>Article object with primary language and optional source title, url and author name.</li>
-                <li>Translations array with title, language and optional short description and image url.</li>
-                <li>Text versions array with article text.</li>
-              </ul>
-              <p>So, Article object can looks like this:</p>
-
-              <pre>{{exampleArticleObject | json}}</pre>
-
-              <p>Everyone can create new article, translation or text version.</p>
-
-              <p>Article can be approved or published only by admins.</p>
-              <p>To become published, translation or text version must be approved by admin or author of parent object.</p>
-              <p>Also, author of parent object can approve, publish, edit and delete translations and text version.</p>
-              <p>You can edit only single object at once. I.e. article or translation or text version.</p>
-              <p>You can select which translation or text version edit on article page.</p>
-              <p>You can't delete the only text version of translation or the only translation in article.</p>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
+      <app-article-create-instruction></app-article-create-instruction>
 
       <div id="data-loading-indication">
 
@@ -55,6 +25,7 @@
           color="warn"
           type="button"
           (click)="onDataRefreshClicked()"
+          i18n="refresh button label|refresh button label@@refreshButton"
         >Refresh</button>
 
       </div>
@@ -71,7 +42,7 @@
           <!--Article section-->
           <mat-divider inset></mat-divider>
 
-          <h3>Article data</h3>
+          <h3 i18n="article data|article data label@@articleData">Article data</h3>
 
           <mat-card id="input-sourceData">
             <div class="mat-input-element">
@@ -80,6 +51,7 @@
                 name="articleIsFromAnotherSite"
                 color="primary"
                 (change)="onArticleIsFromAnotherSiteClicked($event.checked)"
+                i18n="article is from another site|article is from another site@@articleIsFromAnotherSite"
               >Article is from another site</mat-checkbox>
             </div>
             <mat-card-content *ngIf="articleIsFromAnotherSite">
@@ -90,14 +62,16 @@
                     <input
                       matInput
                       formControlName="sourceTitle"
-                      placeholder="Source title"
+                      placeholder="{{sourceTitlePlaceholder}}"
                       name="sourceTitle"
                       required="{{articleIsFromAnotherSite}}"
                       (change)="onSourceTitleChanged($event.target.value)"
                     >
                   </label>
                   <mat-error
-                    *ngIf="articleCreateFormGroup.controls.sourceTitle.errors?.required">You must provide title</mat-error>
+                    *ngIf="articleCreateFormGroup.controls.sourceTitle.errors?.required"
+                    i18n="title required|title required error message@@titleRequiredErrorMessage"
+                  >You must provide title</mat-error>
                 </mat-form-field>
               </div>
               <div id="input-source-author" class="mat-input-element">
@@ -106,7 +80,7 @@
                     <input
                       matInput
                       formControlName="sourceAuthorName"
-                      placeholder="Source author name"
+                      placeholder="{{sourceAuthorNamePlaceholder}}"
                       name="sourceAuthorName"
                       (change)="onSourceAuthorNameChanged($event.target.value)"
                     >
@@ -119,15 +93,17 @@
                     <input
                       matInput
                       formControlName="sourceUrl"
-                      placeholder="Source url"
+                      placeholder="{{sourceUrlPlaceholder}}"
                       name="sourceUrl"
                       required="{{articleIsFromAnotherSite}}"
                       (change)="onSourceUrlChanged($event.target.value)"
                     >
                   </label>
                   <mat-error
+                    i18n="url required|url required error message@@urlRequiredErrorMessage"
                     *ngIf="articleCreateFormGroup.controls.sourceUrl.errors?.required">You must provide url</mat-error>
                   <mat-error
+                    i18n="url invalid|url invalid error message@@urlInvalidErrorMessage"
                     *ngIf="articleCreateFormGroup.controls.sourceUrl.errors?.pattern">Url is not valid</mat-error>
                 </mat-form-field>
               </div>
@@ -136,7 +112,8 @@
 
           <div id="input-primaryLanguage">
             <mat-form-field class="full-width-field default-margin-top">
-              <mat-label>Primary language</mat-label>
+              <mat-label i18n="language select label|primary language select label@@primaryLanguageSelectLabel"
+              >Primary language</mat-label>
 
               <mat-select
                 formControlName="primaryLanguageSelect"
@@ -150,7 +127,9 @@
                 </mat-option>
               </mat-select>
 
-              <mat-error *ngIf="articleCreateFormGroup.controls.primaryLanguageSelect.errors?.required"
+              <mat-error
+                *ngIf="articleCreateFormGroup.controls.primaryLanguageSelect.errors?.required"
+                i18n="language required|language required error message@@languageRequiredErrorMessage"
               >You must make a selection</mat-error>
 
             </mat-form-field>
@@ -168,7 +147,7 @@
                 >{{tag.title}}<mat-icon matChipRemove>cancel</mat-icon></mat-chip>
                 <label>
                   <input
-                    placeholder="Article tags"
+                    placeholder="{{articleTagsPlaceholder}}"
                     #tagsInput
                     [formControl]="tagsCtrl"
                     [disabled]="isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode"
@@ -192,10 +171,10 @@
 
           <!--Translation section-->
           <mat-divider inset></mat-divider>
-          <h3>Translation data</h3>
+          <h3 i18n="translation data|translation data label@@translationData">Translation data</h3>
 
           <mat-card id="input-articleImage" class="default-margin-bottom">
-            <mat-card-title>Article image file</mat-card-title>
+            <mat-card-title i18n="article image file|article image file label@@articleImageFile">Article image file</mat-card-title>
 
             <div id="articleImageContainer"
                  fxLayout
@@ -232,6 +211,7 @@
                   name="useExistingImage"
                   color="primary"
                   (change)="onUseExistingImageClicked($event.checked)"
+                  i18n="use existing image|use existing image checkbox@@useExistingImage"
                 >Use existing image</mat-checkbox>
               </div>
 
@@ -241,8 +221,8 @@
                   class="full-width-field"
                   #articleImageFileInput
                   formControlName="imageFile"
-                  placeholder="Image file"
-                  valuePlaceholder="No file selected"
+                  placeholder="{{imageFilePlaceholder}}"
+                  valuePlaceholder="{{noFileSelectedPlaceholder}}"
                   (change)="articleImageFileChange($event.target.files)"
                 >
                 </ngx-mat-file-input>
@@ -254,7 +234,9 @@
                 >
                   <mat-icon>clear</mat-icon>
                 </button>
-                <mat-error *ngIf="articleCreateFormGroup.get('imageFile').hasError('maxContentSize')"
+                <mat-error
+                  *ngIf="articleCreateFormGroup.get('imageFile').hasError('maxContentSize')"
+                  i18n="file is too large|file is too large@@fileIsTooLargeErrorMessage"
                 >The total size must not exceed {{maxSizeText}} ({{actualSizeText}}).</mat-error>
               </mat-form-field>
               <div id="input-image-file-name" class="mat-input-element">
@@ -264,7 +246,7 @@
                       matInput
                       [value]="imageFileName"
                       formControlName="imageFileName"
-                      placeholder="Image file name"
+                      placeholder="{{imageFileNamePlaceholder}}"
                       name="imageFileName"
                       (change)="onImageFileNameChanged($event.target.value)"
                     >
@@ -277,7 +259,8 @@
 
           <div id="input-translationLanguage" *ngIf="!isCreateArticleMode">
             <mat-form-field class="full-width-field default-margin-top">
-              <mat-label>Translation language</mat-label>
+              <mat-label i18n="translation language|translation language label@@translationLanguage"
+              >Translation language</mat-label>
 
               <mat-select
                 formControlName="translationLanguageSelect"
@@ -292,6 +275,7 @@
               </mat-select>
 
               <mat-error *ngIf="articleCreateFormGroup.controls.translationLanguageSelect.errors?.required"
+                         i18n="language required|language required error message@@languageRequiredErrorMessage"
               >You must make a selection</mat-error>
 
             </mat-form-field>
@@ -304,14 +288,16 @@
                 <input
                   matInput
                   formControlName="title"
-                  placeholder="Title"
+                  placeholder="{{titlePlaceholder}}"
                   name="title"
                   required
                   (change)="onTitleChanged($event.target.value)"
                 >
               </label>
               <mat-error
-                *ngIf="articleCreateFormGroup.controls.title.errors?.required">You must provide title</mat-error>
+                *ngIf="articleCreateFormGroup.controls.title.errors?.required"
+                i18n="title required|title required error message@@titleRequiredErrorMessage"
+              >You must provide title</mat-error>
             </mat-form-field>
           </div>
 
@@ -325,7 +311,7 @@
                 matAutosizeMinRows=1
                 matAutosizeMaxRows=5
                 formControlName="shortDescription"
-                placeholder="Short description"
+                placeholder="{{shortDescriptionPlaceholder}}"
                 name="shortDescription"
                 (change)="onShortDescriptionChanged($event.target.value)"
               ></textarea>
@@ -334,12 +320,12 @@
 
           <!--Version section-->
           <mat-divider inset></mat-divider>
-          <h3>Text version data</h3>
+          <h3 i18n="text version data|text version data label@@textVersionData">Text version data</h3>
 
           <div id="article-text">
             <div class="position-relative">
               <div class="full-width-field default-margin-bottom">
-                <label>Article text</label>
+                <label i18n="article text|article text label@@articleText">Article text</label>
                 <!--suppress AngularUndefinedBinding -->
                 <angular-markdown-editor
                   textareaId="editor1"
@@ -358,7 +344,7 @@
             </div>
 
             <div id="textPreview" class="default-margin-bottom">
-              <label>Preview</label>
+              <label i18n="preview|preview label@@preview">Preview</label>
               <mat-card>
                 <mat-card-content>
                   <markdown [data]="text"></markdown>

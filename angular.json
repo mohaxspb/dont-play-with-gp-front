@@ -60,6 +60,93 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "ru": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "aot": true,
+              "baseHref": "/ru/",
+              "outputPath": "dist/dont-play-with-gp-web/ru/",
+              "i18nFile": "src/locale/messages.ru.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "ru"
+            },
+            "en": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "aot": true,
+              "baseHref": "/en/",
+              "outputPath": "dist/dont-play-with-gp-web/en/",
+              "i18nFile": "src/locale/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en"
+            },
+            "fr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "aot": true,
+              "baseHref": "/fr/",
+              "outputPath": "dist/dont-play-with-gp-web/fr/",
+              "i18nFile": "src/locale/messages.fr.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "fr"
             }
           }
         },
@@ -72,6 +159,15 @@
           "configurations": {
             "production": {
               "browserTarget": "dont-play-with-gp-web:build:production"
+            },
+            "ru": {
+              "browserTarget": "dont-play-with-gp-web:build:ru"
+            },
+            "en": {
+              "browserTarget": "dont-play-with-gp-web:build:en"
+            },
+            "fr": {
+              "browserTarget": "dont-play-with-gp-web:build:fr"
             }
           }
         },
@@ -124,6 +220,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "dont-play-with-gp-web"
 }

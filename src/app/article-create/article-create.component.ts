@@ -8,7 +8,7 @@ import {UserProvider} from '../service/auth/UserProvider';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {finalize, flatMap, map, tap} from 'rxjs/operators';
 import {BehaviorSubject, of, zip} from 'rxjs';
-import {ARTICLE_OBJECT_EXAMPLE_FOR_INSTRUCTION, URL_PATTERN} from '../GpConstants';
+import {URL_PATTERN} from '../GpConstants';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Article} from '../model/data/Article';
 import {NotificationService} from '../service/ui/NotificationService';
@@ -21,6 +21,7 @@ import {TagService} from '../service/data/TagService';
 import {Tag} from '../model/data/Tag';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-article-create',
@@ -84,8 +85,8 @@ export class ArticleCreateComponent implements OnInit {
   // image END
 
   // add/edit data
-  actionTitle = 'New article creation';
-  submitTitle = 'Save';
+  actionTitle: string;
+  submitTitle: string;
 
   article: Article | null = null;
   translation: ArticleTranslation | null = null;
@@ -96,8 +97,15 @@ export class ArticleCreateComponent implements OnInit {
   translationId: number | null = null;
   versionId: number | null = null;
 
-  // instruction
-  exampleArticleObject = JSON.parse(ARTICLE_OBJECT_EXAMPLE_FOR_INSTRUCTION);
+  sourceTitlePlaceholder: string = this.i18n({value: 'Source title', id: 'sourceTitlePlaceholder'});
+  sourceAuthorNamePlaceholder: string = this.i18n({value: 'Source author name', id: 'sourceAuthorNamePlaceholder'});
+  sourceUrlPlaceholder: string = this.i18n({value: 'Source url', id: 'sourceUrlPlaceholder'});
+  articleTagsPlaceholder: string = this.i18n({value: 'Article tags', id: 'articleTagsPlaceholder'});
+  imageFilePlaceholder: string = this.i18n({value: 'Image file', id: 'imageFilePlaceholder'});
+  noFileSelectedPlaceholder: string = this.i18n({value: 'No file selected', id: 'noFileSelectedPlaceholder'});
+  imageFileNamePlaceholder: string = this.i18n({value: 'Image file name', id: 'imageFileNamePlaceholder'});
+  titlePlaceholder: string = this.i18n({value: 'Title', id: 'titlePlaceholder'});
+  shortDescriptionPlaceholder: string = this.i18n({value: 'Short description', id: 'shortDescriptionPlaceholder'});
 
   constructor(
     private route: ActivatedRoute,
@@ -107,7 +115,8 @@ export class ArticleCreateComponent implements OnInit {
     private tagService: TagService,
     private userProvider: UserProvider,
     private articleService: GpArticleService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private i18n: I18n
   ) {
   }
 
@@ -116,54 +125,44 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onArticleIsFromAnotherSiteClicked(checked: boolean) {
-    // console.log('onArticleIsFromAnotherSiteClicked: %s', checked);
     this.articleIsFromAnotherSite = checked;
 
     this.updateSourceDataControls();
   }
 
   onPrimaryLanguageChanged(language: Language) {
-    // console.log('onPrimaryLanguageChanged: %s', JSON.stringify(language));
     this.articleLanguage = language;
   }
 
   onTranslationLanguageChanged(language: Language) {
-    // console.log('onTranslationLanguageChanged: %s', JSON.stringify(language));
     this.translationLanguage = language;
   }
 
   onSourceTitleChanged(sourceTitle: string) {
-    // console.log('onSourceTitleChanged: %s', sourceTitle);
     this.sourceTitle = sourceTitle;
   }
 
   onSourceUrlChanged(sourceUrl: string) {
-    // console.log('onSourceUrlChanged: %s', sourceUrl);
     this.sourceUrl = sourceUrl;
   }
 
   onSourceAuthorNameChanged(sourceAuthorName: string) {
-    // console.log('onSourceAuthorNameChanged: %s', sourceAuthorName);
     this.sourceAuthorName = sourceAuthorName;
   }
 
   onTitleChanged(title: string) {
-    // console.log('onTitleChanged: %s', title);
     this.title = title;
   }
 
   onShortDescriptionChanged(shortDescription: string) {
-    console.log('onShortDescriptionChanged: %s', shortDescription);
     this.shortDescription = shortDescription;
   }
 
   onTextChanged(text: string) {
-    // console.log('onTextChanged: %s', text);
     this.text = text;
   }
 
   onDataRefreshClicked() {
-    // console.log('onDataRefreshClicked');
     this.loadInitialData();
   }
 
@@ -172,12 +171,10 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onImageFileNameChanged(imageFileName: string) {
-    // console.log('onImageFileNameChanged: %s', imageFileName);
     this.imageFileName = imageFileName;
   }
 
   articleImageFileChange(files: FileList) {
-    // console.log('articleImageFileChange: ', files);
     if (files.length > 0) {
       this.imageFile = files[0];
       this.imageFileName = this.imageFile.name;
@@ -206,7 +203,6 @@ export class ArticleCreateComponent implements OnInit {
 
     switch (this.actionType) {
       case ActionType.CREATE_ARTICLE:
-        console.log('CREATE_ARTICLE');
         this.articleService
           .createArticle(
             this.articleLanguage.id,
@@ -233,13 +229,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.EDIT_ARTICLE:
-        console.log('EDIT_ARTICLE: %s/%s/%s/%s/%s',
-          this.articleId,
-          this.articleLanguage.id,
-          this.sourceUrl,
-          this.sourceAuthorName,
-          this.sourceTitle
-        );
         this.articleService
           .editArticle(
             this.articleId,
@@ -263,15 +252,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.ADD_TRANSLATION:
-        console.log('ADD_TRANSLATION: %s/%s/%s/%s/%s/%s/%s',
-          this.articleId,
-          this.translationLanguage.id,
-          this.imageFile,
-          this.imageFileName,
-          this.title,
-          this.shortDescription,
-          this.text
-        );
         this.articleService
           .addTranslation(
             this.articleId,
@@ -296,14 +276,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.EDIT_TRANSLATION:
-        console.log('EDIT_TRANSLATION: %s/%s/%s/%s/%s/%s',
-          this.translationId,
-          this.translationLanguage.id,
-          this.imageFile,
-          this.imageFileName,
-          this.title,
-          this.shortDescription,
-        );
         this.articleService
           .editTranslation(
             this.translationId,
@@ -327,10 +299,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.ADD_VERSION:
-        console.log('ADD_VERSION: %s/%s',
-          this.translationId,
-          this.text
-        );
         this.articleService
           .createVersion(this.translationId, this.text)
           .pipe(
@@ -347,10 +315,6 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.EDIT_VERSION:
-        console.log('EDIT_VERSION: %s/%s',
-          this.versionId,
-          this.text
-        );
         this.articleService
           .editVersion(this.versionId, this.text)
           .pipe(
@@ -370,13 +334,10 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onImageLoadError(event) {
-    console.log('onImageLoadError');
     event.target.src = './assets/baseline-image-24px.svg';
   }
 
   onUseExistingImageClicked(checked: boolean) {
-    console.log('onUseExistingImageClicked: %s', checked);
-
     // disable img inputs, set image url
     if (checked) {
       this.articleImageUrl = this.article.translations[0].imageUrl;
@@ -504,12 +465,6 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   private initForm() {
-    console.log('isEditArticleMode: %s', this.isEditArticleMode);
-    console.log('isAddTranslationMode: %s', this.isAddTranslationMode);
-    console.log('isEditTranslationMode: %s', this.isEditTranslationMode);
-    console.log('isAddVersionMode: %s', this.isAddVersionMode);
-    console.log('isEditVersionMode: %s', this.isEditVersionMode);
-
     if (this.actionType !== ActionType.CREATE_ARTICLE) {
       this.articleIsFromAnotherSite = this.article.sourceUrl != null;
 
@@ -645,10 +600,6 @@ export class ArticleCreateComponent implements OnInit {
     });
 
     this.updateSourceDataControls();
-
-    // this.articleCreateFormGroup.valueChanges.subscribe((changes) => {
-    //   console.log('valueChanges: %s', JSON.stringify(changes));
-    // });
   }
 
   private getImageFileNameFromUrl() {
@@ -675,31 +626,29 @@ export class ArticleCreateComponent implements OnInit {
             this.actionType = ActionType[actionType];
             switch (actionType) {
               case ActionType.CREATE_ARTICLE:
+                this.actionTitle = this.i18n({value: 'Create article', id: 'createArticle'});
+                this.submitTitle = 'Save';
                 return of(null);
               case ActionType.EDIT_ARTICLE:
-                this.actionTitle = 'Edit article';
+                this.actionTitle = this.i18n({value: 'Edit article', id: 'editArticle'});
                 break;
               case ActionType.ADD_TRANSLATION:
-                this.actionTitle = 'Add translation';
+                this.actionTitle = this.i18n({value: 'Add translation', id: 'addTranslation'});
                 break;
               case ActionType.EDIT_TRANSLATION:
-                this.actionTitle = 'Edit translation';
+                this.actionTitle = this.i18n({value: 'Edit translation', id: 'editTranslation'});
                 break;
               case ActionType.ADD_VERSION:
-                this.actionTitle = 'Add version';
+                this.actionTitle = this.i18n({value: 'Add text version', id: 'addVersion'});
                 break;
               case ActionType.EDIT_VERSION:
-                this.actionTitle = 'Edit version';
+                this.actionTitle = this.i18n({value: 'Edit text version', id: 'editVersion'});
                 break;
             }
             this.submitTitle = this.actionTitle;
             this.articleId = Number(articleId);
             this.translationId = translationId != null ? Number(translationId) : null;
             this.versionId = versionId != null ? Number(versionId) : null;
-            console.log(
-              'actionType, articleId, translationId, versionId, actionTitle: %s/%s/%s/%s/%s: ',
-              this.articleId, this.actionType, this.translationId, this.versionId, this.actionTitle
-            );
             return this.articleService.getFullArticleById(this.articleId);
           })
         )

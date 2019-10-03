@@ -2,7 +2,7 @@
 
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Profile</mat-card-title>
+      <mat-card-title i18n="profile|profile page label@@profile">Profile</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
@@ -22,6 +22,7 @@
           color="warn"
           type="button"
           (click)="onDataRefreshClicked()"
+          i18n="refresh button label|refresh button label@@refreshButton"
         >Refresh</button>
 
       </div>
@@ -40,6 +41,7 @@
                 class="avatar default-margin-bottom"
                 src="{{userFromApi.avatar}}"
                 alt="avatar"
+                (error)="onAvatarLoadError($event)"
               />
 
               <button
@@ -99,19 +101,21 @@
                   <input
                     matInput
                     formControlName="name"
-                    placeholder="Name"
+                    placeholder="{{namePlaceholder}}"
                     name="name"
                     required
                     (change)="onNameChanged($event.target.value)"
                   >
                 </label>
-                <mat-error *ngIf="accountEditFormGroup.controls.name.errors?.required">You must provide name</mat-error>
+                <mat-error
+                  *ngIf="accountEditFormGroup.controls.name.errors?.required"
+                  i18n="Name required|name required error message@@nameRequiredErrorMessage">You must provide name</mat-error>
               </mat-form-field>
             </div>
 
             <div id="language" fxLayout="row" fxLayoutGap="16px">
               <mat-form-field class="full-width-field">
-                <mat-label>Primary language</mat-label>
+                <mat-label i18n="language select label|primary language select label@@primaryLanguageSelectLabel">Primary language</mat-label>
 
                 <mat-select
                   formControlName="primaryLanguageSelect"
@@ -126,6 +130,7 @@
                 </mat-select>
 
                 <mat-error *ngIf="accountEditFormGroup.controls.primaryLanguageSelect.errors?.required"
+                           i18n="language required|language required error message@@languageRequiredErrorMessage"
                 >You must make a selection</mat-error>
 
               </mat-form-field>
@@ -138,6 +143,7 @@
                 color="accent"
                 type="submit"
                 [disabled]="!(accountEditFormGroup.dirty && accountEditFormGroup.valid)"
+                i18n="save changes|save changes button label@@saveChangesButtonLabel"
               >Save changes</button>
             </p>
 
@@ -155,7 +161,7 @@
 
           <div id="createdArticles">
 
-            <h3>Created articles</h3>
+            <h3 i18n="created articles|created articles label@@createdArticlesLabel">Created articles</h3>
             <div class="rect-height-200 position-relative">
               <div *ngIf="articlesCreated?.length!==0"
                    fxLayout
@@ -195,8 +201,9 @@
           </div>
 
           <div id="createdComments">
-            <h3>Published comments</h3>
+            <h3 i18n="published comments|published comments label@@publishedCommentsLabel">Published comments</h3>
             <div class="rect-height-200 position-relative">
+              <!--              todo published comments-->
               <p class="center-inside-both-axis">Coming soon!</p>
             </div>
           </div>
@@ -228,12 +235,14 @@
         mat-stroked-button
         color="primary"
         (click)="onChangePasswordClicked()"
+        i18n="change password|change password button label@@changePasswordButtonLabel"
       >Change password</button>
 
       <button
         mat-stroked-button
         color="warn"
         (click)="onDeleteAccountClicked()"
+        i18n="delete account|delete account button label@@deleteAccountButtonLabel"
       >Delete Account</button>
     </mat-card-actions>
 

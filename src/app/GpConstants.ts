@@ -16,3 +16,9 @@ export class GpConstants {
 export const URL_PATTERN = '^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&\'\\(\\)\\*\\+,;=.]+$';
 
 export const ARTICLE_OBJECT_EXAMPLE_FOR_INSTRUCTION = '{"originalLangId":1,"sourceTitle":null,"sourceUrl":null,"sourceAuthorName":null,"translations":[{"langId":1,"title":"Lorem Ipsum","shortDescription":"Lorem ipsum","imageUrl":null,"versions":[{"text":"Lorem ipsum dolor sit amet."}]}]}';
+
+export const SUPPORTED_LANGUAGES = [
+  'en',
+  'ru',
+  'fr'
+];

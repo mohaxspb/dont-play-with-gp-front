@@ -33,6 +33,16 @@ export class GpAccountInteractor {
   editAccount(userId: number, name: string, langCode: string): Observable<GpUser> {
     return this.userService
       .updateAccount(userId, name, langCode)
-      .pipe(tap(user => this.authService.onUserReceived(user)));
+      .pipe(
+        tap(user => {
+          this.authService.onUserReceived(user);
+          this.languageService.setDefaultLangCode(
+            GpLanguageService.getLanguageById(
+              this.languageService.getLanguagesFromLocalStorage(),
+              user.primaryLanguageId
+            ).langCode
+          );
+        })
+      );
   }
 }

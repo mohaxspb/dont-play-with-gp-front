@@ -10,6 +10,21 @@
   </div>
 
   <span class="toolbar-spacer"></span>
+
+  <button mat-button [matMenuTriggerFor]="languagesMenu">
+    <img alt="site language" src="{{langFlag}}">
+  </button>
+  <mat-menu #languagesMenu>
+    <button
+      mat-menu-item
+      *ngFor="let lang of supportedLanguages"
+      (click)="onLangClicked(lang)"
+    >
+      <span>{{lang.toUpperCase()}}</span>
+      <img alt="language" src="{{getFlagPathForLangCode(lang)}}" class="img-language default-margin-left">
+    </button>
+  </mat-menu>
+
   <div
     class="noselect"
     matRipple
@@ -22,6 +37,7 @@
       class="avatar"
       src="{{user.avatar}}"
       alt="avatar"
+      (error)="onAvatarLoadError($event)"
     />
     <mat-icon
       *ngIf="authenticated && isNullOrEmptyOrUndefined(user.avatar)"
@@ -36,7 +52,7 @@
     color="accent"
     *ngIf="!authenticated"
     (click)="onLoginClicked()"
-    i18n="login button@@login"
+    i18n="login|login button label@@login"
   >Login</button>
   <button
     *ngIf="authenticated"
@@ -48,11 +64,11 @@
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="onAccountClicked()">
       <mat-icon>person</mat-icon>
-      <span i18n="account button@@account">Account</span>
+      <span i18n="account|account button label@@account">Account</span>
     </button>
     <button mat-menu-item (click)="onLogoutClicked()">
       <mat-icon>exit_to_app</mat-icon>
-      <span i18n="logout button@@logout">Logout</span>
+      <span i18n="logout|logout button label@@logout">Logout</span>
     </button>
   </mat-menu>
 </mat-toolbar>

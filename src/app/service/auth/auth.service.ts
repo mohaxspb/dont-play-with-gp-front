@@ -27,7 +27,6 @@ export class AuthService {
   }
 
   authenticate() {
-    // console.log('authenticate');
     this.apiService
       .getUser()
       .pipe(
@@ -39,7 +38,6 @@ export class AuthService {
   }
 
   logout(): Observable<string> {
-    console.log('logout');
     return this.apiService
       .logout()
       .pipe(
@@ -68,7 +66,6 @@ export class AuthService {
   }
 
   onUserReceived(user: GpUser | null) {
-    // console.log('user: ' + JSON.stringify(user));
     this.authenticated = user != null;
     this.authProvider.authenticated.next(this.authenticated);
     this.userProvider.call(user);

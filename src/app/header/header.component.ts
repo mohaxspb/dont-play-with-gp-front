@@ -7,6 +7,7 @@ import {UserProvider} from '../service/auth/UserProvider';
 import {MatBottomSheet} from '@angular/material';
 import {GpUser} from '../model/auth/GpUser';
 import {LoginComponent} from '../login/login.component';
+import {GpConstants, SUPPORTED_LANGUAGES} from '../GpConstants';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,8 @@ import {LoginComponent} from '../login/login.component';
 })
 export class HeaderComponent implements OnInit {
   title = 'Don\'t play with Google Play';
+
+  supportedLanguages = SUPPORTED_LANGUAGES;
 
   authenticated: boolean | null;
   user: GpUser | null;

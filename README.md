@@ -27,7 +27,6 @@ Also try to add `--optimization=false`, as it builds, but crashes after deploy(
 ng build --configuration=production --base-href /dont-play-with-google/ --deploy-url /dont-play-with-google/ --aot=false --build-optimizer=false
 ```
 
-
 ## Test on device in same network
 
 Add `host` option to `scripts` in `serve` command in `angular.json`. Now site can be accessed by host IP
@@ -67,6 +66,40 @@ replace:
 ```
 <source>$1<\/source>
         <target>$1<\/target>
+```
+
+## Deployment
+
+Build all languages versions:
+
+`npm run build-i18n-prod`
+
+Then just copy files from `PROJECT_ROOT/dist/` to `var/www/html` if using `apache2` server.
+
+Add add rules to redirect user to correct language in `etc/apache2/apache2.conf`:
+
+```
+<VirtualHost *:80>
+    DocumentRoot "/var/www/html"
+    ServerName domain.zone
+		ServerAlias domain.zone
+		
+  <Directory "/var/www/html">
+    RewriteEngine on
+    RewriteBase /
+    RewriteRule ^../index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule (..) $1/index.html [L]
+    RewriteCond %{HTTP:Accept-Language} ^fr [NC]
+    RewriteRule ^$ /fr/ [R]
+    RewriteCond %{HTTP:Accept-Language} ^ru [NC]
+    RewriteRule ^$ /ru/ [R]
+    RewriteCond %{HTTP:Accept-Language} !^ru [NC]
+    RewriteCond %{HTTP:Accept-Language} !^fr [NC]
+    RewriteRule ^$ /en/ [R]
+  </Directory>
+</VirtualHost>
 ```
 
 ## Markdown editor lib

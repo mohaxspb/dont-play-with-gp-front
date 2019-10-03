@@ -12,6 +12,7 @@ import {NotificationService} from '../service/ui/NotificationService';
 import {GpLanguageService} from '../service/data/GpLanguageService';
 import {Article} from '../model/data/Article';
 import {GpArticleService} from '../service/data/GpArticleService';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-account',
@@ -46,7 +47,8 @@ export class AccountComponent implements OnInit {
     private articleService: GpArticleService,
     private fBuilder: FormBuilder,
     private notificationService: NotificationService,
-    private dialogsService: DialogService
+    private dialogsService: DialogService,
+    private i18n: I18n
   ) {
   }
 
@@ -144,24 +146,37 @@ export class AccountComponent implements OnInit {
             GpLanguageService.getLanguageById(this.languagesListFromApi, this.userFromApi.primaryLanguageId)
           );
           this.accountEditFormGroup.reset(this.accountEditFormGroup.value);
-          // todo translation
-          this.notificationService.showMessage('Successfully updated!');
+          const message = this.i18n({
+            value: 'Successfully updated!',
+            id: 'successfullyUpdated',
+            meaning: 'successfully updated',
+            description: 'successfully updated'
+          });
+          this.notificationService.showMessage(message);
         },
         error => this.notificationService.showError(error)
       );
   }
 
   onAvatarEditClicked() {
-    console.log('onAvatarEditClicked');
-    // todo translation
-    this.notificationService.showMessage('Not implemented yet, sorry)');
+    const message = this.i18n({
+      value: 'Not implemented yet, sorry)',
+      id: 'notImplementedErrorMessage',
+      meaning: 'not implemented yet, sorry',
+      description: 'Not implemented error message)'
+    });
+    this.notificationService.showMessage(message);
     // todo avatar edit feature
   }
 
   onChangePasswordClicked() {
-    console.log('onChangePasswordClicked');
-    // todo translation
-    this.notificationService.showMessage('Not implemented yet, sorry)');
+    const message = this.i18n({
+      value: 'Not implemented yet, sorry)',
+      id: 'notImplementedErrorMessage',
+      meaning: 'not implemented yet, sorry',
+      description: 'Not implemented error message)'
+    });
+    this.notificationService.showMessage(message);
     // todo password change feature
   }
 
@@ -183,9 +198,21 @@ export class AccountComponent implements OnInit {
   }
 
   private showConfirmAccountDeleteDialog(id: number) {
+    const dialogTitle = this.i18n({
+      value: 'Delete account',
+      id: 'deleteAccountDialogTitle',
+      meaning: 'Delete account',
+      description: 'Delete account'
+    });
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to delete account? This can\'t be undone!',
+      id: 'deleteAccountDialogMessage',
+      meaning: 'Are you sure you want to delete account? This can\'t be undone!',
+      description: 'Are you sure you want to delete account? This can\'t be undone!'
+    });
     this.dialogsService
-    // todo translation
-      .confirm('Delete account', 'Are you sure you want to delete account? This can\'t be undone!', 'Delete account')
+      .confirm(dialogTitle, dialogMessage, dialogTitle)
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteAccount(id);

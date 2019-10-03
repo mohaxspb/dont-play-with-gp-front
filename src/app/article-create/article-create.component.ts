@@ -21,6 +21,7 @@ import {TagService} from '../service/data/TagService';
 import {Tag} from '../model/data/Tag';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-article-create',
@@ -104,7 +105,8 @@ export class ArticleCreateComponent implements OnInit {
     private tagService: TagService,
     private userProvider: UserProvider,
     private articleService: GpArticleService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private i18n: I18n
   ) {
   }
 
@@ -616,24 +618,19 @@ export class ArticleCreateComponent implements OnInit {
               case ActionType.CREATE_ARTICLE:
                 return of(null);
               case ActionType.EDIT_ARTICLE:
-                // todo translation todo seems to be we already has it. Check messages.xlf
-                this.actionTitle = 'Edit article';
+                this.actionTitle = this.i18n({value: 'Edit article', id: 'editArticle'});
                 break;
               case ActionType.ADD_TRANSLATION:
-                // todo translation todo seems to be we already has it. Check messages.xlf
-                this.actionTitle = 'Add translation';
+                this.actionTitle = this.i18n({value: 'Add translation', id: 'addTranslation'});
                 break;
               case ActionType.EDIT_TRANSLATION:
-                // todo translation todo seems to be we already has it. Check messages.xlf
-                this.actionTitle = 'Edit translation';
+                this.actionTitle = this.i18n({value: 'Edit translation', id: 'editTranslation'});
                 break;
               case ActionType.ADD_VERSION:
-                // todo translation todo seems to be we already has it. Check messages.xlf
-                this.actionTitle = 'Add version';
+                this.actionTitle = this.i18n({value: 'Add text version', id: 'addVersion'});
                 break;
               case ActionType.EDIT_VERSION:
-                // todo translation todo seems to be we already has it. Check messages.xlf
-                this.actionTitle = 'Edit version';
+                this.actionTitle = this.i18n({value: 'Edit text version', id: 'editVersion'});
                 break;
             }
             this.submitTitle = this.actionTitle;

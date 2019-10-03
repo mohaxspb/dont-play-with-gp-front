@@ -4,9 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --base-href /en/",
-    "start-en": "ng serve --configuration=en",
-    "start-ru": "ng serve --configuration=ru",
-    "start-fr": "ng serve --configuration=fr",
+    "start-en": "ng serve --base-href /en/ --configuration=en",
+    "start-ru": "ng serve --base-href /ru/ --configuration=ru",
+    "start-fr": "ng serve --base-href /fr/ --configuration=fr",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

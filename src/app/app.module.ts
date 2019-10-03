@@ -66,7 +66,6 @@ import {CommentsComponent} from './comments/comments.component';
 import {ArticleCreateInstructionComponent} from './article-create-instruction/article-create-instruction.component';
 // Import the service
 import {I18n} from '@ngx-translate/i18n-polyfill';
-import {LanguageUtils} from './utils/LanguageUtils';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -158,16 +157,13 @@ declare const require; // Use the require method provided by webpack
     {
       provide: TRANSLATIONS,
       useFactory: () => {
-        let defaultLangCode = localStorage.getItem(GpLocalStorageService.Keys.DEFAULT_LANG_CODE);
-        if (defaultLangCode == null) {
-          defaultLangCode = LanguageUtils.getBrowserLanguageCode();
-        }
-        console.log('defaultLangCode: %s', defaultLangCode);
+        const currentLangCode = window.location.pathname.replace(new RegExp('/', 'g'), '');
+        console.log('currentLangCode: %s', currentLangCode);
 
-        if (defaultLangCode === GpLanguageService.DEFAULT_LANG_CODE) {
+        if (currentLangCode === GpLanguageService.DEFAULT_LANG_CODE) {
           return '';
         } else {
-          return require(`raw-loader!../locale/messages.${defaultLangCode}.xlf`).default;
+          return require(`raw-loader!../locale/messages.${currentLangCode}.xlf`).default;
         }
       },
       deps: [LOCALE_ID]

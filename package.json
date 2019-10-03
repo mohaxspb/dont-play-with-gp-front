@@ -3,7 +3,8 @@
   "version": "0.0.6",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --base-href /en/",
+    "start-en": "ng serve --configuration=en",
     "start-ru": "ng serve --configuration=ru",
     "start-fr": "ng serve --configuration=fr",
     "build": "ng build",

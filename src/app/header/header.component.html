@@ -10,6 +10,21 @@
   </div>
 
   <span class="toolbar-spacer"></span>
+
+  <button mat-button [matMenuTriggerFor]="languagesMenu">
+    <img alt="site language" src="{{langFlag}}">
+  </button>
+  <mat-menu #languagesMenu>
+    <button
+      mat-menu-item
+      *ngFor="let lang of supportedLanguages"
+      (click)="onLangClicked(lang)"
+    >
+      <span>{{lang.toUpperCase()}}</span>
+      <img alt="language" src="{{getFlagPathForLangCode(lang)}}" class="img-language default-margin-left">
+    </button>
+  </mat-menu>
+
   <div
     class="noselect"
     matRipple

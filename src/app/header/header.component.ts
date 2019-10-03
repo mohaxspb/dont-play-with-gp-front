@@ -7,7 +7,7 @@ import {UserProvider} from '../service/auth/UserProvider';
 import {MatBottomSheet} from '@angular/material';
 import {GpUser} from '../model/auth/GpUser';
 import {LoginComponent} from '../login/login.component';
-import {GpConstants, SUPPORTED_LANGUAGES} from '../GpConstants';
+import {SUPPORTED_LANGUAGES} from '../GpConstants';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +17,8 @@ import {GpConstants, SUPPORTED_LANGUAGES} from '../GpConstants';
 export class HeaderComponent implements OnInit {
   title = 'Don\'t play with Google Play';
 
-  supportedLanguages = SUPPORTED_LANGUAGES;
+  supportedLanguages: string[] = SUPPORTED_LANGUAGES;
+  currentSiteLanguage: string = GpLanguageService.DEFAULT_LANG_CODE;
 
   authenticated: boolean | null;
   user: GpUser | null;
@@ -36,6 +37,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.currentSiteLanguage = window.location.pathname.replace(new RegExp('/', 'g'), '');
+
     this.authProvider
       .authenticated
       .subscribe((authenticated: boolean) => this.authenticated = authenticated);
@@ -70,5 +73,25 @@ export class HeaderComponent implements OnInit {
 
   onAvatarLoadError(event) {
     event.target.src = './assets/baseline-image-24px.svg';
+  }
+
+  get langFlag() {
+    return './assets/img/flags/' + this.currentSiteLanguage + '.svg';
+  }
+
+  getFlagPathForLangCode(langCode: string): string {
+    switch (langCode) {
+      case 'ru':
+      case 'fr':
+        return './assets/img/flags/' + langCode + '.svg';
+      default:
+        return './assets/img/flags/' + GpLanguageService.DEFAULT_LANG_CODE + '.svg';
+    }
+  }
+
+  onLangClicked(lang: string) {
+    this.currentSiteLanguage = lang;
+
+    window.location.href = '/' + lang + '/' + '#' + this.router.url;
   }
 }

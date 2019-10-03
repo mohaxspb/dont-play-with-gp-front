@@ -85,8 +85,8 @@ export class ArticleCreateComponent implements OnInit {
   // image END
 
   // add/edit data
-  actionTitle = 'New article creation';
-  submitTitle = 'Save';
+  actionTitle: string;
+  submitTitle: string;
 
   article: Article | null = null;
   translation: ArticleTranslation | null = null;
@@ -626,6 +626,8 @@ export class ArticleCreateComponent implements OnInit {
             this.actionType = ActionType[actionType];
             switch (actionType) {
               case ActionType.CREATE_ARTICLE:
+                this.actionTitle = this.i18n({value: 'Create article', id: 'createArticle'});
+                this.submitTitle = 'Save';
                 return of(null);
               case ActionType.EDIT_ARTICLE:
                 this.actionTitle = this.i18n({value: 'Edit article', id: 'editArticle'});

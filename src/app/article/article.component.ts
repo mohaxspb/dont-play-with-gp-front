@@ -18,6 +18,7 @@ import {MatBottomSheet} from '@angular/material';
 import {UserProvider} from '../service/auth/UserProvider';
 import {ActionType} from '../article-create/article-create.component';
 import {Api} from '../service/Api';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-article',
@@ -56,7 +57,8 @@ export class ArticleComponent implements OnInit {
     private languageService: GpLanguageService,
     private notificationService: NotificationService,
     private dialogsService: DialogService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private i18n: I18n
   ) {
   }
 
@@ -191,8 +193,13 @@ export class ArticleComponent implements OnInit {
   onTranslationAddClicked() {
     // show login or translation create component
     if (this.user == null) {
-      // todo translation
-      this.bottomSheet.open(LoginComponent, {data: {title: 'To add translation you should'}});
+      const title = this.i18n({
+        value: 'To add translation you should',
+        id: 'translationAddLoginTitle',
+        meaning: 'to add translation you should',
+        description: 'to add translation you should'
+      });
+      this.bottomSheet.open(LoginComponent, {data: {title}});
     } else {
       // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(
@@ -211,8 +218,13 @@ export class ArticleComponent implements OnInit {
 
   onVersionAddClicked() {
     if (this.user == null) {
-      // todo translation
-      this.bottomSheet.open(LoginComponent, {data: {title: 'To add version you should'}});
+      const title = this.i18n({
+        value: 'To add text version you should',
+        id: 'versionAddLoginTitle',
+        meaning: 'to add text version you should',
+        description: 'to add text version you should'
+      });
+      this.bottomSheet.open(LoginComponent, {data: {title}});
     } else {
       // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(
@@ -285,9 +297,22 @@ export class ArticleComponent implements OnInit {
   }
 
   private showConfirmArticleDeleteDialog(id: number) {
+    const dialogTitle = this.i18n({
+      value: 'Delete article',
+      id: 'deleteArticleDialogTitle',
+      meaning: 'Delete article',
+      description: 'Delete article'
+    });
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to delete article? This can\'t be undone!',
+      id: 'deleteArticleDialogMessage',
+      meaning: 'Are you sure you want to delete article? This can\'t be undone!',
+      description: 'Are you sure you want to delete article? This can\'t be undone!'
+    });
+
     this.dialogsService
-    // todo translation
-      .confirm('Delete article', 'Are you sure you want to delete article? This can\'t be undone!', 'Delete article')
+      .confirm(dialogTitle, dialogMessage, dialogTitle)
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteArticle(id);
@@ -296,9 +321,22 @@ export class ArticleComponent implements OnInit {
   }
 
   private showConfirmTranslationDeleteDialog(id: number) {
+    const dialogTitle = this.i18n({
+      value: 'Delete translation',
+      id: 'deleteTranslationDialogTitle',
+      meaning: 'Delete translation',
+      description: 'Delete translation'
+    });
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to delete translation? This can\'t be undone!',
+      id: 'deleteTranslationDialogMessage',
+      meaning: 'Are you sure you want to delete translation? This can\'t be undone!',
+      description: 'Are you sure you want to delete translation? This can\'t be undone!'
+    });
+
     this.dialogsService
-    // todo translation
-      .confirm('Delete translation', 'Are you sure you want to delete translation? This can\'t be undone!', 'Delete translation')
+      .confirm(dialogTitle, dialogMessage, dialogTitle)
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteTranslation(id);
@@ -307,9 +345,22 @@ export class ArticleComponent implements OnInit {
   }
 
   private showConfirmVersionDeleteDialog(id: number) {
+    const dialogTitle = this.i18n({
+      value: 'Delete text version',
+      id: 'deleteVersionDialogTitle',
+      meaning: 'Delete text version',
+      description: 'Delete text version'
+    });
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to delete text version? This can\'t be undone!',
+      id: 'deleteVersionDialogMessage',
+      meaning: 'Are you sure you want to delete text version? This can\'t be undone!',
+      description: 'Are you sure you want to delete text version? This can\'t be undone!'
+    });
+
     this.dialogsService
-    // todo translation
-      .confirm('Delete text version', 'Are you sure you want to delete text version? This can\'t be undone!', 'Delete version')
+      .confirm(dialogTitle, dialogMessage, dialogTitle)
       .subscribe((res: boolean) => {
         if (res) {
           this.deleteVersion(id);
@@ -422,12 +473,18 @@ export class ArticleComponent implements OnInit {
     } else {
       action = 'hide';
     }
+
+    const dialogMessage = this.i18n({
+      value: 'Are you sure you want to {{action}} this {{dataType}}?\nIt will be available for everyone immediately!',
+      id: 'deleteVersionDialogTitle',
+      meaning: 'Delete text version',
+      description: 'Delete text version'
+    }, {action, dataType});
+
     this.dialogsService
-    // todo translation
       .confirm(
         action + ' ' + dataType,
-        'Are you sure you want to ' + action + ' this ' + dataType + '?\n' +
-        'It will be available for everyone immediately!',
+        dialogMessage,
         action
       )
       .subscribe((res: boolean) => {

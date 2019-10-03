@@ -8,6 +8,7 @@ import {MatBottomSheet} from '@angular/material';
 import {GpUser} from '../model/auth/GpUser';
 import {LoginComponent} from '../login/login.component';
 import {SUPPORTED_LANGUAGES} from '../GpConstants';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -37,7 +38,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentSiteLanguage = window.location.pathname.replace(new RegExp('/', 'g'), '');
+    this.currentSiteLanguage = window.location.pathname
+        .replace(new RegExp(environment.pathPrefix, 'g'), '')
+        .replace(new RegExp('/', 'g'), '');
 
     this.authProvider
       .authenticated

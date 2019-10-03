@@ -2,5 +2,5 @@ export const environment = {
   production: true,
   apiPath: '/api',
   clientId: 'client_id',
-  pathPrefix: ''
+  pathPrefix: 'dont-play-with-google'
 };

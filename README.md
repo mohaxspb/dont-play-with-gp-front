@@ -102,6 +102,32 @@ Add add rules to redirect user to correct language in `etc/apache2/apache2.conf`
 </VirtualHost>
 ```
 
+---
+
+For stage deploy
+ 
+1. build: `npm run build-i18n-stage`
+2. Copy files from `dist` to `var/www/html/${environment.pathPrefix}`
+3. Edit apache2 config:
+
+```
+  <Directory "/var/www/html/dont-play-with-google">
+    RewriteEngine on
+    RewriteBase /
+    RewriteRule ^../index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule (..) $1/index.html [L]
+    RewriteCond %{HTTP:Accept-Language} ^fr [NC]
+    RewriteRule ^$ /dont-play-with-google/fr/ [R]
+    RewriteCond %{HTTP:Accept-Language} ^ru [NC]
+    RewriteRule ^$ /dont-play-with-google/ru/ [R]
+    RewriteCond %{HTTP:Accept-Language} !^ru [NC]
+    RewriteCond %{HTTP:Accept-Language} !^fr [NC]
+    RewriteRule ^$ /dont-play-with-google/en/ [R]
+  </Directory>
+```
+
 ## Markdown editor lib
 
 See [Angular-Markdown-Editor](https://github.com/ghiscoding/angular-markdown-editor)

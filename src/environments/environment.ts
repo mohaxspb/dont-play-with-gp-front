@@ -5,5 +5,6 @@
 export const environment = {
   production: false,
   apiPath: '/api',
-  clientId: 'client_id'
+  clientId: 'client_id',
+  pathPrefix: ''
 };

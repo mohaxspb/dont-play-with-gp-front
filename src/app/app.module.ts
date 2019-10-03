@@ -66,6 +66,7 @@ import {CommentsComponent} from './comments/comments.component';
 import {ArticleCreateInstructionComponent} from './article-create-instruction/article-create-instruction.component';
 // Import the service
 import {I18n} from '@ngx-translate/i18n-polyfill';
+import {environment} from '../environments/environment';
 
 // need this for markdown lib
 // import * as $ from 'jquery';
@@ -157,7 +158,9 @@ declare const require; // Use the require method provided by webpack
     {
       provide: TRANSLATIONS,
       useFactory: () => {
-        const currentLangCode = window.location.pathname.replace(new RegExp('/', 'g'), '');
+        const currentLangCode = window.location.pathname
+            .replace(new RegExp(environment.pathPrefix, 'g'), '')
+            .replace(new RegExp('/', 'g'), '');
         console.log('currentLangCode: %s', currentLangCode);
 
         if (currentLangCode === GpLanguageService.DEFAULT_LANG_CODE) {

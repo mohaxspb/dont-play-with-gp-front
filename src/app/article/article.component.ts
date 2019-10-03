@@ -476,7 +476,7 @@ export class ArticleComponent implements OnInit {
 
     const dialogMessage = this.i18n({
       value: 'Are you sure you want to {{action}} this {{dataType}}?\nIt will be available for everyone immediately!',
-      id: 'deleteVersionDialogTitle',
+      id: 'publishDialogMessage',
       meaning: 'Delete text version',
       description: 'Delete text version'
     }, {action, dataType});

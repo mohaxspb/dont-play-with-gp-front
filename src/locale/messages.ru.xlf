@@ -941,6 +941,101 @@
 				<note priority="1" from="description">wrong email or password</note>
 				<note priority="1" from="meaning">wrong email or password</note>
 			</trans-unit>
+			<trans-unit id="translationAddLoginTitle" datatype="html">
+				<source>To add translation you should</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">to add translation you should</note>
+				<note priority="1" from="meaning">to add translation you should</note>
+			</trans-unit>
+			<trans-unit id="versionAddLoginTitle" datatype="html">
+				<source>To add text version you should</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">to add text version you should</note>
+				<note priority="1" from="meaning">to add text version you should</note>
+			</trans-unit>
+			<trans-unit id="deleteArticleDialogTitle" datatype="html">
+				<source>Delete article</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Delete article</note>
+				<note priority="1" from="meaning">Delete article</note>
+			</trans-unit>
+			<trans-unit id="deleteArticleDialogMessage" datatype="html">
+				<source>Are you sure you want to delete article? This can&apos;t be undone!</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Are you sure you want to delete article? This can&apos;t be undone!</note>
+				<note priority="1" from="meaning">Are you sure you want to delete article? This can&apos;t be undone!</note>
+			</trans-unit>
+			<trans-unit id="deleteTranslationDialogTitle" datatype="html">
+				<source>Delete translation</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Delete translation</note>
+				<note priority="1" from="meaning">Delete translation</note>
+			</trans-unit>
+			<trans-unit id="deleteTranslationDialogMessage" datatype="html">
+				<source>Are you sure you want to delete translation? This can&apos;t be undone!</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Are you sure you want to delete translation? This can&apos;t be undone!</note>
+				<note priority="1" from="meaning">Are you sure you want to delete translation? This can&apos;t be undone!</note>
+			</trans-unit>
+			<trans-unit id="deleteVersionDialogTitle" datatype="html">
+				<source>Delete text version</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Delete text version</note>
+				<note priority="1" from="meaning">Delete text version</note>
+			</trans-unit>
+			<trans-unit id="deleteVersionDialogMessage" datatype="html">
+				<source>Are you sure you want to delete text version? This can&apos;t be undone!</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Are you sure you want to delete text version? This can&apos;t be undone!</note>
+				<note priority="1" from="meaning">Are you sure you want to delete text version? This can&apos;t be undone!</note>
+			</trans-unit>
+			<trans-unit id="publishDialogMessage" datatype="html">
+				<source>Are you sure you want to <x id="INTERPOLATION" equiv-text="{{action}}"/> this <x id="INTERPOLATION_1" equiv-text="{{dataType}}"/>?
+It will be available for everyone immediately!</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Delete text version</note>
+				<note priority="1" from="meaning">Delete text version</note>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

@@ -46,6 +46,9 @@ export class LoginComponent implements OnInit {
   passwordMinLength = GpConstants.PASSWORD_MIN_LENGTH;
   passwordMaxLength = GpConstants.PASSWORD_MAX_LENGTH;
 
+
+  namePlaceholder: string = this.i18n({value: 'Name', id: 'namePlaceholder'});
+
   constructor(
     private bottomSheetRef: MatBottomSheetRef<LoginComponent>,
     private localStorageService: GpLocalStorageService,

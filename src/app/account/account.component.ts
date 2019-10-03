@@ -41,6 +41,8 @@ export class AccountComponent implements OnInit {
   // content
   articlesCreated: Article[] = [];
 
+  namePlaceholder: string = this.i18n({value: 'Name', id: 'namePlaceholder'});
+
   constructor(
     private router: Router,
     private accountInteractor: GpAccountInteractor,

@@ -48,6 +48,8 @@ export class ArticleComponent implements OnInit {
   selectedTranslation: ArticleTranslation;
   selectedTranslationVersion: ArticleTranslationVersion;
 
+  publishingDatePlaceholder: string = this.i18n({value: 'Publishing date', id: 'publishingDatePlaceholder'});
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,

@@ -62,7 +62,7 @@
                     <input
                       matInput
                       formControlName="sourceTitle"
-                      placeholder="Source title"
+                      placeholder="{{sourceTitlePlaceholder}}"
                       name="sourceTitle"
                       required="{{articleIsFromAnotherSite}}"
                       (change)="onSourceTitleChanged($event.target.value)"
@@ -80,7 +80,7 @@
                     <input
                       matInput
                       formControlName="sourceAuthorName"
-                      placeholder="Source author name"
+                      placeholder="{{sourceAuthorNamePlaceholder}}"
                       name="sourceAuthorName"
                       (change)="onSourceAuthorNameChanged($event.target.value)"
                     >
@@ -93,7 +93,7 @@
                     <input
                       matInput
                       formControlName="sourceUrl"
-                      placeholder="Source url"
+                      placeholder="{{sourceUrlPlaceholder}}"
                       name="sourceUrl"
                       required="{{articleIsFromAnotherSite}}"
                       (change)="onSourceUrlChanged($event.target.value)"
@@ -147,7 +147,7 @@
                 >{{tag.title}}<mat-icon matChipRemove>cancel</mat-icon></mat-chip>
                 <label>
                   <input
-                    placeholder="Article tags"
+                    placeholder="{{articleTagsPlaceholder}}"
                     #tagsInput
                     [formControl]="tagsCtrl"
                     [disabled]="isEditTranslationMode || isAddTranslationMode || isAddVersionMode || isEditVersionMode"
@@ -221,8 +221,8 @@
                   class="full-width-field"
                   #articleImageFileInput
                   formControlName="imageFile"
-                  placeholder="Image file"
-                  valuePlaceholder="No file selected"
+                  placeholder="{{imageFilePlaceholder}}"
+                  valuePlaceholder="{{noFileSelectedPlaceholder}}"
                   (change)="articleImageFileChange($event.target.files)"
                 >
                 </ngx-mat-file-input>
@@ -246,7 +246,7 @@
                       matInput
                       [value]="imageFileName"
                       formControlName="imageFileName"
-                      placeholder="Image file name"
+                      placeholder="{{imageFileNamePlaceholder}}"
                       name="imageFileName"
                       (change)="onImageFileNameChanged($event.target.value)"
                     >
@@ -288,7 +288,7 @@
                 <input
                   matInput
                   formControlName="title"
-                  placeholder="Title"
+                  placeholder="{{titlePlaceholder}}"
                   name="title"
                   required
                   (change)="onTitleChanged($event.target.value)"
@@ -311,7 +311,7 @@
                 matAutosizeMinRows=1
                 matAutosizeMaxRows=5
                 formControlName="shortDescription"
-                placeholder="Short description"
+                placeholder="{{shortDescriptionPlaceholder}}"
                 name="shortDescription"
                 (change)="onShortDescriptionChanged($event.target.value)"
               ></textarea>

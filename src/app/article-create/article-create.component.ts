@@ -97,6 +97,16 @@ export class ArticleCreateComponent implements OnInit {
   translationId: number | null = null;
   versionId: number | null = null;
 
+  sourceTitlePlaceholder: string = this.i18n({value: 'Source title', id: 'sourceTitlePlaceholder'});
+  sourceAuthorNamePlaceholder: string = this.i18n({value: 'Source author name', id: 'sourceAuthorNamePlaceholder'});
+  sourceUrlPlaceholder: string = this.i18n({value: 'Source url', id: 'sourceUrlPlaceholder'});
+  articleTagsPlaceholder: string = this.i18n({value: 'Article tags', id: 'articleTagsPlaceholder'});
+  imageFilePlaceholder: string = this.i18n({value: 'Image file', id: 'imageFilePlaceholder'});
+  noFileSelectedPlaceholder: string = this.i18n({value: 'No file selected', id: 'noFileSelectedPlaceholder'});
+  imageFileNamePlaceholder: string = this.i18n({value: 'Image file name', id: 'imageFileNamePlaceholder'});
+  titlePlaceholder: string = this.i18n({value: 'Title', id: 'titlePlaceholder'});
+  shortDescriptionPlaceholder: string = this.i18n({value: 'Short description', id: 'shortDescriptionPlaceholder'});
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,

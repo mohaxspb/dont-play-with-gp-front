@@ -1122,6 +1122,98 @@ It will be available for everyone immediately!</target>
 				<note priority="1" from="description">Unexpected error occurred.</note>
 				<note priority="1" from="meaning">Unexpected error occurred.</note>
 			</trans-unit>
+			<trans-unit id="namePlaceholder" datatype="html">
+				<source>Name</source>
+        <target>Name</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/login/login.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="sourceTitlePlaceholder" datatype="html">
+				<source>Source title</source>
+        <target>Source title</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="sourceAuthorNamePlaceholder" datatype="html">
+				<source>Source author name</source>
+        <target>Source author name</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="sourceUrlPlaceholder" datatype="html">
+				<source>Source url</source>
+        <target>Source url</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="articleTagsPlaceholder" datatype="html">
+				<source>Article tags</source>
+        <target>Article tags</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="imageFilePlaceholder" datatype="html">
+				<source>Image file</source>
+        <target>Image file</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="noFileSelectedPlaceholder" datatype="html">
+				<source>No file selected</source>
+        <target>No file selected</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="imageFileNamePlaceholder" datatype="html">
+				<source>Image file name</source>
+        <target>Image file name</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="titlePlaceholder" datatype="html">
+				<source>Title</source>
+        <target>Title</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="shortDescriptionPlaceholder" datatype="html">
+				<source>Short description</source>
+        <target>Short description</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="publishingDatePlaceholder" datatype="html">
+				<source>Publishing date</source>
+        <target>Publishing date</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

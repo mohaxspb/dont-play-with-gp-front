@@ -1012,6 +1012,87 @@ It will be available for everyone immediately!</source>
 				<note priority="1" from="description">Unexpected error occurred.</note>
 				<note priority="1" from="meaning">Unexpected error occurred.</note>
 			</trans-unit>
+			<trans-unit id="namePlaceholder" datatype="html">
+				<source>Name</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/login/login.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="sourceTitlePlaceholder" datatype="html">
+				<source>Source title</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="sourceAuthorNamePlaceholder" datatype="html">
+				<source>Source author name</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="sourceUrlPlaceholder" datatype="html">
+				<source>Source url</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="articleTagsPlaceholder" datatype="html">
+				<source>Article tags</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="imageFilePlaceholder" datatype="html">
+				<source>Image file</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="noFileSelectedPlaceholder" datatype="html">
+				<source>No file selected</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="imageFileNamePlaceholder" datatype="html">
+				<source>Image file name</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="titlePlaceholder" datatype="html">
+				<source>Title</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="shortDescriptionPlaceholder" datatype="html">
+				<source>Short description</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
+			<trans-unit id="publishingDatePlaceholder" datatype="html">
+				<source>Publishing date</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

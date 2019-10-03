@@ -2,13 +2,16 @@ import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ApiError} from '../../model/ApiError';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(
+    private snackBar: MatSnackBar,
+    private i18n: I18n) {
   }
 
   showMessage(message: string) {
@@ -23,13 +26,23 @@ export class NotificationService {
         this.showMessage(parsedServerError.message);
       } catch (e) {
         console.error(e);
-        // todo translation
-        this.showMessage('Unexpected error occurred.');
+        const message = this.i18n({
+          value: 'Unexpected error occurred.',
+          id: 'unexpectedErrorMessage',
+          meaning: 'Unexpected error occurred.',
+          description: 'Unexpected error occurred.'
+        });
+        this.showMessage(message);
       }
     } else {
       console.error('error is instance of: %s', error.constructor.name);
-      // todo translation
-      this.showMessage('Unexpected error occurred.');
+      const message = this.i18n({
+        value: 'Unexpected error occurred.',
+        id: 'unexpectedErrorMessage',
+        meaning: 'Unexpected error occurred.',
+        description: 'Unexpected error occurred.'
+      });
+      this.showMessage(message);
     }
   }
 }

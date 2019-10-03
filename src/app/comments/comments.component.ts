@@ -16,6 +16,7 @@ import {LoginComponent} from '../login/login.component';
 import {Language} from '../model/data/Language';
 import {EditorInstance, EditorOption} from 'angular-markdown-editor';
 import {AuthorityType} from '../model/auth/Authority';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
   selector: 'app-comments',
@@ -52,7 +53,8 @@ export class CommentsComponent implements OnInit {
     private notificationService: NotificationService,
     private fBuilder: FormBuilder,
     private dialogsService: DialogService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private i18n: I18n
   ) {
   }
 
@@ -162,8 +164,13 @@ export class CommentsComponent implements OnInit {
   }
 
   onLoginClicked() {
-    // todo translation
-    this.bottomSheet.open(LoginComponent, {data: {title: 'To post comment you should'}});
+    const title = this.i18n({
+      value: 'To post comment you should',
+      id: 'postCommentLoginTitle',
+      meaning: 'to post comment you should',
+      description: 'to post comment you should'
+    });
+    this.bottomSheet.open(LoginComponent, {data: {title}});
   }
 
   onCommentDeleteClicked(id: number) {

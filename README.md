@@ -76,6 +76,10 @@ Build all languages versions:
 
 Then just copy files from `PROJECT_ROOT/dist/` to `var/www/html` if using `apache2` server.
 
+Allow overwriting options:
+
+`a2enmod rewrite`
+
 Add add rules to redirect user to correct language in `etc/apache2/apache2.conf` (see https://dev.to/angular/deploying-an-i18n-angular-app-with-angular-cli-2fb9 with adding `/html` at `Directory`):
 
 ```

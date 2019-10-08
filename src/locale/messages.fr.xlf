@@ -181,7 +181,7 @@
 				</context-group>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/header/header.component.html</context>
-					<context context-type="linenumber">41</context>
+					<context context-type="linenumber">56</context>
 				</context-group>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
@@ -235,7 +235,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/header/header.component.html</context>
-					<context context-type="linenumber">52</context>
+					<context context-type="linenumber">67</context>
 				</context-group>
 				<note priority="1" from="description">account button label</note>
 				<note priority="1" from="meaning">account</note>
@@ -245,7 +245,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/header/header.component.html</context>
-					<context context-type="linenumber">56</context>
+					<context context-type="linenumber">71</context>
 				</context-group>
 				<note priority="1" from="description">logout button label</note>
 				<note priority="1" from="meaning">logout</note>
@@ -394,7 +394,7 @@
 				</context-group>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">155</context>
+					<context context-type="linenumber">156</context>
 				</context-group>
 				<note priority="1" from="description">author of article</note>
 				<note priority="1" from="meaning">author of article</note>
@@ -473,22 +473,46 @@
 				<note priority="1" from="description">created articles label</note>
 				<note priority="1" from="meaning">created articles</note>
 			</trans-unit>
+			<trans-unit id="noArticles" datatype="html">
+				<source>0 articles</source>
+				<target>0 статей</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.html</context>
+					<context context-type="linenumber">192</context>
+				</context-group>
+				<note priority="1" from="description">zero articles label</note>
+				<note priority="1" from="meaning">zero articles</note>
+			</trans-unit>
 			<trans-unit id="publishedCommentsLabel" datatype="html">
 				<source>Published comments</source>
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
-					<context context-type="linenumber">204</context>
+					<context context-type="linenumber">210</context>
 				</context-group>
 				<note priority="1" from="description">published comments label</note>
 				<note priority="1" from="meaning">published comments</note>
+			</trans-unit>
+			<trans-unit id="noComments" datatype="html">
+				<source>No comments yet!</source>
+				<target>перевод</target>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.html</context>
+					<context context-type="linenumber">238</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
+					<context context-type="linenumber">87</context>
+				</context-group>
+				<note priority="1" from="description">no comments yet label</note>
+				<note priority="1" from="meaning">no comments yet</note>
 			</trans-unit>
 			<trans-unit id="changePasswordButtonLabel" datatype="html">
 				<source>Change password</source>
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
-					<context context-type="linenumber">239</context>
+					<context context-type="linenumber">283</context>
 				</context-group>
 				<note priority="1" from="description">change password button label</note>
 				<note priority="1" from="meaning">change password</note>
@@ -498,7 +522,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
-					<context context-type="linenumber">246</context>
+					<context context-type="linenumber">290</context>
 				</context-group>
 				<note priority="1" from="description">delete account button label</note>
 				<note priority="1" from="meaning">delete account</note>
@@ -552,7 +576,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">123</context>
+					<context context-type="linenumber">124</context>
 				</context-group>
 				<note priority="1" from="description">approve article button label</note>
 				<note priority="1" from="meaning">approve article</note>
@@ -562,7 +586,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">132</context>
+					<context context-type="linenumber">133</context>
 				</context-group>
 				<note priority="1" from="description">edit article button label</note>
 				<note priority="1" from="meaning">edit article</note>
@@ -572,7 +596,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">141</context>
+					<context context-type="linenumber">142</context>
 				</context-group>
 				<note priority="1" from="description">delete article button label</note>
 				<note priority="1" from="meaning">delete article</note>
@@ -582,7 +606,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">178</context>
+					<context context-type="linenumber">179</context>
 				</context-group>
 				<note priority="1" from="description">translation is not published</note>
 				<note priority="1" from="meaning">translation is not published</note>
@@ -592,7 +616,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">212</context>
+					<context context-type="linenumber">213</context>
 				</context-group>
 				<note priority="1" from="description">publish translation button label</note>
 				<note priority="1" from="meaning">publish translation</note>
@@ -602,7 +626,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">227</context>
+					<context context-type="linenumber">229</context>
 				</context-group>
 				<note priority="1" from="description">approve translation button label</note>
 				<note priority="1" from="meaning">approve translation</note>
@@ -612,7 +636,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">235</context>
+					<context context-type="linenumber">237</context>
 				</context-group>
 				<note priority="1" from="description">edit translation button label</note>
 				<note priority="1" from="meaning">edit translation</note>
@@ -622,7 +646,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">243</context>
+					<context context-type="linenumber">245</context>
 				</context-group>
 				<note priority="1" from="description">add translation button label</note>
 				<note priority="1" from="meaning">add translation</note>
@@ -632,7 +656,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">251</context>
+					<context context-type="linenumber">253</context>
 				</context-group>
 				<note priority="1" from="description">delete translation button label</note>
 				<note priority="1" from="meaning">delete translation</note>
@@ -642,7 +666,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">267</context>
+					<context context-type="linenumber">269</context>
 				</context-group>
 				<note priority="1" from="description">version is not published</note>
 				<note priority="1" from="meaning">version is not published</note>
@@ -653,7 +677,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">273</context>
+					<context context-type="linenumber">275</context>
 				</context-group>
 				<note priority="1" from="description">translated by</note>
 				<note priority="1" from="meaning">translated by</note>
@@ -664,7 +688,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">276</context>
+					<context context-type="linenumber">278</context>
 				</context-group>
 				<note priority="1" from="description">and edited by</note>
 				<note priority="1" from="meaning">and edited by</note>
@@ -675,7 +699,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">281</context>
+					<context context-type="linenumber">283</context>
 				</context-group>
 				<note priority="1" from="description">edited by</note>
 				<note priority="1" from="meaning">edited by</note>
@@ -685,7 +709,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">296</context>
+					<context context-type="linenumber">298</context>
 				</context-group>
 				<note priority="1" from="description">selected version</note>
 				<note priority="1" from="meaning">selected version</note>
@@ -695,7 +719,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">326</context>
+					<context context-type="linenumber">328</context>
 				</context-group>
 				<note priority="1" from="description">publish version button label</note>
 				<note priority="1" from="meaning">publish version</note>
@@ -705,7 +729,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">341</context>
+					<context context-type="linenumber">344</context>
 				</context-group>
 				<note priority="1" from="description">approve version button label</note>
 				<note priority="1" from="meaning">approve version</note>
@@ -715,7 +739,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">349</context>
+					<context context-type="linenumber">352</context>
 				</context-group>
 				<note priority="1" from="description">edit version button label</note>
 				<note priority="1" from="meaning">edit version</note>
@@ -725,7 +749,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">356</context>
+					<context context-type="linenumber">359</context>
 				</context-group>
 				<note priority="1" from="description">add version button label</note>
 				<note priority="1" from="meaning">add version</note>
@@ -735,7 +759,7 @@
 				<target>перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">364</context>
+					<context context-type="linenumber">367</context>
 				</context-group>
 				<note priority="1" from="description">delete version button label</note>
 				<note priority="1" from="meaning">delete version</note>
@@ -780,16 +804,6 @@
 				</context-group>
 				<note priority="1" from="description">need login</note>
 				<note priority="1" from="meaning">only registered users can post comments</note>
-			</trans-unit>
-			<trans-unit id="noComments" datatype="html">
-				<source>No comments yet!</source>
-				<target>перевод</target>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
-					<context context-type="linenumber">87</context>
-				</context-group>
-				<note priority="1" from="description">no comments yet label</note>
-				<note priority="1" from="meaning">no comments yet</note>
 			</trans-unit>
 			<trans-unit id="endOfCommentsList" datatype="html">
 				<source>This is the end of comments list</source>

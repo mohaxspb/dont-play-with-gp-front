@@ -168,7 +168,7 @@
 				</context-group>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/header/header.component.html</context>
-					<context context-type="linenumber">41</context>
+					<context context-type="linenumber">56</context>
 				</context-group>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
@@ -217,7 +217,7 @@
 				<source>Account</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/header/header.component.html</context>
-					<context context-type="linenumber">52</context>
+					<context context-type="linenumber">67</context>
 				</context-group>
 				<note priority="1" from="description">account button label</note>
 				<note priority="1" from="meaning">account</note>
@@ -226,7 +226,7 @@
 				<source>Logout</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/header/header.component.html</context>
-					<context context-type="linenumber">56</context>
+					<context context-type="linenumber">71</context>
 				</context-group>
 				<note priority="1" from="description">logout button label</note>
 				<note priority="1" from="meaning">logout</note>
@@ -361,7 +361,7 @@
 				</context-group>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">155</context>
+					<context context-type="linenumber">156</context>
 				</context-group>
 				<note priority="1" from="description">author of article</note>
 				<note priority="1" from="meaning">author of article</note>
@@ -433,20 +433,42 @@
 				<note priority="1" from="description">created articles label</note>
 				<note priority="1" from="meaning">created articles</note>
 			</trans-unit>
+			<trans-unit id="noArticles" datatype="html">
+				<source>0 articles</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.html</context>
+					<context context-type="linenumber">192</context>
+				</context-group>
+				<note priority="1" from="description">zero articles label</note>
+				<note priority="1" from="meaning">zero articles</note>
+			</trans-unit>
 			<trans-unit id="publishedCommentsLabel" datatype="html">
 				<source>Published comments</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
-					<context context-type="linenumber">204</context>
+					<context context-type="linenumber">210</context>
 				</context-group>
 				<note priority="1" from="description">published comments label</note>
 				<note priority="1" from="meaning">published comments</note>
+			</trans-unit>
+			<trans-unit id="noComments" datatype="html">
+				<source>No comments yet!</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.html</context>
+					<context context-type="linenumber">238</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
+					<context context-type="linenumber">87</context>
+				</context-group>
+				<note priority="1" from="description">no comments yet label</note>
+				<note priority="1" from="meaning">no comments yet</note>
 			</trans-unit>
 			<trans-unit id="changePasswordButtonLabel" datatype="html">
 				<source>Change password</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
-					<context context-type="linenumber">239</context>
+					<context context-type="linenumber">283</context>
 				</context-group>
 				<note priority="1" from="description">change password button label</note>
 				<note priority="1" from="meaning">change password</note>
@@ -455,7 +477,7 @@
 				<source>Delete Account</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
-					<context context-type="linenumber">246</context>
+					<context context-type="linenumber">290</context>
 				</context-group>
 				<note priority="1" from="description">delete account button label</note>
 				<note priority="1" from="meaning">delete account</note>
@@ -504,7 +526,7 @@
 				<source>Approve article</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">123</context>
+					<context context-type="linenumber">124</context>
 				</context-group>
 				<note priority="1" from="description">approve article button label</note>
 				<note priority="1" from="meaning">approve article</note>
@@ -513,7 +535,7 @@
 				<source>Edit article</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">132</context>
+					<context context-type="linenumber">133</context>
 				</context-group>
 				<note priority="1" from="description">edit article button label</note>
 				<note priority="1" from="meaning">edit article</note>
@@ -522,7 +544,7 @@
 				<source>Delete article</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">141</context>
+					<context context-type="linenumber">142</context>
 				</context-group>
 				<note priority="1" from="description">delete article button label</note>
 				<note priority="1" from="meaning">delete article</note>
@@ -531,7 +553,7 @@
 				<source>Translation is not published! So only author or admin can see it.</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">178</context>
+					<context context-type="linenumber">179</context>
 				</context-group>
 				<note priority="1" from="description">translation is not published</note>
 				<note priority="1" from="meaning">translation is not published</note>
@@ -540,7 +562,7 @@
 				<source>Publish translation</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">212</context>
+					<context context-type="linenumber">213</context>
 				</context-group>
 				<note priority="1" from="description">publish translation button label</note>
 				<note priority="1" from="meaning">publish translation</note>
@@ -549,7 +571,7 @@
 				<source>Approve translation</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">227</context>
+					<context context-type="linenumber">229</context>
 				</context-group>
 				<note priority="1" from="description">approve translation button label</note>
 				<note priority="1" from="meaning">approve translation</note>
@@ -558,7 +580,7 @@
 				<source>Edit translation</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">235</context>
+					<context context-type="linenumber">237</context>
 				</context-group>
 				<note priority="1" from="description">edit translation button label</note>
 				<note priority="1" from="meaning">edit translation</note>
@@ -567,7 +589,7 @@
 				<source>Add translation</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">243</context>
+					<context context-type="linenumber">245</context>
 				</context-group>
 				<note priority="1" from="description">add translation button label</note>
 				<note priority="1" from="meaning">add translation</note>
@@ -576,7 +598,7 @@
 				<source>Delete translation</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">251</context>
+					<context context-type="linenumber">253</context>
 				</context-group>
 				<note priority="1" from="description">delete translation button label</note>
 				<note priority="1" from="meaning">delete translation</note>
@@ -585,7 +607,7 @@
 				<source>Version is not published! So only author or admin can see it.</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">267</context>
+					<context context-type="linenumber">269</context>
 				</context-group>
 				<note priority="1" from="description">version is not published</note>
 				<note priority="1" from="meaning">version is not published</note>
@@ -595,7 +617,7 @@
 				</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">273</context>
+					<context context-type="linenumber">275</context>
 				</context-group>
 				<note priority="1" from="description">translated by</note>
 				<note priority="1" from="meaning">translated by</note>
@@ -605,7 +627,7 @@
 				</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">276</context>
+					<context context-type="linenumber">278</context>
 				</context-group>
 				<note priority="1" from="description">and edited by</note>
 				<note priority="1" from="meaning">and edited by</note>
@@ -615,7 +637,7 @@
 				</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">281</context>
+					<context context-type="linenumber">283</context>
 				</context-group>
 				<note priority="1" from="description">edited by</note>
 				<note priority="1" from="meaning">edited by</note>
@@ -624,7 +646,7 @@
 				<source>Selected version:</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">296</context>
+					<context context-type="linenumber">298</context>
 				</context-group>
 				<note priority="1" from="description">selected version</note>
 				<note priority="1" from="meaning">selected version</note>
@@ -633,7 +655,7 @@
 				<source>Publish version</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">326</context>
+					<context context-type="linenumber">328</context>
 				</context-group>
 				<note priority="1" from="description">publish version button label</note>
 				<note priority="1" from="meaning">publish version</note>
@@ -642,7 +664,7 @@
 				<source>Approve version</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">341</context>
+					<context context-type="linenumber">344</context>
 				</context-group>
 				<note priority="1" from="description">approve version button label</note>
 				<note priority="1" from="meaning">approve version</note>
@@ -651,7 +673,7 @@
 				<source>Edit text version</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">349</context>
+					<context context-type="linenumber">352</context>
 				</context-group>
 				<note priority="1" from="description">edit version button label</note>
 				<note priority="1" from="meaning">edit version</note>
@@ -660,7 +682,7 @@
 				<source>Add text version</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">356</context>
+					<context context-type="linenumber">359</context>
 				</context-group>
 				<note priority="1" from="description">add version button label</note>
 				<note priority="1" from="meaning">add version</note>
@@ -669,7 +691,7 @@
 				<source>Delete text version</source>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
-					<context context-type="linenumber">364</context>
+					<context context-type="linenumber">367</context>
 				</context-group>
 				<note priority="1" from="description">delete version button label</note>
 				<note priority="1" from="meaning">delete version</note>
@@ -710,15 +732,6 @@
 				</context-group>
 				<note priority="1" from="description">need login</note>
 				<note priority="1" from="meaning">only registered users can post comments</note>
-			</trans-unit>
-			<trans-unit id="noComments" datatype="html">
-				<source>No comments yet!</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
-					<context context-type="linenumber">87</context>
-				</context-group>
-				<note priority="1" from="description">no comments yet label</note>
-				<note priority="1" from="meaning">no comments yet</note>
 			</trans-unit>
 			<trans-unit id="endOfCommentsList" datatype="html">
 				<source>This is the end of comments list</source>
@@ -846,118 +859,16 @@
 				<note priority="1" from="description">create/edit rule 6</note>
 				<note priority="1" from="meaning">create/edit rule 6</note>
 			</trans-unit>
-			<trans-unit id="loginErrorMessage" datatype="html">
-				<source>Error. May be wrong email and/or password.</source>
+			<trans-unit id="namePlaceholder" datatype="html">
+				<source>Name</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/account/account.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.ts</context>
 					<context context-type="linenumber">1</context>
 				</context-group>
-				<note priority="1" from="description">wrong email or password</note>
-				<note priority="1" from="meaning">wrong email or password</note>
-			</trans-unit>
-			<trans-unit id="translationAddLoginTitle" datatype="html">
-				<source>To add translation you should</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">to add translation you should</note>
-				<note priority="1" from="meaning">to add translation you should</note>
-			</trans-unit>
-			<trans-unit id="versionAddLoginTitle" datatype="html">
-				<source>To add text version you should</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">to add text version you should</note>
-				<note priority="1" from="meaning">to add text version you should</note>
-			</trans-unit>
-			<trans-unit id="deleteArticleDialogTitle" datatype="html">
-				<source>Delete article</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">Delete article</note>
-				<note priority="1" from="meaning">Delete article</note>
-			</trans-unit>
-			<trans-unit id="deleteArticleDialogMessage" datatype="html">
-				<source>Are you sure you want to delete article? This can&apos;t be undone!</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">Are you sure you want to delete article? This can&apos;t be undone!</note>
-				<note priority="1" from="meaning">Are you sure you want to delete article? This can&apos;t be undone!</note>
-			</trans-unit>
-			<trans-unit id="deleteTranslationDialogTitle" datatype="html">
-				<source>Delete translation</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">Delete translation</note>
-				<note priority="1" from="meaning">Delete translation</note>
-			</trans-unit>
-			<trans-unit id="deleteTranslationDialogMessage" datatype="html">
-				<source>Are you sure you want to delete translation? This can&apos;t be undone!</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">Are you sure you want to delete translation? This can&apos;t be undone!</note>
-				<note priority="1" from="meaning">Are you sure you want to delete translation? This can&apos;t be undone!</note>
-			</trans-unit>
-			<trans-unit id="deleteVersionDialogTitle" datatype="html">
-				<source>Delete text version</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">Delete text version</note>
-				<note priority="1" from="meaning">Delete text version</note>
-			</trans-unit>
-			<trans-unit id="deleteVersionDialogMessage" datatype="html">
-				<source>Are you sure you want to delete text version? This can&apos;t be undone!</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">Are you sure you want to delete text version? This can&apos;t be undone!</note>
-				<note priority="1" from="meaning">Are you sure you want to delete text version? This can&apos;t be undone!</note>
-			</trans-unit>
-			<trans-unit id="publishDialogMessage" datatype="html">
-				<source>Are you sure you want to <x id="INTERPOLATION" equiv-text="{{action}}"/> this <x id="INTERPOLATION_1" equiv-text="{{dataType}}"/>?
-It will be available for everyone immediately!</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article/article.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">Delete text version</note>
-				<note priority="1" from="meaning">Delete text version</note>
-			</trans-unit>
-			<trans-unit id="postCommentLoginTitle" datatype="html">
-				<source>To post comment you should</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/comments/comments.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">to post comment you should</note>
-				<note priority="1" from="meaning">to post comment you should</note>
-			</trans-unit>
-			<trans-unit id="createArticleLoginTitle" datatype="html">
-				<source>To create article you should</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/feed/feed.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">to create article you should</note>
-				<note priority="1" from="meaning">to create article you should</note>
 			</trans-unit>
 			<trans-unit id="successfullyUpdated" datatype="html">
 				<source>Successfully updated!</source>
@@ -998,30 +909,6 @@ It will be available for everyone immediately!</source>
 				</context-group>
 				<note priority="1" from="description">Are you sure you want to delete account? This can&apos;t be undone!</note>
 				<note priority="1" from="meaning">Are you sure you want to delete account? This can&apos;t be undone!</note>
-			</trans-unit>
-			<trans-unit id="unexpectedErrorMessage" datatype="html">
-				<source>Unexpected error occurred.</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/service/ui/NotificationService.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/service/ui/NotificationService.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<note priority="1" from="description">Unexpected error occurred.</note>
-				<note priority="1" from="meaning">Unexpected error occurred.</note>
-			</trans-unit>
-			<trans-unit id="namePlaceholder" datatype="html">
-				<source>Name</source>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/account/account.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
-				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/login/login.component.ts</context>
-					<context context-type="linenumber">1</context>
-				</context-group>
 			</trans-unit>
 			<trans-unit id="sourceTitlePlaceholder" datatype="html">
 				<source>Source title</source>
@@ -1086,6 +973,13 @@ It will be available for everyone immediately!</source>
 					<context context-type="linenumber">1</context>
 				</context-group>
 			</trans-unit>
+			<trans-unit id="createArticle" datatype="html">
+				<source>Create article</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+			</trans-unit>
 			<trans-unit id="publishingDatePlaceholder" datatype="html">
 				<source>Publishing date</source>
 				<context-group purpose="location">
@@ -1093,12 +987,127 @@ It will be available for everyone immediately!</source>
 					<context context-type="linenumber">1</context>
 				</context-group>
 			</trans-unit>
-			<trans-unit id="createArticle" datatype="html">
-				<source>Create article</source>
+			<trans-unit id="translationAddLoginTitle" datatype="html">
+				<source>To add translation you should</source>
 				<context-group purpose="location">
-					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
 				</context-group>
+				<note priority="1" from="description">to add translation you should</note>
+				<note priority="1" from="meaning">to add translation you should</note>
+			</trans-unit>
+			<trans-unit id="versionAddLoginTitle" datatype="html">
+				<source>To add text version you should</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">to add text version you should</note>
+				<note priority="1" from="meaning">to add text version you should</note>
+			</trans-unit>
+			<trans-unit id="deleteArticleDialogTitle" datatype="html">
+				<source>Delete article</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Delete article</note>
+				<note priority="1" from="meaning">Delete article</note>
+			</trans-unit>
+			<trans-unit id="deleteArticleDialogMessage" datatype="html">
+				<source>Are you sure you want to delete article? This can&apos;t be undone!</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Are you sure you want to delete article? This can&apos;t be undone!</note>
+				<note priority="1" from="meaning">Are you sure you want to delete article? This can&apos;t be undone!</note>
+			</trans-unit>
+			<trans-unit id="deleteTranslationDialogTitle" datatype="html">
+				<source>Delete translation</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Delete translation</note>
+				<note priority="1" from="meaning">Delete translation</note>
+			</trans-unit>
+			<trans-unit id="deleteTranslationDialogMessage" datatype="html">
+				<source>Are you sure you want to delete translation? This can&apos;t be undone!</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Are you sure you want to delete translation? This can&apos;t be undone!</note>
+				<note priority="1" from="meaning">Are you sure you want to delete translation? This can&apos;t be undone!</note>
+			</trans-unit>
+			<trans-unit id="deleteVersionDialogTitle" datatype="html">
+				<source>Delete text version</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Delete text version</note>
+				<note priority="1" from="meaning">Delete text version</note>
+			</trans-unit>
+			<trans-unit id="deleteVersionDialogMessage" datatype="html">
+				<source>Are you sure you want to delete text version? This can&apos;t be undone!</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Are you sure you want to delete text version? This can&apos;t be undone!</note>
+				<note priority="1" from="meaning">Are you sure you want to delete text version? This can&apos;t be undone!</note>
+			</trans-unit>
+			<trans-unit id="publishDialogMessage" datatype="html">
+				<source>Are you sure you want to <x id="INTERPOLATION" equiv-text="{{action}}"/> this <x id="INTERPOLATION_1" equiv-text="{{dataType}}"/>?
+It will be available for everyone immediately!</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/article/article.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Delete text version</note>
+				<note priority="1" from="meaning">Delete text version</note>
+			</trans-unit>
+			<trans-unit id="postCommentLoginTitle" datatype="html">
+				<source>To post comment you should</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/comments/comments.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">to post comment you should</note>
+				<note priority="1" from="meaning">to post comment you should</note>
+			</trans-unit>
+			<trans-unit id="createArticleLoginTitle" datatype="html">
+				<source>To create article you should</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/feed/feed.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">to create article you should</note>
+				<note priority="1" from="meaning">to create article you should</note>
+			</trans-unit>
+			<trans-unit id="loginErrorMessage" datatype="html">
+				<source>Error. May be wrong email and/or password.</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/login/login.component.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">wrong email or password</note>
+				<note priority="1" from="meaning">wrong email or password</note>
+			</trans-unit>
+			<trans-unit id="unexpectedErrorMessage" datatype="html">
+				<source>Unexpected error occurred.</source>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/service/ui/NotificationService.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<context-group purpose="location">
+					<context context-type="sourcefile">src/app/service/ui/NotificationService.ts</context>
+					<context context-type="linenumber">1</context>
+				</context-group>
+				<note priority="1" from="description">Unexpected error occurred.</note>
+				<note priority="1" from="meaning">Unexpected error occurred.</note>
 			</trans-unit>
 		</body>
 	</file>

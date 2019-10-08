@@ -163,7 +163,7 @@
 
             <h3 i18n="created articles|created articles label@@createdArticlesLabel">Created articles</h3>
             <div class="rect-height-200 position-relative">
-              <div *ngIf="articlesCreated?.length!==0"
+              <div *ngIf="articlesCreated?.length!==0 else noArticles"
                    fxLayout
                    fxLayoutGap="16px"
                    class="overflow-x default-padding-around"
@@ -187,6 +187,12 @@
 
               </div>
 
+              <ng-template #noArticles>
+                <div>
+                  <p i18n="zero articles|zero articles label@@noArticles">0 articles</p>
+                </div>
+              </ng-template>
+
               <div id="articles-loading-indication"
                    *ngIf="articlesAreLoading|async"
                    class="background-half-transparent-white cover"
@@ -203,8 +209,46 @@
           <div id="createdComments">
             <h3 i18n="published comments|published comments label@@publishedCommentsLabel">Published comments</h3>
             <div class="rect-height-200 position-relative">
-              <!--              todo published comments-->
-              <p class="center-inside-both-axis">Coming soon!</p>
+              <div *ngIf="commentsCreated?.length!==0 else noComments"
+                   fxLayout
+                   fxLayoutGap="16px"
+                   class="overflow-x default-padding-around"
+              >
+                <div *ngFor="let comment of commentsCreated">
+                  <mat-card
+                    class="account-article-card"
+                    fxFlex="noshrink"
+                    fxLayout="column"
+                    (click)="onCommentClicked(comment.articleId)"
+                  >
+                    <mat-card-content
+                      fxFlex="80%"
+                      class="account-article-card-content"
+                    >{{comment.text}}</mat-card-content>
+                    <mat-card-footer fxFlex="10%">
+                      <p class="default-margin-left">{{comment.created | date:'shortDate':'UTC': userLanguage.langCode}}</p>
+                    </mat-card-footer>
+                  </mat-card>
+                </div>
+
+              </div>
+
+              <ng-template #noComments>
+                <div>
+                  <p i18n="no comments yet|no comments yet label@@noComments">No comments yet!</p>
+                </div>
+              </ng-template>
+
+              <div id="comments-loading-indication"
+                   *ngIf="commentsAreLoading|async"
+                   class="background-half-transparent-white cover"
+                   (click)="$event.stopPropagation()"
+              >
+                <mat-spinner
+                  class="center-inside-both-axis"
+                  [diameter]="24"
+                ></mat-spinner>
+              </div>
             </div>
           </div>
 

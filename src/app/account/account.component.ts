@@ -13,6 +13,8 @@ import {GpLanguageService} from '../service/data/GpLanguageService';
 import {Article} from '../model/data/Article';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {I18n} from '@ngx-translate/i18n-polyfill';
+import {CommentService} from '../service/data/CommentService';
+import {GpComment} from '../model/data/GpComment';
 
 @Component({
   selector: 'app-account',
@@ -24,6 +26,7 @@ export class AccountComponent implements OnInit {
   dataIsLoading = new BehaviorSubject<boolean>(false);
   progressInAction = new BehaviorSubject<boolean>(false);
   articlesAreLoading = new BehaviorSubject<boolean>(false);
+  commentsAreLoading = new BehaviorSubject<boolean>(false);
 
   userFromApi: GpUser;
 
@@ -40,6 +43,7 @@ export class AccountComponent implements OnInit {
 
   // content
   articlesCreated: Article[] = [];
+  commentsCreated: GpComment[] = [];
 
   namePlaceholder: string = this.i18n({value: 'Name', id: 'namePlaceholder'});
 
@@ -47,6 +51,7 @@ export class AccountComponent implements OnInit {
     private router: Router,
     private accountInteractor: GpAccountInteractor,
     private articleService: GpArticleService,
+    private commentService: CommentService,
     private fBuilder: FormBuilder,
     private notificationService: NotificationService,
     private dialogsService: DialogService,
@@ -75,6 +80,7 @@ export class AccountComponent implements OnInit {
 
           this.initForm(this.userFromApi, this.userLanguage);
           this.loadCreatedArticles();
+          this.loadCreatedComments();
         }
       );
   }
@@ -89,6 +95,20 @@ export class AccountComponent implements OnInit {
       )
       .subscribe(
         articles => this.articlesCreated = articles,
+        error => this.notificationService.showError(error)
+      );
+  }
+
+  private loadCreatedComments() {
+    this.commentsAreLoading.next(true);
+
+    this.commentService
+      .getCommentsByUser(this.userFromApi.id)
+      .pipe(
+        finalize(() => this.commentsAreLoading.next(false))
+      )
+      .subscribe(
+        comments => this.commentsCreated = comments,
         error => this.notificationService.showError(error)
       );
   }
@@ -189,6 +209,11 @@ export class AccountComponent implements OnInit {
   onArticleClicked(id: number) {
     // noinspection JSIgnoredPromiseFromCall
     this.router.navigateByUrl('article/' + id.toString());
+  }
+
+  onCommentClicked(articleId: number) {
+    // noinspection JSIgnoredPromiseFromCall
+    this.router.navigateByUrl('article/' + articleId.toString());
   }
 
   isNullOrEmptyOrUndefined(value) {

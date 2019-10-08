@@ -4,7 +4,7 @@
 		<body>
 			<trans-unit id="loginWithEmail" datatype="html">
 				<source>Login with email</source>
-				<target>перевод</target>
+				<target>Войти с помощью электронной почты</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">6</context>
@@ -14,7 +14,7 @@
 			</trans-unit>
 			<trans-unit id="registerWithEmail" datatype="html">
 				<source>Register with email</source>
-				<target>перевод</target>
+				<target>Зарегистрируйтесь через электронную почту</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">8</context>
@@ -24,7 +24,7 @@
 			</trans-unit>
 			<trans-unit id="nameRequiredErrorMessage" datatype="html">
 				<source>You must provide name</source>
-				<target>перевод</target>
+				<target>Вы должны указать имя</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">33</context>
@@ -38,7 +38,7 @@
 			</trans-unit>
 			<trans-unit id="emailRequiredErrorMessage" datatype="html">
 				<source>You must provide Email</source>
-				<target>перевод</target>
+				<target>Вы должны предоставить адрес электронной почты</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">51</context>
@@ -52,7 +52,7 @@
 			</trans-unit>
 			<trans-unit id="passwordRequiredErrorMessage" datatype="html">
 				<source>You must provide password</source>
-				<target>перевод</target>
+				<target>Вы должны предоставить пароль</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">72</context>
@@ -67,7 +67,7 @@
 			<trans-unit id="passwordMinLengthErrorMessage" datatype="html">
 				<source>Minimum length is <x id="INTERPOLATION" equiv-text="{{passwordMinLength}}"/>
 				</source>
-				<target>перевод
+				<target>Минимальная длина <x id="INTERPOLATION" equiv-text="{{passwordMinLength}}"/>
 				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
@@ -79,7 +79,7 @@
 			<trans-unit id="passwordMaxLengthErrorMessage" datatype="html">
 				<source>Maximum length is <x id="INTERPOLATION" equiv-text="{{passwordMaxLength}}"/>
 				</source>
-				<target>перевод
+				<target>Максимальная длина <x id="INTERPOLATION" equiv-text="{{passwordMaxLength}}"/>
 				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
@@ -90,7 +90,7 @@
 			</trans-unit>
 			<trans-unit id="passwordsDoesntMatchErrorMessage" datatype="html">
 				<source>Password &amp; Password Confirm does not match.</source>
-				<target>перевод</target>
+				<target>Пароль &amp; Password Confirm does not match.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">103</context>
@@ -100,7 +100,7 @@
 			</trans-unit>
 			<trans-unit id="primaryLanguageSelectLabel" datatype="html">
 				<source>Primary language</source>
-				<target>перевод</target>
+				<target>Основной язык</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">110</context>
@@ -118,7 +118,7 @@
 			</trans-unit>
 			<trans-unit id="languageRequiredErrorMessage" datatype="html">
 				<source>You must make a selection</source>
-				<target>перевод</target>
+				<target>Вы должны сделать выбор</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">126</context>
@@ -140,7 +140,7 @@
 			</trans-unit>
 			<trans-unit id="langsListEmptyErrorMessage" datatype="html">
 				<source>Please, refresh languages list</source>
-				<target>перевод</target>
+				<target>Пожалуйста, обновите список языков</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">129</context>
@@ -150,7 +150,7 @@
 			</trans-unit>
 			<trans-unit id="refreshButton" datatype="html">
 				<source>Refresh</source>
-				<target>перевод</target>
+				<target>Обновить</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">142</context>
@@ -172,7 +172,7 @@
 			</trans-unit>
 			<trans-unit id="login" datatype="html">
 				<source>Login</source>
-				<target>перевод</target>
+				<target>Войти</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">161</context>
@@ -194,7 +194,7 @@
 			</trans-unit>
 			<trans-unit id="register" datatype="html">
 				<source>Register</source>
-				<target>перевод</target>
+				<target>Зарегистрироваться</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">169</context>
@@ -204,7 +204,7 @@
 			</trans-unit>
 			<trans-unit id="noAccountQuestion" datatype="html">
 				<source>Don&apos;t have account?</source>
-				<target>перевод</target>
+				<target>Нет аккаунта?</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">175</context>
@@ -214,7 +214,7 @@
 			</trans-unit>
 			<trans-unit id="createAccountButtonLabel" datatype="html">
 				<source>Create it!</source>
-				<target>перевод</target>
+				<target>Создайте его!</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">181</context>
@@ -224,7 +224,7 @@
 			</trans-unit>
 			<trans-unit id="orContinueWith" datatype="html">
 				<source>Or continue with</source>
-				<target>перевод</target>
+				<target>Или продолжить с</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.html</context>
 					<context context-type="linenumber">195</context>
@@ -234,7 +234,7 @@
 			</trans-unit>
 			<trans-unit id="account" datatype="html">
 				<source>Account</source>
-				<target>перевод</target>
+				<target>Учетная запись</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/header/header.component.html</context>
 					<context context-type="linenumber">67</context>
@@ -244,7 +244,7 @@
 			</trans-unit>
 			<trans-unit id="logout" datatype="html">
 				<source>Logout</source>
-				<target>перевод</target>
+				<target>Выйти</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/header/header.component.html</context>
 					<context context-type="linenumber">71</context>
@@ -254,7 +254,7 @@
 			</trans-unit>
 			<trans-unit id="articleData" datatype="html">
 				<source>Article data</source>
-				<target>перевод</target>
+				<target>Данные статьи</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">45</context>
@@ -264,7 +264,7 @@
 			</trans-unit>
 			<trans-unit id="articleIsFromAnotherSite" datatype="html">
 				<source>Article is from another site</source>
-				<target>перевод</target>
+				<target>Статья с другого сайта</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">55</context>
@@ -274,7 +274,7 @@
 			</trans-unit>
 			<trans-unit id="titleRequiredErrorMessage" datatype="html">
 				<source>You must provide title</source>
-				<target>перевод</target>
+				<target>Вы должны предоставить название</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">74</context>
@@ -288,7 +288,7 @@
 			</trans-unit>
 			<trans-unit id="urlRequiredErrorMessage" datatype="html">
 				<source>You must provide url</source>
-				<target>перевод</target>
+				<target>Вы должны предоставить URL</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">104</context>
@@ -298,7 +298,7 @@
 			</trans-unit>
 			<trans-unit id="urlInvalidErrorMessage" datatype="html">
 				<source>Url is not valid</source>
-				<target>перевод</target>
+				<target>URL недействителен</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">107</context>
@@ -308,7 +308,7 @@
 			</trans-unit>
 			<trans-unit id="translationData" datatype="html">
 				<source>Translation data</source>
-				<target>перевод</target>
+				<target>Данные перевода</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">174</context>
@@ -318,7 +318,7 @@
 			</trans-unit>
 			<trans-unit id="articleImageFile" datatype="html">
 				<source>Article image file</source>
-				<target>перевод</target>
+				<target>Файл изображения статьи</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">177</context>
@@ -328,7 +328,7 @@
 			</trans-unit>
 			<trans-unit id="useExistingImage" datatype="html">
 				<source>Use existing image</source>
-				<target>перевод</target>
+				<target>Использовать существующее изображение</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">215</context>
@@ -338,7 +338,7 @@
 			</trans-unit>
 			<trans-unit id="fileIsTooLargeErrorMessage" datatype="html">
 				<source>The total size must not exceed <x id="INTERPOLATION" equiv-text="{{maxSizeText}}"/> (<x id="INTERPOLATION_1" equiv-text="{{actualSizeText}}"/>).</source>
-				<target>перевод</target>
+				<target>Общий размер не должен превышать <x id="INTERPOLATION" equiv-text="{{maxSizeText}}"/> (<x id="INTERPOLATION_1" equiv-text="{{actualSizeText}}"/>).</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">240</context>
@@ -348,7 +348,7 @@
 			</trans-unit>
 			<trans-unit id="translationLanguage" datatype="html">
 				<source>Translation language</source>
-				<target>перевод</target>
+				<target>Язык перевода</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">263</context>
@@ -358,7 +358,7 @@
 			</trans-unit>
 			<trans-unit id="textVersionData" datatype="html">
 				<source>Text version data</source>
-				<target>перевод</target>
+				<target>Данные текстовой версии</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">323</context>
@@ -368,7 +368,7 @@
 			</trans-unit>
 			<trans-unit id="articleText" datatype="html">
 				<source>Article text</source>
-				<target>перевод</target>
+				<target>Текст статьи</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">328</context>
@@ -378,7 +378,7 @@
 			</trans-unit>
 			<trans-unit id="preview" datatype="html">
 				<source>Preview</source>
-				<target>перевод</target>
+				<target>Предварительный просмотр</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.html</context>
 					<context context-type="linenumber">347</context>
@@ -389,7 +389,7 @@
 			<trans-unit id="authorOfArticle" datatype="html">
 				<source>Author: <x id="INTERPOLATION" equiv-text="{{articleAndTranslation[0].sourceAuthorName != null ? articleAndTranslation[0].sourceAuthorName : articleAndTranslation[0].author.fullName}}"/>
 				</source>
-				<target>перевод
+				<target>Автор: <x id="INTERPOLATION" equiv-text="{{articleAndTranslation[0].sourceAuthorName != null ? articleAndTranslation[0].sourceAuthorName : articleAndTranslation[0].author.fullName}}"/>
 				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/feed/feed.component.html</context>
@@ -404,7 +404,7 @@
 			</trans-unit>
 			<trans-unit id="tagsLabel" datatype="html">
 				<source>Tags: </source>
-				<target>перевод</target>
+				<target>Теги: </target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/feed/feed.component.html</context>
 					<context context-type="linenumber">61</context>
@@ -414,7 +414,7 @@
 			</trans-unit>
 			<trans-unit id="tryAgainButtonLabel" datatype="html">
 				<source>Try again</source>
-				<target>перевод</target>
+				<target>Попробуйте еще раз</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/feed/feed.component.html</context>
 					<context context-type="linenumber">110</context>
@@ -428,7 +428,7 @@
 			</trans-unit>
 			<trans-unit id="endOfArticlesList" datatype="html">
 				<source>This is the end of articles list</source>
-				<target>перевод</target>
+				<target>Это конец списка статей</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/feed/feed.component.html</context>
 					<context context-type="linenumber">113</context>
@@ -438,7 +438,7 @@
 			</trans-unit>
 			<trans-unit id="cancelButtonLabel" datatype="html">
 				<source>Cancel</source>
-				<target>перевод</target>
+				<target>Отмена</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/dialog/dialog.component.html</context>
 					<context context-type="linenumber">12</context>
@@ -448,7 +448,7 @@
 			</trans-unit>
 			<trans-unit id="profile" datatype="html">
 				<source>Profile</source>
-				<target>перевод</target>
+				<target>Профиль</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
 					<context context-type="linenumber">5</context>
@@ -458,7 +458,7 @@
 			</trans-unit>
 			<trans-unit id="saveChangesButtonLabel" datatype="html">
 				<source>Save changes</source>
-				<target>перевод</target>
+				<target>Сохранить изменения</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
 					<context context-type="linenumber">147</context>
@@ -468,7 +468,7 @@
 			</trans-unit>
 			<trans-unit id="createdArticlesLabel" datatype="html">
 				<source>Created articles</source>
-				<target>перевод</target>
+				<target>Созданные статьи</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
 					<context context-type="linenumber">164</context>
@@ -488,7 +488,7 @@
 			</trans-unit>
 			<trans-unit id="publishedCommentsLabel" datatype="html">
 				<source>Published comments</source>
-				<target>перевод</target>
+				<target>Опубликованные комментарии</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
 					<context context-type="linenumber">210</context>
@@ -498,7 +498,7 @@
 			</trans-unit>
 			<trans-unit id="noComments" datatype="html">
 				<source>No comments yet!</source>
-				<target>перевод</target>
+				<target>Нет комментариев</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
 					<context context-type="linenumber">238</context>
@@ -512,7 +512,7 @@
 			</trans-unit>
 			<trans-unit id="changePasswordButtonLabel" datatype="html">
 				<source>Change password</source>
-				<target>перевод</target>
+				<target>Изменить пароль</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
 					<context context-type="linenumber">283</context>
@@ -522,7 +522,7 @@
 			</trans-unit>
 			<trans-unit id="deleteAccountButtonLabel" datatype="html">
 				<source>Delete Account</source>
-				<target>перевод</target>
+				<target>Удалить аккаунт</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.html</context>
 					<context context-type="linenumber">290</context>
@@ -532,7 +532,7 @@
 			</trans-unit>
 			<trans-unit id="notPublished" datatype="html">
 				<source>Not published</source>
-				<target>перевод</target>
+				<target>Не опубликовано</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">39</context>
@@ -542,7 +542,7 @@
 			</trans-unit>
 			<trans-unit id="changePublishDateLabel" datatype="html">
 				<source>You can publish article with any date here.</source>
-				<target>перевод</target>
+				<target>Вы можете опубликовать статью с любой датой здесь.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">63</context>
@@ -552,7 +552,7 @@
 			</trans-unit>
 			<trans-unit id="changePublishDateDescription" datatype="html">
 				<source>Article will be published immediately with given date and time. If date is in future, article will arrive on `feed` page only after this date.</source>
-				<target>перевод</target>
+				<target>Статья будет опубликована немедленно с указанием даты и времени. Если дата наступит в будущем, статья появится на странице `feed` только после этой даты.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">65</context>
@@ -562,7 +562,7 @@
 			</trans-unit>
 			<trans-unit id="publishArticle" datatype="html">
 				<source>Publish article</source>
-				<target>перевод</target>
+				<target>Опубликовать статью</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">87</context>
@@ -576,7 +576,7 @@
 			</trans-unit>
 			<trans-unit id="approveArticle" datatype="html">
 				<source>Approve article</source>
-				<target>перевод</target>
+				<target>Утвердить статью</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">124</context>
@@ -586,7 +586,7 @@
 			</trans-unit>
 			<trans-unit id="editArticle" datatype="html">
 				<source>Edit article</source>
-				<target>перевод</target>
+				<target>Редактировать статью</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">133</context>
@@ -596,7 +596,7 @@
 			</trans-unit>
 			<trans-unit id="deleteArticle" datatype="html">
 				<source>Delete article</source>
-				<target>перевод</target>
+				<target>Удалить статью</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">142</context>
@@ -606,7 +606,7 @@
 			</trans-unit>
 			<trans-unit id="translationIsNotPublished" datatype="html">
 				<source>Translation is not published! So only author or admin can see it.</source>
-				<target>перевод</target>
+				<target>Перевод не опубликован! Так что только автор или администратор может видеть это.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">179</context>
@@ -616,7 +616,7 @@
 			</trans-unit>
 			<trans-unit id="publishTranslation" datatype="html">
 				<source>Publish translation</source>
-				<target>перевод</target>
+				<target>Опубликовать перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">213</context>
@@ -626,7 +626,7 @@
 			</trans-unit>
 			<trans-unit id="approveTranslation" datatype="html">
 				<source>Approve translation</source>
-				<target>перевод</target>
+				<target>Утвердить перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">229</context>
@@ -636,7 +636,7 @@
 			</trans-unit>
 			<trans-unit id="editTranslation" datatype="html">
 				<source>Edit translation</source>
-				<target>перевод</target>
+				<target>Редактировать перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">237</context>
@@ -646,7 +646,7 @@
 			</trans-unit>
 			<trans-unit id="addTranslation" datatype="html">
 				<source>Add translation</source>
-				<target>перевод</target>
+				<target>Добавить перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">245</context>
@@ -656,7 +656,7 @@
 			</trans-unit>
 			<trans-unit id="deleteTranslation" datatype="html">
 				<source>Delete translation</source>
-				<target>перевод</target>
+				<target>Удалить перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">253</context>
@@ -666,7 +666,7 @@
 			</trans-unit>
 			<trans-unit id="versionIsNotPublished" datatype="html">
 				<source>Version is not published! So only author or admin can see it.</source>
-				<target>перевод</target>
+				<target>Версия не опубликована! Так что только автор или администратор может видеть это.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">269</context>
@@ -677,7 +677,8 @@
 			<trans-unit id="translatedBy" datatype="html">
 				<source>Translated by <x id="INTERPOLATION" equiv-text="{{selectedTranslation.author.fullName}}"/>
 				</source>
-				<target>перевод</target>
+				<target>Переведено <x id="INTERPOLATION" equiv-text="{{selectedTranslation.author.fullName}}"/>
+				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">275</context>
@@ -688,7 +689,8 @@
 			<trans-unit id="andEditedBy" datatype="html">
 				<source> and edited by <x id="INTERPOLATION" equiv-text="{{selectedTranslationVersion.author.fullName}}"/>
 				</source>
-				<target>перевод</target>
+				<target> и отредактировано <x id="INTERPOLATION" equiv-text="{{selectedTranslationVersion.author.fullName}}"/>
+				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">278</context>
@@ -699,7 +701,8 @@
 			<trans-unit id="editedBy" datatype="html">
 				<source>Edited by <x id="INTERPOLATION" equiv-text="{{selectedTranslationVersion.author.fullName}}"/>
 				</source>
-				<target>перевод</target>
+				<target>Под редакцией <x id="INTERPOLATION" equiv-text="{{selectedTranslationVersion.author.fullName}}"/>
+				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">283</context>
@@ -709,7 +712,7 @@
 			</trans-unit>
 			<trans-unit id="selectedVersion" datatype="html">
 				<source>Selected version:</source>
-				<target>перевод</target>
+				<target>Выбранная версия:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">298</context>
@@ -719,7 +722,7 @@
 			</trans-unit>
 			<trans-unit id="publishVersion" datatype="html">
 				<source>Publish version</source>
-				<target>перевод</target>
+				<target>Опубликовать версию</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">328</context>
@@ -729,7 +732,7 @@
 			</trans-unit>
 			<trans-unit id="approveVersion" datatype="html">
 				<source>Approve version</source>
-				<target>перевод</target>
+				<target>Утвердить версию</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">344</context>
@@ -739,7 +742,7 @@
 			</trans-unit>
 			<trans-unit id="editVersion" datatype="html">
 				<source>Edit text version</source>
-				<target>перевод</target>
+				<target>Редактировать версию текста</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">352</context>
@@ -749,7 +752,7 @@
 			</trans-unit>
 			<trans-unit id="addVersion" datatype="html">
 				<source>Add text version</source>
-				<target>перевод</target>
+				<target>Добавить версию текста</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">359</context>
@@ -759,7 +762,7 @@
 			</trans-unit>
 			<trans-unit id="deleteVersion" datatype="html">
 				<source>Delete text version</source>
-				<target>перевод</target>
+				<target>Удалить версию текста</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.html</context>
 					<context context-type="linenumber">367</context>
@@ -770,7 +773,8 @@
 			<trans-unit id="comments" datatype="html">
 				<source>Comments: <x id="INTERPOLATION" equiv-text="{{commentsCount}}"/>
 				</source>
-				<target>перевод</target>
+				<target>Комментарии: <x id="INTERPOLATION" equiv-text="{{commentsCount}}"/>
+				</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
 					<context context-type="linenumber">1</context>
@@ -780,7 +784,7 @@
 			</trans-unit>
 			<trans-unit id="addComment" datatype="html">
 				<source>Add comment</source>
-				<target>перевод</target>
+				<target>Добавить комментарий</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
 					<context context-type="linenumber">19</context>
@@ -790,7 +794,7 @@
 			</trans-unit>
 			<trans-unit id="send" datatype="html">
 				<source>Send</source>
-				<target>перевод</target>
+				<target>Отправить</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
 					<context context-type="linenumber">38</context>
@@ -800,7 +804,7 @@
 			</trans-unit>
 			<trans-unit id="needLoginToPostComment" datatype="html">
 				<source>Only registered users can post comments!</source>
-				<target>перевод</target>
+				<target>Только зарегистрированные пользователи могут оставлять комментарии!</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
 					<context context-type="linenumber">54</context>
@@ -810,7 +814,7 @@
 			</trans-unit>
 			<trans-unit id="endOfCommentsList" datatype="html">
 				<source>This is the end of comments list</source>
-				<target>перевод</target>
+				<target>Это конец списка комментариев</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/comments/comments.component.html</context>
 					<context context-type="linenumber">115</context>
@@ -820,7 +824,7 @@
 			</trans-unit>
 			<trans-unit id="instruction" datatype="html">
 				<source>Instruction</source>
-				<target>перевод</target>
+				<target>Инструкция</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">5</context>
@@ -830,7 +834,7 @@
 			</trans-unit>
 			<trans-unit id="articleConsistsOf" datatype="html">
 				<source>Article consists of</source>
-				<target>перевод</target>
+				<target>Статья состоит из</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">9</context>
@@ -840,7 +844,7 @@
 			</trans-unit>
 			<trans-unit id="articleObject" datatype="html">
 				<source>Article object with primary language and optional source title, url and author name.</source>
-				<target>перевод</target>
+				<target>Объект статьи с основным языком и необязательным исходным названием, URL и именем автора.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">13</context>
@@ -850,7 +854,7 @@
 			</trans-unit>
 			<trans-unit id="translationObject" datatype="html">
 				<source>Translations array with title, language and optional short description and image url.</source>
-				<target>перевод</target>
+				<target>Массив переводов с заголовком, языком и необязательным кратким описанием и URL-адресом изображения.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">15</context>
@@ -860,7 +864,7 @@
 			</trans-unit>
 			<trans-unit id="textVersionObject" datatype="html">
 				<source>Text versions array with article text.</source>
-				<target>перевод</target>
+				<target>Массив версий текста с текстом статьи.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">17</context>
@@ -870,7 +874,7 @@
 			</trans-unit>
 			<trans-unit id="articleExample" datatype="html">
 				<source>So, Article object can looks like this:</source>
-				<target>перевод</target>
+				<target>Итого, объект Article может выглядеть так:</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">19</context>
@@ -880,7 +884,7 @@
 			</trans-unit>
 			<trans-unit id="everyoneCanCreateNewObject" datatype="html">
 				<source>Everyone can create new article, translation or text version.</source>
-				<target>перевод</target>
+				<target>Каждый может создать новую статью, перевод или версию текста.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">24</context>
@@ -890,7 +894,7 @@
 			</trans-unit>
 			<trans-unit id="createEditRule1" datatype="html">
 				<source>Article can be approved or published only by admins.</source>
-				<target>перевод</target>
+				<target>Статья может быть одобрена или опубликована только админами.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">27</context>
@@ -900,7 +904,7 @@
 			</trans-unit>
 			<trans-unit id="createEditRule2" datatype="html">
 				<source>To become published, translation or text version must be approved by admin or author of parent object.</source>
-				<target>перевод</target>
+				<target>Для публикации, перевод или версия текста должны быть одобрены администратором или автором родительского объекта.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">29</context>
@@ -910,7 +914,7 @@
 			</trans-unit>
 			<trans-unit id="createEditRule3" datatype="html">
 				<source>Also, author of parent object can approve, publish, edit and delete translations and text version.</source>
-				<target>перевод</target>
+				<target>Кроме того, автор родительского объекта может утверждать, публиковать, редактировать и удалять переводы и версии текста.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">31</context>
@@ -920,7 +924,7 @@
 			</trans-unit>
 			<trans-unit id="createEditRule4" datatype="html">
 				<source>You can edit only single object at once. I.e. article or translation or text version.</source>
-				<target>перевод</target>
+				<target>Вы можете редактировать только один объект одновременно. То есть статью или перевод или версию текста.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">33</context>
@@ -930,7 +934,7 @@
 			</trans-unit>
 			<trans-unit id="createEditRule5" datatype="html">
 				<source>You can select which translation or text version edit on article page.</source>
-				<target>перевод</target>
+				<target>Вы можете выбрать, какой перевод или версию текста редактировать на странице статьи.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">35</context>
@@ -940,7 +944,7 @@
 			</trans-unit>
 			<trans-unit id="createEditRule6" datatype="html">
 				<source>You can&apos;t delete the only text version of translation or the only translation in article.</source>
-				<target>перевод</target>
+				<target>Вы не можете удалить единственную версию текста перевода или единственный перевод в статье.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create-instruction/article-create-instruction.component.html</context>
 					<context context-type="linenumber">37</context>
@@ -950,7 +954,7 @@
 			</trans-unit>
 			<trans-unit id="loginErrorMessage" datatype="html">
 				<source>Error. May be wrong email and/or password.</source>
-				<target>перевод</target>
+				<target>Ошибка. Может быть неправильный адрес электронной почты и / или пароль.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/login/login.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -960,7 +964,7 @@
 			</trans-unit>
 			<trans-unit id="translationAddLoginTitle" datatype="html">
 				<source>To add translation you should</source>
-				<target>перевод</target>
+				<target>Чтобы добавить перевод, вы должны</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -970,7 +974,7 @@
 			</trans-unit>
 			<trans-unit id="versionAddLoginTitle" datatype="html">
 				<source>To add text version you should</source>
-				<target>перевод</target>
+				<target>Чтобы добавить текстовую версию, вы должны</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -980,7 +984,7 @@
 			</trans-unit>
 			<trans-unit id="deleteArticleDialogTitle" datatype="html">
 				<source>Delete article</source>
-				<target>перевод</target>
+				<target>Удалить статью</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -990,7 +994,7 @@
 			</trans-unit>
 			<trans-unit id="deleteArticleDialogMessage" datatype="html">
 				<source>Are you sure you want to delete article? This can&apos;t be undone!</source>
-				<target>перевод</target>
+				<target>Вы уверены, что хотите удалить статью? Это не может быть отменено!</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1000,7 +1004,7 @@
 			</trans-unit>
 			<trans-unit id="deleteTranslationDialogTitle" datatype="html">
 				<source>Delete translation</source>
-				<target>перевод</target>
+				<target>Удалить перевод</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1010,7 +1014,7 @@
 			</trans-unit>
 			<trans-unit id="deleteTranslationDialogMessage" datatype="html">
 				<source>Are you sure you want to delete translation? This can&apos;t be undone!</source>
-				<target>перевод</target>
+				<target>Вы уверены, что хотите удалить перевод? Это не может быть отменено!</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1020,7 +1024,7 @@
 			</trans-unit>
 			<trans-unit id="deleteVersionDialogTitle" datatype="html">
 				<source>Delete text version</source>
-				<target>перевод</target>
+				<target>Удалить текстовую версию</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1034,7 +1038,7 @@
 			</trans-unit>
 			<trans-unit id="deleteVersionDialogMessage" datatype="html">
 				<source>Are you sure you want to delete text version? This can&apos;t be undone!</source>
-				<target>перевод</target>
+				<target>Вы уверены, что хотите удалить текстовую версию? Это не может быть отменено!</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1045,7 +1049,8 @@
 			<trans-unit id="publishDialogMessage" datatype="html">
 				<source>Are you sure you want to <x id="INTERPOLATION" equiv-text="{{action}}"/> this <x id="INTERPOLATION_1" equiv-text="{{dataType}}"/>?
 It will be available for everyone immediately!</source>
-				<target>перевод</target>
+				<target>Вы уверены, что хотите <x id="INTERPOLATION" equiv-text="{{action}}"/> эту/этот <x id="INTERPOLATION_1" equiv-text="{{dataType}}"/>?
+Это будет исполнено немедленно!</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1055,7 +1060,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="postCommentLoginTitle" datatype="html">
 				<source>To post comment you should</source>
-				<target>перевод</target>
+				<target>Чтобы оставить комментарий, вы должны</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/comments/comments.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1065,7 +1070,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="createArticleLoginTitle" datatype="html">
 				<source>To create article you should</source>
-				<target>перевод</target>
+				<target>Для создания статьи вам необходимо</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/feed/feed.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1075,7 +1080,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="successfullyUpdated" datatype="html">
 				<source>Successfully updated!</source>
-				<target>перевод</target>
+				<target>Успешно обновлено!</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1085,7 +1090,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="notImplementedErrorMessage" datatype="html">
 				<source>Not implemented yet, sorry)</source>
-				<target>перевод</target>
+				<target>Пока не реализовано, извините)</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1099,7 +1104,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="deleteAccountDialogTitle" datatype="html">
 				<source>Delete account</source>
-				<target>перевод</target>
+				<target>Удалить аккаунт</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1109,7 +1114,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="deleteAccountDialogMessage" datatype="html">
 				<source>Are you sure you want to delete account? This can&apos;t be undone!</source>
-				<target>перевод</target>
+				<target>Вы уверены, что хотите удалить аккаунт? Это не может быть отменено!</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1119,7 +1124,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="unexpectedErrorMessage" datatype="html">
 				<source>Unexpected error occurred.</source>
-				<target>перевод</target>
+				<target>Произошла непредвиденная ошибка.</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/service/ui/NotificationService.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1133,7 +1138,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="namePlaceholder" datatype="html">
 				<source>Name</source>
-				<target>перевод</target>
+				<target>Имя</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/account/account.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1145,7 +1150,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="sourceTitlePlaceholder" datatype="html">
 				<source>Source title</source>
-				<target>перевод</target>
+				<target>Заголовок источника</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1153,7 +1158,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="sourceAuthorNamePlaceholder" datatype="html">
 				<source>Source author name</source>
-				<target>перевод</target>
+				<target>Имя автора источника</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1161,7 +1166,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="sourceUrlPlaceholder" datatype="html">
 				<source>Source url</source>
-				<target>перевод</target>
+				<target>Исходный URL</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1169,7 +1174,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="articleTagsPlaceholder" datatype="html">
 				<source>Article tags</source>
-				<target>перевод</target>
+				<target>Теги статьи</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1177,7 +1182,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="imageFilePlaceholder" datatype="html">
 				<source>Image file</source>
-				<target>перевод</target>
+				<target>Файл изображения</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1185,7 +1190,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="noFileSelectedPlaceholder" datatype="html">
 				<source>No file selected</source>
-				<target>перевод</target>
+				<target>Файл не выбран</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1193,7 +1198,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="imageFileNamePlaceholder" datatype="html">
 				<source>Image file name</source>
-				<target>перевод</target>
+				<target>Имя файла изображения</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1201,7 +1206,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="titlePlaceholder" datatype="html">
 				<source>Title</source>
-				<target>перевод</target>
+				<target>Название</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1209,7 +1214,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="shortDescriptionPlaceholder" datatype="html">
 				<source>Short description</source>
-				<target>перевод</target>
+				<target>Краткое описание</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1217,7 +1222,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="publishingDatePlaceholder" datatype="html">
 				<source>Publishing date</source>
-				<target>перевод</target>
+				<target>Дата публикации</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article/article.component.ts</context>
 					<context context-type="linenumber">1</context>
@@ -1225,7 +1230,7 @@ It will be available for everyone immediately!</source>
 			</trans-unit>
 			<trans-unit id="createArticle" datatype="html">
 				<source>Create article</source>
-				<target>перевод</target>
+				<target>Создать статью</target>
 				<context-group purpose="location">
 					<context context-type="sourcefile">src/app/article-create/article-create.component.ts</context>
 					<context context-type="linenumber">1</context>

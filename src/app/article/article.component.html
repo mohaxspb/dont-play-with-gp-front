@@ -101,7 +101,7 @@
                    fxLayoutAlign="start start"
                    fxLayoutGap="8px">
                 <mat-slide-toggle
-                  [disabled]="!article.approved"
+                  [disabled]="disableArticlePublishSwitch"
                   [(ngModel)]="article.published"
                   [labelPosition]="'before'"
                   (change)="onPublishArticleChanged($event.checked)"
@@ -116,6 +116,7 @@
                    fxLayoutGap="8px"
               >
                 <mat-slide-toggle
+                  [disabled]="article.published"
                   [(ngModel)]="article.approved"
                   [labelPosition]="'before'"
                   (change)="onApproveArticleChanged($event.checked)"
@@ -220,6 +221,7 @@
              fxLayoutGap="8px"
         >
           <mat-slide-toggle
+            [disabled]="selectedTranslation.published"
             [(ngModel)]="selectedTranslation.approved"
             [labelPosition]="'before'"
             (change)="onApproveTranslationChanged($event.checked)"
@@ -334,6 +336,7 @@
                fxLayoutGap="8px"
           >
             <mat-slide-toggle
+              [disabled]="selectedTranslationVersion.published"
               [(ngModel)]="selectedTranslationVersion.approved"
               [labelPosition]="'before'"
               (change)="onApproveVersionChanged($event.checked)"

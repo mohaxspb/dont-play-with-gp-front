@@ -290,12 +290,45 @@ export class ArticleComponent implements OnInit {
     );
   }
 
+  get disableArticlePublishSwitch() {
+    // allow publish for admin if there is only one translation and version
+    if (this.isAdmin() && this.article.translations.length === 1 && this.article.translations[0].versions.length === 1) {
+      return false;
+    } else {
+      return !this.article.approved;
+    }
+  }
+
   isAdmin(): boolean {
     return this.user != null && this.user.authorities.map(value => value.authority).includes(AuthorityType.ADMIN);
   }
 
   getFullImagePath(relativePath: string): string {
     return Api.URL + relativePath;
+  }
+
+  publishArticleForDate() {
+    this.progressInAction.next(true);
+
+    this.articleService
+      .publishArticleWithDate(this.article.id, this.publishDate)
+      .pipe(
+        finalize(() => this.progressInAction.next(false))
+      )
+      .subscribe(
+        value => this.article = value,
+        error => {
+          this.notificationService.showError(error);
+        }
+      );
+  }
+
+  onPublishDateChanged(value: string) {
+    this.publishDate = value ? new Date(Date.parse(value)).toISOString() : null;
+  }
+
+  onArticleImageLoadError(event) {
+    event.target.src = './assets/baseline-image-24px.svg';
   }
 
   private showConfirmArticleDeleteDialog(id: number) {
@@ -415,25 +448,27 @@ export class ArticleComponent implements OnInit {
         })
       )
       .subscribe(
-        (article: Article) => {
-          this.article = article;
-
-          // preferred lang calculation
-          this.preferredLanguage = this.languageService.getPreferredLanguageForUser(this.user, this.languages);
-
-          // selected lang calculation
-          // this can be passed from outside (click on concrete translation). If not - calculate it
-          if (this.selectedLanguage == null) {
-            this.selectedLanguage = GpArticleService.getCorrectLanguageForArticle(this.article, this.preferredLanguage, this.languages);
-          }
-
-          this.availableArticleLanguages = GpArticleService.getLanguagesFromArticle(this.article, this.languages);
-
-          this.selectedTranslation = this.calculateSelectedTranslation();
-          this.selectedTranslationVersion = this.calculateVersion();
-        },
+        (article: Article) => this.onArticleReceived(article),
         error => this.notificationService.showError(error)
       );
+  }
+
+  private onArticleReceived(article: Article) {
+    this.article = article;
+
+    // preferred lang calculation
+    this.preferredLanguage = this.languageService.getPreferredLanguageForUser(this.user, this.languages);
+
+    // selected lang calculation
+    // this can be passed from outside (click on concrete translation). If not - calculate it
+    if (this.selectedLanguage == null) {
+      this.selectedLanguage = GpArticleService.getCorrectLanguageForArticle(this.article, this.preferredLanguage, this.languages);
+    }
+
+    this.availableArticleLanguages = GpArticleService.getLanguagesFromArticle(this.article, this.languages);
+
+    this.selectedTranslation = this.calculateSelectedTranslation();
+    this.selectedTranslationVersion = this.calculateVersion();
   }
 
   private calculateSelectedTranslation(): ArticleTranslation {
@@ -527,7 +562,7 @@ export class ArticleComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        value => this.article = value,
+        value => this.onArticleReceived(value),
         error => {
           this.article.published = !publish;
           this.notificationService.showError(error);
@@ -627,30 +662,6 @@ export class ArticleComponent implements OnInit {
   private getSelectedVersionIndexInSelectedTranslation(): number {
     return this.article.translations[this.getSelectedTranslationIndexInArticle()]
       .versions.findIndex(version => version.id === this.selectedTranslationVersion.id);
-  }
-
-  publishArticleForDate() {
-    this.progressInAction.next(true);
-
-    this.articleService
-      .publishArticleWithDate(this.article.id, this.publishDate)
-      .pipe(
-        finalize(() => this.progressInAction.next(false))
-      )
-      .subscribe(
-        value => this.article = value,
-        error => {
-          this.notificationService.showError(error);
-        }
-      );
-  }
-
-  onPublishDateChanged(value: string) {
-    this.publishDate = value ? new Date(Date.parse(value)).toISOString() : null;
-  }
-
-  onArticleImageLoadError(event) {
-    event.target.src = './assets/baseline-image-24px.svg';
   }
 }
 

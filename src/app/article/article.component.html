@@ -101,7 +101,7 @@
                    fxLayoutAlign="start start"
                    fxLayoutGap="8px">
                 <mat-slide-toggle
-                  [disabled]="!article.approved"
+                  [disabled]="disableArticlePublishSwitch"
                   [(ngModel)]="article.published"
                   [labelPosition]="'before'"
                   (change)="onPublishArticleChanged($event.checked)"

@@ -163,7 +163,7 @@
 
             <h3 i18n="created articles|created articles label@@createdArticlesLabel">Created articles</h3>
             <div class="rect-height-200 position-relative">
-              <div *ngIf="articlesCreated?.length!==0"
+              <div *ngIf="articlesCreated?.length!==0 else noArticles"
                    fxLayout
                    fxLayoutGap="16px"
                    class="overflow-x default-padding-around"
@@ -187,6 +187,12 @@
 
               </div>
 
+              <ng-template #noArticles>
+                <div>
+                  <!--                  todo-->
+                </div>
+              </ng-template>
+
               <div id="articles-loading-indication"
                    *ngIf="articlesAreLoading|async"
                    class="background-half-transparent-white cover"
@@ -203,7 +209,7 @@
           <div id="createdComments">
             <h3 i18n="published comments|published comments label@@publishedCommentsLabel">Published comments</h3>
             <div class="rect-height-200 position-relative">
-              <div *ngIf="commentsCreated?.length!==0"
+              <div *ngIf="commentsCreated?.length!==0 else noComments"
                    fxLayout
                    fxLayoutGap="16px"
                    class="overflow-x default-padding-around"
@@ -226,6 +232,12 @@
                 </div>
 
               </div>
+
+              <ng-template #noComments>
+                <div>
+<!--                  todo-->
+                </div>
+              </ng-template>
 
               <div id="comments-loading-indication"
                    *ngIf="commentsAreLoading|async"

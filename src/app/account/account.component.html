@@ -203,8 +203,40 @@
           <div id="createdComments">
             <h3 i18n="published comments|published comments label@@publishedCommentsLabel">Published comments</h3>
             <div class="rect-height-200 position-relative">
-              <!--              todo published comments-->
-              <p class="center-inside-both-axis">Coming soon!</p>
+              <div *ngIf="commentsCreated?.length!==0"
+                   fxLayout
+                   fxLayoutGap="16px"
+                   class="overflow-x default-padding-around"
+              >
+                <div *ngFor="let comment of commentsCreated">
+                  <mat-card
+                    class="account-article-card"
+                    fxFlex="noshrink"
+                    fxLayout="column"
+                    (click)="onCommentClicked(comment.articleId)"
+                  >
+                    <mat-card-content
+                      fxFlex="80%"
+                      class="account-article-card-content"
+                    >{{comment.text}}</mat-card-content>
+                    <mat-card-footer fxFlex="10%">
+                      <p class="default-margin-left">{{comment.created | date:'shortDate':'UTC': userLanguage.langCode}}</p>
+                    </mat-card-footer>
+                  </mat-card>
+                </div>
+
+              </div>
+
+              <div id="comments-loading-indication"
+                   *ngIf="commentsAreLoading|async"
+                   class="background-half-transparent-white cover"
+                   (click)="$event.stopPropagation()"
+              >
+                <mat-spinner
+                  class="center-inside-both-axis"
+                  [diameter]="24"
+                ></mat-spinner>
+              </div>
             </div>
           </div>
 

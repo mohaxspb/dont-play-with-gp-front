@@ -16,7 +16,7 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  title = 'Don\'t play with Google Play';
+  title = 'Don\'t play with Google';
 
   supportedLanguages: string[] = SUPPORTED_LANGUAGES;
   currentSiteLanguage: string = GpLanguageService.DEFAULT_LANG_CODE;

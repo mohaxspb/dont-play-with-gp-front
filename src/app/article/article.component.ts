@@ -29,7 +29,7 @@ export class ArticleComponent implements OnInit {
 
   @ViewChild('dateInput', {static: false}) dateInput: ElementRef<HTMLInputElement>;
 
-  publishDate: string | null;
+  publishDate: string | null = null;
 
   dataIsLoading = new BehaviorSubject<boolean>(false);
   progressInAction = new BehaviorSubject<boolean>(false);
@@ -316,7 +316,7 @@ export class ArticleComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        value => this.article = value,
+        value => this.onArticleReceived(value),
         error => {
           this.notificationService.showError(error);
         }

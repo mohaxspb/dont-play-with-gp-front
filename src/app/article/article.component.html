@@ -67,11 +67,11 @@
               <mat-form-field>
                 <label>
                   <input
-                      #dateInput
-                      matInput
-                      type="datetime-local"
-                      placeholder="{{publishingDatePlaceholder}}"
-                      (change)="onPublishDateChanged($event.target.value)"
+                    matInput
+                    required
+                    type="datetime-local"
+                    placeholder="{{publishingDatePlaceholder}}"
+                    (change)="onPublishDateChanged($event.target.value)"
                   >
                 </label>
               </mat-form-field>
@@ -80,7 +80,7 @@
                 <button
                   mat-raised-button
                   color="accent"
-                  [disabled]="disableArticlePublishSwitch"
+                  [disabled]="disableArticlePublishSwitch || publishDate==null"
                   (click)="publishArticleForDate()"
                   class="default-margin-left"
                   i18n="publish article|publish article button label@@publishArticle"

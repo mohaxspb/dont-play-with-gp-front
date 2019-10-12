@@ -29,7 +29,7 @@ export class ArticleComponent implements OnInit {
 
   @ViewChild('dateInput', {static: false}) dateInput: ElementRef<HTMLInputElement>;
 
-  publishDate: string | null;
+  publishDate: string | null = null;
 
   dataIsLoading = new BehaviorSubject<boolean>(false);
   progressInAction = new BehaviorSubject<boolean>(false);

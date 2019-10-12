@@ -316,7 +316,7 @@ export class ArticleComponent implements OnInit {
         finalize(() => this.progressInAction.next(false))
       )
       .subscribe(
-        value => this.article = value,
+        value => this.onArticleReceived(value),
         error => {
           this.notificationService.showError(error);
         }

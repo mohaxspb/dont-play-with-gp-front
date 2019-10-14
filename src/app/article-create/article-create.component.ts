@@ -701,6 +701,12 @@ export class ArticleCreateComponent implements OnInit {
         .filter(tag => !this.selectedTags.includes(tag));
     }
   }
+
+  showUseExistingImageCheckbox() {
+    return this.isAddTranslationMode
+      && this.article != null
+      && this.article.translations.find(value => value.imageUrl != null);
+  }
 }
 
 export enum ActionType {

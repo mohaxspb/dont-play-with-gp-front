@@ -1,0 +1,50 @@
+<div fxLayout fxLayoutGap="16px" *ngIf="!showManageCookies">
+
+  <div fxFlex>
+    <h3>Stop! Cookie time</h3>
+    <p>We use cookies to personalise content, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, and analytics partners who may combine it with other information that you've provided to them or that they've collected from your use of their services. You consent to our cookies if you continue to use this website. </p>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="center space-around" fxLayoutGap="16px">
+    <button
+      mat-stroked-button
+      color="warn"
+      (click)="onManageCookiesClicked()"
+    >Manage cookies</button>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="onCookiesAcceptClicked()"
+    >Accept</button>
+  </div>
+
+</div>
+<div *ngIf="showManageCookies">
+
+  <h3>About Cookies</h3>
+  <p>We use cookies and so-called pixel tags to collect information about visitors on our websites. Pixel tags are invisible tags placed on certain pages of our websites, but unlike cookies, not saved on your computer. A pixel tag triggers a cookie when you visit a website. A cookie is a small piece of data sent from the website to your web browser and may be stored on your computer's hard drive. Cookies allow us to recognize your computer while you are on the website and help customize your online experience and make it more convenient for you. Cookies are also useful in allowing more efficient log-in for users, tracking transaction histories, and preserving information between sessions. The information collected from cookies may also be used to improve the functionality of the website and to measure traffic patterns.</p>
+  <p>Example of improved experience: If you visit our site, you will not be asked for your password every time you visit, but rather every now and then, or when you clear your cookies manually.</p>
+  <p>There are two main kinds of cookies: session cookies and persistent cookies. Session cookies are deleted from your computer when you close your browser, whereas persistent cookies remain stored on your computer until deleted, or until they reach their expiry date. You are entitled to choose whether or not you would like to use cookies. If you do not approve to the use of cookies, please be sure to opt out, as in block or disable them using your browser settings as described below or the opt-out link provided to you on your first visit to the website.</p>
+
+  <h4>Strictly necessary cookies</h4>
+  <p>These cookies are necessary for the website to function. They are usually set in response to actions made by you which amount to a request for services, such as logging in or filling in forms. You can set your browser to block or alert you about these cookies, but some parts of the website might then not work. These cookies do not store any Personal Information.</p>
+
+  <h4>Performance cookies</h4>
+  <p>These cookies allow us to count visits and traffic sources in order to measure and improve the performance of the website. These cookies help us to know which pages are the most and least popular and how visitors move around the website. All information these cookies collect is aggregated and therefore anonymous. You can set your browser to block or alert you about these cookies. If you do so, we will not know when you have visited our website, and will not be able to monitor its performance.</p>
+
+  <h4>Functionality cookies</h4>
+  <p>These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third party providers whose services have been added to the website. If you do not allow these cookies, some or all of these services may not function properly.</p>
+
+  <h4>Targeting cookies</h4>
+  <p>Advertisers and/or other content providers that may appear on our website may also use cookies that are not sent by us. Such advertisements or content may use cookies to help track and target the interests of users of the website in order to present customized and personalized advertisements or other messages that the user might find interesting. These cookies uniquely identify your browser and Internet device. Such cookies may even impact your experience of other websites you may visit subsequently. If you do not allow these cookies, you will experience less targeted advertising. We are not responsible for any of our advertisers or content providers cookies and we will always require your active consent for our own targeting cookies.</p>
+
+  <h4>View cookies</h4>
+  <p>Please note that most web browser applications (such as Microsoft Edge, Mozilla Firefox and Google Chrome) have features that can notify you when you receive a cookie or prevent cookies from being sent. In Microsoft Edge, you can refuse all cookies by clicking "Tools", "Internet Options", "Privacy", and selecting "Block all cookies" using the sliding selector. In Firefox, you can adjust your cookies by clicking "Tools", "Options" and "Privacy". In Google Chrome, you can also adjust your cookies by clicking on "Settings", "Show advanced settings", "Content settings" and on the "Privacy" section.</p>
+  <p>If you disable cookies, however, you may not be able to use certain personalized functions of the website.</p>
+
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="onCookiesAcceptClicked()"
+  >Accept</button>
+</div>

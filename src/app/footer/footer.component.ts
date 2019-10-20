@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {version} from 'package.json';
+import {MatBottomSheet} from '@angular/material';
+import {CookiesBottomSheetComponent} from '../cookies-bottom-sheet/cookies-bottom-sheet.component';
+import {GpLocalStorageService} from '../service/GpLocalStorageService';
 
 @Component({
   selector: 'app-footer',
@@ -9,11 +12,20 @@ import {version} from 'package.json';
 export class FooterComponent implements OnInit {
   appVersion: string;
 
-  constructor() {
+  constructor(
+    private localStorageService: GpLocalStorageService,
+    private bottomSheet: MatBottomSheet
+  ) {
     this.appVersion = version;
   }
 
   ngOnInit() {
+    if (!this.localStorageService.isCookiesAccepted()) {
+      this.openCookiesInfo();
+    }
   }
 
+  openCookiesInfo() {
+    this.bottomSheet.open(CookiesBottomSheetComponent);
+  }
 }

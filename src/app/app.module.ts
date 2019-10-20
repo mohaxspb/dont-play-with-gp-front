@@ -64,6 +64,7 @@ import {TagService} from './service/data/TagService';
 import {CommentService} from './service/data/CommentService';
 import {CommentsComponent} from './comments/comments.component';
 import {ArticleCreateInstructionComponent} from './article-create-instruction/article-create-instruction.component';
+import { CookiesBottomSheetComponent } from './cookies-bottom-sheet/cookies-bottom-sheet.component';
 // Import the service
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {environment} from '../environments/environment';
@@ -98,11 +99,13 @@ declare const require; // Use the require method provided by webpack
     ArticleComponent,
     ArticleCreateComponent,
     CommentsComponent,
-    ArticleCreateInstructionComponent
+    ArticleCreateInstructionComponent,
+    CookiesBottomSheetComponent
   ],
   entryComponents: [
     LoginComponent,
-    DialogComponent
+    DialogComponent,
+    CookiesBottomSheetComponent
   ],
   imports: [
     RouterModule.forRoot(routes, {useHash: true}),

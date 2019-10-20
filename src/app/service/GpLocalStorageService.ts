@@ -10,6 +10,7 @@ export class GpLocalStorageService {
     static LANGUAGES = 'LANGUAGES';
     static DEFAULT_LANG_CODE = 'DEFAULT_LANG_CODE';
     static TARGET_URL = 'TARGET_URL';
+    static COOKIES_ACCEPTED = 'COOKIES_ACCEPTED';
   };
 
   constructor() {
@@ -50,5 +51,13 @@ export class GpLocalStorageService {
 
   getTargetUrl(): string | null {
     return localStorage.getItem(GpLocalStorageService.Keys.TARGET_URL);
+  }
+
+  isCookiesAccepted(): boolean {
+    return localStorage.getItem(GpLocalStorageService.Keys.COOKIES_ACCEPTED) != null;
+  }
+
+  setCookiesAccepted() {
+    localStorage.setItem(GpLocalStorageService.Keys.COOKIES_ACCEPTED, String(true));
   }
 }

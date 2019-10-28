@@ -6,3 +6,8 @@
   object-fit: cover;
   object-position: center;
 }
+
+markdown ::ng-deep img {
+  max-width: 100%;
+  height: auto;
+}

@@ -2,3 +2,8 @@
   padding-right: 16px;
   padding-left: 16px;
 }
+
+markdown ::ng-deep img {
+  max-width: 100%;
+  height: auto;
+}

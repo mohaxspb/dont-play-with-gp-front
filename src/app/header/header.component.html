@@ -1,11 +1,33 @@
 <mat-toolbar color="primary">
+
   <div
+    fxShow.gt-xs="true"
+    fxShow="false"
     matRipple
-    class="noselect default-padding-around"
-    fxLayout="row"
-    fxLayoutAlign="space-around center"
+    class="logo-image-container noselect"
+    (click)="onTitleClicked()">
+
+    <img
+      src="./assets/img/titleImg.jpg"
+      alt="logo"
+      class="logo-image noselect"
+    />
+  </div>
+
+  <div
+    fxShow.gt-xs="false"
+    fxShow="true"
+    matRipple
+    fxLayout
+    fxLayoutAlign="center center"
+    class="noselect logo-image-container"
     (click)="onTitleClicked()"
   >
+    <img
+      src="./assets/img/logo.jpg"
+      alt="logo"
+      class="noselect logo-image-2"
+    />
     <span>{{title}}</span>
   </div>
 
@@ -54,6 +76,7 @@
     (click)="onLoginClicked()"
     i18n="login|login button label@@login"
   >Login</button>
+
   <button
     *ngIf="authenticated"
     mat-icon-button

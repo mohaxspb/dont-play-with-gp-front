@@ -54,6 +54,8 @@ body {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+
+  -webkit-user-drag: none; /*for image from https://stackoverflow.com/a/12906840/3212712*/
 }
 
 .default-margin-right {

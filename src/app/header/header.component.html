@@ -1,34 +1,25 @@
 <mat-toolbar color="primary">
 
   <div
-    fxShow.gt-xs="true"
-    fxShow="false"
     matRipple
     class="logo-image-container noselect"
     (click)="onTitleClicked()">
 
     <img
+      fxShow.gt-xs="true"
+      fxShow="false"
       src="./assets/img/titleImg.jpg"
       alt="logo"
       class="logo-image noselect"
     />
-  </div>
 
-  <div
-    fxShow.gt-xs="false"
-    fxShow="true"
-    matRipple
-    fxLayout
-    fxLayoutAlign="center center"
-    class="noselect logo-image-container"
-    (click)="onTitleClicked()"
-  >
     <img
-      src="./assets/img/logo.jpg"
+      fxShow.gt-xs="false"
+      fxShow="true"
+      src="./assets/img/titleImgMobile.jpg"
       alt="logo"
-      class="noselect logo-image-2"
+      class="logo-image noselect"
     />
-    <span>{{title}}</span>
   </div>
 
   <span class="toolbar-spacer"></span>

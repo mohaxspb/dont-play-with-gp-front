@@ -19,12 +19,9 @@ where `--skipTests=true` needed to prevent `spec` file generating
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Staging build
-Use `--aot=false --build-optimizer=false`, as there is some f*cking bug with empty error message(
-
-Also try to add `--optimization=false`, as it builds, but crashes after deploy(
 
 ```
-ng build --configuration=production --base-href /dont-play-with-google/ --deploy-url /dont-play-with-google/ --aot=false --build-optimizer=false
+ng build --configuration=production --base-href /dont-play-with-google/ --deploy-url /dont-play-with-google/
 ```
 
 ## Test on device in same network

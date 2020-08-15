@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ApiError} from '../../model/ApiError';
 import {I18n} from '@ngx-translate/i18n-polyfill';
@@ -11,7 +11,8 @@ export class NotificationService {
 
   constructor(
     private snackBar: MatSnackBar,
-    private i18n: I18n) {
+    private i18n: I18n
+  ) {
   }
 
   showMessage(message: string) {

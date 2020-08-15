@@ -20,7 +20,8 @@ import {Api} from '../service/Api';
 import {TagService} from '../service/data/TagService';
 import {Tag} from '../model/data/Tag';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent} from '@angular/material';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
@@ -36,8 +37,8 @@ export class ArticleCreateComponent implements OnInit {
    */
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  @ViewChild('tagsInput', {static: false}) tagsInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
+  @ViewChild('tagsInput') tagsInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   tagsCtrl: FormControl;
 

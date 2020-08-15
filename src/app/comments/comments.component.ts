@@ -3,7 +3,7 @@ import {CommentService} from '../service/data/CommentService';
 import {GpUserService} from '../service/auth/GpUserService';
 import {NotificationService} from '../service/ui/NotificationService';
 import {DialogService} from '../service/ui/DialogService';
-import {MatBottomSheet} from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import {BehaviorSubject, of} from 'rxjs';
 import {GpConstants} from '../GpConstants';
 import {GpComment} from '../model/data/GpComment';

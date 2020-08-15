@@ -14,7 +14,7 @@ import {GpUserService} from '../service/auth/GpUserService';
 import {AuthorityType} from '../model/auth/Authority';
 import {DialogService} from '../service/ui/DialogService';
 import {LoginComponent} from '../login/login.component';
-import {MatBottomSheet} from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import {UserProvider} from '../service/auth/UserProvider';
 import {ActionType} from '../article-create/article-create.component';
 import {Api} from '../service/Api';
@@ -27,7 +27,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 })
 export class ArticleComponent implements OnInit {
 
-  @ViewChild('dateInput', {static: false}) dateInput: ElementRef<HTMLInputElement>;
+  @ViewChild('dateInput') dateInput: ElementRef<HTMLInputElement>;
 
   publishDate: string | null = null;
 

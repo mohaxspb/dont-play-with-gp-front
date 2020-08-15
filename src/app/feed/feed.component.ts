@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../service/auth/auth.service';
-import {MatBottomSheet} from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import {LoginComponent} from '../login/login.component';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {BehaviorSubject, of, zip} from 'rxjs';

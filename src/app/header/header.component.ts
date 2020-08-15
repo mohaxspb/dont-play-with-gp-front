@@ -4,7 +4,7 @@ import {AuthService} from '../service/auth/auth.service';
 import {AuthProvider} from '../service/auth/auth.state.subject';
 import {GpLanguageService} from '../service/data/GpLanguageService';
 import {UserProvider} from '../service/auth/UserProvider';
-import {MatBottomSheet} from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import {GpUser} from '../model/auth/GpUser';
 import {LoginComponent} from '../login/login.component';
 import {SUPPORTED_LANGUAGES} from '../GpConstants';

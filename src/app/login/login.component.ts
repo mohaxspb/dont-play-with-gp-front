@@ -3,7 +3,7 @@ import {AuthService} from '../service/auth/auth.service';
 import {GpConstants, SocialProvider} from '../GpConstants';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MyErrorStateMatcher} from '../utils/MyErrorStateMatcher';
-import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import {GpLanguageService} from '../service/data/GpLanguageService';
 import {BehaviorSubject} from 'rxjs';
 import {finalize} from 'rxjs/operators';

@@ -11,7 +11,8 @@ export class NotificationService {
 
   constructor(
     private snackBar: MatSnackBar,
-    private i18n: I18n) {
+    private i18n: I18n
+  ) {
   }
 
   showMessage(message: string) {

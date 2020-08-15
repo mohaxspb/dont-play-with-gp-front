@@ -4,6 +4,13 @@
   "newProjectRoot": "projects",
   "projects": {
     "dont-play-with-gp-web": {
+      "i18n": {
+        "locales": {
+          "ru": "src/locale/messages.ru.xlf",
+          "en": "src/locale/messages.en.xlf",
+          "fr": "src/locale/messages.fr.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -18,7 +25,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -49,7 +56,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -58,6 +64,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
@@ -68,6 +78,9 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+            "localize": [
+              "ru"
+            ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -81,15 +94,13 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
-              "aot": true,
-              "baseHref": "/ru/",
-              "outputPath": "dist/dont-play-with-gp-web/ru/",
-              "i18nFile": "src/locale/messages.ru.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "ru"
-            },
+              "outputPath": "dist/dont-play-with-gp-web"},
             "en": {
               "fileReplacements": [
                 {
@@ -97,6 +108,9 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+            "localize": [
+              "en"
+            ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -110,15 +124,13 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
-              "aot": true,
-              "baseHref": "/en/",
-              "outputPath": "dist/dont-play-with-gp-web/en/",
-              "i18nFile": "src/locale/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en"
-            },
+              "outputPath": "dist/dont-play-with-gp-web"},
             "fr": {
               "fileReplacements": [
                 {
@@ -126,6 +138,9 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+            "localize": [
+              "fr"
+            ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -139,15 +154,13 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
-              "aot": true,
-              "baseHref": "/fr/",
-              "outputPath": "dist/dont-play-with-gp-web/fr/",
-              "i18nFile": "src/locale/messages.fr.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "fr"
-            },
+              "outputPath": "dist/dont-play-with-gp-web"},
             "stage-ru": {
               "fileReplacements": [
                 {
@@ -155,6 +168,9 @@
                   "with": "src/environments/environment.stage.ts"
                 }
               ],
+            "localize": [
+              "ru"
+            ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -168,15 +184,13 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
-              "aot": true,
-              "baseHref": "/ru/",
-              "outputPath": "dist/dont-play-with-gp-web/ru/",
-              "i18nFile": "src/locale/messages.ru.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "ru"
-            },
+              "outputPath": "dist/dont-play-with-gp-web"},
             "stage-en": {
               "fileReplacements": [
                 {
@@ -184,6 +198,9 @@
                   "with": "src/environments/environment.stage.ts"
                 }
               ],
+            "localize": [
+              "en"
+            ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -197,15 +214,13 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
-              "aot": true,
-              "baseHref": "/en/",
-              "outputPath": "dist/dont-play-with-gp-web/en/",
-              "i18nFile": "src/locale/messages.en.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en"
-            },
+              "outputPath": "dist/dont-play-with-gp-web"},
             "stage-fr": {
               "fileReplacements": [
                 {
@@ -213,6 +228,9 @@
                   "with": "src/environments/environment.stage.ts"
                 }
               ],
+            "localize": [
+              "fr"
+            ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -226,15 +244,13 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
-              "aot": true,
-              "baseHref": "/fr/",
-              "outputPath": "dist/dont-play-with-gp-web/fr/",
-              "i18nFile": "src/locale/messages.fr.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "fr"
-            }
+              "outputPath": "dist/dont-play-with-gp-web"}
           }
         },
         "serve": {

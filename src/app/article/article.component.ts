@@ -27,7 +27,7 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 })
 export class ArticleComponent implements OnInit {
 
-  @ViewChild('dateInput', {static: false}) dateInput: ElementRef<HTMLInputElement>;
+  @ViewChild('dateInput') dateInput: ElementRef<HTMLInputElement>;
 
   publishDate: string | null = null;
 

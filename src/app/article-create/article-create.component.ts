@@ -36,8 +36,8 @@ export class ArticleCreateComponent implements OnInit {
    */
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  @ViewChild('tagsInput', {static: false}) tagsInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
+  @ViewChild('tagsInput') tagsInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   tagsCtrl: FormControl;
 

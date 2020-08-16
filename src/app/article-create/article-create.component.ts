@@ -20,8 +20,8 @@ import {Api} from '../service/Api';
 import {TagService} from '../service/data/TagService';
 import {Tag} from '../model/data/Tag';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
+import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatChipInputEvent} from '@angular/material/chips';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 
 @Component({
@@ -132,22 +132,27 @@ export class ArticleCreateComponent implements OnInit {
   }
 
   onPrimaryLanguageChanged(language: Language) {
+    console.log('onSourceTitleChanged: %s', language);
     this.articleLanguage = language;
   }
 
   onTranslationLanguageChanged(language: Language) {
+    console.log('onSourceTitleChanged: %s', language);
     this.translationLanguage = language;
   }
 
   onSourceTitleChanged(sourceTitle: string) {
+    console.log('onSourceTitleChanged: %s', sourceTitle);
     this.sourceTitle = sourceTitle;
   }
 
   onSourceUrlChanged(sourceUrl: string) {
+    console.log('onSourceTitleChanged: %s', sourceUrl);
     this.sourceUrl = sourceUrl;
   }
 
   onSourceAuthorNameChanged(sourceAuthorName: string) {
+    console.log('onSourceTitleChanged: %s', sourceAuthorName);
     this.sourceAuthorName = sourceAuthorName;
   }
 
@@ -230,6 +235,7 @@ export class ArticleCreateComponent implements OnInit {
           );
         break;
       case ActionType.EDIT_ARTICLE:
+        console.log('EDIT_ARTICLE: %s/%s/%s', this.sourceTitle, this.sourceAuthorName, this.sourceUrl);
         this.articleService
           .editArticle(
             this.articleId,
@@ -661,6 +667,32 @@ export class ArticleCreateComponent implements OnInit {
           this.preferredLanguage = GpLanguageService.getLanguageById(this.languagesListFromApi, this.user.primaryLanguageId);
           this.tagsFromApi = data[2];
           this.article = data[3];
+
+          // also fill all other fields
+          if (this.article != null) {
+            this.articleIsFromAnotherSite = this.article.sourceTitle != null;
+            this.sourceTitle = this.article.sourceTitle;
+            this.sourceUrl = this.article.sourceUrl;
+            this.sourceAuthorName = this.article.sourceAuthorName;
+
+            const translationIndex = this.article.translations
+              .findIndex((value, index) => value.id === this.translationId);
+            if (translationIndex !== -1) {
+              this.translation = this.article.translations[translationIndex];
+              this.title = this.translation.title;
+              this.shortDescription = this.translation.shortDescription;
+
+              const versionIndex = this.translation.versions
+                .findIndex((value) => value.id === this.versionId);
+              if (versionIndex !== -1) {
+                this.version = this.translation.versions[versionIndex];
+                this.text = this.version.text;
+              } else {
+                this.version = null;
+              }
+              this.translation = null;
+            }
+          }
         }),
         finalize(() => this.dataIsLoading.next(false))
       )

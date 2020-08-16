@@ -50,6 +50,7 @@
                 formControlName="articleIsFromAnotherSite"
                 name="articleIsFromAnotherSite"
                 color="primary"
+                [value]="articleIsFromAnotherSite"
                 (change)="onArticleIsFromAnotherSiteClicked($event.checked)"
                 i18n="article is from another site|article is from another site@@articleIsFromAnotherSite"
               >Article is from another site</mat-checkbox>
@@ -65,6 +66,7 @@
                       placeholder="{{sourceTitlePlaceholder}}"
                       name="sourceTitle"
                       required="{{articleIsFromAnotherSite}}"
+                      [value]="sourceTitle"
                       (change)="onSourceTitleChanged($event.target.value)"
                     >
                   </label>
@@ -82,6 +84,7 @@
                       formControlName="sourceAuthorName"
                       placeholder="{{sourceAuthorNamePlaceholder}}"
                       name="sourceAuthorName"
+                      [value]="sourceAuthorName"
                       (change)="onSourceAuthorNameChanged($event.target.value)"
                     >
                   </label>
@@ -96,6 +99,7 @@
                       placeholder="{{sourceUrlPlaceholder}}"
                       name="sourceUrl"
                       required="{{articleIsFromAnotherSite}}"
+                      [value]="sourceUrl"
                       (change)="onSourceUrlChanged($event.target.value)"
                     >
                   </label>
@@ -244,10 +248,10 @@
                   <label class="full-width-field">
                     <input
                       matInput
-                      [value]="imageFileName"
                       formControlName="imageFileName"
                       placeholder="{{imageFileNamePlaceholder}}"
                       name="imageFileName"
+                      [value]="imageFileName"
                       (change)="onImageFileNameChanged($event.target.value)"
                     >
                   </label>
@@ -291,6 +295,7 @@
                   placeholder="{{titlePlaceholder}}"
                   name="title"
                   required
+                  [value]="title"
                   (change)="onTitleChanged($event.target.value)"
                 >
               </label>
@@ -313,6 +318,7 @@
                 formControlName="shortDescription"
                 placeholder="{{shortDescriptionPlaceholder}}"
                 name="shortDescription"
+                [value]="shortDescription"
                 (change)="onShortDescriptionChanged($event.target.value)"
               ></textarea>
             </mat-form-field>

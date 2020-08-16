@@ -7,6 +7,7 @@ import {ArticleTranslationVersion} from '../../model/data/ArticleTranslationVers
 import {Language} from '../../model/data/Language';
 import {GpLanguageService} from './GpLanguageService';
 import {PublishVersionResult} from '../../model/data/PublishVersionResult';
+import {Feed} from '../../model/data/Feed';
 
 @Injectable()
 export class GpArticleService {
@@ -87,7 +88,7 @@ export class GpArticleService {
     return this.apiService.publishArticleTranslationVersion(id, publish);
   }
 
-  getPublishedArticles(limit: number, offset: number, onlyForCurrentDate: boolean): Observable<Article[]> {
+  getPublishedArticles(limit: number, offset: number, onlyForCurrentDate: boolean): Observable<Feed> {
     return this.apiService.getArticles(limit, offset, onlyForCurrentDate);
   }
 

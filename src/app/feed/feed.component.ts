@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../service/auth/auth.service';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {LoginComponent} from '../login/login.component';
 import {GpArticleService} from '../service/data/GpArticleService';
 import {BehaviorSubject, of, zip} from 'rxjs';
@@ -14,7 +14,6 @@ import {GpLanguageService} from '../service/data/GpLanguageService';
 import {UserProvider} from '../service/auth/UserProvider';
 import {GpUser} from '../model/auth/GpUser';
 import {ArticleTranslation} from '../model/data/ArticleTranslation';
-import {NavigationUtils} from '../utils/NavigationUtils';
 import {Api} from '../service/Api';
 import {ActionType} from '../article-create/article-create.component';
 import {AuthorityType} from '../model/auth/Authority';
@@ -77,12 +76,6 @@ export class FeedComponent implements OnInit {
       });
       this.bottomSheet.open(LoginComponent, {data: {title}});
     }
-  }
-
-  onArticleClicked(article: Article, translation: ArticleTranslation) {
-    this.router
-      .navigate(['article/' + article.id], {queryParams: {langId: translation.langId}})
-      .then(() => NavigationUtils.scrollToTop());
   }
 
   correctArticleLanguage(article: Article): Language {

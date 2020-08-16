@@ -20,13 +20,19 @@
           <div id="header-container" fxLayout.gt-xs="row" fxLayout="column" fxLayoutAlign="start start">
 
             <mat-card-header
-              (click)="onArticleClicked(articleAndTranslation[0], articleAndTranslation[1])"
               fxFlex
               fxFlexOrder="2"
               fxFlex.gt-xs
               fxFlexOrder.gt-xs="1"
             >
-              <mat-card-title>{{articleAndTranslation[1].title}}</mat-card-title>
+              <mat-card-title>
+                <a
+                  class="primary-text"
+                  routerLink="/article/{{articleAndTranslation[0].id}}"
+                  [queryParams]="{langId: articleAndTranslation[1].langId}"
+                >{{articleAndTranslation[1].title}}
+                </a>
+              </mat-card-title>
               <mat-card-subtitle fxLayoutAlign="start center" fxLayoutGap="16px">
                 <mat-icon *ngIf="articleAndTranslation[0].fromFuture">alarm</mat-icon>
                 <span>{{articleAndTranslation[0].publishedDate | date:'medium':'UTC': preferredLanguage.langCode}}</span>
@@ -38,24 +44,25 @@
               >Author: {{articleAndTranslation[0].sourceAuthorName != null ? articleAndTranslation[0].sourceAuthorName : articleAndTranslation[0].author.fullName}}</mat-card-subtitle>
             </mat-card-header>
 
-            <img
-              *ngIf="articleAndTranslation[1].imageUrl!=null"
-              src="{{getFullImagePath(articleAndTranslation[1].imageUrl)}}"
-              alt="Article image"
-              fxShow="{{articleAndTranslation[1].imageUrl!=null}}"
-              fxFlexOrder="1"
-              fxFlexOrder.gt-xs="2"
-              (click)="onArticleClicked(articleAndTranslation[0], articleAndTranslation[1])"
-              [ngClass]="{'article-image':true, 'default-margin-bottom':true, 'article-image-desktop':false}"
-              [ngClass.gt-xs]="{'article-image':false, 'article-image-desktop':true}"
-              (error)="onArticleImageLoadError($event)"
-            >
+            <a
+              class="primary-text"
+              routerLink="/article/{{articleAndTranslation[0].id}}"
+              [queryParams]="{langId: articleAndTranslation[1].langId}">
+              <img
+                *ngIf="articleAndTranslation[1].imageUrl!=null"
+                src="{{getFullImagePath(articleAndTranslation[1].imageUrl)}}"
+                alt="Article image"
+                fxShow="{{articleAndTranslation[1].imageUrl!=null}}"
+                fxFlexOrder="1"
+                fxFlexOrder.gt-xs="2"
+                [ngClass]="{'article-image':true, 'default-margin-bottom':true, 'article-image-desktop':false}"
+                [ngClass.gt-xs]="{'article-image':false, 'article-image-desktop':true}"
+                (error)="onArticleImageLoadError($event)"
+              >
+            </a>
           </div>
 
-          <mat-card-content
-            class="default-margin-left"
-            (click)="onArticleClicked(articleAndTranslation[0], articleAndTranslation[1])"
-          >{{articleAndTranslation[1].shortDescription}}</mat-card-content>
+          <mat-card-content class="default-margin-left">{{articleAndTranslation[1].shortDescription}}</mat-card-content>
 
           <div *ngIf="articleAndTranslation[0].tags.length>0" class="small-margin-left">
             <span i18n="tags label|tags label@@tagsLabel">Tags: </span>

@@ -10,6 +10,8 @@ $accent: mat-palette($mat-amber, A200, A100, A400);
 
 $theme: mat-light-theme($primary, $accent);
 
+$foreground: map-get($theme, foreground);
+
 // Include all theme styles for the components.
 @include angular-material-theme($theme);
 
@@ -41,6 +43,10 @@ body {
 
 .background-color-primary {
   background: mat-color($primary);
+}
+
+.primary-text {
+  color: mat-color($foreground, text);
 }
 
 /**

@@ -19,6 +19,8 @@ import {ActionType} from '../article-create/article-create.component';
 import {AuthorityType} from '../model/auth/Authority';
 import {GpUserService} from '../service/auth/GpUserService';
 import {I18n} from '@ngx-translate/i18n-polyfill';
+import {PageEvent} from '@angular/material/paginator';
+import {Feed} from '../model/data/Feed';
 
 @Component({
   selector: 'app-feed',
@@ -28,14 +30,17 @@ import {I18n} from '@ngx-translate/i18n-polyfill';
 export class FeedComponent implements OnInit {
 
   progressInAction = new BehaviorSubject<boolean>(false);
-  bottomProgressInAction = new BehaviorSubject<boolean>(false);
-  bottomProgressErrorOccurred = new BehaviorSubject<boolean>(false);
 
   languages: Language[] | null = null;
   user: GpUser | null = null;
   preferredLanguage: Language;
 
   articlesAndTranslations: [Article, ArticleTranslation][] = [];
+
+  // paginator
+  currentPage = 0;
+  allArticlesSize = 0;
+  pageEvent: PageEvent;
 
   constructor(
     private router: Router,
@@ -91,10 +96,6 @@ export class FeedComponent implements OnInit {
     return translation != null ? translation : article.translations[0];
   }
 
-  onScroll() {
-    this.loadArticles(this.articlesAndTranslations.length);
-  }
-
   articlesListEndReached(): boolean {
     return this.articlesAndTranslations.length % GpConstants.DEFAULT_LIMIT !== 0;
   }
@@ -109,11 +110,9 @@ export class FeedComponent implements OnInit {
   }
 
   loadArticles(offset: number = 0) {
-    if (offset === 0) {
-      this.progressInAction.next(true);
-    } else {
-      this.bottomProgressInAction.next(true);
-    }
+    this.progressInAction.next(true);
+
+    this.articlesAndTranslations = [];
 
     this.articleService
       .getPublishedArticles(GpConstants.DEFAULT_LIMIT, offset, !this.isAdmin())
@@ -129,26 +128,17 @@ export class FeedComponent implements OnInit {
         //   }
         // }),
         finalize(() => {
-          if (offset === 0) {
-            this.progressInAction.next(false);
-          } else {
-            this.bottomProgressInAction.next(false);
-          }
+          this.progressInAction.next(false);
         })
       )
       .subscribe(
-        articles => {
+        (feed: Feed) => {
           this.preferredLanguage = this.languageService.getPreferredLanguageForUser(this.user, this.languages);
-          if (offset === 0) {
-            this.articlesAndTranslations = this.mapArticlesToArticlesAndTranslation(articles);
-          } else {
-            this.bottomProgressErrorOccurred.next(false);
-            this.articlesAndTranslations = this.articlesAndTranslations.concat(this.mapArticlesToArticlesAndTranslation(articles));
-          }
+          this.articlesAndTranslations = this.mapArticlesToArticlesAndTranslation(feed.articles);
+          this.allArticlesSize = feed.totalSize;
         },
         error => {
           this.notificationService.showError(error);
-          this.bottomProgressErrorOccurred.next(true);
         }
       );
   }
@@ -184,5 +174,12 @@ export class FeedComponent implements OnInit {
         },
         error => this.notificationService.showError(error)
       );
+  }
+
+  handlePage($event: PageEvent) {
+    console.log('handlePage: %s', $event.pageIndex);
+    this.currentPage = $event.pageIndex;
+    this.loadArticles($event.pageIndex * 10);
+    return $event;
   }
 }

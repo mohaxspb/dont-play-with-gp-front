@@ -11,6 +11,7 @@ import {ArticleTranslationVersion} from '../model/data/ArticleTranslationVersion
 import {PublishVersionResult} from '../model/data/PublishVersionResult';
 import {Tag} from '../model/data/Tag';
 import {GpComment} from '../model/data/GpComment';
+import {Feed} from '../model/data/Feed';
 
 
 @Injectable()
@@ -215,12 +216,12 @@ export class GpApiService {
     );
   }
 
-  getArticles(limit: number, offset: number, onlyForCurrentDate: boolean): Observable<Article[]> {
+  getArticles(limit: number, offset: number, onlyForCurrentDate: boolean): Observable<Feed> {
     const params = new HttpParams()
       .append('limit', limit.toString())
       .append('onlyForCurrentDate', onlyForCurrentDate.toString())
       .append('offset', offset.toString());
-    return this.http.get<Article[]>(
+    return this.http.get<Feed>(
       Api.URL + Api.ArticleEndpoint.URL + Api.ArticleEndpoint.Method.ALL,
       {
         withCredentials: true,

@@ -280,24 +280,6 @@ export class GpApiService {
       );
   }
 
-  deleteImageByUserIdAndImageName(userId: number, imageName: string): Observable<boolean> {
-    return this.http.delete<boolean>(
-      Api.URL + Api.ImageEndpoint.URL + userId + '/' + imageName,
-      {withCredentials: true}
-    );
-  }
-
-  addImage(image: File, imageName: string): Observable<string> {
-    const formData = new FormData();
-    formData.append('imageName', imageName.toString());
-    formData.append('image', image);
-    return this.http.post<string>(
-      Api.URL + Api.ImageEndpoint.URL + Api.ImageEndpoint.Method.ADD,
-      formData,
-      {withCredentials: true}
-    );
-  }
-
   createVersion(translationId: number, text: string): Observable<ArticleTranslationVersion> {
     const formData = new FormData();
     formData.append('articleTranslationId', translationId.toString());

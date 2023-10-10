@@ -26,7 +26,7 @@
     "@angular/cdk": "^10.2.7",
     "@angular/common": "~10.2.1",
     "@angular/compiler": "~10.2.1",
-    "@angular/core": "~10.2.1",
+    "@angular/core": "~10.2.5",
     "@angular/flex-layout": "10.0.0-beta.32",
     "@angular/forms": "~10.2.1",
     "@angular/localize": "~10.2.1",
